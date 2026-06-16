@@ -86,7 +86,7 @@ export default async function ResourcesPage() {
             <div className="mt-10">
               <EmptyState
                 body="The blog stream is ready for the first market read."
-                title="No posts yet"
+                title="The analysis stream is ready"
               />
             </div>
           )}
@@ -121,7 +121,7 @@ export default async function ResourcesPage() {
             <div className="mt-10">
               <EmptyState
                 body="This section is ready for the first customer readout."
-                title="No customer stories yet"
+                title="The proof library is ready"
               />
             </div>
           )}
@@ -156,7 +156,7 @@ export default async function ResourcesPage() {
             <div className="mt-10">
               <EmptyState
                 body="The guide library is ready for the first framework."
-                title="No guides yet"
+                title="The guide library is ready"
               />
             </div>
           )}
@@ -191,7 +191,7 @@ export default async function ResourcesPage() {
             <div className="mt-10">
               <EmptyState
                 body="The newsroom is ready for the next company signal."
-                title="No press items yet"
+                title="The newsroom is ready"
               />
             </div>
           )}

@@ -93,7 +93,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             <div className="mt-10">
               <EmptyState
                 body="This topic is ready for the first Hatchet market read."
-                title="No posts in this category yet"
+                title="This topic is ready for a market read"
               />
             </div>
           )}

@@ -18,7 +18,7 @@ function NavigationMenu({
       data-slot="navigation-menu"
       data-viewport={viewport}
       className={cn(
-        "group/navigation-menu relative flex max-w-max flex-1 items-center justify-center",
+        "group/navigation-menu relative flex max-w-max items-center justify-center",
         className,
       )}
       {...props}
@@ -37,7 +37,7 @@ function NavigationMenuList({
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
       className={cn(
-        "group flex flex-1 list-none items-center justify-center gap-0",
+        "group flex list-none items-center justify-center gap-0",
         className,
       )}
       {...props}
@@ -59,7 +59,7 @@ function NavigationMenuItem({
 }
 
 const navigationMenuTriggerStyle = cva(
-  "group/navigation-menu-trigger inline-flex h-11 w-max items-center justify-center rounded-lg px-3 text-sm font-medium transition-all outline-none hover:bg-muted-surface focus:bg-muted-surface focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-muted-surface/50 data-popup-open:hover:bg-muted-surface data-open:bg-muted-surface/50 data-open:hover:bg-muted-surface data-open:focus:bg-muted-surface",
+  "group/navigation-menu-trigger inline-flex h-11 w-max items-center justify-center rounded-lg px-2 text-sm font-medium whitespace-nowrap transition-all outline-none hover:bg-muted-surface focus:bg-muted-surface focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-muted-surface/50 data-popup-open:hover:bg-muted-surface data-open:bg-muted-surface/50 data-open:hover:bg-muted-surface data-open:focus:bg-muted-surface",
 );
 
 function NavigationMenuTrigger({

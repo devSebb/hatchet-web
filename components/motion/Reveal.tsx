@@ -1,10 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 import { EASE_OUT, MOTION_DURATION, REVEAL_DISTANCE } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { useHydratedReducedMotion } from "./use-hydrated-reduced-motion";
 
 type RevealProps = {
   children: ReactNode;
@@ -19,7 +20,7 @@ export function Reveal({
   delay = 0,
   distance = "base",
 }: RevealProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   if (shouldReduceMotion) {
     return <div className={className}>{children}</div>;

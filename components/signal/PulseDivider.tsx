@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
+import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import { EASE_OUT, MOTION_DURATION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +14,7 @@ type PulseDividerProps = {
 export function PulseDivider({ className }: PulseDividerProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.7 });
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   return (
     <div

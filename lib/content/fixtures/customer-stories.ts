@@ -3,8 +3,8 @@ import type { CustomerStory } from "@/lib/content/types";
 export const customerStories = [
   {
     slug: "riot-launch-readout",
-    company: "Riot",
-    logo: "/images/logos/riot.svg",
+    company: "Riot Games",
+    logo: "/images/logos/riot-games.png",
     quote:
       "Hatchet helped our team see creator pickup, regional lift, and audience quality in the same launch readout.",
     metric: "32% faster launch reporting",
@@ -15,9 +15,9 @@ export const customerStories = [
       "<p>Riot needed a fast read on creator coverage after a major game beat. Hatchet normalized the live-streaming signal across platforms and highlighted where audience attention held after launch-week spikes.</p>",
   },
   {
-    slug: "playstation-creator-partnering",
-    company: "PlayStation",
-    logo: "/images/logos/playstation.svg",
+    slug: "microsoft-creator-partnering",
+    company: "Microsoft",
+    logo: "/images/logos/microsoft.png",
     quote:
       "The team could compare creators by real audience movement instead of relying only on follower counts.",
     metric: "4 markets prioritized",
@@ -25,12 +25,12 @@ export const customerStories = [
     summary:
       "A brand partnerships team used Hatchet to shortlist creator partners by audience movement, category fit, and market momentum.",
     contentHtml:
-      "<p>PlayStation needed to understand which creators were moving conversation in priority markets. Hatchet combined viewership, creator activity, and game context to support a sharper partner shortlist.</p>",
+      "<p>Microsoft needed to understand which creators were moving conversation in priority markets. Hatchet combined viewership, creator activity, and game context to support a sharper partner shortlist.</p>",
   },
   {
     slug: "nascar-esports-broadcast-benchmark",
     company: "NASCAR",
-    logo: "/images/logos/nascar.svg",
+    logo: "/images/logos/nascar.png",
     quote:
       "Hatchet gave us a consistent benchmark for official broadcasts, creator coverage, and sponsor visibility.",
     metric: "18 events benchmarked",

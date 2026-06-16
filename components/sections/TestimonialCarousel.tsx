@@ -1,10 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
-import { useReducedMotion } from "framer-motion";
 
+import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +15,7 @@ export type TestimonialItem = {
   role: string;
   company: string;
   logo: string;
+  logoSrc?: string;
   headshot?: string;
 };
 
@@ -30,16 +32,18 @@ const defaultTestimonials: TestimonialItem[] = [
       "Hatchet gives our team a consistent read on creator pickup, audience quality, and the moments that actually move the market.",
     name: "Maya Chen",
     role: "Director of insights",
-    company: "Riot",
-    logo: "Riot",
+    company: "Riot Games",
+    logo: "Riot Games",
+    logoSrc: "/images/logos/riot-games.png",
   },
   {
     quote:
       "We can compare games, creators, and community movement in one place instead of stitching together platform exports.",
     name: "Jordan Ellis",
     role: "Research lead",
-    company: "PlayStation",
-    logo: "PlayStation",
+    company: "Microsoft",
+    logo: "Microsoft",
+    logoSrc: "/images/logos/microsoft.png",
   },
   {
     quote:
@@ -48,6 +52,7 @@ const defaultTestimonials: TestimonialItem[] = [
     role: "Partnerships strategy",
     company: "NASCAR",
     logo: "NASCAR",
+    logoSrc: "/images/logos/nascar.png",
   },
 ];
 
@@ -57,7 +62,7 @@ export function TestimonialCarousel({
   testimonials = defaultTestimonials,
   className,
 }: TestimonialCarouselProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: testimonials.length > 1,
     align: "start",
@@ -151,9 +156,23 @@ export function TestimonialCarousel({
               >
                 <div className="border-border bg-surface flex min-h-80 flex-col justify-between rounded-xl border p-6 shadow-md">
                   <div>
-                    <div className="border-border bg-background/70 font-display text-foreground inline-flex h-10 items-center rounded-lg border px-3 text-sm font-semibold">
-                      {testimonial.logo}
-                    </div>
+                    {testimonial.logoSrc ? (
+                      <div className="border-border bg-paper-surface h-12 w-40 rounded-lg border p-2 shadow-sm">
+                        <div className="relative h-full w-full">
+                          <Image
+                            alt={`${testimonial.company} logo`}
+                            className="object-contain"
+                            fill
+                            sizes="144px"
+                            src={testimonial.logoSrc}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="border-border bg-background/70 font-display text-foreground inline-flex h-10 items-center rounded-lg border px-3 text-sm font-semibold">
+                        {testimonial.logo}
+                      </div>
+                    )}
                     <blockquote className="body-lg text-foreground mt-8">
                       “{testimonial.quote}”
                     </blockquote>
@@ -186,15 +205,22 @@ export function TestimonialCarousel({
               aria-label={`Show testimonial ${index + 1} from ${testimonial.company}`}
               aria-pressed={selectedIndex === index}
               className={cn(
-                "focus-visible:ring-ring/50 h-2.5 rounded-full transition-all outline-none focus-visible:ring-3",
-                selectedIndex === index
-                  ? "bg-signal w-8"
-                  : "bg-signal-grid hover:bg-muted w-2.5",
+                "focus-visible:ring-ring/50 group/dot inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg outline-none focus-visible:ring-3",
               )}
               key={`${testimonial.company}-dot`}
               onClick={() => scrollTo(index)}
               type="button"
-            />
+            >
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "h-2.5 rounded-full transition-all duration-(--dur-base)",
+                  selectedIndex === index
+                    ? "bg-signal w-8"
+                    : "bg-signal-grid group-hover/dot:bg-muted w-2.5",
+                )}
+              />
+            </button>
           ))}
         </div>
       </div>

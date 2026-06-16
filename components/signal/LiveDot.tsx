@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
+import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import { EASE_OUT, MOTION_DURATION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +12,7 @@ type LiveDotProps = {
 };
 
 export function LiveDot({ className, label = "Live" }: LiveDotProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   return (
     <span

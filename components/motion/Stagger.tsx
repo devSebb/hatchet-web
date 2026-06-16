@@ -1,7 +1,7 @@
 "use client";
 
 import { Children, type ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 import {
   EASE_OUT,
@@ -10,6 +10,7 @@ import {
   STAGGER_STEP,
 } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { useHydratedReducedMotion } from "./use-hydrated-reduced-motion";
 
 type StaggerProps = {
   children: ReactNode;
@@ -24,7 +25,7 @@ export function Stagger({
   childClassName,
   step = STAGGER_STEP,
 }: StaggerProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
   const items = Children.toArray(children);
 
   if (shouldReduceMotion) {

@@ -55,7 +55,7 @@ export default async function PressPage() {
             <div className="mt-10">
               <EmptyState
                 body="The press room is ready for the next announcement."
-                title="No press items yet"
+                title="The press room is ready"
               />
             </div>
           )}

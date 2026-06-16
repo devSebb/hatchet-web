@@ -76,11 +76,11 @@ export function Footer() {
           {footerColumns.map((column) => (
             <div key={column.label}>
               <h2 className="eyebrow text-muted">{column.label}</h2>
-              <ul className="mt-4 grid gap-3">
+              <ul className="mt-3 grid">
                 {column.items.map((item) => (
                   <li key={item.href}>
                     <Link
-                      className="hover:text-foreground focus-visible:ring-ring/50 text-muted rounded-sm text-sm transition-colors outline-none focus-visible:ring-3"
+                      className="hover:text-foreground focus-visible:ring-ring/50 text-muted inline-flex min-h-11 min-w-11 items-center rounded-sm text-sm transition-colors outline-none focus-visible:ring-3"
                       href={item.href}
                     >
                       {item.label}
@@ -100,11 +100,11 @@ export function Footer() {
             reserved.
           </p>
           <nav aria-label="Legal">
-            <ul className="flex flex-wrap gap-4">
+            <ul className="flex flex-wrap gap-x-4">
               {legalNav.map((item) => (
                 <li key={item.href}>
                   <Link
-                    className="hover:text-foreground focus-visible:ring-ring/50 rounded-sm transition-colors outline-none focus-visible:ring-3"
+                    className="hover:text-foreground focus-visible:ring-ring/50 inline-flex min-h-11 min-w-11 items-center rounded-sm transition-colors outline-none focus-visible:ring-3"
                     href={item.href}
                   >
                     {item.label}

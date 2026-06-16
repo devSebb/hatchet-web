@@ -1,8 +1,9 @@
 "use client";
 
 import { useId, useMemo } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
+import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import { EASE_OUT, MOTION_DURATION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -53,7 +54,7 @@ export function Sparkline({
   strokeWidth = 1.5,
 }: SparklineProps) {
   const titleId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
   const points = useMemo(() => buildPoints(data, height), [data, height]);
   const shouldAnimate = animated && !shouldReduceMotion;
 

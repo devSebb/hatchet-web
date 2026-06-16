@@ -53,7 +53,7 @@ export default async function GuidesPage() {
             <div className="mt-10">
               <EmptyState
                 body="This shelf is ready for the first guide or e-book."
-                title="No guides yet"
+                title="The guide shelf is ready"
               />
             </div>
           )}

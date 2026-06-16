@@ -1,23 +1,50 @@
+import Image from "next/image";
+
 import { Stagger } from "@/components/motion/Stagger";
 import { cn } from "@/lib/utils";
+
+type LogoItem = {
+  name: string;
+  src: string;
+};
 
 type LogoWallProps = {
   eyebrow?: string;
   title?: string;
-  logos?: string[];
+  logos?: LogoItem[];
   className?: string;
 };
 
 const defaultLogos = [
-  "Riot",
-  "Microsoft",
-  "PlayStation",
-  "Activision",
-  "Ubisoft",
-  "Capcom",
-  "NASCAR",
-  "YouTube",
-];
+  {
+    name: "Riot Games",
+    src: "/images/logos/riot-games.png",
+  },
+  {
+    name: "Microsoft",
+    src: "/images/logos/microsoft.png",
+  },
+  {
+    name: "Blizzard",
+    src: "/images/logos/blizzard.png",
+  },
+  {
+    name: "Electronic Arts",
+    src: "/images/logos/ea.png",
+  },
+  {
+    name: "Google",
+    src: "/images/logos/google.png",
+  },
+  {
+    name: "NASCAR",
+    src: "/images/logos/nascar.png",
+  },
+  {
+    name: "YouTube",
+    src: "/images/logos/youtube.png",
+  },
+] satisfies LogoItem[];
 
 export function LogoWall({
   eyebrow = "Trusted signal",
@@ -32,13 +59,21 @@ export function LogoWall({
           <p className="eyebrow text-muted">{eyebrow}</p>
           <h2 className="h2 mt-3">{title}</h2>
         </div>
-        <Stagger className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+        <Stagger className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
           {logos.map((logo) => (
             <div
-              className="border-border bg-surface/70 text-muted hover:border-signal/50 hover:bg-elevated hover:text-foreground font-display flex h-20 items-center justify-center rounded-lg border px-3 text-center text-sm font-semibold grayscale transition-[filter,color,border-color,background-color] duration-(--dur-base) hover:grayscale-0"
-              key={logo}
+              className="group border-border bg-paper-surface hover:border-signal/50 flex h-24 items-center justify-center rounded-lg border p-4 shadow-sm transition-[border-color,transform,box-shadow] duration-(--dur-base) hover:-translate-y-0.5 hover:shadow-md"
+              key={logo.name}
             >
-              {logo}
+              <div className="relative h-12 w-36 max-w-full">
+                <Image
+                  alt={`${logo.name} logo`}
+                  className="object-contain opacity-75 grayscale transition-[filter,opacity] duration-(--dur-base) group-hover:opacity-100 group-hover:grayscale-0"
+                  fill
+                  sizes="144px"
+                  src={logo.src}
+                />
+              </div>
             </div>
           ))}
         </Stagger>

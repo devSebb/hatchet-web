@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useInView, useReducedMotion } from "framer-motion";
+import { useInView } from "framer-motion";
 
 import { MOTION_DURATION_MS } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { useHydratedReducedMotion } from "./use-hydrated-reduced-motion";
 
 type CounterProps = {
   to: number;
@@ -25,7 +26,7 @@ export function Counter({
 }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.45 });
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
   const [value, setValue] = useState(from);
 
   const formatter = useMemo(

@@ -51,7 +51,7 @@ export default async function CustomerStoriesPage() {
           ) : (
             <div className="border-border bg-card mt-10 rounded-xl border p-6 text-center shadow-sm">
               <p className="font-display text-lg font-semibold">
-                No customer stories yet
+                The proof library is ready
               </p>
               <p className="body text-muted mt-3">
                 This library is ready for the first customer proof point.

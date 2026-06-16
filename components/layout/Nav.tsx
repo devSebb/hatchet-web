@@ -18,7 +18,7 @@ type NavProps = {
 
 export function Nav({ items, className }: NavProps) {
   return (
-    <NavigationMenu className={cn("hidden lg:flex", className)}>
+    <NavigationMenu className={cn(className ?? "hidden lg:flex")}>
       <NavigationMenuList className="gap-1">
         {items.map((item) => (
           <NavigationMenuItem key={item.href}>
@@ -63,7 +63,7 @@ export function Nav({ items, className }: NavProps) {
             ) : (
               <NavigationMenuLink asChild>
                 <Link
-                  className="hover:bg-muted-surface focus:bg-muted-surface focus-visible:ring-ring/50 inline-flex h-11 items-center rounded-lg px-3 text-sm font-medium transition-all outline-none focus-visible:ring-3"
+                  className="hover:bg-muted-surface focus:bg-muted-surface focus-visible:ring-ring/50 inline-flex h-11 items-center rounded-lg px-2 text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-3"
                   href={item.href}
                 >
                   {item.label}

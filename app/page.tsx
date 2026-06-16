@@ -99,16 +99,18 @@ const testimonials = [
       "Hatchet gives our team one read on creators, category momentum, and the audience shifts that matter after launch week.",
     name: "Maya Chen",
     role: "Director of insights",
-    company: "Riot",
-    logo: "Riot",
+    company: "Riot Games",
+    logo: "Riot Games",
+    logoSrc: "/images/logos/riot-games.png",
   },
   {
     quote:
       "We can see which creators actually move gaming audiences instead of planning around follower counts and stale rankings.",
     name: "Jordan Ellis",
     role: "Research lead",
-    company: "PlayStation",
-    logo: "PlayStation",
+    company: "Microsoft",
+    logo: "Microsoft",
+    logoSrc: "/images/logos/microsoft.png",
   },
   {
     quote:
@@ -117,6 +119,7 @@ const testimonials = [
     role: "Partnerships strategy",
     company: "NASCAR",
     logo: "NASCAR",
+    logoSrc: "/images/logos/nascar.png",
   },
 ];
 

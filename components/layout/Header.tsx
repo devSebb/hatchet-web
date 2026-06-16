@@ -53,21 +53,24 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex h-18 w-full max-w-[96rem] items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
-        <div className="flex min-w-0 flex-1 items-center gap-8">
+        <div className="flex shrink-0 items-center gap-6">
           <Logo />
-          <Nav className="hidden min-[1500px]:flex" items={primaryNav} />
+          <Nav
+            className="hidden shrink-0 min-[1400px]:flex"
+            items={primaryNav}
+          />
         </div>
 
-        <div className="hidden shrink-0 items-center gap-3 min-[1500px]:flex">
-          <Button asChild>
+        <div className="hidden shrink-0 items-center gap-3 min-[1400px]:flex">
+          <Button asChild className="px-3">
             <Link href={siteConfig.bookDemoUrl}>Book a demo</Link>
           </Button>
-          <Button asChild variant="secondary">
+          <Button asChild className="px-3" variant="secondary">
             <Link href={siteConfig.appLoginUrl}>Log in</Link>
           </Button>
         </div>
 
-        <MobileNav className="min-[1500px]:hidden" />
+        <MobileNav className="min-[1400px]:hidden" />
       </div>
     </header>
   );
