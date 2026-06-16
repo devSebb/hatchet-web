@@ -6,7 +6,7 @@ export const guides = [
     title: "Game launch readout template",
     summary:
       "A practical framework for reporting launch performance across creators, categories, platforms, and audience retention.",
-    coverImage: "/images/content/launch-readout-template.jpg",
+    coverImage: "/images/content/launch-readout-template.svg",
     gated: true,
   },
   {
@@ -14,7 +14,7 @@ export const guides = [
     title: "Creator shortlist scorecard",
     summary:
       "A worksheet for evaluating gaming creators by audience quality, category fit, momentum, and sponsor risk.",
-    coverImage: "/images/content/creator-scorecard.jpg",
+    coverImage: "/images/content/creator-scorecard.svg",
     gated: false,
   },
   {
@@ -22,7 +22,7 @@ export const guides = [
     title: "Esports sponsor measurement guide",
     summary:
       "How to compare official broadcasts, co-streams, watch parties, and long-tail clips in one sponsor readout.",
-    coverImage: "/images/content/esports-sponsor-guide.jpg",
+    coverImage: "/images/content/esports-sponsor-guide.svg",
     gated: false,
   },
 ] satisfies Guide[];

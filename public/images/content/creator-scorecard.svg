@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Creator scorecard</title>
+  <desc id="desc">Abstract Hatchet guide cover for creator scorecards.</desc>
+  <rect width="1200" height="675" fill="#0F1217"/>
+  <g fill="#1E232C" stroke="#282E39" stroke-width="3">
+    <rect x="120" y="170" width="280" height="310" rx="18"/>
+    <rect x="460" y="130" width="280" height="390" rx="18"/>
+    <rect x="800" y="210" width="280" height="270" rx="18"/>
+  </g>
+  <path d="M160 408C242 362 306 380 376 314M500 400C594 318 644 350 704 250M838 390C914 320 988 340 1046 274" stroke="#E0242B" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <text x="96" y="104" fill="#E8EAEE" font-family="Inter, sans-serif" font-size="50" font-weight="700">Creator shortlist</text>
+  <text x="96" y="592" fill="#98A1AE" font-family="JetBrains Mono, monospace" font-size="24" letter-spacing="4">SCORECARD</text>
+</svg>

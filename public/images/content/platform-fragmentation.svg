@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Platform fragmentation signal</title>
+  <desc id="desc">Abstract Hatchet signal card for platform fragmentation.</desc>
+  <rect width="1200" height="675" fill="#0F1217"/>
+  <g stroke="#282E39" stroke-width="3" fill="none">
+    <rect x="126" y="250" width="180" height="180" rx="18"/>
+    <rect x="384" y="160" width="180" height="180" rx="18"/>
+    <rect x="642" y="300" width="180" height="180" rx="18"/>
+    <rect x="900" y="190" width="180" height="180" rx="18"/>
+  </g>
+  <path d="M306 340C342 286 358 250 384 250M564 250C610 252 626 316 642 356M822 390C866 380 870 292 900 280" stroke="#E0242B" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <text x="96" y="132" fill="#E8EAEE" font-family="Inter, sans-serif" font-size="52" font-weight="700">Platform fragmentation</text>
+  <text x="96" y="190" fill="#98A1AE" font-family="JetBrains Mono, monospace" font-size="24" letter-spacing="4">RESEARCH SIGNAL</text>
+</svg>
