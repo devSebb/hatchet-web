@@ -335,8 +335,7 @@ export default function StyleguidePage() {
 
           <PageHeader
             eyebrow="Page header"
-            signal
-            subtitle="Interior pages use a direct setup: a mono eyebrow, a display-scale title, clear supporting copy, and an optional Signal accent."
+            subtitle="Interior pages use a direct setup: a mono eyebrow, a display-scale title, and clear supporting copy."
             title="Every market read starts with live signal"
           />
 

@@ -43,7 +43,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Blog and trends"
-        signal
         subtitle="Market reads on creator velocity, game launches, esports audiences, brand planning, and the platform shifts shaping live streaming."
         title="Analysis for the teams reading gaming in motion."
       />

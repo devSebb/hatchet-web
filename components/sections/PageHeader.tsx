@@ -1,21 +1,16 @@
-import { Sparkline } from "@/components/signal/Sparkline";
 import { cn } from "@/lib/utils";
 
 type PageHeaderProps = {
   eyebrow?: string;
   title: string;
   subtitle?: string;
-  signal?: boolean;
   className?: string;
 };
-
-const accentData = [12, 18, 16, 29, 25, 42, 38, 54, 51, 68];
 
 export function PageHeader({
   eyebrow,
   title,
   subtitle,
-  signal = false,
   className,
 }: PageHeaderProps) {
   return (
@@ -32,13 +27,6 @@ export function PageHeader({
           <p className="body-lg text-muted mt-5 max-w-3xl">{subtitle}</p>
         ) : null}
       </div>
-      {signal ? (
-        <Sparkline
-          className="mt-10 max-w-xl opacity-80"
-          data={accentData}
-          height={40}
-        />
-      ) : null}
     </section>
   );
 }

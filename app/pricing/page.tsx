@@ -125,7 +125,6 @@ export default function PricingPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Pricing"
-        signal
         subtitle="The commercial model is intentionally undecided in this scaffold. The page supports contact-sales now and tier cards later without rebuilding the route."
         title="Pricing shaped around your market questions."
       />

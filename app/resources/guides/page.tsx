@@ -26,7 +26,6 @@ export default async function GuidesPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Guides and e-books"
-        signal
         subtitle="Templates, scorecards, and frameworks for teams turning gaming market movement into repeatable decisions."
         title="Practical ways to structure the signal."
       />

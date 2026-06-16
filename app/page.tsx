@@ -11,7 +11,6 @@ import { StatCounters } from "@/components/sections/StatCounters";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
 import { LiveDot } from "@/components/signal/LiveDot";
 import { PulseDivider } from "@/components/signal/PulseDivider";
-import { Sparkline } from "@/components/signal/Sparkline";
 import { Button } from "@/components/ui/button";
 import { buildMetadata } from "@/lib/seo";
 
@@ -150,11 +149,28 @@ function ProductGlimpse() {
         </span>
       </div>
 
-      <Sparkline
-        className="mt-8"
-        data={[18, 23, 21, 38, 34, 57, 49, 73, 68, 86, 81, 96]}
-        height={78}
-      />
+      <div className="mt-8 grid gap-3">
+        {[
+          ["Creator velocity", "76%"],
+          ["Game demand", "64%"],
+          ["Community signal", "88%"],
+        ].map(([label, width]) => (
+          <div className="grid gap-2" key={label}>
+            <div className="flex items-center justify-between gap-4">
+              <span className="small text-muted">{label}</span>
+              <span className="text-foreground font-mono text-xs font-bold tabular-nums">
+                {width}
+              </span>
+            </div>
+            <div className="bg-background h-2 overflow-hidden rounded-full">
+              <div
+                className="bg-signal-2 h-full rounded-full"
+                style={{ width }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div className="mt-7 grid gap-3">
         {[

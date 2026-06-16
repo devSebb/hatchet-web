@@ -23,7 +23,6 @@ export default function CareersPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Careers"
-        signal
         subtitle="This scaffold keeps careers lightweight: a clear company intro, placeholder openings, and a route that can grow when hiring copy is ready."
         title="Build the market intelligence layer for gaming."
       />

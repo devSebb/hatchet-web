@@ -14,7 +14,7 @@ function Logo() {
   return (
     <Link
       aria-label="Hatchet home"
-      className="focus-visible:ring-ring/50 group inline-flex items-center gap-3 rounded-lg outline-none focus-visible:ring-3"
+      className="focus-visible:ring-ring/50 group inline-flex min-h-11 items-center gap-3 rounded-lg pr-2 outline-none focus-visible:ring-3"
       href="/"
     >
       <span

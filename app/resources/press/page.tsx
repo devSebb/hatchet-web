@@ -28,7 +28,6 @@ export default async function PressPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Press"
-        signal
         subtitle="Company announcements and coverage related to Hatchet's live-streaming, gaming, and esports intelligence work."
         title="News from the signal layer."
       />

@@ -24,7 +24,6 @@ export default function SolutionsPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Solutions"
-        signal
         subtitle="Use live-streaming, creator, game, press, and community signals as a practical market intelligence layer for your team."
         title="One signal layer for gaming decisions."
       />

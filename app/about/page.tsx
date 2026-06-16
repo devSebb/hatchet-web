@@ -37,7 +37,6 @@ export default function AboutPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="About Hatchet"
-        signal
         subtitle="Hatchet exists to make live-streaming, gaming, creator, esports, press, and community movement measurable for the teams building around it."
         title="We supply the data behind the stream."
       />

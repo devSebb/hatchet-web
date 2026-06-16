@@ -23,7 +23,6 @@ export default function WhyHatchetPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Why Hatchet"
-        signal
         subtitle="Gaming culture moves through creators, games, platforms, press, events, and communities. Hatchet measures that movement as one live signal."
         title="Market intelligence built for live gaming behavior."
       />

@@ -34,7 +34,28 @@ function DefaultProductGlimpse() {
         <LiveDot className="eyebrow text-muted" label="Live read" />
         <span className="text-muted font-mono text-xs">Audience signal</span>
       </div>
-      <Sparkline className="mt-6" data={heroSignal} height={68} />
+      <div className="mt-6 grid gap-3">
+        {[
+          ["Creator velocity", "72%"],
+          ["Game demand", "58%"],
+          ["Community movement", "81%"],
+        ].map(([label, width]) => (
+          <div className="grid gap-2" key={label}>
+            <div className="flex items-center justify-between gap-4">
+              <span className="small text-muted">{label}</span>
+              <span className="text-foreground font-mono text-xs font-bold tabular-nums">
+                {width}
+              </span>
+            </div>
+            <div className="bg-background h-2 overflow-hidden rounded-full">
+              <div
+                className="bg-signal-2 h-full rounded-full"
+                style={{ width }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
         {[
           ["Creators", "40M+"],

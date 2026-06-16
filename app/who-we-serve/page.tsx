@@ -24,7 +24,6 @@ export default function WhoWeServePage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Who we serve"
-        signal
         subtitle="Different teams ask different questions of the live-streaming market. Hatchet gives each one a signal layer they can act on."
         title="Built for the teams watching gaming move."
       />

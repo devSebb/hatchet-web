@@ -53,7 +53,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow={guide.gated ? "Gated guide" : "Open guide"}
-        signal
         subtitle={guide.summary}
         title={guide.title}
       />

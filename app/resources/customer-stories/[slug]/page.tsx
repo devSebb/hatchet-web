@@ -55,7 +55,6 @@ export default async function CustomerStoryPage({
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Customer story"
-        signal
         subtitle={story.summary}
         title={`${story.company} uses Hatchet to read the market signal.`}
       />

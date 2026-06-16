@@ -54,7 +54,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow={post.category}
-        signal
         subtitle={post.excerpt}
         title={post.title}
       />

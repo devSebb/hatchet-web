@@ -102,7 +102,6 @@ export default async function VerticalPage({ params }: VerticalPageProps) {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow={vertical.label}
-        signal
         subtitle={vertical.subtitle}
         title={vertical.title}
       />

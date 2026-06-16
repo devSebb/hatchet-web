@@ -86,7 +86,6 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow={solution.label}
-        signal
         subtitle={solution.subtitle}
         title={solution.title}
       />

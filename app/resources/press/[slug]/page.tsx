@@ -52,12 +52,7 @@ export default async function PressItemPage({ params }: PressItemPageProps) {
 
   return (
     <main className="bg-background text-foreground">
-      <PageHeader
-        eyebrow="Press"
-        signal
-        subtitle={item.excerpt}
-        title={item.title}
-      />
+      <PageHeader eyebrow="Press" subtitle={item.excerpt} title={item.title} />
 
       <SectionDivider surface="paper" />
 

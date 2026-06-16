@@ -25,7 +25,6 @@ export default async function CustomerStoriesPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Customer stories"
-        signal
         subtitle="Customer story templates show the metric, quote, and use-case framing each story will carry when final copy lands."
         title="How teams turn live signal into decisions."
       />

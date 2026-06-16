@@ -15,7 +15,7 @@ type LegalPageProps = {
 export function LegalPage({ title, description, sections }: LegalPageProps) {
   return (
     <main className="bg-background text-foreground">
-      <PageHeader eyebrow="Legal" signal subtitle={description} title={title} />
+      <PageHeader eyebrow="Legal" subtitle={description} title={title} />
 
       <SectionDivider surface="paper" />
 

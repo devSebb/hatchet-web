@@ -54,7 +54,6 @@ export default async function ResourcesPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Resources"
-        signal
         subtitle="Read market analysis, customer examples, practical guides, and company news from the Hatchet content adapter."
         title="The live-streaming market read, organized for teams."
       />
