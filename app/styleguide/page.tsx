@@ -22,14 +22,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Styleguide | Hatchet",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+export function generateMetadata(): Metadata {
+  return buildMetadata({
+    title: "Styleguide",
+    description: "Internal Hatchet design-system review surface.",
+    path: "/styleguide",
+    noIndex: true,
+  });
+}
 
 type Swatch = {
   label: string;

@@ -13,12 +13,16 @@ import { LiveDot } from "@/components/signal/LiveDot";
 import { PulseDivider } from "@/components/signal/PulseDivider";
 import { Sparkline } from "@/components/signal/Sparkline";
 import { Button } from "@/components/ui/button";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Business intelligence for gaming, esports, and live streaming",
-  description:
-    "Hatchet supplies live-streaming, gaming, creator, esports, press, and community intelligence for brands, publishers, research agencies, and teams.",
-};
+export function generateMetadata(): Metadata {
+  return buildMetadata({
+    title: "Business intelligence for gaming, esports, and live streaming",
+    description:
+      "Hatchet supplies live-streaming, gaming, creator, esports, press, and community intelligence for brands, publishers, research agencies, and teams.",
+    path: "/",
+  });
+}
 
 const differentiators = [
   {

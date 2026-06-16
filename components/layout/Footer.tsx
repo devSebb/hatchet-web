@@ -1,9 +1,10 @@
 import Link from "next/link";
 
-import { footerColumns, legalNav } from "@/lib/config/nav";
-import { siteConfig, type SocialLink } from "@/lib/config/site";
+import { HubSpotForm } from "@/components/forms/HubSpotForm";
 import { PulseDivider } from "@/components/signal/PulseDivider";
 import { Button } from "@/components/ui/button";
+import { footerColumns, legalNav } from "@/lib/config/nav";
+import { siteConfig, type SocialLink } from "@/lib/config/site";
 
 function SocialMark({ label }: { label: SocialLink["label"] }) {
   return (
@@ -44,30 +45,12 @@ export function Footer() {
             </p>
           </div>
 
-          <form className="border-border bg-surface grid max-w-md gap-3 rounded-lg border p-4">
-            <div>
-              <p className="eyebrow text-muted">Streamlined</p>
-              <p className="text-foreground mt-2 text-sm font-medium">
-                Get a concise read on gaming and live-streaming movement.
-              </p>
-            </div>
-            <div className="grid gap-2 sm:grid-cols-[1fr_auto]">
-              <label className="sr-only" htmlFor="footer-email">
-                Email address
-              </label>
-              <input
-                className="border-border bg-background focus-visible:ring-ring/50 h-9 rounded-lg border px-3 text-sm transition outline-none focus-visible:ring-3"
-                id="footer-email"
-                name="email"
-                placeholder="name@company.com"
-                type="email"
-              />
-              <Button type="button">Notify me</Button>
-            </div>
-            <p className="text-muted text-xs">
-              Form shell only. HubSpot wiring lands in Phase 9.
-            </p>
-          </form>
+          <HubSpotForm
+            className="max-w-md"
+            compact
+            id="newsletter"
+            type="newsletter"
+          />
 
           <div className="flex flex-wrap gap-2">
             {siteConfig.socials.map((social) => (

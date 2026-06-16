@@ -1,7 +1,9 @@
 import Link from "next/link";
 
+import { HubSpotForm } from "@/components/forms/HubSpotForm";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
+import type { HubSpotFormType } from "@/lib/hubspot";
 import { cn } from "@/lib/utils";
 
 type CTASectionProps = {
@@ -16,6 +18,8 @@ type CTASectionProps = {
     label: string;
     href: string;
   };
+  hubSpotForm?: HubSpotFormType | false;
+  hubSpotFormId?: string;
   surface?: "dark" | "paper";
   className?: string;
 };
@@ -26,6 +30,8 @@ export function CTASection({
   body = "Book a demo and we will show how Hatchet turns streaming, esports, press, and community movement into intelligence your team can use.",
   primaryCta = { label: "Book a demo", href: siteConfig.bookDemoUrl },
   secondaryCta = { label: "Sign up", href: siteConfig.signUpUrl },
+  hubSpotForm = "bookDemo",
+  hubSpotFormId,
   surface = "dark",
   className,
 }: CTASectionProps) {
@@ -52,13 +58,18 @@ export function CTASection({
           <h2 className="h2 mt-3">{title}</h2>
           <p className="body-lg text-muted mt-5">{body}</p>
         </div>
-        <div className="flex flex-wrap gap-3">
-          <Button asChild>
-            <Link href={primaryCta.href}>{primaryCta.label}</Link>
-          </Button>
-          <Button asChild variant={isPaper ? "outline" : "secondary"}>
-            <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
-          </Button>
+        <div className="grid gap-4 md:min-w-80">
+          <div className="flex flex-wrap gap-3">
+            <Button asChild>
+              <Link href={primaryCta.href}>{primaryCta.label}</Link>
+            </Button>
+            <Button asChild variant={isPaper ? "outline" : "secondary"}>
+              <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
+            </Button>
+          </div>
+          {hubSpotForm ? (
+            <HubSpotForm compact id={hubSpotFormId} type={hubSpotForm} />
+          ) : null}
         </div>
       </div>
     </section>

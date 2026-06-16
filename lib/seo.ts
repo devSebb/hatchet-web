@@ -13,7 +13,7 @@ export function absoluteUrl(path = "/") {
   return new URL(path, siteConfig.url).toString();
 }
 
-export function createMetadata({
+export function buildMetadata({
   title,
   description,
   path,
@@ -40,3 +40,5 @@ export function createMetadata({
     },
   };
 }
+
+export const createMetadata = buildMetadata;
