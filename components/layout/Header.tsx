@@ -52,25 +52,22 @@ export function Header() {
           : "bg-background/82 border-transparent backdrop-blur-md",
       )}
     >
-      <div className="mx-auto flex h-18 w-full max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-18 w-full max-w-[96rem] items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 flex-1 items-center gap-8">
           <Logo />
-          <Nav items={primaryNav} />
+          <Nav className="hidden min-[1500px]:flex" items={primaryNav} />
         </div>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden shrink-0 items-center gap-3 min-[1500px]:flex">
           <Button asChild>
             <Link href={siteConfig.bookDemoUrl}>Book a demo</Link>
           </Button>
           <Button asChild variant="secondary">
-            <Link href={siteConfig.signUpUrl}>Sign up</Link>
-          </Button>
-          <Button asChild variant="link">
             <Link href={siteConfig.appLoginUrl}>Log in</Link>
           </Button>
         </div>
 
-        <MobileNav />
+        <MobileNav className="min-[1500px]:hidden" />
       </div>
     </header>
   );

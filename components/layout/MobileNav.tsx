@@ -12,6 +12,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   Sheet,
   SheetClose,
@@ -22,13 +23,17 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-export function MobileNav() {
+type MobileNavProps = {
+  className?: string;
+};
+
+export function MobileNav({ className }: MobileNavProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button
           aria-label="Open navigation menu"
-          className="lg:hidden"
+          className={cn(className ?? "lg:hidden")}
           size="icon-lg"
           variant="ghost"
         >
@@ -106,11 +111,6 @@ export function MobileNav() {
           </SheetClose>
           <SheetClose asChild>
             <Button asChild variant="secondary">
-              <Link href={siteConfig.signUpUrl}>Sign up</Link>
-            </Button>
-          </SheetClose>
-          <SheetClose asChild>
-            <Button asChild variant="link">
               <Link href={siteConfig.appLoginUrl}>Log in</Link>
             </Button>
           </SheetClose>
