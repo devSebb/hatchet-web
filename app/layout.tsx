@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Inter, JetBrains_Mono } from "next/font/google";
+
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import { defaultMetadata } from "@/lib/config/site";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({
@@ -23,11 +27,7 @@ const mono = JetBrains_Mono({
   weight: ["500", "700"],
 });
 
-export const metadata: Metadata = {
-  title: "Hatchet",
-  description:
-    "Marketing website foundation for Hatchet, a live-streaming and gaming analytics company.",
-};
+export const metadata: Metadata = defaultMetadata;
 
 export default function RootLayout({
   children,
@@ -39,7 +39,11 @@ export default function RootLayout({
       lang="en"
       className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="font-body flex min-h-full flex-col">{children}</body>
+      <body className="font-body flex min-h-full flex-col">
+        <Header />
+        <div className="flex-1">{children}</div>
+        <Footer />
+      </body>
     </html>
   );
 }
