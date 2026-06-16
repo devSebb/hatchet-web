@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
 
+import { Counter } from "@/components/motion/Counter";
+import { Reveal } from "@/components/motion/Reveal";
+import { Stagger } from "@/components/motion/Stagger";
+import { LiveDot } from "@/components/signal/LiveDot";
+import { PulseDivider } from "@/components/signal/PulseDivider";
+import { Sparkline } from "@/components/signal/Sparkline";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -110,6 +116,8 @@ const typeSamples = [
   },
 ];
 
+const signalData = [18, 22, 19, 31, 28, 44, 39, 58, 53, 68, 64, 82];
+
 function SwatchGrid({ swatches }: { swatches: Swatch[] }) {
   return (
     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -125,23 +133,6 @@ function SwatchGrid({ swatches }: { swatches: Swatch[] }) {
           </div>
         </div>
       ))}
-    </div>
-  );
-}
-
-function SignalPlaceholder() {
-  return (
-    <div className="border-border bg-card rounded-lg border p-5">
-      <p className="eyebrow text-muted">Signal placeholder</p>
-      <div className="bg-signal-grid mt-5 h-px w-full" />
-      <div className="mt-4 grid gap-2">
-        <div className="bg-signal-2 h-px w-4/5" />
-        <div className="bg-signal h-px w-3/5" />
-      </div>
-      <p className="small text-muted mt-5">
-        Phase 2 will replace this with the live sparkline, divider pulse, and
-        stat sparkline primitives.
-      </p>
     </div>
   );
 }
@@ -243,8 +234,82 @@ export default function StyleguidePage() {
             </CardContent>
           </Card>
 
-          <SignalPlaceholder />
+          <Card>
+            <CardHeader>
+              <CardTitle>Motion primitives</CardTitle>
+              <CardDescription>
+                Reveal, Stagger, and Counter use centralized token timings and
+                no-op under reduced motion.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-6">
+              <Reveal>
+                <div className="border-border bg-elevated rounded-lg border p-4">
+                  <p className="eyebrow text-muted">Reveal</p>
+                  <p className="body mt-2">
+                    This block fades and rises once when it enters the viewport.
+                  </p>
+                </div>
+              </Reveal>
+
+              <Stagger className="grid gap-3 sm:grid-cols-3">
+                <div className="border-border bg-background rounded-lg border p-3">
+                  <p className="small font-medium">Creator velocity</p>
+                </div>
+                <div className="border-border bg-background rounded-lg border p-3">
+                  <p className="small font-medium">Game demand</p>
+                </div>
+                <div className="border-border bg-background rounded-lg border p-3">
+                  <p className="small font-medium">Audience lift</p>
+                </div>
+              </Stagger>
+
+              <div>
+                <p className="eyebrow text-muted">Counter</p>
+                <Counter to={40} suffix="M+" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>The Signal</CardTitle>
+            <CardDescription>
+              Sparkline, divider pulse, and live dot are the sanctioned
+              live-signal motif primitives.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-8">
+            <div className="grid gap-4 lg:grid-cols-[1fr_18rem] lg:items-end">
+              <div>
+                <p className="eyebrow text-muted">Sparkline</p>
+                <Sparkline className="mt-4" data={signalData} height={64} />
+              </div>
+              <div className="border-border bg-elevated rounded-lg border p-4">
+                <p className="small text-muted">
+                  Draws once on mount. It renders as a complete static line
+                  under reduced motion.
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <p className="eyebrow text-muted">Pulse divider</p>
+              <PulseDivider className="mt-4" />
+            </div>
+
+            <div>
+              <p className="eyebrow text-muted">Live dot</p>
+              <p className="body mt-3">
+                <LiveDot
+                  className="text-foreground"
+                  label="Live audience read"
+                />
+              </p>
+            </div>
+          </CardContent>
+        </Card>
       </section>
     </main>
   );
