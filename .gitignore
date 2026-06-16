@@ -10,6 +10,12 @@
 !.yarn/releases
 !.yarn/versions
 
+# Markdown files
+BUILD_PLAN.md
+DESIGN.md
+CLAUDE.md
+AGENTS.md
+
 # testing
 /coverage
 
