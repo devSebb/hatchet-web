@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
-import { FeatureBlock } from "@/components/sections/FeatureBlock";
+import { LogoWall } from "@/components/sections/LogoWall";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { SectionDivider } from "@/components/sections/SectionDivider";
-import { Badge } from "@/components/ui/badge";
-import { getSolution, solutions } from "@/lib/config/marketing";
+import {
+  getSolution,
+  type ProductSolution,
+  solutions,
+} from "@/lib/config/solutions";
 import { createMetadata } from "@/lib/seo";
 
 type SolutionPageProps = {
@@ -34,38 +38,107 @@ export async function generateMetadata({
   }
 
   return createMetadata({
-    title: `${solution.label}: ${solution.title}`,
-    description: solution.subtitle,
+    title: `${solution.name}: ${solution.title}`,
+    description: solution.metaDescription,
     path: solution.href,
   });
 }
 
-function SolutionProofCards({
-  solution,
-}: {
-  solution: NonNullable<ReturnType<typeof getSolution>>;
-}) {
+const trustedLogos = [
+  {
+    name: "Riot Games",
+    src: "/images/logos/riot-games.png",
+  },
+  {
+    name: "YouTube",
+    src: "/images/logos/youtube.png",
+  },
+  {
+    name: "Microsoft",
+    src: "/images/logos/microsoft.png",
+  },
+  {
+    name: "NASCAR",
+    src: "/images/logos/nascar.png",
+  },
+  {
+    name: "Activision Blizzard",
+    src: "/images/logos/blizzard.png",
+  },
+  {
+    name: "PlayStation",
+  },
+] satisfies { name: string; src?: string }[];
+
+function CapabilitiesSection({ solution }: { solution: ProductSolution }) {
   return (
     <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
       <div className="mx-auto w-full max-w-7xl">
         <Reveal>
           <div className="max-w-3xl">
-            <Badge variant="outline">{solution.capability}</Badge>
-            <h2 className="h1 mt-5">
-              The placeholder outcome this route will own.
+            <p className="eyebrow text-muted">Capabilities</p>
+            <h2 className="h1 mt-4">
+              What {solution.name.toLowerCase()} helps your team do.
             </h2>
-            <p className="body-lg text-muted mt-5">{solution.proof}</p>
+            <p className="body-lg text-muted mt-5">{solution.bodyNote}</p>
+          </div>
+        </Reveal>
+
+        <Stagger className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {solution.capabilities.map((capability) => (
+            <article
+              className="border-border bg-card hover:border-signal/60 rounded-xl border p-6 shadow-sm transition-[border-color,transform,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:shadow-md"
+              key={capability.title}
+            >
+              <div className="bg-signal mb-6 h-1 w-10 rounded-full" />
+              <h2 className="h3">{capability.title}</h2>
+              <p className="body text-muted mt-4">{capability.description}</p>
+            </article>
+          ))}
+        </Stagger>
+
+        {solution.slug === "web-dashboard" ? (
+          <Reveal>
+            <div className="border-border bg-card mt-6 rounded-xl border p-6 shadow-sm">
+              <p className="body text-muted">
+                Looking for access levels?{" "}
+                <Link
+                  className="text-foreground font-semibold underline-offset-4 hover:underline"
+                  href="/pricing"
+                >
+                  View pricing options
+                </Link>{" "}
+                instead of sorting tiers on the product page.
+              </p>
+            </div>
+          </Reveal>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
+function WhySection({ solution }: { solution: ProductSolution }) {
+  return (
+    <section className="bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <div className="mx-auto w-full max-w-7xl">
+        <Reveal>
+          <div className="max-w-3xl">
+            <p className="eyebrow text-muted">Why it works</p>
+            <h2 className="h1 mt-4">
+              Built for teams that need a defensible market read.
+            </h2>
           </div>
         </Reveal>
 
         <Stagger className="mt-10 grid gap-4 md:grid-cols-3">
-          {solution.bullets.map((bullet) => (
+          {solution.why.map((item) => (
             <article
-              className="border-border bg-card rounded-xl border p-6 shadow-sm"
-              key={bullet}
+              className="border-border bg-elevated rounded-xl border p-6 shadow-sm"
+              key={item.title}
             >
-              <div className="bg-signal mb-6 h-1 w-10 rounded-full" />
-              <p className="body text-muted">{bullet}</p>
+              <h2 className="h3">{item.title}</h2>
+              <p className="body text-muted mt-4">{item.description}</p>
             </article>
           ))}
         </Stagger>
@@ -85,33 +158,36 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
   return (
     <main className="bg-background text-foreground">
       <PageHeader
-        eyebrow={solution.label}
+        eyebrow={solution.eyebrow}
+        primaryCta={solution.primaryCta}
+        secondaryCta={solution.secondaryCta}
         subtitle={solution.subtitle}
         title={solution.title}
       />
 
+      <LogoWall
+        className="pt-0 pb-16 lg:pb-20"
+        eyebrow="Trusted by market leaders"
+        logos={trustedLogos}
+        title="Trusted by Riot, YouTube, Microsoft, NASCAR, Activision Blizzard, and PlayStation."
+      />
+
       <SectionDivider surface="paper" />
 
-      <SolutionProofCards solution={solution} />
+      <CapabilitiesSection solution={solution} />
 
       <SectionDivider />
 
-      <FeatureBlock
-        body={solution.body}
-        bullets={[...solution.bullets]}
-        className="bg-background py-18 lg:py-24"
-        eyebrow={solution.capability}
-        heading="Turn fragmented market movement into a focused workflow."
-        link={{ label: "View pricing", href: "/pricing" }}
-      />
+      <WhySection solution={solution} />
 
       <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"
-        eyebrow="Next step"
+        eyebrow="Book a demo"
+        primaryCta={solution.primaryCta}
         secondaryCta={{ label: "See all solutions", href: "/solutions" }}
-        title={`Talk through ${solution.label.toLowerCase()} with Hatchet.`}
+        title={`See how ${solution.name.toLowerCase()} can fit your team.`}
       />
     </main>
   );

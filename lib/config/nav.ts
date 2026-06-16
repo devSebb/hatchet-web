@@ -16,19 +16,22 @@ export const primaryNav = [
     href: "/solutions",
     children: [
       {
-        label: "Solution A",
-        href: "/solutions/solution-a",
-        description: "Placeholder path for the first solution narrative.",
+        label: "Web Dashboard",
+        href: "/solutions/web-dashboard",
+        description:
+          "Use one interface for live viewership, creators, games, esports, VOD, and audience signal.",
       },
       {
-        label: "Solution B",
-        href: "/solutions/solution-b",
-        description: "Placeholder path for the second solution narrative.",
+        label: "Custom Reports",
+        href: "/solutions/custom-reports",
+        description:
+          "Work with Hatchet analysts on strategic reports built around your KPIs.",
       },
       {
-        label: "Solution C",
-        href: "/solutions/solution-c",
-        description: "Placeholder path for the third solution narrative.",
+        label: "API & Data Integrations",
+        href: "/solutions/api-data-integrations",
+        description:
+          "Connect live-streaming data to products, dashboards, BI, and attribution workflows.",
       },
     ],
   },

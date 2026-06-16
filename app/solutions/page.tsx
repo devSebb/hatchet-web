@@ -7,14 +7,14 @@ import { CTASection } from "@/components/sections/CTASection";
 import { FeatureBlock } from "@/components/sections/FeatureBlock";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { SectionDivider } from "@/components/sections/SectionDivider";
-import { solutions } from "@/lib/config/marketing";
+import { solutions } from "@/lib/config/solutions";
 import { createMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
   return createMetadata({
     title: "Solutions",
     description:
-      "Explore Hatchet solutions for creator intelligence, game launch tracking, custom reports, and data integrations.",
+      "Explore Hatchet products for live streaming analytics, custom reporting, and API data integrations.",
     path: "/solutions",
   });
 }
@@ -24,8 +24,8 @@ export default function SolutionsPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Solutions"
-        subtitle="Use live-streaming, creator, game, press, and community signals as a practical market intelligence layer for your team."
-        title="One signal layer for gaming decisions."
+        subtitle="Use Hatchet as your live-streaming intelligence layer: work in the dashboard, ask our analysts for custom reporting, or connect the data directly to your stack."
+        title="Three ways to turn live signal into decisions."
       />
 
       <SectionDivider surface="paper" />
@@ -34,10 +34,15 @@ export default function SolutionsPage() {
         <div className="mx-auto w-full max-w-7xl">
           <Reveal>
             <div className="max-w-3xl">
-              <p className="eyebrow text-muted">Solution paths</p>
+              <p className="eyebrow text-muted">Product paths</p>
               <h2 className="h1 mt-4">
-                Start with the decision, then follow the signal.
+                Choose the shape that fits how your team works.
               </h2>
+              <p className="body-lg text-muted mt-5">
+                Start with a shared web workspace, commission a focused analyst
+                report, or move Hatchet data into the systems your team already
+                uses.
+              </p>
             </div>
           </Reveal>
 
@@ -49,12 +54,26 @@ export default function SolutionsPage() {
                 key={solution.slug}
               >
                 <div>
-                  <p className="eyebrow text-muted">{solution.label}</p>
-                  <h2 className="h3 mt-4">{solution.title}</h2>
-                  <p className="body text-muted mt-4">{solution.subtitle}</p>
+                  <p className="eyebrow text-muted">{solution.eyebrow}</p>
+                  <h2 className="h3 mt-4">{solution.name}</h2>
+                  <p className="body text-muted mt-4">{solution.summary}</p>
+                  <ul className="mt-6 grid gap-2">
+                    {solution.capabilities.slice(0, 3).map((capability) => (
+                      <li
+                        className="text-muted flex gap-3 text-sm"
+                        key={capability.title}
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="bg-signal mt-2 size-1.5 shrink-0 rounded-full"
+                        />
+                        <span>{capability.title}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
                 <span className="text-foreground mt-8 text-sm font-semibold underline-offset-4 group-hover:underline">
-                  Explore {solution.label}
+                  Explore {solution.name}
                 </span>
               </Link>
             ))}
@@ -65,16 +84,16 @@ export default function SolutionsPage() {
       <SectionDivider />
 
       <FeatureBlock
-        body="Hatchet keeps the public site pointed at the strategy problem, while the product app, rankings, live widgets, and reports stay in their own systems. These route templates link outward when real product workflows are needed."
+        body="Hatchet can serve a self-serve analyst, a strategy team that needs a polished readout, or a product group that needs normalized streaming data inside its own tools. The product path changes, but the signal stays consistent."
         bullets={[
-          "Route market-facing pages around outcomes instead of internal product modules.",
-          "Keep marketing copy grounded in creators, games, viewership, press, and communities.",
-          "Leave space for the next pass to swap placeholder labels for final positioning.",
+          "Use the Web Dashboard for recurring discovery and shared analysis.",
+          "Use Custom Reports when the question needs analyst context and a finished deliverable.",
+          "Use API and Data Integrations when Hatchet data needs to power internal systems.",
         ]}
         className="bg-background py-18 lg:py-24"
-        eyebrow="Built to evolve"
-        heading="Flexible templates for the next design and copy pass."
-        link={{ label: "See who we serve", href: "/who-we-serve" }}
+        eyebrow="One data layer"
+        heading="Pick the workflow. Keep the same market read."
+        link={{ label: "Compare pricing", href: "/pricing" }}
       />
 
       <SectionDivider />
@@ -83,7 +102,7 @@ export default function SolutionsPage() {
         className="py-18 lg:py-24"
         eyebrow="Book a demo"
         secondaryCta={{ label: "Compare audiences", href: "/why-hatchet" }}
-        title="Find the right Hatchet path for your team."
+        title="Find the right Hatchet product path for your team."
       />
     </main>
   );

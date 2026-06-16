@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 type LogoItem = {
   name: string;
-  src: string;
+  src?: string;
 };
 
 type LogoWallProps = {
@@ -65,15 +65,21 @@ export function LogoWall({
               className="group border-border bg-paper-surface hover:border-signal/50 flex h-24 items-center justify-center rounded-lg border p-4 shadow-sm transition-[border-color,transform,box-shadow] duration-(--dur-base) hover:-translate-y-0.5 hover:shadow-md"
               key={logo.name}
             >
-              <div className="relative h-12 w-36 max-w-full">
-                <Image
-                  alt={`${logo.name} logo`}
-                  className="object-contain opacity-75 grayscale transition-[filter,opacity] duration-(--dur-base) group-hover:opacity-100 group-hover:grayscale-0"
-                  fill
-                  sizes="144px"
-                  src={logo.src}
-                />
-              </div>
+              {logo.src ? (
+                <div className="relative h-12 w-36 max-w-full">
+                  <Image
+                    alt={`${logo.name} logo`}
+                    className="object-contain opacity-75 grayscale transition-[filter,opacity] duration-(--dur-base) group-hover:opacity-100 group-hover:grayscale-0"
+                    fill
+                    sizes="144px"
+                    src={logo.src}
+                  />
+                </div>
+              ) : (
+                <span className="font-display text-paper-muted text-center text-lg font-semibold">
+                  {logo.name}
+                </span>
+              )}
             </div>
           ))}
         </Stagger>

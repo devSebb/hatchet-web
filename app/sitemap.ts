@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 
-import { solutions, verticals } from "@/lib/config/marketing";
+import { verticals } from "@/lib/config/marketing";
 import { legalNav, primaryNav } from "@/lib/config/nav";
+import { solutions } from "@/lib/config/solutions";
 import { content } from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo";
 
