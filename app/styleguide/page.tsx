@@ -6,6 +6,13 @@ import { Stagger } from "@/components/motion/Stagger";
 import { LiveDot } from "@/components/signal/LiveDot";
 import { PulseDivider } from "@/components/signal/PulseDivider";
 import { Sparkline } from "@/components/signal/Sparkline";
+import { CTASection } from "@/components/sections/CTASection";
+import { FeatureBlock } from "@/components/sections/FeatureBlock";
+import { Hero } from "@/components/sections/Hero";
+import { LogoWall } from "@/components/sections/LogoWall";
+import { PageHeader } from "@/components/sections/PageHeader";
+import { StatCounters } from "@/components/sections/StatCounters";
+import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -310,6 +317,65 @@ export default function StyleguidePage() {
             </div>
           </CardContent>
         </Card>
+
+        <div className="grid gap-8">
+          <div className="max-w-3xl">
+            <p className="eyebrow text-muted">Section components</p>
+            <h2 className="h1 mt-3">Reusable marketing section library</h2>
+            <p className="body-lg text-muted mt-5">
+              These previews show the prop-driven shells pages will compose in
+              later phases. Copy is placeholder, but it uses Hatchet product
+              language instead of filler.
+            </p>
+          </div>
+
+          <PulseDivider />
+
+          <PageHeader
+            eyebrow="Page header"
+            signal
+            subtitle="Interior pages use a direct setup: a mono eyebrow, a display-scale title, clear supporting copy, and an optional Signal accent."
+            title="Every market read starts with live signal"
+          />
+
+          <PulseDivider />
+
+          <Hero
+            emphasizedTitle="as it moves."
+            subtitle="Hatchet connects creators, games, audiences, press, and community movement so teams can see what is rising before the recap lands."
+            title="Measure gaming attention"
+          />
+
+          <PulseDivider />
+
+          <LogoWall />
+
+          <PulseDivider />
+
+          <FeatureBlock
+            body="Bring creator pickup, platform spread, chat movement, and press context into the same readout so launch teams can separate durable demand from short spikes."
+            bullets={[
+              "Normalize creator activity across live-streaming platforms.",
+              "Compare game demand before and after campaign beats.",
+              "Turn audience movement into cleaner stakeholder reporting.",
+            ]}
+            eyebrow="Feature block"
+            heading="Track the signals that explain why a game is moving."
+            link={{ label: "View solutions", href: "/solutions" }}
+          />
+
+          <PulseDivider />
+
+          <StatCounters />
+
+          <PulseDivider />
+
+          <TestimonialCarousel />
+
+          <PulseDivider />
+
+          <CTASection surface="paper" />
+        </div>
       </section>
     </main>
   );
