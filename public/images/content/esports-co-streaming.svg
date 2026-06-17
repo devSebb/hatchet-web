@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
   <title id="title">Esports co-streaming signal</title>
   <desc id="desc">Abstract Hatchet signal card for co-streaming.</desc>
-  <rect width="1200" height="675" fill="#0F1217"/>
-  <g stroke="rgba(152,161,174,0.16)" stroke-width="2">
+  <rect width="1200" height="675" fill="#151F2C"/>
+  <g stroke="rgba(255,255,255,0.16)" stroke-width="2">
     <path d="M120 168H1080M120 310H1080M120 452H1080"/>
   </g>
-  <path d="M116 482C214 392 284 430 372 350C470 260 552 324 650 230C748 136 846 198 952 146C1010 118 1058 108 1108 96" fill="none" stroke="#6E8BB0" stroke-width="8" stroke-linecap="round"/>
-  <path d="M116 540C242 470 330 516 450 424C558 342 652 384 760 304C880 214 982 242 1108 182" fill="none" stroke="#E0242B" stroke-width="8" stroke-linecap="round"/>
-  <text x="96" y="132" fill="#E8EAEE" font-family="Inter, sans-serif" font-size="52" font-weight="700">Co-streaming</text>
-  <text x="96" y="190" fill="#98A1AE" font-family="JetBrains Mono, monospace" font-size="24" letter-spacing="4">ESPORTS SIGNAL</text>
+  <path d="M116 482C214 392 284 430 372 350C470 260 552 324 650 230C748 136 846 198 952 146C1010 118 1058 108 1108 96" fill="none" stroke="#151F2C" stroke-width="8" stroke-linecap="round"/>
+  <path d="M116 540C242 470 330 516 450 424C558 342 652 384 760 304C880 214 982 242 1108 182" fill="none" stroke="#C4262D" stroke-width="8" stroke-linecap="round"/>
+  <text x="96" y="132" fill="#FFFFFF" font-family="Montserrat, sans-serif" font-size="52" font-weight="700">Co-streaming</text>
+  <text x="96" y="190" fill="#C9D0DB" font-family="Montserrat, sans-serif" font-size="24" letter-spacing="4">ESPORTS SIGNAL</text>
 </svg>

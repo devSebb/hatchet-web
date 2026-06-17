@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
   <title id="title">Creator velocity signal</title>
   <desc id="desc">Abstract Hatchet signal card for creator velocity.</desc>
-  <rect width="1200" height="675" fill="#161A21"/>
-  <path d="M0 520H1200" stroke="rgba(152,161,174,0.16)" stroke-width="2"/>
-  <path d="M96 452C190 386 264 414 344 316C430 210 520 256 602 206C704 144 768 234 862 172C946 116 1036 146 1112 92" fill="none" stroke="#E0242B" stroke-width="8" stroke-linecap="round"/>
-  <circle cx="862" cy="172" r="18" fill="#E0242B"/>
-  <text x="96" y="132" fill="#E8EAEE" font-family="Inter, sans-serif" font-size="52" font-weight="700">Creator velocity</text>
-  <text x="96" y="190" fill="#98A1AE" font-family="JetBrains Mono, monospace" font-size="24" letter-spacing="4">LIVE SIGNAL</text>
+  <rect width="1200" height="675" fill="#1C293A"/>
+  <path d="M0 520H1200" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+  <path d="M96 452C190 386 264 414 344 316C430 210 520 256 602 206C704 144 768 234 862 172C946 116 1036 146 1112 92" fill="none" stroke="#C4262D" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="862" cy="172" r="18" fill="#C4262D"/>
+  <text x="96" y="132" fill="#FFFFFF" font-family="Montserrat, sans-serif" font-size="52" font-weight="700">Creator velocity</text>
+  <text x="96" y="190" fill="#C9D0DB" font-family="Montserrat, sans-serif" font-size="24" letter-spacing="4">LIVE SIGNAL</text>
 </svg>

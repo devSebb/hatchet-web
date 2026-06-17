@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
   <title id="title">Community spikes signal</title>
   <desc id="desc">Abstract Hatchet signal card for community spikes.</desc>
-  <rect width="1200" height="675" fill="#161A21"/>
-  <g fill="#6E8BB0" opacity=".45">
+  <rect width="1200" height="675" fill="#1C293A"/>
+  <g fill="#151F2C" opacity=".45">
     <circle cx="192" cy="440" r="26"/>
     <circle cx="288" cy="386" r="18"/>
     <circle cx="400" cy="470" r="34"/>
@@ -11,7 +11,7 @@
     <circle cx="820" cy="238" r="19"/>
     <circle cx="968" cy="350" r="42"/>
   </g>
-  <path d="M120 518C236 454 312 486 426 388C536 292 628 354 748 246C884 124 980 204 1100 116" fill="none" stroke="#E0242B" stroke-width="8" stroke-linecap="round"/>
-  <text x="96" y="132" fill="#E8EAEE" font-family="Inter, sans-serif" font-size="52" font-weight="700">Community spikes</text>
-  <text x="96" y="190" fill="#98A1AE" font-family="JetBrains Mono, monospace" font-size="24" letter-spacing="4">BRAND SIGNAL</text>
+  <path d="M120 518C236 454 312 486 426 388C536 292 628 354 748 246C884 124 980 204 1100 116" fill="none" stroke="#C4262D" stroke-width="8" stroke-linecap="round"/>
+  <text x="96" y="132" fill="#FFFFFF" font-family="Montserrat, sans-serif" font-size="52" font-weight="700">Community spikes</text>
+  <text x="96" y="190" fill="#C9D0DB" font-family="Montserrat, sans-serif" font-size="24" letter-spacing="4">BRAND SIGNAL</text>
 </svg>

@@ -7,6 +7,7 @@ import { primaryNav } from "@/lib/config/nav";
 import { siteConfig } from "@/lib/config/site";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { BrandLogo } from "./BrandLogo";
 import { MobileNav } from "./MobileNav";
 import { Nav } from "./Nav";
 
@@ -14,19 +15,10 @@ function Logo() {
   return (
     <Link
       aria-label="Hatchet home"
-      className="focus-visible:ring-ring/50 group inline-flex min-h-11 items-center gap-3 rounded-lg pr-2 outline-none focus-visible:ring-3"
+      className="focus-visible:ring-ring/50 inline-flex min-h-11 items-center rounded-lg outline-none focus-visible:ring-3"
       href="/"
     >
-      <span
-        aria-hidden="true"
-        className="border-border bg-elevated relative grid size-9 place-items-center overflow-hidden rounded-lg border shadow-sm"
-      >
-        <span className="bg-signal absolute top-1/2 left-1/2 h-6 w-1 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-full" />
-        <span className="bg-signal-2 absolute top-1/2 left-1/2 h-6 w-1 -translate-x-1/2 -translate-y-1/2 -rotate-45 rounded-full" />
-      </span>
-      <span className="font-display text-foreground text-xl font-semibold tracking-[-0.015em]">
-        Hatchet
-      </span>
+      <BrandLogo alt="" className="h-12" priority variant="white" />
     </Link>
   );
 }

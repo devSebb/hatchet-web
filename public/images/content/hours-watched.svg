@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
   <title id="title">Hours watched analytics signal</title>
   <desc id="desc">Abstract Hatchet signal card for hours watched.</desc>
-  <rect width="1200" height="675" fill="#1E232C"/>
-  <g fill="#282E39">
+  <rect width="1200" height="675" fill="#233047"/>
+  <g fill="#3A4658">
     <rect x="128" y="380" width="104" height="160" rx="12"/>
     <rect x="276" y="310" width="104" height="230" rx="12"/>
     <rect x="424" y="250" width="104" height="290" rx="12"/>
@@ -10,7 +10,7 @@
     <rect x="720" y="270" width="104" height="270" rx="12"/>
     <rect x="868" y="132" width="104" height="408" rx="12"/>
   </g>
-  <path d="M128 360C260 320 358 344 464 266C572 186 646 232 744 180C846 126 940 148 1072 96" fill="none" stroke="#E0242B" stroke-width="8" stroke-linecap="round"/>
-  <text x="96" y="132" fill="#E8EAEE" font-family="Inter, sans-serif" font-size="52" font-weight="700">Beyond hours watched</text>
-  <text x="96" y="190" fill="#98A1AE" font-family="JetBrains Mono, monospace" font-size="24" letter-spacing="4">ANALYTICS SIGNAL</text>
+  <path d="M128 360C260 320 358 344 464 266C572 186 646 232 744 180C846 126 940 148 1072 96" fill="none" stroke="#C4262D" stroke-width="8" stroke-linecap="round"/>
+  <text x="96" y="132" fill="#FFFFFF" font-family="Montserrat, sans-serif" font-size="52" font-weight="700">Beyond hours watched</text>
+  <text x="96" y="190" fill="#C9D0DB" font-family="Montserrat, sans-serif" font-size="24" letter-spacing="4">ANALYTICS SIGNAL</text>
 </svg>

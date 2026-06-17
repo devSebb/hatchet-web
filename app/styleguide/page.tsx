@@ -165,8 +165,8 @@ export default function StyleguidePage() {
           <CardHeader>
             <CardTitle>Type scale</CardTitle>
             <CardDescription>
-              Bricolage Grotesque for display, Inter for body and UI, JetBrains
-              Mono for data labels.
+              Montserrat is the single brand typeface across display, body, UI,
+              labels, and data figures.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-7">
@@ -183,7 +183,7 @@ export default function StyleguidePage() {
           <CardHeader>
             <CardTitle>Dark surface colors</CardTitle>
             <CardDescription>
-              Core brand, charcoal, text, and Signal tokens on the default brand
+              Core brand, navy, text, and Signal tokens on the default brand
               surface.
             </CardDescription>
           </CardHeader>

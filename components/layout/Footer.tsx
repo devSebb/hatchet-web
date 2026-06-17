@@ -5,6 +5,7 @@ import { PulseDivider } from "@/components/signal/PulseDivider";
 import { Button } from "@/components/ui/button";
 import { footerColumns, legalNav } from "@/lib/config/nav";
 import { siteConfig, type SocialLink } from "@/lib/config/site";
+import { BrandLogo } from "./BrandLogo";
 
 function SocialMark({ label }: { label: SocialLink["label"] }) {
   return (
@@ -25,19 +26,11 @@ export function Footer() {
         <div className="space-y-7">
           <div>
             <Link
-              className="focus-visible:ring-ring/50 inline-flex min-h-11 items-center gap-3 rounded-lg pr-2 outline-none focus-visible:ring-3"
+              aria-label="Hatchet home"
+              className="focus-visible:ring-ring/50 inline-flex min-h-11 items-center rounded-lg outline-none focus-visible:ring-3"
               href="/"
             >
-              <span
-                aria-hidden="true"
-                className="border-border bg-elevated relative grid size-10 place-items-center overflow-hidden rounded-lg border"
-              >
-                <span className="bg-signal absolute top-1/2 left-1/2 h-7 w-1 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-full" />
-                <span className="bg-signal-2 absolute top-1/2 left-1/2 h-7 w-1 -translate-x-1/2 -translate-y-1/2 -rotate-45 rounded-full" />
-              </span>
-              <span className="font-display text-2xl font-semibold tracking-[-0.015em]">
-                Hatchet
-              </span>
+              <BrandLogo alt="" className="h-14" variant="white" />
             </Link>
             <p className="body text-muted mt-4 max-w-md">
               Live-streaming, gaming, esports, creator, press, and community
