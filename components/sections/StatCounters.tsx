@@ -20,33 +20,36 @@ type StatCountersProps = {
 
 const defaultStats: StatItem[] = [
   {
-    label: "Channels tracked",
-    value: 40,
-    suffix: "M+",
-    description: "Creator and channel records connected to gaming audiences.",
-    sparkline: [12, 18, 17, 24, 31, 35, 44],
-  },
-  {
-    label: "Minutes processed daily",
-    value: 2.8,
-    suffix: "B",
-    description: "Live viewing minutes normalized into usable market signal.",
-    sparkline: [20, 24, 27, 29, 34, 42, 51],
-  },
-  {
-    label: "Chat messages tracked daily",
-    value: 900,
-    suffix: "M+",
+    label: "Live platforms tracked",
+    value: 20,
+    suffix: "+",
     description:
-      "Community reactions tied back to creators, games, and events.",
-    sparkline: [30, 28, 34, 39, 46, 45, 58],
+      "Twitch, YouTube, Kick, and more — major and emerging platforms in one normalized view.",
+    sparkline: [9, 11, 12, 14, 16, 18, 21],
   },
   {
-    label: "Creators tracked",
-    value: 12,
-    suffix: "M+",
-    description: "Creator activity indexed across live-streaming platforms.",
-    sparkline: [10, 15, 14, 22, 29, 34, 43],
+    label: "History since 2016",
+    value: 10,
+    suffix: "+ yrs",
+    description:
+      "Minute-level viewership data going back to 2016, ready for trend and benchmark analysis.",
+    sparkline: [3, 4, 5, 6, 7, 8, 10],
+  },
+  {
+    label: "Data granularity",
+    value: 1,
+    suffix: "-min",
+    description:
+      "Every stream measured at one-minute resolution — the industry's highest standard.",
+    sparkline: [12, 14, 13, 15, 16, 18, 20],
+  },
+  {
+    label: "Core metrics tracked",
+    value: 10,
+    suffix: "+",
+    description:
+      "Hours watched, concurrent viewers, airtime, EMV, CPM, logo presence share, and more.",
+    sparkline: [4, 5, 5, 7, 8, 9, 11],
   },
 ];
 

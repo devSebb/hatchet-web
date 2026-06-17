@@ -13,7 +13,7 @@ export function generateMetadata(): Metadata {
   return createMetadata({
     title: "Careers",
     description:
-      "Explore placeholder career openings for the Hatchet marketing site scaffold.",
+      "Explore open roles at Hatchet and help build the market intelligence layer for gaming, esports, and live streaming.",
     path: "/about/careers",
   });
 }
@@ -23,7 +23,7 @@ export default function CareersPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Careers"
-        subtitle="This scaffold keeps careers lightweight: a clear company intro, placeholder openings, and a route that can grow when hiring copy is ready."
+        subtitle="We are a small, data-obsessed team building the market intelligence layer for gaming, esports, and live streaming. Explore where you can help shape it."
         title="Build the market intelligence layer for gaming."
       />
 
@@ -35,7 +35,7 @@ export default function CareersPage() {
             <div className="max-w-3xl">
               <p className="eyebrow text-muted">Open roles</p>
               <h2 className="h1 mt-4">
-                Placeholder openings with room for the real hiring system.
+                Roles across product, engineering, and growth.
               </h2>
             </div>
           </Reveal>
@@ -64,7 +64,7 @@ export default function CareersPage() {
         className="py-18 lg:py-24"
         eyebrow="Stay close"
         secondaryCta={{ label: "About Hatchet", href: "/about" }}
-        title="The final careers workflow will link to the hiring system."
+        title="Join the team measuring the signal behind gaming."
       />
     </main>
   );

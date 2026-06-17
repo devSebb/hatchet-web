@@ -125,7 +125,7 @@ export default function PricingPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Pricing"
-        subtitle="The commercial model is intentionally undecided in this scaffold. The page supports contact-sales now and tier cards later without rebuilding the route."
+        subtitle="Hatchet pricing is built around the scope of the signal you need — the markets and platforms you track, the reporting you run, and the teams you support. Start with a conversation and we will shape it to fit."
         title="Pricing shaped around your market questions."
       />
 
@@ -136,15 +136,15 @@ export default function PricingPage() {
       <SectionDivider />
 
       <FeatureBlock
-        body="A brand sponsorship team, a publisher launch team, and a research agency may need the same market signal in different shapes. The template leaves room for packaging once the final pricing story is confirmed."
+        body="A brand sponsorship team, a publisher launch team, and a research agency often need the same market signal in different shapes. Hatchet packages coverage, reporting, and data access around the way your team actually makes decisions."
         bullets={[
-          "Contact-sales layout is the default for this phase.",
-          "Tier cards are present behind a local flag for later packaging.",
-          "All CTAs route to placeholder demo and sign-up targets.",
+          "Start with the markets, platforms, and games you need to track.",
+          "Scale from self-serve dashboards to analyst-built reports and data integrations.",
+          "Add seats, research support, and custom scopes as your needs grow.",
         ]}
         className="bg-background py-18 lg:py-24"
         eyebrow="Flexible model"
-        heading="The structure can shift without changing the page system."
+        heading="Pricing that scales with the questions you're asking."
       />
 
       <SectionDivider />

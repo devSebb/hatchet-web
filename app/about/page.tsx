@@ -72,15 +72,15 @@ export default function AboutPage() {
       <SectionDivider />
 
       <FeatureBlock
-        body="The public site will tell the rebrand story, explain the market intelligence layer, and point teams to the right next step. Product app surfaces, rankings, reports, and live data systems remain separate."
+        body="Hatchet brings live-streaming, gaming, creator, esports, and community intelligence into one market read, then meets each team where they work — from self-serve dashboards to analyst-built reports and data integrations."
         bullets={[
-          "Public marketing pages stay focused on audiences and outcomes.",
-          "Content-driven resources will read through the adapter in Phase 8.",
-          "Careers and company pages stay lightweight until final copy lands.",
+          "We stay focused on the audiences and outcomes behind every gaming decision.",
+          "Guides, customer stories, and market analysis turn the data into context.",
+          "A growing team measuring the signal behind live gaming culture.",
         ]}
         className="bg-background py-18 lg:py-24"
         eyebrow="Company"
-        heading="A focused marketing foundation for a broader intelligence product."
+        heading="One intelligence layer for the business of gaming."
         link={{ label: "View careers", href: "/about/careers" }}
       />
 

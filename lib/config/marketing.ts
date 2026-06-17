@@ -6,14 +6,15 @@ export const verticals = [
     title: "Plan gaming partnerships around live audience movement.",
     subtitle:
       "See which creators, games, communities, and moments can carry a brand message before media plans are already fixed.",
-    audience: "Brand, sponsorship, and media teams",
+    audience: "Brand, sponsorship, influencer marketing, and media teams",
     jobs: [
       "Find creators whose live audiences match the campaign brief.",
       "Compare games and genres by momentum, not assumptions.",
+      "Run campaigns end to end: recruit creators, manage contracts and payments, and track deliverables.",
       "Explain sponsorship choices with audience and community evidence.",
     ],
     proof:
-      "Hatchet turns creator velocity, hours watched, and chat movement into partnership signals your stakeholders can trust.",
+      "Hatchet covers the full partnership workflow — discover creators, manage contracts and payments, and attribute results — on one trusted read of hours watched, creator momentum, and chat movement.",
   },
   {
     slug: "games-publishers",
@@ -57,7 +58,7 @@ export const verticals = [
     audience: "Team, league, event, and partnerships teams",
     jobs: [
       "Compare event viewership across official and creator-led coverage.",
-      "Frame sponsor value with consistent audience and exposure signals.",
+      "Frame sponsor value with consistent exposure metrics like earned media value and logo presence share.",
       "Track roster, creator, and event moments that move communities.",
     ],
     proof:
@@ -89,33 +90,36 @@ export const differentiators = [
 
 export const proofStats = [
   {
-    label: "Channels tracked",
-    value: 40,
-    suffix: "M+",
-    description: "Creator and channel records connected to gaming audiences.",
-    sparkline: [14, 18, 17, 29, 34, 41, 52],
-  },
-  {
-    label: "Games indexed",
-    value: 150,
-    suffix: "K+",
-    description: "Game entities mapped to live viewership and creator signal.",
-    sparkline: [15, 22, 28, 31, 43, 45, 59],
-  },
-  {
-    label: "Minutes processed daily",
-    value: 2.8,
-    suffix: "B",
-    description: "Live viewing minutes normalized into usable market signal.",
-    sparkline: [22, 25, 31, 30, 43, 48, 61],
-  },
-  {
-    label: "Chat messages tracked daily",
-    value: 900,
-    suffix: "M+",
+    label: "Live platforms tracked",
+    value: 20,
+    suffix: "+",
     description:
-      "Community reactions tied back to creators, games, and events.",
-    sparkline: [28, 31, 35, 42, 44, 57, 66],
+      "Twitch, YouTube, Kick, and more — major and emerging platforms in one normalized view.",
+    sparkline: [9, 11, 12, 14, 16, 18, 21],
+  },
+  {
+    label: "History since 2016",
+    value: 10,
+    suffix: "+ yrs",
+    description:
+      "Minute-level viewership data going back to 2016, ready for trend and benchmark analysis.",
+    sparkline: [3, 4, 5, 6, 7, 8, 10],
+  },
+  {
+    label: "Data granularity",
+    value: 1,
+    suffix: "-min",
+    description:
+      "Every stream measured at one-minute resolution — the industry's highest standard.",
+    sparkline: [12, 14, 13, 15, 16, 18, 20],
+  },
+  {
+    label: "Core metrics tracked",
+    value: 10,
+    suffix: "+",
+    description:
+      "Hours watched, concurrent viewers, airtime, EMV, CPM, logo presence share, and more.",
+    sparkline: [4, 5, 5, 7, 8, 9, 11],
   },
 ];
 

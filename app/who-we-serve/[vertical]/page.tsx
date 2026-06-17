@@ -52,7 +52,7 @@ function VerticalFraming({
           <div className="max-w-3xl">
             <p className="eyebrow text-muted">Audience, jobs, proof</p>
             <h2 className="h1 mt-4">
-              The route template changes the framing, not the signal.
+              Same signal, framed for the way your team works.
             </h2>
           </div>
         </Reveal>

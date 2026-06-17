@@ -43,14 +43,14 @@ const rawSolutions = [
     summary:
       "Explore live viewership, esports, YouTube VODs, audience behavior, and competitive movement from one shared workspace.",
     bodyNote:
-      "Share the same data across departments, then export clean readouts to Excel, PDF, and Google Sheets. Pricing tiers live on the pricing page so the dashboard story can stay focused on the workflow.",
+      "Share the same data across departments, then export clean readouts to Excel, PDF, and Google Sheets.",
     primaryCta: { label: "Book a demo", href: siteConfig.bookDemoUrl },
     secondaryCta: { label: "Start free trial", href: siteConfig.signUpUrl },
     capabilities: [
       {
         title: "Live streaming viewership",
         description:
-          "Track real-time and historical viewership at minute-level granularity across every major platform, including top channels, games, and market trends.",
+          "Track real-time and historical viewership at minute-level granularity across every major platform — with data going back to 2016 — including top channels, games, and market trends.",
       },
       {
         title: "Esports measurement",
@@ -73,9 +73,14 @@ const rawSolutions = [
           "Understand viewer demographics, preferences, and behavior so content and marketing decisions match the audience you want to grow.",
       },
       {
+        title: "Influencer campaign management",
+        description:
+          "Discover and recruit creators, then run campaigns end to end — manage your roster, contracts, payments, and deliverables in one place, with no spreadsheets and conversion-level attribution.",
+      },
+      {
         title: "Speech and logo recognition",
         description:
-          "Use speech recognition, logo recognition, Twitch tags, and advanced tooling across 16+ platforms.",
+          "Use speech recognition, logo recognition, Twitch tags, and advanced tooling across 20+ platforms.",
       },
     ],
     why: [
@@ -130,7 +135,7 @@ const rawSolutions = [
       {
         title: "Brand lift and sponsorship",
         description:
-          "Measure campaigns with audience chat data, logo recognition, speech recognition, and viewership data.",
+          "Measure campaigns with audience chat data, logo presence share, earned media value (EMV), CPM, speech recognition, and viewership data.",
       },
       {
         title: "Competitive and market analysis",
@@ -180,7 +185,7 @@ const rawSolutions = [
       {
         title: "All major and minor platforms",
         description:
-          "Access up to 16 live streaming platforms, including Twitch, YouTube, Facebook Gaming, AfreecaTV, and Kick.",
+          "Access 20+ live streaming platforms, including Twitch, YouTube, Kick, Facebook Gaming, AfreecaTV, and more.",
       },
       {
         title: "Hundreds of endpoints",
@@ -217,7 +222,7 @@ const rawSolutions = [
       {
         title: "The most accurate data on the market",
         description:
-          "Minute-level granularity across 16+ platforms combines with demographics and social data for a sharper read.",
+          "Minute-level granularity across 20+ platforms combines with demographics and social data for a sharper read.",
       },
       {
         title: "Dedicated support channels",
