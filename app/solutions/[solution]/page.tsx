@@ -67,6 +67,7 @@ const trustedLogos = [
   },
   {
     name: "PlayStation",
+    src: "/images/logos/sony.png",
   },
 ] satisfies { name: string; src?: string }[];
 
