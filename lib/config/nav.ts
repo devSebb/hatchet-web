@@ -88,14 +88,6 @@ export const primaryNav = [
     ],
   },
   {
-    label: "Why Hatchet",
-    href: "/why-hatchet",
-  },
-  {
-    label: "Pricing",
-    href: "/pricing",
-  },
-  {
     label: "About",
     href: "/about",
     children: [
@@ -110,6 +102,14 @@ export const primaryNav = [
         description: "Join the team measuring live signal.",
       },
     ],
+  },
+  {
+    label: "Pricing",
+    href: "/pricing",
+  },
+  {
+    label: "Why Hatchet",
+    href: "/why-hatchet",
   },
 ] satisfies NavItem[];
 

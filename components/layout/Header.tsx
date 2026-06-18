@@ -18,7 +18,7 @@ function Logo() {
       className="focus-visible:ring-ring/50 inline-flex min-h-11 items-center rounded-lg outline-none focus-visible:ring-3"
       href="/"
     >
-      <BrandLogo alt="" className="h-12" priority variant="white" />
+      <BrandLogo alt="" className="h-10" priority variant="red" />
     </Link>
   );
 }
