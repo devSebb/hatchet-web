@@ -9,9 +9,9 @@ import { Hero } from "@/components/sections/Hero";
 import { LogoWall } from "@/components/sections/LogoWall";
 import { StatCounters } from "@/components/sections/StatCounters";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
-import { LiveDot } from "@/components/signal/LiveDot";
 import { PulseDivider } from "@/components/signal/PulseDivider";
 import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/lib/config/site";
 import { buildMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
@@ -140,76 +140,6 @@ function SectionDivider({ surface = "dark" }: { surface?: "dark" | "paper" }) {
   );
 }
 
-function ProductGlimpse() {
-  return (
-    <div className="border-border bg-surface/95 relative overflow-hidden rounded-xl border p-5 shadow-xl">
-      <div className="flex items-start justify-between gap-5">
-        <div>
-          <LiveDot className="eyebrow text-muted" label="Live market read" />
-          <p className="font-display mt-3 text-2xl font-semibold tracking-[-0.015em]">
-            Audience signal moving now
-          </p>
-        </div>
-        <span className="border-border bg-background/70 text-muted rounded-lg border px-2.5 py-1 font-mono text-xs">
-          24h
-        </span>
-      </div>
-
-      <div className="mt-8 grid gap-3">
-        {[
-          ["Creator velocity", "76%"],
-          ["Game demand", "64%"],
-          ["Community signal", "88%"],
-        ].map(([label, width]) => (
-          <div className="grid gap-2" key={label}>
-            <div className="flex items-center justify-between gap-4">
-              <span className="small text-muted">{label}</span>
-              <span className="text-foreground font-mono text-xs font-bold tabular-nums">
-                {width}
-              </span>
-            </div>
-            <div className="bg-background h-2 overflow-hidden rounded-full">
-              <div
-                className="bg-signal-2 h-full rounded-full"
-                style={{ width }}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-7 grid gap-3">
-        {[
-          [
-            "Creator velocity",
-            "+42%",
-            "Launch coverage holding past preview access",
-          ],
-          ["Game demand", "+31%", "Category lift across Twitch and YouTube"],
-          [
-            "Community signal",
-            "+18%",
-            "Chat volume rising around update coverage",
-          ],
-        ].map(([label, value, body]) => (
-          <div
-            className="border-border bg-background/70 grid grid-cols-[1fr_auto] gap-4 rounded-lg border p-3"
-            key={label}
-          >
-            <div>
-              <p className="text-foreground text-sm font-medium">{label}</p>
-              <p className="small text-muted mt-1">{body}</p>
-            </div>
-            <p className="text-brand-soft font-mono text-sm font-bold tabular-nums">
-              {value}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function DifferentiatorTrio() {
   return (
     <section className="surface-paper bg-background text-foreground px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
@@ -315,18 +245,23 @@ export default function Home() {
   return (
     <main className="bg-background text-foreground">
       <Hero
-        emphasizedTitle="and live streaming."
-        eyebrow="Business intelligence for gaming, esports, and live streaming"
-        productGlimpse={<ProductGlimpse />}
-        subtitle="Hatchet tracks creators, games, audiences, press, and community signals across the platforms where gaming culture moves. We supply the data so your team can see the stream clearly."
-        title="Conquer the signal behind gaming"
+        emphasizedTitle="Across Socials and Streaming"
+        eyebrow="The complete gaming intelligence for streaming and social media"
+        primaryCta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
+        secondaryCta={{
+          label: "See It In Action",
+          href: "https://www.youtube.com/@StreamHatchet",
+        }}
+        stats={["30+ platforms", "10+ years of data", "55M+ creators"]}
+        subtitle="The only Creator Marketing Analytics platform built for gaming. Covering creator discovery, campaign tracking, and ROI measurement in one place, across every social network."
+        title="Complete Gaming Intelligence"
       />
 
       <SectionDivider />
 
       <LogoWall
         className="pb-18 lg:pb-24"
-        title="Trusted by the teams shaping gaming."
+        title="Trusted by the teams running gaming's biggest campaigns"
       />
 
       <SectionDivider surface="paper" />
