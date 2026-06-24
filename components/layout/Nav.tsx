@@ -29,17 +29,14 @@ export function Nav({ items, className }: NavProps) {
               <>
                 <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="grid w-[28rem] gap-1 p-2">
+                  <div className="grid w-56 gap-1 p-2">
                     <NavigationMenuLink asChild>
                       <Link
-                        className="bg-muted-surface/60 block rounded-lg p-3 transition-colors outline-none"
+                        className="bg-muted-surface/60 block rounded-lg px-3 py-2 transition-colors outline-none"
                         href={item.href}
                       >
-                        <span className="font-display text-foreground block text-base font-semibold">
+                        <span className="font-display text-foreground block text-sm font-semibold">
                           {item.label}
-                        </span>
-                        <span className="small text-muted mt-1 block">
-                          View the {item.label.toLowerCase()} overview.
                         </span>
                       </Link>
                     </NavigationMenuLink>
@@ -51,11 +48,6 @@ export function Nav({ items, className }: NavProps) {
                             <span className="text-foreground block text-sm font-medium">
                               {child.label}
                             </span>
-                            {child.description ? (
-                              <span className="text-muted mt-1 block text-xs leading-relaxed">
-                                {child.description}
-                              </span>
-                            ) : null}
                           </Link>
                         </NavigationMenuLink>
                       ))}
