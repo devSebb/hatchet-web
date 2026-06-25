@@ -334,7 +334,16 @@ export default function Home() {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Book a demo"
+        // TODO: swap for a non-hero product view (reuses the hero image for now)
+        media={{
+          src: "/images/hero-dashboard.png",
+          alt: "Hatchet dashboard showing live-streaming analytics across platforms",
+          width: 2000,
+          height: 1143,
+        }}
+        proof={{ kind: "stat", value: "{{VERIFY}}", label: "creators tracked" }}
         title="Bring the live-streaming market read into your next decision."
+        variant="featured"
       />
     </main>
   );
