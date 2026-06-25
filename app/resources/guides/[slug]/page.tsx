@@ -120,7 +120,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Keep building the framework"
-        secondaryCta={{ label: "All guides", href: "/resources/guides" }}
         title="Use Hatchet data to make the next readout easier to defend."
       />
     </main>

@@ -101,8 +101,18 @@ export default function SolutionsPage() {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Book a demo"
-        secondaryCta={{ label: "Compare audiences", href: "/why-hatchet" }}
+        media={{
+          src: "/images/hero-dashboard.png",
+          alt: "Hatchet dashboard showing live-streaming analytics across platforms",
+          width: 2000,
+          height: 1143,
+        }}
+        proof={{
+          kind: "pills",
+          items: ["Creator discovery", "Campaign tracking", "ROI measurement"],
+        }}
         title="Find the right Hatchet product path for your team."
+        variant="featured"
       />
     </main>
   );

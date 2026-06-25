@@ -203,7 +203,6 @@ export default async function ResourcesPage() {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Use the signal"
-        secondaryCta={{ label: "Explore solutions", href: "/solutions" }}
         title="Turn the latest market read into your next decision."
       />
     </main>

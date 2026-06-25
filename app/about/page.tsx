@@ -89,7 +89,6 @@ export default function AboutPage() {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Work with Hatchet"
-        secondaryCta={{ label: "See careers", href: "/about/careers" }}
         title="Bring live-streaming intelligence into sharper focus."
       />
     </main>

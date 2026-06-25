@@ -126,7 +126,6 @@ export default async function VerticalPage({ params }: VerticalPageProps) {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Talk through the use case"
-        secondaryCta={{ label: "View solutions", href: "/solutions" }}
         title={`Bring Hatchet into the ${vertical.label.toLowerCase()} workflow.`}
       />
     </main>
