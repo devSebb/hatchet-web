@@ -72,7 +72,12 @@ export function StatCounters({
               className="border-border bg-surface rounded-xl border p-5 shadow-sm"
               key={stat.label}
             >
-              <Sparkline data={stat.sparkline} height={28} strokeWidth={1.25} />
+              <Sparkline
+                color="var(--brand-highlight)"
+                data={stat.sparkline}
+                height={28}
+                strokeWidth={1.25}
+              />
               <p className="eyebrow text-muted mt-5">{stat.label}</p>
               <Counter
                 className="text-foreground mt-3 block"

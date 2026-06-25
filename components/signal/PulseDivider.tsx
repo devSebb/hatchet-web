@@ -29,7 +29,7 @@ export function PulseDivider({ className }: PulseDividerProps) {
             ? { left: "calc(100% - 0.5rem)", opacity: [0, 1, 1, 0.72] }
             : undefined
         }
-        className="bg-signal shadow-signal absolute top-[0.375rem] left-[calc(100%_-_0.5rem)] size-2 rounded-full"
+        className="bg-brand-highlight shadow-glow-brand absolute top-[0.375rem] left-[calc(100%_-_0.5rem)] size-2 rounded-full"
         initial={
           shouldReduceMotion
             ? false

@@ -8,13 +8,15 @@
   --color-brand: var(--brand);
   --color-brand-strong: var(--brand-strong);
   --color-brand-soft: var(--brand-soft);
+  --color-brand-highlight: var(--brand-highlight);
+  --color-brand-lowlight: var(--brand-lowlight);
   --color-ink: var(--ink);
   --color-bg: var(--bg);
   --color-surface: var(--surface);
   --color-elevated: var(--elevated);
   --color-border: var(--border);
   --color-text: var(--text);
-  --color-muted: var(--text-muted);
+  --color-muted: var(--muted-foreground);
   --color-muted-surface: var(--muted);
   --color-paper: var(--paper);
   --color-paper-surface: var(--paper-surface);
@@ -94,25 +96,51 @@
   color-scheme: dark;
 
   --brand: #c4262d;
-  --brand-strong: color-mix(in srgb, var(--brand) 78%, var(--ink));
+  --brand-highlight: #ff6007;
+  --brand-lowlight: #911b20;
+  --brand-strong: var(--brand-lowlight);
   --brand-soft: color-mix(in srgb, var(--brand) 76%, var(--white));
   --ink: #000000;
   --bg: #151f2c;
-  --surface: color-mix(in srgb, var(--bg) 86%, var(--white));
-  --elevated: color-mix(in srgb, var(--bg) 76%, var(--white));
-  --border: color-mix(in srgb, var(--bg) 68%, var(--white));
+  --surface: color-mix(in srgb, var(--bg) 82%, var(--white));
+  --elevated: color-mix(in srgb, var(--bg) 71%, var(--white));
+  --border: color-mix(in srgb, var(--bg) 60%, var(--white));
   --text: #ffffff;
-  --text-muted: color-mix(in srgb, var(--text) 68%, var(--bg));
+  --text-muted: color-mix(in srgb, var(--text) 75%, var(--bg));
+
+  /* Ember gradient system — red-dominant, orange flares only at the far edge */
+  --gradient-brand: linear-gradient(
+    120deg,
+    var(--brand-lowlight) 0%,
+    var(--brand) 42%,
+    var(--brand) 68%,
+    var(--brand-highlight) 100%
+  );
+  --gradient-brand-hover: linear-gradient(
+    120deg,
+    var(--brand) 0%,
+    var(--brand) 55%,
+    var(--brand-highlight) 100%
+  );
+  --gradient-brand-text: linear-gradient(
+    100deg,
+    var(--brand-soft) 0%,
+    var(--brand) 45%,
+    var(--brand-highlight) 100%
+  );
+  --glow-brand: 0 10px 30px
+      color-mix(in srgb, var(--brand) 32%, transparent),
+    0 2px 10px color-mix(in srgb, var(--brand-highlight) 24%, transparent);
   --paper: #ffffff;
   --paper-surface: #ffffff;
-  --paper-border: color-mix(in srgb, var(--bg) 16%, var(--white));
+  --paper-border: color-mix(in srgb, var(--bg) 22%, var(--white));
   --paper-ink: #000000;
   --paper-muted: color-mix(in srgb, var(--bg) 78%, var(--white));
   --white: #ffffff;
   --black: #000000;
   --signal: var(--brand);
   --signal-2: var(--bg);
-  --signal-grid: color-mix(in srgb, var(--white) 16%, transparent);
+  --signal-grid: color-mix(in srgb, var(--white) 24%, transparent);
 
   --space-unit: 0.5rem;
   --space-1: 0.5rem;
@@ -203,6 +231,7 @@
   --border: var(--paper-border);
   --input: var(--paper-border);
   --ring: color-mix(in srgb, var(--brand) 70%, var(--signal-2));
+  --signal-grid: color-mix(in srgb, var(--black) 20%, transparent);
   --sidebar: var(--paper-surface);
   --sidebar-foreground: var(--paper-ink);
   --sidebar-primary: var(--primary);
@@ -281,6 +310,26 @@
 }
 
 @layer utilities {
+  .bg-gradient-brand {
+    background-color: var(--brand);
+    background-image: var(--gradient-brand);
+  }
+
+  .bg-gradient-brand-hover:hover {
+    background-image: var(--gradient-brand-hover);
+  }
+
+  .shadow-glow-brand {
+    box-shadow: var(--glow-brand);
+  }
+
+  .text-gradient-brand {
+    background-image: var(--gradient-brand-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   .display {
     font-family: var(--font-brand);
     font-size: clamp(2.75rem, 6vw, 4.5rem);

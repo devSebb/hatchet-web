@@ -208,7 +208,7 @@ function ReportsMedia() {
 
 function VerticalTeaser() {
   return (
-    <section className="bg-background px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
+    <section className="surface-paper bg-background px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
       <div className="mx-auto w-full max-w-7xl">
         <Reveal>
           <div className="max-w-3xl">
@@ -222,7 +222,7 @@ function VerticalTeaser() {
         <Stagger className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {verticals.map((vertical) => (
             <Link
-              className="group border-border bg-surface hover:border-signal/60 focus-visible:ring-ring/50 hover:bg-elevated flex min-h-64 flex-col justify-between rounded-xl border p-5 transition-[border-color,background-color,transform] duration-(--dur-base) outline-none hover:-translate-y-1 focus-visible:ring-3"
+              className="group border-border bg-card hover:border-brand/60 focus-visible:ring-ring/50 hover:bg-muted-surface flex min-h-64 flex-col justify-between rounded-xl border p-5 transition-[border-color,background-color,transform] duration-(--dur-base) outline-none hover:-translate-y-1 focus-visible:ring-3"
               href={vertical.href}
               key={vertical.href}
             >
@@ -246,7 +246,12 @@ export default function Home() {
     <main className="bg-background text-foreground">
       <Hero
         emphasizedTitle="Across Socials and Streaming"
-        eyebrow="The complete gaming intelligence for streaming and social media"
+        image={{
+          src: "/images/hero-dashboard.png",
+          alt: "Hatchet Creator Discovery dashboard showing live-streaming analytics across platforms",
+          width: 2000,
+          height: 1143,
+        }}
         primaryCta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
         secondaryCta={{
           label: "See It In Action",
@@ -257,10 +262,10 @@ export default function Home() {
         title="Complete Gaming Intelligence"
       />
 
-      <SectionDivider />
+      <SectionDivider surface="paper" />
 
       <LogoWall
-        className="pb-18 lg:pb-24"
+        className="surface-paper bg-background pb-18 lg:pb-24"
         title="Trusted by the teams running gaming's biggest campaigns"
       />
 
@@ -268,7 +273,7 @@ export default function Home() {
 
       <DifferentiatorTrio />
 
-      <SectionDivider />
+      <SectionDivider surface="paper" />
 
       <FeatureBlock
         body="Track creators, games, hours watched, chat velocity, and platform spread in one normalized view. Hatchet helps teams understand what is gaining attention, who is driving it, and where the audience is moving next."
@@ -277,7 +282,7 @@ export default function Home() {
           "Compare creator velocity before, during, and after launch beats.",
           "Connect audience movement to games, genres, publishers, and events.",
         ]}
-        className="bg-background py-18 lg:py-24"
+        className="surface-paper bg-background py-18 lg:py-24"
         eyebrow="Live-streaming intelligence"
         heading="See the market while it is still moving."
         link={{ label: "Explore solutions", href: "/solutions" }}
@@ -309,7 +314,7 @@ export default function Home() {
         title="A measurement layer built for the scale of gaming culture."
       />
 
-      <SectionDivider />
+      <SectionDivider surface="paper" />
 
       <VerticalTeaser />
 

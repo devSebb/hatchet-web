@@ -1,10 +1,17 @@
-import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
 import { cn } from "@/lib/utils";
+
+type HeroImage = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+};
 
 type HeroProps = {
   eyebrow?: string;
@@ -20,43 +27,39 @@ type HeroProps = {
     label: string;
     href: string;
   };
-  productGlimpse?: ReactNode;
+  image?: HeroImage;
   className?: string;
 };
 
 export function Hero({
-  eyebrow = "Gaming and live-streaming intelligence",
+  eyebrow,
   title,
   emphasizedTitle,
   subtitle,
   stats,
   primaryCta = { label: "Book a demo", href: siteConfig.bookDemoUrl },
   secondaryCta = { label: "Sign up", href: siteConfig.signUpUrl },
-  productGlimpse,
+  image,
   className,
 }: HeroProps) {
   return (
     <section
       className={cn(
-        "bg-background relative isolate overflow-hidden px-4 py-20 sm:px-6 lg:px-8 lg:py-28",
+        "bg-background relative isolate overflow-hidden px-4 pt-10 pb-16 sm:px-6 lg:px-8 lg:pt-14 lg:pb-20",
         className,
       )}
     >
-      <div
-        className={cn(
-          "mx-auto grid w-full max-w-7xl gap-12",
-          productGlimpse && "lg:grid-cols-[1fr_30rem] lg:items-center",
-        )}
-      >
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center text-center">
         <Reveal>
-          <div className="max-w-4xl">
-            <p className="eyebrow text-muted">{eyebrow}</p>
-            <h1 className="display mt-5">
-              {title} <span className="text-brand-soft">{emphasizedTitle}</span>
+          <div className="mx-auto flex max-w-3xl flex-col items-center">
+            {eyebrow ? <p className="eyebrow text-muted">{eyebrow}</p> : null}
+            <h1 className="display">
+              {title}{" "}
+              <span className="text-gradient-brand">{emphasizedTitle}</span>
             </h1>
             <p className="body-lg text-muted mt-6 max-w-2xl">{subtitle}</p>
             {stats?.length ? (
-              <ul className="text-muted mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm">
+              <ul className="text-muted mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-mono text-sm">
                 {stats.map((stat, index) => (
                   <li className="flex items-center gap-3" key={stat}>
                     {index > 0 ? (
@@ -71,7 +74,7 @@ export function Hero({
                 ))}
               </ul>
             ) : null}
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button asChild>
                 <Link href={primaryCta.href}>{primaryCta.label}</Link>
               </Button>
@@ -82,7 +85,21 @@ export function Hero({
           </div>
         </Reveal>
 
-        {productGlimpse ? <Reveal delay={0.08}>{productGlimpse}</Reveal> : null}
+        {image ? (
+          <Reveal delay={0.08}>
+            <div className="border-border bg-surface/60 mt-10 w-full max-w-5xl overflow-hidden rounded-2xl border p-2 shadow-xl lg:mt-12">
+              <Image
+                alt={image.alt}
+                className="h-auto w-full rounded-xl"
+                height={image.height}
+                priority
+                sizes="(min-width: 1024px) 64rem, 100vw"
+                src={image.src}
+                width={image.width}
+              />
+            </div>
+          </Reveal>
+        ) : null}
       </div>
     </section>
   );
