@@ -11,11 +11,11 @@ import {
   SearchCheckIcon,
   WorkflowIcon,
 } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 
 import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import { Button } from "@/components/ui/button";
-import { MOTION_DURATION, EASE_OUT } from "@/lib/motion";
+import { EASE_OUT, MOTION_DURATION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type Stage = {
@@ -24,10 +24,8 @@ type Stage = {
   tagline: string;
   href: string;
   Icon: LucideIcon;
-  /** Node center on the ring (lg+). Indices: 0 top, 1 right, 2 bottom, 3 left. */
-  pos: string;
-  /** SVG node point for the decorative ring/connectors. */
-  point: { x: number; y: number };
+  /** Unit direction from the core. 0 top → clockwise. */
+  dir: { x: number; y: number };
 };
 
 const STAGES: Stage[] = [
@@ -38,8 +36,7 @@ const STAGES: Stage[] = [
       "Describe the creator you need, get a match — and know they're real before you commit.",
     href: "/solutions/discovery",
     Icon: SearchCheckIcon,
-    pos: "lg:left-1/2 lg:top-[12%]",
-    point: { x: 50, y: 12 },
+    dir: { x: 0, y: -1 },
   },
   {
     num: "02",
@@ -48,8 +45,7 @@ const STAGES: Stage[] = [
       "Streaming and social performance, side by side in one cross-platform view.",
     href: "/solutions/intelligence",
     Icon: LineChartIcon,
-    pos: "lg:left-[88%] lg:top-1/2",
-    point: { x: 88, y: 50 },
+    dir: { x: 1, y: 0 },
   },
   {
     num: "03",
@@ -58,8 +54,7 @@ const STAGES: Stage[] = [
       "Run campaigns end to end — roster, contracts, payments, and deliverables in one place.",
     href: "/solutions/creator-community",
     Icon: WorkflowIcon,
-    pos: "lg:left-1/2 lg:top-[88%]",
-    point: { x: 50, y: 88 },
+    dir: { x: 0, y: 1 },
   },
   {
     num: "04",
@@ -68,66 +63,188 @@ const STAGES: Stage[] = [
       "EMV, engagement, and per-creator results — ready-to-use exports for stakeholders.",
     href: "/solutions/reporting",
     Icon: FileTextIcon,
-    pos: "lg:left-[12%] lg:top-1/2",
-    point: { x: 12, y: 50 },
+    dir: { x: -1, y: 0 },
   },
 ];
 
-const RING_RADIUS = 38;
-const AUTO_ADVANCE_MS = 4800;
+const AUTO_ADVANCE_MS = 4200;
+
+// ── Geometry (SVG user units, 0–100 viewBox) ──────────────────────────────
+const CENTER = 50;
+const CORE_R = 14; // outer radius of the faceted core
+const TABLE_R = 6; // inner "table" of the cut gem
+const RING_R = 38; // faceted outer ring + station distance
+const TRACE_START = 14; // trace leaves the core edge
+const TRACE_END = 30; // trace stops short of the station tile
+
+const octagon = (r: number) =>
+  Array.from({ length: 8 }, (_, k) => {
+    const a = ((-90 + k * 45) * Math.PI) / 180;
+    return { x: CENTER + r * Math.cos(a), y: CENTER + r * Math.sin(a) };
+  });
+
+const fmt = (p: { x: number; y: number }) =>
+  `${p.x.toFixed(2)},${p.y.toFixed(2)}`;
+
+const CORE_OUTER = octagon(CORE_R);
+const CORE_TABLE = octagon(TABLE_R);
+const RING = octagon(RING_R);
+const RING_PATH = `M ${RING.map(fmt).join(" L ")} Z`;
+const CORE_OUTER_PTS = CORE_OUTER.map(fmt).join(" ");
+const CORE_TABLE_PTS = CORE_TABLE.map(fmt).join(" ");
+
+// Light-from-above facet ramp (composed from charcoal tokens, no raw hex).
+const FACET_FILLS = [
+  "color-mix(in srgb, var(--elevated) 64%, var(--white) 16%)", // top — brightest
+  "var(--elevated)", // top-right
+  "color-mix(in srgb, var(--elevated) 58%, var(--surface) 42%)", // right
+  "var(--surface)", // bottom-right
+  "color-mix(in srgb, var(--surface) 52%, var(--bg) 48%)", // bottom — darkest
+  "var(--surface)", // bottom-left
+  "color-mix(in srgb, var(--elevated) 58%, var(--surface) 42%)", // left
+  "var(--elevated)", // top-left
+];
+
+const CROWN_FACETS = CORE_OUTER.map((_, k) => {
+  const n = (k + 1) % 8;
+  return {
+    points: [CORE_TABLE[k], CORE_TABLE[n], CORE_OUTER[n], CORE_OUTER[k]]
+      .map(fmt)
+      .join(" "),
+    fill: FACET_FILLS[k],
+  };
+});
+
+const trace = (dir: { x: number; y: number }, r: number) => ({
+  x: CENTER + dir.x * r,
+  y: CENTER + dir.y * r,
+});
+
+// Octagonal faceted tile (chamfered corners) — shared rest/active shape.
+const CLIP =
+  "polygon(18% 0%, 82% 0%, 100% 18%, 100% 82%, 82% 100%, 18% 100%, 0% 82%, 0% 18%)";
+
+const FACE_BG =
+  "linear-gradient(160deg, var(--elevated) 0%, var(--surface) 60%, color-mix(in srgb, var(--surface) 70%, var(--bg)) 100%)";
+const EDGE_REST =
+  "linear-gradient(150deg, color-mix(in srgb, var(--white) 22%, var(--border)) 0%, var(--border) 50%, color-mix(in srgb, var(--bg) 55%, var(--border)) 100%)";
+const EDGE_ACTIVE =
+  "linear-gradient(150deg, color-mix(in srgb, var(--white) 30%, var(--brand)) 0%, color-mix(in srgb, var(--brand) 55%, var(--bg)) 100%)";
+const UNDERGLOW =
+  "radial-gradient(120% 100% at 50% 120%, color-mix(in srgb, var(--brand) 60%, transparent) 0%, transparent 70%)";
+
+function StationFacet({
+  stage,
+  isActive,
+  layout,
+}: {
+  stage: Stage;
+  isActive: boolean;
+  layout: "tile" | "row";
+}) {
+  const { Icon } = stage;
+  return (
+    <span
+      className="block p-px transition-[filter] duration-(--dur-base)"
+      style={{ clipPath: CLIP, background: isActive ? EDGE_ACTIVE : EDGE_REST }}
+    >
+      <span
+        className={cn(
+          "relative block overflow-hidden",
+          layout === "tile" ? "px-3 py-4" : "px-4 py-3",
+        )}
+        style={{ clipPath: CLIP, background: FACE_BG }}
+      >
+        <span
+          aria-hidden="true"
+          className={cn(
+            "pointer-events-none absolute inset-x-0 -bottom-2 h-3/4 blur-md transition-opacity duration-(--dur-base)",
+            isActive ? "opacity-100" : "opacity-0",
+          )}
+          style={{ background: UNDERGLOW }}
+        />
+        <span
+          className={cn(
+            "relative flex items-center",
+            layout === "tile" ? "flex-col gap-1.5 text-center" : "gap-3",
+          )}
+        >
+          <Icon
+            aria-hidden="true"
+            className={cn(
+              "size-5 shrink-0 transition-colors duration-(--dur-base)",
+              isActive ? "text-brand-highlight" : "text-muted",
+            )}
+          />
+          <span className={cn(layout === "row" && "flex flex-col")}>
+            <span
+              className={cn(
+                "font-mono text-xs font-semibold tabular-nums transition-colors duration-(--dur-base)",
+                isActive ? "text-brand" : "text-muted",
+              )}
+            >
+              {stage.num}
+            </span>
+            <span
+              className={cn(
+                "text-sm font-semibold transition-colors duration-(--dur-base)",
+                isActive ? "text-foreground" : "text-muted",
+              )}
+            >
+              {stage.stage}
+            </span>
+          </span>
+        </span>
+      </span>
+    </span>
+  );
+}
+
+function CoreLabel({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className="flex flex-col items-center gap-1 px-3 text-center">
+      <Image
+        alt="Hatchet"
+        className={cn("h-auto object-contain", compact ? "w-16" : "w-3/4")}
+        height={832}
+        src="/brand/hatchet_hatchet_white.png"
+        width={2102}
+      />
+      <span className="eyebrow text-muted text-[0.5rem]">
+        Creator Intelligence
+      </span>
+    </div>
+  );
+}
 
 export function CreatorLifecycle({ className }: { className?: string }) {
   const reduceMotion = useHydratedReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const inView = useInView(sectionRef, { amount: 0.3 });
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const baseId = useId();
+  const [interacted, setInteracted] = useState(false);
+  const gradientId = useId().replace(/:/g, "");
+  const panelId = `${gradientId}-panel`;
 
-  // Auto-advance through the stages until the user hovers/focuses the widget.
+  // Demo itself on a gentle interval; hand control to the user on first
+  // interaction and never auto-advance again. Paused while offscreen.
   useEffect(() => {
-    if (reduceMotion || paused) {
+    if (reduceMotion || interacted || !inView) {
       return;
     }
-    const interval = window.setInterval(() => {
+    const id = window.setInterval(() => {
       setActive((index) => (index + 1) % STAGES.length);
     }, AUTO_ADVANCE_MS);
-    return () => window.clearInterval(interval);
-  }, [reduceMotion, paused]);
+    return () => window.clearInterval(id);
+  }, [reduceMotion, interacted, inView]);
 
-  const select = (index: number, focus = false) => {
-    const next = (index + STAGES.length) % STAGES.length;
-    setActive(next);
-    if (focus) {
-      tabRefs.current[next]?.focus();
-    }
-  };
-
-  const onKeyDown = (event: React.KeyboardEvent, index: number) => {
-    switch (event.key) {
-      case "ArrowRight":
-      case "ArrowDown":
-        event.preventDefault();
-        select(index + 1, true);
-        break;
-      case "ArrowLeft":
-      case "ArrowUp":
-        event.preventDefault();
-        select(index - 1, true);
-        break;
-      case "Home":
-        event.preventDefault();
-        select(0, true);
-        break;
-      case "End":
-        event.preventDefault();
-        select(STAGES.length - 1, true);
-        break;
-      default:
-        break;
-    }
+  const activate = (index: number) => {
+    setInteracted(true);
+    setActive(index);
   };
 
   const activeStage = STAGES[active];
+  const animateRouting = !reduceMotion && inView;
 
   return (
     <section
@@ -135,8 +252,8 @@ export function CreatorLifecycle({ className }: { className?: string }) {
         "bg-background text-foreground relative overflow-hidden px-4 py-16 sm:px-6 lg:px-8 lg:py-24",
         className,
       )}
+      ref={sectionRef}
     >
-      {/* Decorative data substrate (matches the featured CTA texture system). */}
       <div
         aria-hidden="true"
         className="cta-grid pointer-events-none absolute inset-0"
@@ -155,176 +272,250 @@ export function CreatorLifecycle({ className }: { className?: string }) {
           </p>
         </div>
 
-        <div
-          className="mt-12 grid items-center gap-10 lg:mt-16 lg:grid-cols-[1.45fr_1fr] lg:gap-14"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-              setPaused(false);
-            }
-          }}
-        >
-          {/* ── Orbital selector (hero, ~60%) ───────────────────────── */}
-          <div
-            aria-label="Creator lifecycle stages"
-            className="relative mx-auto grid w-full max-w-md grid-cols-2 gap-3 sm:max-w-lg lg:block lg:aspect-square lg:max-w-[34rem] lg:gap-0"
-            role="tablist"
-          >
-            {/* Decorative ring, connectors, hub, traveling pulse (lg only). */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 hidden lg:block"
-            >
-              <svg
-                className="absolute inset-0 h-full w-full"
-                fill="none"
-                viewBox="0 0 100 100"
-              >
-                <circle
-                  cx="50"
-                  cy="50"
-                  r={RING_RADIUS}
-                  style={{ stroke: "var(--signal-grid)" }}
-                  strokeDasharray="1 3"
-                  strokeWidth="0.4"
-                />
-                {STAGES.map((s, i) => (
-                  <line
-                    key={s.num}
-                    style={{
-                      stroke:
-                        i === active ? "var(--brand)" : "var(--signal-grid)",
-                      transition: "stroke var(--dur-base) var(--ease-out)",
-                    }}
-                    strokeWidth={i === active ? 0.6 : 0.3}
-                    x1="50"
-                    x2={s.point.x}
-                    y1="50"
-                    y2={s.point.y}
-                  />
-                ))}
-              </svg>
+        <div className="mt-12 grid items-center gap-10 lg:mt-16 lg:grid-cols-[1.45fr_1fr] lg:gap-14">
+          {/* ── The Intelligence Core (desktop radial) ─────────────── */}
+          <div className="relative mx-auto hidden aspect-square w-full max-w-[34rem] lg:block">
+            {animateRouting ? (
+              <motion.div
+                animate={{ rotate: 360 }}
+                aria-hidden="true"
+                className="absolute inset-[10%] rounded-full opacity-[0.06]"
+                style={{
+                  background:
+                    "conic-gradient(from 0deg, transparent 0deg, var(--brand) 36deg, transparent 84deg)",
+                }}
+                transition={{ duration: 16, ease: "linear", repeat: Infinity }}
+              />
+            ) : null}
 
-              {/* Traveling signal pulse around the ring. */}
-              {!reduceMotion ? (
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  className="absolute inset-0"
-                  style={{ transformOrigin: "50% 50%" }}
-                  transition={{ duration: 18, ease: "linear", repeat: Infinity }}
+            <svg
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full"
+              fill="none"
+              viewBox="0 0 100 100"
+            >
+              <defs>
+                <linearGradient
+                  id={`${gradientId}-table`}
+                  x1="0"
+                  x2="0"
+                  y1="0"
+                  y2="1"
                 >
-                  <span className="bg-brand-highlight shadow-glow-brand absolute left-1/2 top-[12%] size-2 -translate-x-1/2 -translate-y-1/2 rounded-full" />
-                </motion.div>
-              ) : null}
-            </div>
-
-            {/* Central Hatchet hub (lg only). */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute left-1/2 top-1/2 hidden size-[34%] -translate-x-1/2 -translate-y-1/2 lg:flex lg:flex-col lg:items-center lg:justify-center"
-            >
-              {!reduceMotion ? (
-                <motion.div
-                  animate={{ opacity: [0.4, 0.7, 0.4], scale: [1, 1.08, 1] }}
-                  className="bg-brand/30 absolute inset-2 rounded-full blur-2xl"
-                  transition={{
-                    duration: 6,
-                    ease: "easeInOut",
-                    repeat: Infinity,
-                  }}
-                />
-              ) : (
-                <div className="bg-brand/25 absolute inset-2 rounded-full blur-2xl" />
-              )}
-              <div className="border-border/70 bg-elevated/80 shadow-glow-brand relative flex aspect-square w-full items-center justify-center rounded-full border backdrop-blur-sm">
-                <div className="flex flex-col items-center gap-1.5 px-4">
-                  <Image
-                    alt="Hatchet"
-                    className="h-auto w-3/4 max-w-none object-contain"
-                    height={832}
-                    src="/brand/hatchet_hatchet_white.png"
-                    width={2102}
+                  <stop
+                    offset="0%"
+                    stopColor="color-mix(in srgb, var(--elevated) 58%, var(--white) 24%)"
                   />
-                  <span className="eyebrow text-muted text-[0.55rem]">
-                    Creator Intelligence
-                  </span>
-                </div>
-              </div>
+                  <stop offset="100%" stopColor="var(--surface)" />
+                </linearGradient>
+                <radialGradient id={`${gradientId}-glow`}>
+                  <stop
+                    offset="0%"
+                    stopColor="color-mix(in srgb, var(--brand) 85%, transparent)"
+                  />
+                  <stop
+                    offset="65%"
+                    stopColor="color-mix(in srgb, var(--brand) 22%, transparent)"
+                  />
+                  <stop offset="100%" stopColor="transparent" />
+                </radialGradient>
+                <clipPath id={`${gradientId}-core`}>
+                  <polygon points={CORE_OUTER_PTS} />
+                </clipPath>
+              </defs>
+
+              {/* Faceted outer ring (draws itself in on first reveal). */}
+              <motion.path
+                d={RING_PATH}
+                initial={reduceMotion ? false : { pathLength: 0 }}
+                stroke="var(--signal-grid)"
+                strokeWidth={0.4}
+                transition={{ duration: 1.1, ease: "easeInOut" }}
+                viewport={{ once: true, amount: 0.3 }}
+                whileInView={reduceMotion ? undefined : { pathLength: 1 }}
+              />
+
+              {/* Idle circuit traces (every inactive station). */}
+              {STAGES.map((s, i) => {
+                if (i === active) {
+                  return null;
+                }
+                const a = trace(s.dir, TRACE_START);
+                const b = trace(s.dir, TRACE_END);
+                return (
+                  <line
+                    className={animateRouting ? "cta-trace-flow" : undefined}
+                    key={s.num}
+                    stroke="var(--signal-grid)"
+                    strokeDasharray="1 2"
+                    strokeWidth={0.3}
+                    x1={a.x}
+                    x2={b.x}
+                    y1={a.y}
+                    y2={b.y}
+                  />
+                );
+              })}
+
+              {/* Faceted core: crown facets + lit table. */}
+              {CROWN_FACETS.map((facet, i) => (
+                <polygon
+                  fill={facet.fill}
+                  key={i}
+                  points={facet.points}
+                  stroke="color-mix(in srgb, var(--bg) 55%, transparent)"
+                  strokeWidth={0.15}
+                />
+              ))}
+              <polygon
+                fill={`url(#${gradientId}-table)`}
+                points={CORE_TABLE_PTS}
+              />
+
+              {/* Sub-surface red glow, contained inside the core (breathing). */}
+              <motion.circle
+                animate={
+                  animateRouting ? { opacity: [0.32, 0.6, 0.32] } : undefined
+                }
+                clipPath={`url(#${gradientId}-core)`}
+                cx={CENTER}
+                cy={CENTER}
+                fill={`url(#${gradientId}-glow)`}
+                initial={false}
+                opacity={reduceMotion ? 0.42 : 0.32}
+                r={CORE_R}
+                transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
+              />
+
+              {/* Live trace → active station + traveling data packet. */}
+              {(() => {
+                const a = trace(activeStage.dir, TRACE_START);
+                const b = trace(activeStage.dir, TRACE_END);
+                return (
+                  <g key={`live-${active}`}>
+                    <line
+                      stroke="var(--brand)"
+                      strokeLinecap="round"
+                      strokeWidth={0.7}
+                      x1={a.x}
+                      x2={b.x}
+                      y1={a.y}
+                      y2={b.y}
+                    />
+                    {animateRouting ? (
+                      <motion.circle
+                        animate={{
+                          cx: [a.x, b.x],
+                          cy: [a.y, b.y],
+                          opacity: [0, 1, 1, 0],
+                        }}
+                        fill="var(--brand-highlight)"
+                        r={1.2}
+                        style={{
+                          filter: "drop-shadow(0 0 1.5px var(--brand))",
+                        }}
+                        transition={{
+                          duration: 1.3,
+                          ease: "easeInOut",
+                          repeat: Infinity,
+                          repeatDelay: 0.2,
+                        }}
+                      />
+                    ) : null}
+                  </g>
+                );
+              })()}
+            </svg>
+
+            {/* Core label overlay. */}
+            <div className="absolute left-1/2 top-1/2 flex size-[30%] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+              <CoreLabel />
             </div>
 
-            {/* Stage nodes — the actual tabs. */}
+            {/* Stations — real links; hover/focus activates, click navigates. */}
             {STAGES.map((s, i) => {
               const isActive = i === active;
               return (
-                <button
-                  aria-controls={`${baseId}-panel`}
-                  aria-selected={isActive}
-                  className={cn(
-                    "group focus-visible:ring-ring/60 flex flex-col items-center gap-2 rounded-2xl outline-none focus-visible:ring-3 lg:absolute lg:w-32 lg:-translate-x-1/2 lg:-translate-y-1/2",
-                    s.pos,
-                  )}
-                  id={`${baseId}-tab-${i}`}
+                <Link
+                  aria-label={`Step ${s.num}: ${s.stage}`}
+                  className="group focus-visible:ring-ring/60 absolute w-28 -translate-x-1/2 -translate-y-1/2 rounded-xl no-underline outline-none focus-visible:ring-3"
+                  href={s.href}
                   key={s.num}
-                  onClick={() => select(i)}
-                  onKeyDown={(event) => onKeyDown(event, i)}
-                  ref={(el) => {
-                    tabRefs.current[i] = el;
+                  onFocus={() => activate(i)}
+                  onMouseEnter={() => activate(i)}
+                  style={{
+                    left: `${CENTER + s.dir.x * RING_R}%`,
+                    top: `${CENTER + s.dir.y * RING_R}%`,
                   }}
-                  role="tab"
-                  tabIndex={isActive ? 0 : -1}
-                  type="button"
                 >
-                  <span
-                    className={cn(
-                      "relative flex size-16 items-center justify-center rounded-full border transition-all duration-(--dur-base) sm:size-20",
-                      isActive
-                        ? "border-brand bg-elevated shadow-glow-brand scale-105"
-                        : "border-border bg-card group-hover:border-brand/50 group-hover:bg-elevated",
-                    )}
-                  >
-                    <s.Icon
-                      aria-hidden="true"
-                      className={cn(
-                        "size-6 transition-colors duration-(--dur-base) sm:size-7",
-                        isActive
-                          ? "text-brand-highlight"
-                          : "text-muted group-hover:text-foreground",
-                      )}
-                    />
-                  </span>
-                  <span className="flex flex-col items-center">
-                    <span
-                      className={cn(
-                        "font-display text-xs font-bold tabular-nums transition-colors duration-(--dur-base)",
-                        isActive ? "text-brand" : "text-muted",
-                      )}
-                    >
-                      {s.num}
-                    </span>
-                    <span
-                      className={cn(
-                        "text-center text-sm font-semibold transition-colors duration-(--dur-base)",
-                        isActive
-                          ? "text-foreground"
-                          : "text-muted group-hover:text-foreground",
-                      )}
-                    >
-                      {s.stage}
-                    </span>
-                  </span>
-                </button>
+                  <StationFacet isActive={isActive} layout="tile" stage={s} />
+                </Link>
               );
             })}
           </div>
 
-          {/* ── Detail panel (secondary, ~40%) ──────────────────────── */}
+          {/* ── Mobile / tablet: vertical faceted stepper ──────────── */}
+          <div className="lg:hidden">
+            <div className="relative mx-auto mb-7 w-fit">
+              {!reduceMotion ? (
+                <span
+                  aria-hidden="true"
+                  className="bg-brand/25 absolute inset-2 rounded-full blur-2xl"
+                />
+              ) : null}
+              <div
+                className="border-border/70 relative flex items-center justify-center border p-4"
+                style={{ clipPath: CLIP, background: FACE_BG }}
+              >
+                <CoreLabel compact />
+              </div>
+            </div>
+
+            <div className="relative pl-7">
+              <span
+                aria-hidden="true"
+                className="bg-border absolute top-4 bottom-4 left-2 w-px"
+              />
+              <motion.span
+                animate={{
+                  height: `${((active + 1) / STAGES.length) * 100}%`,
+                }}
+                aria-hidden="true"
+                className="bg-brand shadow-glow-brand absolute top-4 left-2 w-px"
+                initial={false}
+                transition={{
+                  duration: reduceMotion ? 0 : MOTION_DURATION.base,
+                  ease: EASE_OUT,
+                }}
+              />
+              <ol className="grid gap-3">
+                {STAGES.map((s, i) => (
+                  <li key={s.num}>
+                    <Link
+                      aria-label={`Step ${s.num}: ${s.stage}`}
+                      className="group focus-visible:ring-ring/60 block rounded-xl no-underline outline-none focus-visible:ring-3"
+                      href={s.href}
+                      onFocus={() => activate(i)}
+                      onMouseEnter={() => activate(i)}
+                    >
+                      <StationFacet
+                        isActive={i === active}
+                        layout="row"
+                        stage={s}
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+
+          {/* ── Detail card ────────────────────────────────────────── */}
           <div
-            aria-labelledby={`${baseId}-tab-${active}`}
-            className="border-border bg-card/60 cta-panel-frame relative min-h-64 rounded-2xl border p-7 backdrop-blur-sm lg:min-h-72 lg:p-8"
-            id={`${baseId}-panel`}
-            role="tabpanel"
+            aria-atomic="true"
+            aria-live="polite"
+            className="border-border bg-card/60 cta-panel-frame relative mt-10 min-h-64 rounded-2xl border p-7 backdrop-blur-sm lg:mt-0 lg:min-h-72 lg:p-8"
+            id={panelId}
           >
             <AnimatePresence mode="wait">
               <motion.div
