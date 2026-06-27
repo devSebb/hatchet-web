@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
+import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { SectionDivider } from "@/components/sections/SectionDivider";
@@ -54,6 +55,10 @@ export default function WhyHatchetPage() {
           </Stagger>
         </div>
       </section>
+
+      <SectionDivider />
+
+      <CreatorLifecycle />
 
       <SectionDivider />
 

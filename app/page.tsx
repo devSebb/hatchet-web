@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Gamepad2Icon, ShieldCheckIcon, WorkflowIcon } from "lucide-react";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
+import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
 import { CTASection } from "@/components/sections/CTASection";
 import { FeatureBlock } from "@/components/sections/FeatureBlock";
 import { Hero } from "@/components/sections/Hero";
@@ -22,6 +24,27 @@ export function generateMetadata(): Metadata {
     path: "/",
   });
 }
+
+const pillars = [
+  {
+    icon: WorkflowIcon,
+    kicker: "Data + execution",
+    title: "One Platform, Full Lifecycle",
+    body: "From discovery to reporting — find the creator, run the campaign, and prove the ROI. All in one tool, with nothing stitched together.",
+  },
+  {
+    icon: ShieldCheckIcon,
+    kicker: "Verified precision",
+    title: "The Data Nobody Else Has",
+    body: "10 years of verified data from streaming and social across 30+ platforms. No estimates. No fake audiences — every number is real.",
+  },
+  {
+    icon: Gamepad2Icon,
+    kicker: "Native, not retrofitted",
+    title: "Built for Gaming from Day One",
+    body: "This isn't a generic analytics tool with a gaming skin. Hatchet was built for gaming from the inside out — never retrofitted to it.",
+  },
+];
 
 const differentiators = [
   {
@@ -137,6 +160,60 @@ function SectionDivider({ surface = "dark" }: { surface?: "dark" | "paper" }) {
         <PulseDivider />
       </div>
     </div>
+  );
+}
+
+function Pillars() {
+  return (
+    <section className="bg-background text-foreground relative isolate overflow-hidden px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 right-0 -z-10 h-80 w-80 rounded-full bg-[var(--gradient-cta-glow)] blur-3xl"
+      />
+      <div className="mx-auto w-full max-w-7xl">
+        <Reveal>
+          <div className="max-w-3xl">
+            <p className="eyebrow text-muted">Why Hatchet</p>
+            <h2 className="h1 mt-4">
+              Other tools make you choose.{" "}
+              <span className="text-gradient-brand">Hatchet doesn&apos;t.</span>
+            </h2>
+            <p className="body-lg text-muted mt-5">
+              One platform for the entire creator-marketing lifecycle, powered by
+              verified gaming data — and built for gaming from day one.
+            </p>
+          </div>
+        </Reveal>
+
+        <Stagger className="mt-12 grid gap-5 lg:grid-cols-3">
+          {pillars.map((pillar, index) => {
+            const Icon = pillar.icon;
+
+            return (
+              <article
+                className="group border-border bg-surface relative overflow-hidden rounded-2xl border p-7 shadow-sm transition-[transform,border-color,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:border-brand/40 hover:shadow-glow-brand"
+                key={pillar.title}
+              >
+                <span
+                  aria-hidden="true"
+                  className="font-display pointer-events-none absolute -top-3 right-5 text-7xl font-extrabold text-white/[0.04] select-none"
+                >
+                  {`0${index + 1}`}
+                </span>
+                <div className="bg-gradient-brand shadow-glow-brand flex size-12 items-center justify-center rounded-xl text-white">
+                  <Icon aria-hidden="true" className="size-6" />
+                </div>
+                <p className="eyebrow text-brand-soft mt-6">{pillar.kicker}</p>
+                <h3 className="font-display mt-2 text-xl font-semibold tracking-[-0.01em]">
+                  {pillar.title}
+                </h3>
+                <p className="body text-muted mt-3">{pillar.body}</p>
+              </article>
+            );
+          })}
+        </Stagger>
+      </div>
+    </section>
   );
 }
 
@@ -268,6 +345,14 @@ export default function Home() {
         className="surface-paper bg-background pb-18 lg:pb-24"
         title="Trusted by the teams running gaming's biggest campaigns"
       />
+
+      <SectionDivider />
+
+      <Pillars />
+
+      <SectionDivider />
+
+      <CreatorLifecycle />
 
       <SectionDivider surface="paper" />
 

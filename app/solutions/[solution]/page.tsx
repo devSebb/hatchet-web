@@ -98,7 +98,7 @@ function CapabilitiesSection({ solution }: { solution: ProductSolution }) {
           ))}
         </Stagger>
 
-        {solution.slug === "web-dashboard" ? (
+        {solution.slug === "intelligence" ? (
           <Reveal>
             <div className="border-border bg-card mt-6 rounded-xl border p-6 shadow-sm">
               <p className="body text-muted">

@@ -16,22 +16,28 @@ export const primaryNav = [
     href: "/solutions",
     children: [
       {
-        label: "Web Dashboard",
-        href: "/solutions/web-dashboard",
+        label: "Discovery",
+        href: "/solutions/discovery",
         description:
-          "Use one interface for live viewership, creators, games, esports, VOD, and audience signal.",
+          "Search and verify creators with AI search and audience-quality scoring.",
       },
       {
-        label: "Custom Reports",
-        href: "/solutions/custom-reports",
+        label: "Intelligence",
+        href: "/solutions/intelligence",
         description:
-          "Work with Hatchet analysts on strategic reports built around your KPIs.",
+          "Analyze streaming and social campaign performance in one cross-platform view.",
       },
       {
-        label: "API & Data Integrations",
-        href: "/solutions/api-data-integrations",
+        label: "Creator Community",
+        href: "/solutions/creator-community",
         description:
-          "Connect live-streaming data to products, dashboards, BI, and attribution workflows.",
+          "Manage your creator roster and campaigns end to end, with attribution built in.",
+      },
+      {
+        label: "Reporting",
+        href: "/solutions/reporting",
+        description:
+          "Report EMV, engagement, and per-creator results, ready to share.",
       },
     ],
   },
