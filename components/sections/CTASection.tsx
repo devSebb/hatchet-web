@@ -108,19 +108,24 @@ function CTACopy({
 
 function CTAMediaPanel({ media }: { media?: CTAMedia }) {
   return (
-    <div className="relative">
+    <div className="relative md:-translate-y-3 lg:-translate-y-4">
       {media ? (
-        <div className="relative rounded-2xl border border-white/12 bg-white/5 p-2 shadow-xl">
+        <div className="relative md:-translate-x-4 md:scale-[1.07] lg:-translate-x-6 lg:scale-[1.12]">
+          {/* Red under-glow so the image sits in the gradient, not on it. */}
+          <div
+            aria-hidden="true"
+            className="bg-brand/25 absolute inset-x-8 top-1/3 -bottom-6 -z-10 rounded-[40%] blur-3xl"
+          />
           <Image
             alt={media.alt}
-            className="h-auto w-full rounded-xl"
+            className="cta-media-elevation h-auto w-full"
             height={media.height}
-            sizes="(min-width: 768px) 36rem, 100vw"
+            sizes="(min-width: 768px) 40rem, 100vw"
             src={media.src}
             width={media.width}
           />
           <LiveDot
-            className="bg-bg/80 absolute top-4 left-4 rounded-full px-2.5 py-1 text-xs text-white backdrop-blur-sm"
+            className="bg-bg/70 absolute top-4 right-4 rounded-full px-2.5 py-1 text-xs text-white backdrop-blur-sm"
             label="Live data"
           />
         </div>
@@ -148,18 +153,53 @@ export function CTASection({
   return (
     <section
       className={cn(
-        "bg-gradient-cta px-4 py-16 sm:px-6 lg:px-8 lg:py-20",
+        "bg-background px-4 py-16 sm:px-6 lg:px-8 lg:py-20",
         className,
       )}
     >
-      {isFeatured ? (
-        <div className="mx-auto grid w-full max-w-7xl items-center gap-10 md:grid-cols-[1.1fr_1fr] lg:gap-14">
-          <Reveal className="order-last md:order-first">
-            <CTAMediaPanel media={media} />
-          </Reveal>
-          <Reveal className="order-first md:order-last" delay={0.08}>
+      <div
+        className={cn(
+          "bg-gradient-cta cta-panel-frame relative mx-auto w-full max-w-7xl rounded-3xl px-6 py-12 sm:px-10 lg:px-16 lg:py-16",
+          isFeatured
+            ? "overflow-hidden md:overflow-visible"
+            : "overflow-hidden",
+        )}
+      >
+        {/* Decorative "data substrate": grid (+ animated bloom on featured) + grain. */}
+        <div
+          aria-hidden="true"
+          className="cta-grid pointer-events-none absolute inset-0 rounded-[inherit]"
+        />
+        {isFeatured ? (
+          <div
+            aria-hidden="true"
+            className="cta-bloom pointer-events-none absolute inset-0 rounded-[inherit]"
+          />
+        ) : null}
+        <div
+          aria-hidden="true"
+          className="cta-grain pointer-events-none absolute inset-0 rounded-[inherit]"
+        />
+        {isFeatured ? (
+          <div className="relative z-10 grid items-center gap-10 md:grid-cols-[1.1fr_1fr] lg:gap-14">
+            <Reveal className="order-last md:order-first">
+              <CTAMediaPanel media={media} />
+            </Reveal>
+            <Reveal className="order-first md:order-last" delay={0.08}>
+              <CTACopy
+                align="start"
+                body={body}
+                cta={cta}
+                eyebrow={eyebrow}
+                proof={proof}
+                title={title}
+              />
+            </Reveal>
+          </div>
+        ) : (
+          <Reveal className="relative z-10 mx-auto w-full max-w-3xl">
             <CTACopy
-              align="start"
+              align="center"
               body={body}
               cta={cta}
               eyebrow={eyebrow}
@@ -167,19 +207,8 @@ export function CTASection({
               title={title}
             />
           </Reveal>
-        </div>
-      ) : (
-        <Reveal className="mx-auto w-full max-w-3xl">
-          <CTACopy
-            align="center"
-            body={body}
-            cta={cta}
-            eyebrow={eyebrow}
-            proof={proof}
-            title={title}
-          />
-        </Reveal>
-      )}
+        )}
+      </div>
     </section>
   );
 }
