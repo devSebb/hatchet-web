@@ -397,6 +397,19 @@
     mix-blend-mode: overlay;
   }
 
+  /* Idle circuit traces drift slowly (reduced-motion gated, like cta-bloom). */
+  @media (prefers-reduced-motion: no-preference) {
+    .cta-trace-flow {
+      animation: cta-trace-flow 3s linear infinite;
+    }
+  }
+
+  @keyframes cta-trace-flow {
+    to {
+      stroke-dashoffset: -12;
+    }
+  }
+
   /* Light-from-above hairline + crisp inner frame for the panel. */
   .cta-panel-frame {
     box-shadow:
