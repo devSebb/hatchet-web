@@ -69,18 +69,22 @@ const STAGES: Stage[] = [
 
 const AUTO_ADVANCE_MS = 4200;
 
-// ── Geometry (SVG user units, 0–100 viewBox) ──────────────────────────────
-const CENTER = 50;
-const CORE_R = 14; // outer radius of the faceted core
+// ── Geometry (SVG user units) — wide rectangular field, circular core ──────
+const VBW = 140;
+const VBH = 100;
+const CX = 70;
+const CY = 50;
+const CORE_R = 15; // outer radius of the faceted core (circular gem)
 const TABLE_R = 6; // inner "table" of the cut gem
-const RING_R = 38; // faceted outer ring + station distance
-const TRACE_START = 14; // trace leaves the core edge
-const TRACE_END = 30; // trace stops short of the station tile
+const RX = 52; // horizontal station/ring radius (wide)
+const RY = 34; // vertical station/ring radius (short) → rectangular field
+const DIAG = 0.707;
+const TRACE_BACK = 9; // trace stops this far short of the station
 
 const octagon = (r: number) =>
   Array.from({ length: 8 }, (_, k) => {
     const a = ((-90 + k * 45) * Math.PI) / 180;
-    return { x: CENTER + r * Math.cos(a), y: CENTER + r * Math.sin(a) };
+    return { x: CX + r * Math.cos(a), y: CY + r * Math.sin(a) };
   });
 
 const fmt = (p: { x: number; y: number }) =>
@@ -88,10 +92,26 @@ const fmt = (p: { x: number; y: number }) =>
 
 const CORE_OUTER = octagon(CORE_R);
 const CORE_TABLE = octagon(TABLE_R);
-const RING = octagon(RING_R);
-const RING_PATH = `M ${RING.map(fmt).join(" L ")} Z`;
 const CORE_OUTER_PTS = CORE_OUTER.map(fmt).join(" ");
 const CORE_TABLE_PTS = CORE_TABLE.map(fmt).join(" ");
+
+// Faceted outer ring — a wide octagon (rectangular, not round).
+const RING = [
+  { x: CX, y: CY - RY },
+  { x: CX + RX * DIAG, y: CY - RY * DIAG },
+  { x: CX + RX, y: CY },
+  { x: CX + RX * DIAG, y: CY + RY * DIAG },
+  { x: CX, y: CY + RY },
+  { x: CX - RX * DIAG, y: CY + RY * DIAG },
+  { x: CX - RX, y: CY },
+  { x: CX - RX * DIAG, y: CY - RY * DIAG },
+];
+const RING_PATH = `M ${RING.map(fmt).join(" L ")} Z`;
+
+const traceFor = (dir: { x: number; y: number }) => ({
+  a: { x: CX + dir.x * CORE_R, y: CY + dir.y * CORE_R },
+  b: { x: CX + dir.x * (RX - TRACE_BACK), y: CY + dir.y * (RY - TRACE_BACK) },
+});
 
 // Light-from-above facet ramp (composed from charcoal tokens, no raw hex).
 const FACET_FILLS = [
@@ -115,14 +135,9 @@ const CROWN_FACETS = CORE_OUTER.map((_, k) => {
   };
 });
 
-const trace = (dir: { x: number; y: number }, r: number) => ({
-  x: CENTER + dir.x * r,
-  y: CENTER + dir.y * r,
-});
-
 // Octagonal faceted tile (chamfered corners) — shared rest/active shape.
 const CLIP =
-  "polygon(18% 0%, 82% 0%, 100% 18%, 100% 82%, 82% 100%, 18% 100%, 0% 82%, 0% 18%)";
+  "polygon(14% 0%, 86% 0%, 100% 22%, 100% 78%, 86% 100%, 14% 100%, 0% 78%, 0% 22%)";
 
 const FACE_BG =
   "linear-gradient(160deg, var(--elevated) 0%, var(--surface) 60%, color-mix(in srgb, var(--surface) 70%, var(--bg)) 100%)";
@@ -151,7 +166,7 @@ function StationFacet({
       <span
         className={cn(
           "relative block overflow-hidden",
-          layout === "tile" ? "px-3 py-4" : "px-4 py-3",
+          layout === "tile" ? "px-4 py-3.5" : "px-4 py-3",
         )}
         style={{ clipPath: CLIP, background: FACE_BG }}
       >
@@ -166,7 +181,7 @@ function StationFacet({
         <span
           className={cn(
             "relative flex items-center",
-            layout === "tile" ? "flex-col gap-1.5 text-center" : "gap-3",
+            layout === "tile" ? "justify-center gap-3" : "gap-3",
           )}
         >
           <Icon
@@ -176,7 +191,7 @@ function StationFacet({
               isActive ? "text-brand-highlight" : "text-muted",
             )}
           />
-          <span className={cn(layout === "row" && "flex flex-col")}>
+          <span className="flex flex-col">
             <span
               className={cn(
                 "font-mono text-xs font-semibold tabular-nums transition-colors duration-(--dur-base)",
@@ -202,10 +217,10 @@ function StationFacet({
 
 function CoreLabel({ compact = false }: { compact?: boolean }) {
   return (
-    <div className="flex flex-col items-center gap-1 px-3 text-center">
+    <div className="flex flex-col items-center gap-1 px-2 text-center">
       <Image
         alt="Hatchet"
-        className={cn("h-auto object-contain", compact ? "w-16" : "w-3/4")}
+        className={cn("h-auto object-contain", compact ? "w-16" : "w-4/5")}
         height={832}
         src="/brand/hatchet_hatchet_white.png"
         width={2102}
@@ -272,14 +287,14 @@ export function CreatorLifecycle({ className }: { className?: string }) {
           </p>
         </div>
 
-        <div className="mt-12 grid items-center gap-10 lg:mt-16 lg:grid-cols-[1.45fr_1fr] lg:gap-14">
-          {/* ── The Intelligence Core (desktop radial) ─────────────── */}
-          <div className="relative mx-auto hidden aspect-square w-full max-w-[34rem] lg:block">
+        <div className="mt-12 grid items-center gap-10 lg:mt-16 lg:grid-cols-[1.7fr_1fr] lg:gap-12">
+          {/* ── The Intelligence Core (desktop, wide rectangular field) ─ */}
+          <div className="relative mx-auto hidden aspect-[7/5] w-full max-w-[46rem] lg:block">
             {animateRouting ? (
               <motion.div
                 animate={{ rotate: 360 }}
                 aria-hidden="true"
-                className="absolute inset-[10%] rounded-full opacity-[0.06]"
+                className="absolute inset-[14%] rounded-full opacity-[0.06]"
                 style={{
                   background:
                     "conic-gradient(from 0deg, transparent 0deg, var(--brand) 36deg, transparent 84deg)",
@@ -292,7 +307,7 @@ export function CreatorLifecycle({ className }: { className?: string }) {
               aria-hidden="true"
               className="absolute inset-0 h-full w-full"
               fill="none"
-              viewBox="0 0 100 100"
+              viewBox={`0 0 ${VBW} ${VBH}`}
             >
               <defs>
                 <linearGradient
@@ -340,8 +355,7 @@ export function CreatorLifecycle({ className }: { className?: string }) {
                 if (i === active) {
                   return null;
                 }
-                const a = trace(s.dir, TRACE_START);
-                const b = trace(s.dir, TRACE_END);
+                const { a, b } = traceFor(s.dir);
                 return (
                   <line
                     className={animateRouting ? "cta-trace-flow" : undefined}
@@ -378,8 +392,8 @@ export function CreatorLifecycle({ className }: { className?: string }) {
                   animateRouting ? { opacity: [0.32, 0.6, 0.32] } : undefined
                 }
                 clipPath={`url(#${gradientId}-core)`}
-                cx={CENTER}
-                cy={CENTER}
+                cx={CX}
+                cy={CY}
                 fill={`url(#${gradientId}-glow)`}
                 initial={false}
                 opacity={reduceMotion ? 0.42 : 0.32}
@@ -389,8 +403,7 @@ export function CreatorLifecycle({ className }: { className?: string }) {
 
               {/* Live trace → active station + traveling data packet. */}
               {(() => {
-                const a = trace(activeStage.dir, TRACE_START);
-                const b = trace(activeStage.dir, TRACE_END);
+                const { a, b } = traceFor(activeStage.dir);
                 return (
                   <g key={`live-${active}`}>
                     <line
@@ -410,7 +423,7 @@ export function CreatorLifecycle({ className }: { className?: string }) {
                           opacity: [0, 1, 1, 0],
                         }}
                         fill="var(--brand-highlight)"
-                        r={1.2}
+                        r={1.4}
                         style={{
                           filter: "drop-shadow(0 0 1.5px var(--brand))",
                         }}
@@ -428,7 +441,7 @@ export function CreatorLifecycle({ className }: { className?: string }) {
             </svg>
 
             {/* Core label overlay. */}
-            <div className="absolute left-1/2 top-1/2 flex size-[30%] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+            <div className="absolute left-1/2 top-1/2 flex aspect-square w-[22%] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
               <CoreLabel />
             </div>
 
@@ -438,14 +451,14 @@ export function CreatorLifecycle({ className }: { className?: string }) {
               return (
                 <Link
                   aria-label={`Step ${s.num}: ${s.stage}`}
-                  className="group focus-visible:ring-ring/60 absolute w-28 -translate-x-1/2 -translate-y-1/2 rounded-xl no-underline outline-none focus-visible:ring-3"
+                  className="group focus-visible:ring-ring/60 absolute w-44 -translate-x-1/2 -translate-y-1/2 rounded-xl no-underline outline-none focus-visible:ring-3"
                   href={s.href}
                   key={s.num}
                   onFocus={() => activate(i)}
                   onMouseEnter={() => activate(i)}
                   style={{
-                    left: `${CENTER + s.dir.x * RING_R}%`,
-                    top: `${CENTER + s.dir.y * RING_R}%`,
+                    left: `${((CX + s.dir.x * RX) / VBW) * 100}%`,
+                    top: `${((CY + s.dir.y * RY) / VBH) * 100}%`,
                   }}
                 >
                   <StationFacet isActive={isActive} layout="tile" stage={s} />
