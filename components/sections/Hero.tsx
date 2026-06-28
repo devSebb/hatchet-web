@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { CircuitField } from "@/components/sections/CircuitField";
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
@@ -49,6 +50,8 @@ export function Hero({
         className,
       )}
     >
+      <CircuitField density="quiet" />
+
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center text-center">
         <Reveal>
           <div className="mx-auto flex max-w-3xl flex-col items-center">
