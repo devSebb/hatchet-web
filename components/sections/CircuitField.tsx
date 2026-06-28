@@ -52,7 +52,7 @@ const VIAS: [number, number][] = [
 ];
 
 const NEGATIVE_SPACE_MASK =
-  "radial-gradient(120% 95% at 50% 32%, transparent 0%, transparent 42%, #000 90%)";
+  "radial-gradient(120% 95% at 50% 32%, transparent 0%, transparent 26%, #000 78%)";
 
 export function CircuitField({
   density = "quiet",
@@ -155,10 +155,10 @@ export function CircuitField({
   }, [reduceMotion, pulseCount, pulseDurationMs, pulseIntervalMs]);
 
   const rootStyle = {
-    "--cf-trace-color": "color-mix(in srgb, var(--white) 4.5%, transparent)",
-    "--cf-via-color": "color-mix(in srgb, var(--white) 11%, transparent)",
+    "--cf-trace-color": "color-mix(in srgb, var(--white) 9%, transparent)",
+    "--cf-via-color": "color-mix(in srgb, var(--white) 20%, transparent)",
     "--cf-pulse-color": "var(--brand)",
-    "--cf-field-opacity": density === "quiet" ? "0.7" : "0.92",
+    "--cf-field-opacity": density === "quiet" ? "1" : "1",
     "--cf-pitch": "120px",
     maskImage: NEGATIVE_SPACE_MASK,
     WebkitMaskImage: NEGATIVE_SPACE_MASK,
@@ -187,7 +187,7 @@ export function CircuitField({
             d={d}
             key={d}
             stroke="var(--cf-trace-color)"
-            strokeWidth={1.4}
+            strokeWidth={1.6}
           />
         ))}
         {VIAS.map(([cx, cy]) => (
