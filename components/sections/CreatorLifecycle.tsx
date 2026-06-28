@@ -173,8 +173,8 @@ function StationFacet({
     : "color-mix(in srgb, var(--white) 22%, transparent)";
   // Tunable knobs as local CSS vars.
   const rootStyle = {
-    "--chamfer": "18px",
-    "--grid-cell": "11px",
+    "--chamfer": "22px",
+    "--grid-cell": "12px",
     "--grid-line": isActive
       ? "color-mix(in srgb, var(--brand) 20%, transparent)"
       : "color-mix(in srgb, var(--white) 4.5%, transparent)",
@@ -203,7 +203,7 @@ function StationFacet({
         <span
           className={cn(
             "relative block overflow-hidden",
-            layout === "tile" ? "px-4 py-3.5" : "px-4 py-3",
+            layout === "tile" ? "px-6 py-5" : "px-5 py-4",
           )}
           style={{
             clipPath: STATION_CLIP,
@@ -227,7 +227,7 @@ function StationFacet({
           {/* Registration crosshair in upper-right negative space. */}
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute top-2 right-3 size-3.5"
+            className="pointer-events-none absolute top-2.5 right-3.5 size-4"
           >
             <span
               className="absolute top-0 left-1/2 h-full w-px -translate-x-1/2 transition-colors duration-[250ms]"
@@ -258,14 +258,14 @@ function StationFacet({
             <Icon
               aria-hidden="true"
               className={cn(
-                "size-5 shrink-0 transition-colors duration-[250ms]",
+                "size-7 shrink-0 transition-colors duration-[250ms]",
                 isActive ? "text-brand-highlight" : "text-muted",
               )}
             />
             <span className="flex flex-col">
               <span
                 className={cn(
-                  "font-mono text-xs font-semibold tabular-nums transition-colors duration-[250ms]",
+                  "font-mono text-sm font-semibold tabular-nums transition-colors duration-[250ms]",
                   isActive ? "text-brand" : "text-muted",
                 )}
               >
@@ -273,7 +273,7 @@ function StationFacet({
               </span>
               <span
                 className={cn(
-                  "text-sm font-semibold transition-colors duration-[250ms]",
+                  "text-base font-semibold transition-colors duration-[250ms]",
                   isActive ? "text-foreground" : "text-muted",
                 )}
               >
@@ -359,9 +359,9 @@ export function CreatorLifecycle({ className }: { className?: string }) {
           </p>
         </div>
 
-        <div className="mt-12 grid items-center gap-10 lg:mt-16 lg:grid-cols-[1.7fr_1fr] lg:gap-12">
+        <div className="mt-12 grid items-center gap-10 lg:mt-16 lg:grid-cols-[1.85fr_1fr] lg:gap-12">
           {/* ── The Intelligence Core (desktop, wide rectangular field) ─ */}
-          <div className="relative mx-auto hidden aspect-[7/5] w-full max-w-[46rem] lg:block">
+          <div className="relative mx-auto hidden aspect-[7/5] w-full max-w-[52rem] lg:block">
             {animateRouting ? (
               <motion.div
                 animate={{ rotate: 360 }}
@@ -523,7 +523,7 @@ export function CreatorLifecycle({ className }: { className?: string }) {
               return (
                 <Link
                   aria-label={`Step ${s.num}: ${s.stage}`}
-                  className="group focus-visible:ring-ring/60 absolute w-44 -translate-x-1/2 -translate-y-1/2 rounded-xl no-underline outline-none focus-visible:ring-3"
+                  className="group focus-visible:ring-ring/60 absolute w-56 -translate-x-1/2 -translate-y-1/2 rounded-xl no-underline outline-none focus-visible:ring-3"
                   href={s.href}
                   key={s.num}
                   onFocus={() => activate(i)}
