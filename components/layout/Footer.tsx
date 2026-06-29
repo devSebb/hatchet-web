@@ -1,79 +1,116 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 
-import { HubSpotForm } from "@/components/forms/HubSpotForm";
-import { PulseDivider } from "@/components/signal/PulseDivider";
-import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/motion/Reveal";
 import { footerColumns, legalNav } from "@/lib/config/nav";
-import { siteConfig, type SocialLink } from "@/lib/config/site";
+import { siteConfig } from "@/lib/config/site";
 import { BrandLogo } from "./BrandLogo";
+import { FooterNewsletter } from "./FooterNewsletter";
+import { FooterSocials } from "./FooterSocials";
 
-function SocialMark({ label }: { label: SocialLink["label"] }) {
-  return (
-    <span aria-hidden="true" className="font-mono text-xs font-bold">
-      {label === "LinkedIn" ? "IN" : label === "YouTube" ? "YT" : label[0]}
-    </span>
-  );
-}
+// Whisper-faint blueprint dot grid (texture-class, static, no Signal slot).
+// Uses the existing --grid-line token (white 7%) so it recedes on the charcoal.
+const BLUEPRINT_GRID: CSSProperties = {
+  backgroundImage: "radial-gradient(var(--grid-line) 1px, transparent 1.5px)",
+  backgroundSize: "2rem 2rem",
+  maskImage:
+    "linear-gradient(to bottom, transparent, black 22%, black 78%, transparent)",
+  WebkitMaskImage:
+    "linear-gradient(to bottom, transparent, black 22%, black 78%, transparent)",
+};
 
 export function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="bg-background text-foreground">
-      <div className="mx-auto w-full max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
-        <PulseDivider />
+    <footer className="bg-background text-foreground relative isolate overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={BLUEPRINT_GRID}
+      />
+
+      {/* Top hairline with a small registration tick aligned to the content edge. */}
+      <div className="border-border relative border-t">
+        <span
+          aria-hidden="true"
+          className="bg-brand absolute top-0 left-4 h-2 w-px -translate-y-1/2 sm:left-6 lg:left-8"
+        />
       </div>
 
-      <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_1.4fr] lg:px-8 lg:py-16">
-        <div className="space-y-7">
+      {/* Band A — brand + newsletter */}
+      <Reveal>
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 pt-8 pb-6 sm:px-6 lg:grid-cols-2 lg:px-8 lg:pt-10">
           <div>
             <Link
               aria-label="Hatchet home"
-              className="focus-visible:ring-ring/50 inline-flex min-h-11 items-center rounded-lg outline-none focus-visible:ring-3"
+              className="focus-visible:ring-ring/50 -ml-1 inline-flex min-h-11 items-center rounded-lg outline-none focus-visible:ring-3"
               href="/"
             >
-              <BrandLogo alt="" className="h-14" variant="white" />
+              <BrandLogo alt="" className="h-16" variant="white" />
             </Link>
-            <p className="body text-muted mt-4 max-w-md">
+            <p className="body text-muted mt-2 max-w-[300px]">
               Live-streaming, gaming, esports, creator, press, and community
               signals for teams that need market intelligence.
             </p>
           </div>
 
-          <HubSpotForm
-            className="max-w-md"
-            compact
-            id="newsletter"
-            type="newsletter"
-          />
-
-          <div className="flex flex-wrap gap-2">
-            {siteConfig.socials.map((social) => (
-              <Button
-                aria-label={social.label}
-                asChild
-                key={social.href}
-                size="icon-sm"
-                variant="outline"
-              >
-                <Link href={social.href}>
-                  <SocialMark label={social.label} />
-                </Link>
-              </Button>
-            ))}
+          <div className="lg:justify-self-end">
+            <FooterNewsletter />
           </div>
         </div>
+      </Reveal>
 
-        <nav
-          aria-label="Footer navigation"
-          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4"
-        >
-          {footerColumns.map((column) => (
-            <div key={column.label}>
-              <h2 className="eyebrow text-muted">{column.label}</h2>
-              <ul className="mt-3 grid">
-                {column.items.map((item) => (
+      {/* Band B — navigation columns (audited real routes) */}
+      <nav
+        aria-label="Footer navigation"
+        className="border-border/60 mx-auto grid w-full max-w-7xl gap-x-8 gap-y-10 border-t px-4 py-10 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8"
+      >
+        {footerColumns.map((column) => (
+          <div key={column.label}>
+            <h2 className="eyebrow text-muted">{column.label}</h2>
+            <ul className="mt-4 grid gap-1">
+              {column.items.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    className="group text-muted hover:text-foreground focus-visible:ring-ring/50 inline-flex min-h-9 items-center gap-2 rounded-sm text-sm transition-colors outline-none focus-visible:ring-3"
+                    href={item.href}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="bg-brand h-px w-0 transition-all duration-(--dur-base) group-hover:w-3"
+                    />
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
+
+      {/* Band C — signature watermark + legal bar, read as one anchored unit */}
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div aria-hidden="true" className="-mb-3 overflow-hidden select-none">
+          <span
+            className="font-display text-foreground/[0.07] block leading-[0.78] font-extrabold tracking-[-0.04em] whitespace-nowrap"
+            style={{ fontSize: "clamp(2.75rem, 16vw, 12rem)" }}
+          >
+            {siteConfig.name}
+          </span>
+        </div>
+
+        <div className="border-border text-muted flex flex-col gap-4 border-t py-6 text-sm md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <p>
+              &copy; {year} {siteConfig.name}
+            </p>
+            <nav aria-label="Legal">
+              <ul className="flex flex-wrap items-center gap-x-4 gap-y-1">
+                {legalNav.map((item) => (
                   <li key={item.href}>
                     <Link
-                      className="hover:text-foreground focus-visible:ring-ring/50 text-muted inline-flex min-h-11 min-w-11 items-center rounded-sm text-sm transition-colors outline-none focus-visible:ring-3"
+                      className="hover:text-foreground focus-visible:ring-ring/50 inline-flex min-h-9 items-center rounded-sm transition-colors outline-none focus-visible:ring-3"
                       href={item.href}
                     >
                       {item.label}
@@ -81,31 +118,10 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
-          ))}
-        </nav>
-      </div>
+            </nav>
+          </div>
 
-      <div className="border-border border-t">
-        <div className="text-muted mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-6 text-sm sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-          <p>
-            &copy; {new Date().getFullYear()} {siteConfig.name}. All rights
-            reserved.
-          </p>
-          <nav aria-label="Legal">
-            <ul className="flex flex-wrap gap-x-4">
-              {legalNav.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    className="hover:text-foreground focus-visible:ring-ring/50 inline-flex min-h-11 min-w-11 items-center rounded-sm transition-colors outline-none focus-visible:ring-3"
-                    href={item.href}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <FooterSocials className="md:justify-self-end" />
         </div>
       </div>
     </footer>
