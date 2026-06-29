@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   ArrowRightIcon,
   FileTextIcon,
@@ -139,147 +139,70 @@ const CROWN_FACETS = CORE_OUTER.map((_, k) => {
 const CORE_CLIP =
   "polygon(18% 0%, 82% 0%, 100% 18%, 100% 82%, 82% 100%, 18% 100%, 0% 82%, 0% 18%)";
 
-// Station node — a single cut corner (bottom-right), sharp elsewhere.
-const STATION_CLIP =
-  "polygon(0 0, 100% 0, 100% calc(100% - var(--chamfer)), calc(100% - var(--chamfer)) 100%, 0 100%)";
-
 const FACE_BG =
   "linear-gradient(160deg, var(--elevated) 0%, var(--surface) 60%, color-mix(in srgb, var(--surface) 70%, var(--bg)) 100%)";
-const EDGE_REST =
-  "linear-gradient(150deg, color-mix(in srgb, var(--white) 22%, var(--border)) 0%, var(--border) 50%, color-mix(in srgb, var(--bg) 55%, var(--border)) 100%)";
-const EDGE_ACTIVE =
-  "linear-gradient(150deg, color-mix(in srgb, var(--white) 30%, var(--brand)) 0%, color-mix(in srgb, var(--brand) 55%, var(--bg)) 100%)";
 const UNDERGLOW =
   "radial-gradient(120% 100% at 50% 120%, color-mix(in srgb, var(--brand) 60%, transparent) 0%, transparent 70%)";
-
-const GRID_MASK = "radial-gradient(125% 115% at 50% 26%, #000 36%, transparent 92%)";
 
 function StationFacet({
   stage,
   isActive,
-  layout,
-  index,
 }: {
   stage: Stage;
   isActive: boolean;
-  layout: "tile" | "row";
-  index: number;
 }) {
   const { Icon } = stage;
-  // Decorative coordinate, derived from the step number (implies no real metric).
-  const tick = `${stage.num} · ${String.fromCharCode(65 + index)}${index + 1}`;
-  const markColor = isActive
-    ? "var(--brand)"
-    : "color-mix(in srgb, var(--white) 22%, transparent)";
-  // Tunable knobs as local CSS vars.
-  const rootStyle = {
-    "--chamfer": "22px",
-    "--grid-cell": "12px",
-    "--grid-line": isActive
-      ? "color-mix(in srgb, var(--brand) 20%, transparent)"
-      : "color-mix(in srgb, var(--white) 4.5%, transparent)",
-  } as CSSProperties;
-
   return (
-    <span className="relative block" style={rootStyle}>
-      {/* Red under-glow behind the tile (lives outside the clip). */}
+    <span className="relative block">
+      {/* Red under-glow behind the card (active only). */}
       <span
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute -inset-2 blur-lg transition-opacity duration-[250ms]",
+          "pointer-events-none absolute -inset-2 rounded-2xl blur-lg transition-opacity duration-[250ms]",
           isActive ? "opacity-100" : "opacity-0",
         )}
         style={{ background: UNDERGLOW }}
       />
 
-      {/* Engineered 1px edge frame that follows the cut corner. */}
+      {/* Clean rounded card — mirrors the detail container on the right. */}
       <span
-        className="relative block p-px transition-[background] duration-[250ms]"
-        style={{
-          clipPath: STATION_CLIP,
-          background: isActive ? EDGE_ACTIVE : EDGE_REST,
-        }}
+        className={cn(
+          "cta-panel-frame relative flex items-center gap-3.5 rounded-2xl border p-5 backdrop-blur-sm transition-[border-color,background-color] duration-[250ms]",
+          isActive ? "border-brand bg-card/85" : "border-border bg-card/60",
+        )}
       >
         <span
           className={cn(
-            "relative block overflow-hidden",
-            layout === "tile" ? "px-6 py-5" : "px-5 py-4",
+            "flex size-11 shrink-0 items-center justify-center rounded-lg border transition-colors duration-[250ms]",
+            isActive
+              ? "border-brand/40 bg-brand/10"
+              : "border-border bg-elevated/60",
           )}
-          style={{
-            clipPath: STATION_CLIP,
-            background: FACE_BG,
-            boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--white) 6%, transparent)",
-          }}
         >
-          {/* Blueprint line grid, edge-masked so it fades before the cut. */}
-          <span
+          <Icon
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px)",
-              backgroundSize: "var(--grid-cell) var(--grid-cell)",
-              maskImage: GRID_MASK,
-              WebkitMaskImage: GRID_MASK,
-            }}
+            className={cn(
+              "size-5 transition-colors duration-[250ms]",
+              isActive ? "text-brand-highlight" : "text-muted",
+            )}
           />
-
-          {/* Registration crosshair in upper-right negative space. */}
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute top-2.5 right-3.5 size-4"
-          >
-            <span
-              className="absolute top-0 left-1/2 h-full w-px -translate-x-1/2 transition-colors duration-[250ms]"
-              style={{ background: markColor }}
-            />
-            <span
-              className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 transition-colors duration-[250ms]"
-              style={{ background: markColor }}
-            />
-          </span>
-
-          {/* Decorative coordinate tick near the chamfer. */}
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute right-4 bottom-1.5 font-mono text-[9.5px] tracking-[0.1em] transition-colors duration-[250ms]"
-            style={{ color: markColor }}
-          >
-            {tick}
-          </span>
-
-          {/* Content (unchanged). */}
+        </span>
+        <span className="flex flex-col">
           <span
             className={cn(
-              "relative z-10 flex items-center",
-              layout === "tile" ? "justify-center gap-3" : "gap-3",
+              "font-mono text-xs font-semibold tabular-nums transition-colors duration-[250ms]",
+              isActive ? "text-brand" : "text-muted",
             )}
           >
-            <Icon
-              aria-hidden="true"
-              className={cn(
-                "size-7 shrink-0 transition-colors duration-[250ms]",
-                isActive ? "text-brand-highlight" : "text-muted",
-              )}
-            />
-            <span className="flex flex-col">
-              <span
-                className={cn(
-                  "font-mono text-sm font-semibold tabular-nums transition-colors duration-[250ms]",
-                  isActive ? "text-brand" : "text-muted",
-                )}
-              >
-                {stage.num}
-              </span>
-              <span
-                className={cn(
-                  "text-base font-semibold transition-colors duration-[250ms]",
-                  isActive ? "text-foreground" : "text-muted",
-                )}
-              >
-                {stage.stage}
-              </span>
-            </span>
+            {stage.num}
+          </span>
+          <span
+            className={cn(
+              "text-base leading-tight font-semibold transition-colors duration-[250ms]",
+              isActive ? "text-foreground" : "text-muted",
+            )}
+          >
+            {stage.stage}
           </span>
         </span>
       </span>
@@ -533,12 +456,7 @@ export function CreatorLifecycle({ className }: { className?: string }) {
                     top: `${((CY + s.dir.y * RY) / VBH) * 100}%`,
                   }}
                 >
-                  <StationFacet
-                    index={i}
-                    isActive={isActive}
-                    layout="tile"
-                    stage={s}
-                  />
+                  <StationFacet isActive={isActive} stage={s} />
                 </Link>
               );
             })}
@@ -588,12 +506,7 @@ export function CreatorLifecycle({ className }: { className?: string }) {
                       onFocus={() => activate(i)}
                       onMouseEnter={() => activate(i)}
                     >
-                      <StationFacet
-                        index={i}
-                        isActive={i === active}
-                        layout="row"
-                        stage={s}
-                      />
+                      <StationFacet isActive={i === active} stage={s} />
                     </Link>
                   </li>
                 ))}
