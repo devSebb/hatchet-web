@@ -1,4 +1,5 @@
 import { Counter } from "@/components/motion/Counter";
+import { CircuitField } from "@/components/sections/CircuitField";
 import { Sparkline } from "@/components/signal/Sparkline";
 import { cn } from "@/lib/utils";
 
@@ -60,7 +61,13 @@ export function StatCounters({
   className,
 }: StatCountersProps) {
   return (
-    <section className={cn("px-4 py-16 sm:px-6 lg:px-8", className)}>
+    <section
+      className={cn(
+        "relative isolate overflow-hidden px-4 py-16 sm:px-6 lg:px-8",
+        className,
+      )}
+    >
+      <CircuitField density="quiet" />
       <div className="mx-auto w-full max-w-7xl">
         <div className="max-w-3xl">
           <p className="eyebrow text-muted">{eyebrow}</p>

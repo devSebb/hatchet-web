@@ -54,6 +54,14 @@ const VIAS: [number, number][] = [
 const NEGATIVE_SPACE_MASK =
   "radial-gradient(120% 95% at 50% 32%, transparent 0%, transparent 26%, #000 78%)";
 
+// Pulses cycle through the brand palette so the motion reads as on-theme
+// rather than a single flat red.
+const PULSE_COLORS = [
+  "var(--brand)",
+  "var(--brand-highlight)",
+  "var(--brand-soft)",
+];
+
 export function CircuitField({
   density = "quiet",
   pulseCount = 3,
@@ -87,6 +95,7 @@ export function CircuitField({
     const busy = new Set<number>();
     let timer: number | undefined;
     let stopped = false;
+    let colorTick = 0;
 
     const rand = (min: number, max: number) => min + Math.random() * (max - min);
 
@@ -104,6 +113,10 @@ export function CircuitField({
       }
       const d = TRACES[Math.floor(Math.random() * TRACES.length)];
       busy.add(slot);
+      el.style.setProperty(
+        "--cf-pulse-color",
+        PULSE_COLORS[colorTick++ % PULSE_COLORS.length],
+      );
       el.style.offsetPath = `path('${d}')`;
       const anim = el.animate(
         [

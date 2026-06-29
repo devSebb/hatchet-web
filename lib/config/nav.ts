@@ -65,6 +65,11 @@ export const primaryNav = [
         href: "/who-we-serve/esports-teams",
         description: "Benchmark live audiences, events, and sponsor value.",
       },
+      {
+        label: "Marketing & Talent Agencies",
+        href: "/who-we-serve/marketing-and-talent-agencies",
+        description: "Run creator programs at scale for multiple clients.",
+      },
     ],
   },
   {

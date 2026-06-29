@@ -64,6 +64,22 @@ export const verticals = [
     proof:
       "Hatchet gives esports organizations a repeatable read on live attention, sponsor context, and audience movement.",
   },
+  {
+    slug: "marketing-and-talent-agencies",
+    label: "Marketing & Talent Agencies",
+    href: "/who-we-serve/marketing-and-talent-agencies",
+    title: "Run creator programs at scale across every client.",
+    subtitle:
+      "Manage discovery, campaigns, and reporting for multiple rosters and brands from one verified source of truth.",
+    audience: "Creator, talent, influencer, and social agency teams",
+    jobs: [
+      "Source and verify creators against each client brief in minutes.",
+      "Run multiple campaigns end to end: contracts, payments, and deliverables.",
+      "Deliver client-ready reporting on one consistent set of metrics.",
+    ],
+    proof:
+      "Hatchet gives agencies a single workspace to discover creators, run programs, and prove results across every client.",
+  },
 ] as const;
 
 export type Vertical = (typeof verticals)[number];

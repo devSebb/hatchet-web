@@ -1,9 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Gamepad2Icon, ShieldCheckIcon, WorkflowIcon } from "lucide-react";
+import {
+  ArrowRightIcon,
+  BadgeCheckIcon,
+  BarChart3Icon,
+  Gamepad2Icon,
+  LayoutGridIcon,
+  MegaphoneIcon,
+  RocketIcon,
+  Share2Icon,
+  ShieldCheckIcon,
+  SwordsIcon,
+  TrendingUpIcon,
+  TrophyIcon,
+  UsersIcon,
+  WorkflowIcon,
+} from "lucide-react";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
+import { CircuitField } from "@/components/sections/CircuitField";
 import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
 import { CTASection } from "@/components/sections/CTASection";
 import { FeatureBlock } from "@/components/sections/FeatureBlock";
@@ -46,6 +62,39 @@ const pillars = [
   },
 ];
 
+const whyHatchetReasons = [
+  {
+    icon: Share2Icon,
+    title: "Platform Coverage",
+    tagline: "Name a platform. We probably track it.",
+    body: "Twitch, YouTube, TikTok, Instagram, X and 25+ more. Where gaming lives, Hatchet is already there.",
+  },
+  {
+    icon: BadgeCheckIcon,
+    title: "Verified Data, Longest History",
+    tagline: "10+ years of data. Zero tolerance for fake.",
+    body: "The deepest verified dataset in gaming — streaming and social, no estimates, no inflated audiences, no shortcuts.",
+  },
+  {
+    icon: TrophyIcon,
+    title: "Industry Leader",
+    tagline: "The teams running gaming trust Hatchet.",
+    body: "Riot, EA, Ubisoft, Capcom and hundreds more use Hatchet to make every campaign decision with confidence.",
+  },
+  {
+    icon: TrendingUpIcon,
+    title: "Stay Ahead of the Industry",
+    tagline: "Always know what's happening in gaming.",
+    body: "Access analyst-written reports, trend data, and market intelligence — so you're never caught off guard.",
+  },
+  {
+    icon: LayoutGridIcon,
+    title: "One Platform, Built for You",
+    tagline: "Everything your team needs. Nothing it doesn't.",
+    body: "Discovery, execution, reporting — tailored to your workflow, not a generic tool you have to bend to fit.",
+  },
+];
+
 const differentiators = [
   {
     label: "One normalized market read",
@@ -61,26 +110,36 @@ const differentiators = [
   },
 ];
 
-const verticals = [
+const useCases = [
   {
+    icon: MegaphoneIcon,
     label: "Brands",
+    body: "Understand gaming before you commit a budget. Reach Gen Z the right way, with an expert beside you.",
     href: "/who-we-serve/brands",
-    body: "Find the creators, games, and moments that fit the audience before campaigns lock.",
   },
   {
-    label: "Games & Publishers",
+    icon: RocketIcon,
+    label: "Game Publishers",
+    body: "Launch campaigns and always-on programs in one tool. Conversion, not just reach.",
     href: "/who-we-serve/games-publishers",
-    body: "Measure launch interest, creator pickup, and durable category lift across platforms.",
   },
   {
+    icon: BarChart3Icon,
     label: "Market Research Agencies",
+    body: "Competitor comparisons and trend data, built on verified, accurate numbers.",
     href: "/who-we-serve/market-research-agencies",
-    body: "Add normalized live-streaming intelligence to gaming market studies and trackers.",
   },
   {
-    label: "Esports Teams",
+    icon: SwordsIcon,
+    label: "Esports Orgs",
+    body: "Viewership, sponsorship, and audience data in one repeatable read.",
     href: "/who-we-serve/esports-teams",
-    body: "Benchmark broadcasts, co-streams, sponsor visibility, and event audience retention.",
+  },
+  {
+    icon: UsersIcon,
+    label: "Marketing & Talent Agencies",
+    body: "Run creator programs at scale for multiple clients, all from one workspace.",
+    href: "/who-we-serve/marketing-and-talent-agencies",
   },
 ];
 
@@ -170,6 +229,7 @@ function Pillars() {
         aria-hidden="true"
         className="pointer-events-none absolute -top-24 right-0 -z-10 h-80 w-80 rounded-full bg-[var(--gradient-cta-glow)] blur-3xl"
       />
+      <CircuitField density="quiet" />
       <div className="mx-auto w-full max-w-7xl">
         <Reveal>
           <div className="max-w-3xl">
@@ -208,6 +268,67 @@ function Pillars() {
                   {pillar.title}
                 </h3>
                 <p className="body text-muted mt-3">{pillar.body}</p>
+              </article>
+            );
+          })}
+        </Stagger>
+      </div>
+    </section>
+  );
+}
+
+function WhyHatchet() {
+  return (
+    <section className="bg-background text-foreground relative isolate overflow-hidden px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 left-0 -z-10 h-80 w-80 rounded-full bg-[var(--gradient-cta-glow)] blur-3xl"
+      />
+      <CircuitField density="quiet" />
+      <div className="mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-12 lg:gap-16">
+        <Reveal className="lg:col-span-4">
+          <div className="lg:sticky lg:top-28">
+            <p className="eyebrow text-muted">Why Hatchet</p>
+            <h2 className="h1 mt-4">
+              Five reasons teams{" "}
+              <span className="text-gradient-brand">bet on Hatchet.</span>
+            </h2>
+            <p className="body-lg text-muted mt-5">
+              The broadest coverage, the deepest verified history, and the
+              workflow gaming teams actually run on.
+            </p>
+          </div>
+        </Reveal>
+
+        <Stagger
+          childClassName="border-border border-t"
+          className="border-border border-b lg:col-span-8"
+        >
+          {whyHatchetReasons.map((reason, index) => {
+            const Icon = reason.icon;
+
+            return (
+              <article
+                className="group flex gap-5 py-7 sm:gap-7 sm:py-8"
+                key={reason.title}
+              >
+                <div className="flex shrink-0 flex-col items-center gap-3">
+                  <span className="font-display text-brand-soft text-sm font-semibold tabular-nums">
+                    {`0${index + 1}`}
+                  </span>
+                  <span className="bg-gradient-brand shadow-glow-brand flex size-11 items-center justify-center rounded-xl text-white transition-transform duration-(--dur-base) group-hover:-translate-y-0.5">
+                    <Icon aria-hidden="true" className="size-5" />
+                  </span>
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-display text-xl font-semibold tracking-[-0.01em]">
+                    {reason.title}
+                  </h3>
+                  <p className="text-brand-soft mt-1 font-medium">
+                    {reason.tagline}
+                  </p>
+                  <p className="body text-muted mt-3 max-w-2xl">{reason.body}</p>
+                </div>
               </article>
             );
           })}
@@ -283,35 +404,74 @@ function ReportsMedia() {
   );
 }
 
-function VerticalTeaser() {
+function BuiltForYourTeam() {
   return (
-    <section className="surface-paper bg-background px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
+    <section className="surface-paper bg-background text-foreground px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
       <div className="mx-auto w-full max-w-7xl">
         <Reveal>
           <div className="max-w-3xl">
-            <p className="eyebrow text-muted">Who we serve</p>
-            <h2 className="h1 mt-4">
-              One signal layer for every team watching gaming move.
-            </h2>
+            <p className="eyebrow text-muted">Use cases</p>
+            <h2 className="h1 mt-4">Built for your team.</h2>
+            <p className="body-lg text-muted mt-5">
+              Whatever your role in gaming, Hatchet meets your workflow. Pick the
+              path that fits how your team works.
+            </p>
           </div>
         </Reveal>
 
-        <Stagger className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {verticals.map((vertical) => (
-            <Link
-              className="group border-border bg-card hover:border-brand/60 focus-visible:ring-ring/50 hover:bg-muted-surface flex min-h-64 flex-col justify-between rounded-xl border p-5 transition-[border-color,background-color,transform] duration-(--dur-base) outline-none hover:-translate-y-1 focus-visible:ring-3"
-              href={vertical.href}
-              key={vertical.href}
-            >
-              <div>
-                <p className="eyebrow text-muted">{vertical.label}</p>
-                <p className="body text-muted mt-5">{vertical.body}</p>
-              </div>
-              <span className="text-foreground mt-8 text-sm font-semibold underline-offset-4 group-hover:underline">
-                Explore {vertical.label}
-              </span>
-            </Link>
-          ))}
+        <Stagger
+          childClassName="h-full"
+          className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {useCases.map((useCase) => {
+            const Icon = useCase.icon;
+
+            return (
+              <Link
+                className="group border-border bg-card hover:border-brand/40 hover:shadow-glow-brand focus-visible:ring-ring/50 flex h-full flex-col rounded-2xl border p-7 shadow-sm transition-[transform,border-color,box-shadow] duration-(--dur-base) outline-none hover:-translate-y-1 focus-visible:ring-3"
+                href={useCase.href}
+                key={useCase.href}
+              >
+                <span className="bg-gradient-brand shadow-glow-brand flex size-12 items-center justify-center rounded-xl text-white">
+                  <Icon aria-hidden="true" className="size-6" />
+                </span>
+                <h3 className="font-display mt-6 text-xl font-semibold tracking-[-0.01em]">
+                  {useCase.label}
+                </h3>
+                <p className="body text-muted mt-3 flex-1">{useCase.body}</p>
+                <span className="text-foreground mt-6 inline-flex items-center gap-1.5 text-sm font-semibold underline-offset-4 group-hover:underline">
+                  Explore
+                  <ArrowRightIcon
+                    aria-hidden="true"
+                    className="size-4 transition-transform duration-(--dur-base) group-hover:translate-x-0.5"
+                  />
+                </span>
+              </Link>
+            );
+          })}
+
+          <Link
+            className="group bg-gradient-brand shadow-glow-brand focus-visible:ring-ring/50 flex h-full flex-col rounded-2xl p-7 text-white transition-transform duration-(--dur-base) outline-none hover:-translate-y-1 focus-visible:ring-3"
+            href={siteConfig.bookDemoUrl}
+          >
+            <span className="flex size-12 items-center justify-center rounded-xl bg-white/15 text-white">
+              <ArrowRightIcon aria-hidden="true" className="size-6" />
+            </span>
+            <h3 className="font-display mt-6 text-xl font-semibold tracking-[-0.01em]">
+              Not sure where you fit?
+            </h3>
+            <p className="body mt-3 flex-1 text-white/85">
+              Tell us about your team and we&apos;ll map the fastest path to
+              value.
+            </p>
+            <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold">
+              Book a demo
+              <ArrowRightIcon
+                aria-hidden="true"
+                className="size-4 transition-transform duration-(--dur-base) group-hover:translate-x-0.5"
+              />
+            </span>
+          </Link>
         </Stagger>
       </div>
     </section>
@@ -353,6 +513,14 @@ export default function Home() {
       <SectionDivider />
 
       <CreatorLifecycle />
+
+      <SectionDivider />
+
+      <WhyHatchet />
+
+      <SectionDivider surface="paper" />
+
+      <BuiltForYourTeam />
 
       <SectionDivider surface="paper" />
 
@@ -398,10 +566,6 @@ export default function Home() {
         stats={proofStats}
         title="A measurement layer built for the scale of gaming culture."
       />
-
-      <SectionDivider surface="paper" />
-
-      <VerticalTeaser />
 
       <SectionDivider surface="paper" />
 
