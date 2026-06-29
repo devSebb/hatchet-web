@@ -102,10 +102,6 @@ export default async function CustomerStoryPage({
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Build the next story"
-        secondaryCta={{
-          label: "All customer stories",
-          href: "/resources/customer-stories",
-        }}
         title="Turn your live-streaming data into a story stakeholders can use."
       />
     </main>

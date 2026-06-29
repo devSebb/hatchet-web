@@ -104,7 +104,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Read the next signal"
-        secondaryCta={{ label: "All posts", href: "/blog" }}
         title="Bring live-streaming analysis into the next planning meeting."
       />
     </main>

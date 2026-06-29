@@ -67,7 +67,6 @@ export default async function PressPage() {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Press contact"
-        secondaryCta={{ label: "Resource hub", href: "/resources" }}
         title="Use Hatchet context in your next gaming market story."
       />
     </main>

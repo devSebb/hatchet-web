@@ -375,7 +375,25 @@ export default function StyleguidePage() {
 
           <PulseDivider />
 
-          <CTASection surface="paper" />
+          <CTASection eyebrow="Book a demo" />
+
+          <PulseDivider />
+
+          <CTASection
+            eyebrow="Book a demo"
+            media={{
+              src: "/images/hero-dashboard.png",
+              alt: "Hatchet dashboard preview",
+              width: 2000,
+              height: 1143,
+            }}
+            proof={{
+              kind: "stat",
+              value: "{{VERIFY}}",
+              label: "creators tracked",
+            }}
+            variant="featured"
+          />
         </div>
       </section>
     </main>

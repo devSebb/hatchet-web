@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { CircuitField } from "@/components/sections/CircuitField";
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
@@ -45,10 +46,12 @@ export function Hero({
   return (
     <section
       className={cn(
-        "bg-background relative isolate overflow-hidden px-4 pt-10 pb-16 sm:px-6 lg:px-8 lg:pt-14 lg:pb-20",
+        "bg-background relative isolate overflow-hidden px-4 pt-12 pb-16 sm:px-6 lg:px-8 lg:pt-18 lg:pb-20",
         className,
       )}
     >
+      <CircuitField density="quiet" />
+
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center text-center">
         <Reveal>
           <div className="mx-auto flex max-w-3xl flex-col items-center">
@@ -57,9 +60,9 @@ export function Hero({
               {title}{" "}
               <span className="text-gradient-brand">{emphasizedTitle}</span>
             </h1>
-            <p className="body-lg text-muted mt-6 max-w-2xl">{subtitle}</p>
+            <p className="body-lg text-muted mt-4 max-w-2xl">{subtitle}</p>
             {stats?.length ? (
-              <ul className="text-muted mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-mono text-sm">
+              <ul className="text-muted mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-mono text-sm">
                 {stats.map((stat, index) => (
                   <li className="flex items-center gap-3" key={stat}>
                     {index > 0 ? (
@@ -74,7 +77,7 @@ export function Hero({
                 ))}
               </ul>
             ) : null}
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Button asChild>
                 <Link href={primaryCta.href}>{primaryCta.label}</Link>
               </Button>
@@ -87,7 +90,7 @@ export function Hero({
 
         {image ? (
           <Reveal delay={0.08}>
-            <div className="border-border bg-surface/60 mt-10 w-full max-w-5xl overflow-hidden rounded-2xl border p-2 shadow-xl lg:mt-12">
+            <div className="border-border bg-surface/60 mt-8 w-full max-w-5xl overflow-hidden rounded-2xl border p-2 shadow-xl lg:mt-10">
               <Image
                 alt={image.alt}
                 className="h-auto w-full rounded-xl"

@@ -65,7 +65,6 @@ export default async function GuidesPage() {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Need a custom readout"
-        secondaryCta={{ label: "View blog", href: "/blog" }}
         title="Build a reporting framework around the signal your team needs."
       />
     </main>

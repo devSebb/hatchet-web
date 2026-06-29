@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
+import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { SectionDivider } from "@/components/sections/SectionDivider";
@@ -57,6 +58,10 @@ export default function WhyHatchetPage() {
 
       <SectionDivider />
 
+      <CreatorLifecycle />
+
+      <SectionDivider />
+
       <StatCounters
         className="bg-elevated py-18 lg:py-24"
         eyebrow="Proof at signal scale"
@@ -69,7 +74,6 @@ export default function WhyHatchetPage() {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="See the difference"
-        secondaryCta={{ label: "Explore solutions", href: "/solutions" }}
         title="Use live signal when gaming market decisions need proof."
       />
     </main>

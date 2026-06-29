@@ -152,8 +152,18 @@ export default function PricingPage() {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Talk pricing"
-        secondaryCta={{ label: "Why Hatchet", href: "/why-hatchet" }}
+        media={{
+          src: "/images/hero-dashboard.png",
+          alt: "Hatchet dashboard showing live-streaming analytics across platforms",
+          width: 2000,
+          height: 1143,
+        }}
+        proof={{
+          kind: "pills",
+          items: ["Creator discovery", "Campaign tracking", "ROI measurement"],
+        }}
         title="Talk with Hatchet about the right market intelligence scope."
+        variant="featured"
       />
     </main>
   );

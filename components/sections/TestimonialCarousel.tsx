@@ -154,10 +154,10 @@ export function TestimonialCarousel({
                 className="min-w-0 flex-[0_0_100%] pr-4 md:flex-[0_0_70%] lg:flex-[0_0_52%]"
                 key={`${testimonial.company}-${testimonial.name}`}
               >
-                <div className="border-border bg-surface flex min-h-80 flex-col justify-between rounded-xl border p-6 shadow-md">
+                <div className="border-paper-border bg-paper-surface flex min-h-80 flex-col justify-between rounded-xl border-2 p-6">
                   <div>
                     {testimonial.logoSrc ? (
-                      <div className="border-border bg-paper-surface h-12 w-40 rounded-lg border p-2 shadow-sm">
+                      <div className="border-paper-border bg-paper-surface h-12 w-40 rounded-lg border p-2 shadow-sm">
                         <div className="relative h-full w-full">
                           <Image
                             alt={`${testimonial.company} logo`}
@@ -169,29 +169,21 @@ export function TestimonialCarousel({
                         </div>
                       </div>
                     ) : (
-                      <div className="border-border bg-background/70 font-display text-foreground inline-flex h-10 items-center rounded-lg border px-3 text-sm font-semibold">
+                      <div className="border-paper-border bg-paper font-display text-paper-ink inline-flex h-10 items-center rounded-lg border px-3 text-sm font-semibold">
                         {testimonial.logo}
                       </div>
                     )}
-                    <blockquote className="body-lg text-foreground mt-8">
+                    <blockquote className="body-lg text-paper-ink mt-8">
                       “{testimonial.quote}”
                     </blockquote>
                   </div>
-                  <div className="mt-8 flex items-center gap-3">
-                    <div className="bg-elevated grid size-10 place-items-center rounded-lg font-mono text-xs font-bold">
-                      {testimonial.name
-                        .split(" ")
-                        .map((part) => part[0])
-                        .join("")}
-                    </div>
-                    <div>
-                      <p className="text-foreground text-sm font-semibold">
-                        {testimonial.name}
-                      </p>
-                      <p className="small text-muted">
-                        {testimonial.role}, {testimonial.company}
-                      </p>
-                    </div>
+                  <div className="mt-8">
+                    <p className="text-paper-ink text-sm font-semibold">
+                      {testimonial.name}
+                    </p>
+                    <p className="small text-paper-muted">
+                      {testimonial.role}, {testimonial.company}
+                    </p>
                   </div>
                 </div>
               </article>

@@ -2,9 +2,10 @@ import { normalizeBrand } from "@/lib/content/providers/wordpress";
 import { siteConfig } from "@/lib/config/site";
 
 export type SolutionSlug =
-  | "web-dashboard"
-  | "custom-reports"
-  | "api-data-integrations";
+  | "discovery"
+  | "intelligence"
+  | "creator-community"
+  | "reporting";
 
 type SolutionCta = {
   label: string;
@@ -32,25 +33,94 @@ export type ProductSolution = {
   href: `/solutions/${SolutionSlug}`;
 };
 
+// NOTE: Solutions are framed as the four stages of the creator lifecycle
+// (Find & Verify → Analyze → Execute → Report). Capabilities marked with a
+// trailing {{VERIFY}} describe product behavior that has no prior source copy;
+// content/product to confirm the claim before launch.
 const rawSolutions = [
   {
-    slug: "web-dashboard",
-    name: "Web Dashboard",
-    eyebrow: "Web Dashboard",
-    title: "All-in-one live streaming analytics",
+    slug: "discovery",
+    name: "Discovery",
+    eyebrow: "Find & Verify",
+    title: "Find the right creators — and verify them before you commit.",
     subtitle:
-      "The Web Dashboard is the core of Hatchet, with real-time insights and comprehensive analytics across the live streaming universe in one intuitive interface.",
+      "Describe the creator you need and get a match. Hatchet's AI search surfaces the right channels, then scores audience quality so you know who is real before a dollar moves.",
     summary:
-      "Explore live viewership, esports, YouTube VODs, audience behavior, and competitive movement from one shared workspace.",
+      "Search by what you actually need, then verify audience authenticity with fake-follower scoring and suspicious-channel flags.",
     bodyNote:
-      "Share the same data across departments, then export clean readouts to Excel, PDF, and Google Sheets.",
+      "Discovery runs on the same live signal as the rest of Hatchet, so the creators you shortlist carry their full history straight into analysis and campaigns.",
+    primaryCta: { label: "Book a demo", href: siteConfig.bookDemoUrl },
+    secondaryCta: { label: "Start free trial", href: siteConfig.signUpUrl },
+    capabilities: [
+      {
+        title: "AI Smart Search",
+        description:
+          "Describe the creator you need in plain language and get a ranked match across 20+ platforms, instead of filtering by hand. {{VERIFY}}",
+      },
+      {
+        title: "Fake audience scoring",
+        description:
+          "Score follower and viewer authenticity to spot inflated or bot-driven audiences before you commit budget. {{VERIFY}}",
+      },
+      {
+        title: "Suspicious channel flagging",
+        description:
+          "Automatic flags surface bought engagement, irregular growth, and risky channels while you shortlist. {{VERIFY}}",
+      },
+      {
+        title: "Creator discovery across platforms",
+        description:
+          "Find creators making content on any topic, then track relevance across gaming and non-gaming YouTube VODs.",
+      },
+      {
+        title: "Audience fit",
+        description:
+          "Understand viewer demographics, preferences, and behavior so the creators you pick match the audience you want to grow.",
+      },
+      {
+        title: "Shortlist to roster",
+        description:
+          "Move verified creators straight into outreach and your roster — no spreadsheets, no copy-paste between tools.",
+      },
+    ],
+    why: [
+      {
+        title: "Know before you commit",
+        description:
+          "Verify audience quality up front so spend goes to creators with real, engaged audiences.",
+      },
+      {
+        title: "Describe it, don't filter it",
+        description:
+          "Natural-language search replaces hours of manual filtering with a ranked shortlist. {{VERIFY}}",
+      },
+      {
+        title: "One connected workflow",
+        description:
+          "Verified creators carry into analysis, execution, and reporting without re-importing data.",
+      },
+    ],
+    metaDescription:
+      "Find and verify creators with Hatchet Discovery: AI smart search, fake-audience scoring, suspicious-channel flagging, and audience-fit analysis across 20+ platforms.",
+  },
+  {
+    slug: "intelligence",
+    name: "Intelligence",
+    eyebrow: "Analyze",
+    title: "Streaming and social campaign analytics in one view.",
+    subtitle:
+      "Measure live viewership, esports, and social performance side by side. Hatchet unifies cross-platform signal so your team reads the market from one place instead of stitching exports.",
+    summary:
+      "Track real-time and historical performance across streaming and social — viewership, esports, competitors, and audience — in one workspace.",
+    bodyNote:
+      "Intelligence draws on minute-level data going back to 2016 across 20+ platforms, so every read is grounded in the same source the rest of your team uses.",
     primaryCta: { label: "Book a demo", href: siteConfig.bookDemoUrl },
     secondaryCta: { label: "Start free trial", href: siteConfig.signUpUrl },
     capabilities: [
       {
         title: "Live streaming viewership",
         description:
-          "Track real-time and historical viewership at minute-level granularity across every major platform — with data going back to 2016 — including top channels, games, and market trends.",
+          "Track real-time and historical viewership at minute-level granularity across every major platform, with data going back to 2016.",
       },
       {
         title: "Esports measurement",
@@ -58,9 +128,9 @@ const rawSolutions = [
           "Measure tournaments, teams, player performances, engagement, and the global impact of esports events.",
       },
       {
-        title: "YouTube VOD intelligence",
+        title: "Cross-platform campaign analytics",
         description:
-          "Find creators making content on any topic, then monitor brand mentions and relevance across gaming and non-gaming YouTube VODs.",
+          "See streaming and social performance for a campaign in one normalized view, instead of stitching platform exports. {{VERIFY}}",
       },
       {
         title: "Competitor analysis",
@@ -68,69 +138,119 @@ const rawSolutions = [
           "Benchmark your metrics against the market, spot strengths and gaps, and make the next move with evidence.",
       },
       {
-        title: "Audience insights",
-        description:
-          "Understand viewer demographics, preferences, and behavior so content and marketing decisions match the audience you want to grow.",
-      },
-      {
-        title: "Influencer campaign management",
-        description:
-          "Discover and recruit creators, then run campaigns end to end — manage your roster, contracts, payments, and deliverables in one place, with no spreadsheets and conversion-level attribution.",
-      },
-      {
         title: "Speech and logo recognition",
         description:
           "Use speech recognition, logo recognition, Twitch tags, and advanced tooling across 20+ platforms.",
       },
+      {
+        title: "Audience insights",
+        description:
+          "Understand viewer demographics, preferences, and behavior across the channels you track.",
+      },
     ],
     why: [
       {
-        title: "Unparalleled insights",
+        title: "One unified read",
         description:
-          "Deep analytics on viewership, demographics, and engagement for teams that need more than surface metrics.",
+          "A single cross-platform view keeps every team aligned around the same market picture.",
       },
       {
-        title: "Real-time analytics",
+        title: "Real-time and historical",
         description:
           "Live and historical data help teams move fast without losing the context behind the number.",
       },
       {
-        title: "Cross-platform measurement",
+        title: "Built for gaming decisions",
         description:
-          "One unified view across every major streaming platform keeps teams aligned around the same market read.",
+          "Metrics fit launches, sponsorships, esports, and market sizing without translating generic media numbers.",
       },
     ],
     metaDescription:
-      "Use Hatchet's Web Dashboard for real-time live streaming analytics, esports measurement, YouTube VOD intelligence, competitor analysis, and audience insight.",
+      "Analyze streaming and social performance in one view with Hatchet Intelligence: live viewership, esports measurement, competitor analysis, and audience insight.",
   },
   {
-    slug: "custom-reports",
-    name: "Custom Reports",
-    eyebrow: "Custom Reports",
-    title: "Custom reporting for strategic decisions",
+    slug: "creator-community",
+    name: "Creator Community",
+    eyebrow: "Execute",
+    title: "Run every creator relationship end to end.",
     subtitle:
-      "Work one-on-one with Hatchet analysts to build the exact report your team needs, with in-depth analytics and actionable insight for your use case. If you do not see the report you need, we will build it.",
+      "My Creators is your roster and CRM in one. Manage outreach, contracts, payments, and deliverables for every creator and campaign — no spreadsheets, with attribution built in.",
     summary:
-      "Turn custom questions into analyst-built reports for campaigns, leagues, teams, sponsorships, and market strategy.",
+      "Manage your creator roster and campaigns end to end: outreach, contracts, payments, deliverables, and conversion-level attribution.",
     bodyNote:
-      "Reports can be delivered as PDFs or inside your Hatchet Web Dashboard. Custom report packages include Web App licenses so stakeholders can dig into the signal behind the readout.",
+      "Creator Community shares the same data as discovery and analytics, so verified creators and their performance flow straight into live campaigns.",
+    primaryCta: { label: "Book a demo", href: siteConfig.bookDemoUrl },
+    secondaryCta: { label: "Start free trial", href: siteConfig.signUpUrl },
+    capabilities: [
+      {
+        title: "My Creators roster and CRM",
+        description:
+          "Keep every creator relationship in one roster — contacts, status, history, and notes in a single place. {{VERIFY}}",
+      },
+      {
+        title: "End-to-end campaign management",
+        description:
+          "Run campaigns from outreach to delivery: manage contracts, payments, and deliverables in one place, no spreadsheets.",
+      },
+      {
+        title: "Conversion-level attribution",
+        description:
+          "Attribute conversions to creators and campaigns so you know what actually drove results.",
+      },
+      {
+        title: "Team and creator performance",
+        description:
+          "Track team and creator performance across campaigns and social platforms.",
+      },
+      {
+        title: "Outreach and recruiting",
+        description:
+          "Discover, recruit, and onboard creators directly from your shortlist into active campaigns.",
+      },
+      {
+        title: "Roster-wide visibility",
+        description:
+          "See status, deliverables, and spend across your whole roster at a glance. {{VERIFY}}",
+      },
+    ],
+    why: [
+      {
+        title: "No more spreadsheets",
+        description:
+          "One system for roster, contracts, payments, and deliverables replaces scattered files.",
+      },
+      {
+        title: "Verified to live in one flow",
+        description:
+          "Creators verified in discovery move straight into managed campaigns.",
+      },
+      {
+        title: "Attribution by default",
+        description:
+          "Every campaign ties back to conversions, so ROI is built in, not bolted on.",
+      },
+    ],
+    metaDescription:
+      "Execute campaigns with Hatchet Creator Community: a My Creators roster and CRM for outreach, contracts, payments, deliverables, and conversion-level attribution.",
+  },
+  {
+    slug: "reporting",
+    name: "Reporting",
+    eyebrow: "Report",
+    title: "Campaign reporting that's ready to share.",
+    subtitle:
+      "Turn live signal into ready-to-use readouts: EMV, engagement, and per-creator breakdowns in a campaigns dashboard, plus analyst-built custom reports and clean exports.",
+    summary:
+      "Report on campaigns with EMV, engagement, and per-creator breakdowns — self-serve in the dashboard or analyst-built for strategic decisions.",
+    bodyNote:
+      "Reports can be delivered as PDFs, inside your Hatchet dashboard, or pushed to your stack via API, with first-party data connected for sharper attribution.",
     primaryCta: { label: "Get a custom quote", href: siteConfig.bookDemoUrl },
     secondaryCta: { label: "Book a demo", href: siteConfig.bookDemoUrl },
     capabilities: [
       {
-        title: "Influencer marketing measurement",
+        title: "Campaigns dashboard",
         description:
-          "Find creators who fit your audience and goals, manage team performance, and analyze campaigns across social platforms.",
-      },
-      {
-        title: "League and event reporting",
-        description:
-          "Track viewer behavior, churn, and retention; forecast and schedule events; and dig into match data for segment analysis.",
-      },
-      {
-        title: "Team performance",
-        description:
-          "Track an esports team or organization's streaming and social performance, then report viewership to support brand sponsorships.",
+          "Track EMV, engagement, and per-creator breakdowns for every campaign in one dashboard. {{VERIFY}}",
       },
       {
         title: "Brand lift and sponsorship",
@@ -138,100 +258,45 @@ const rawSolutions = [
           "Measure campaigns with audience chat data, logo presence share, earned media value (EMV), CPM, speech recognition, and viewership data.",
       },
       {
-        title: "Competitive and market analysis",
+        title: "Ready-to-use exports",
         description:
-          "Understand the market through competitive analysis, industry trends, and practices your team can act on.",
+          "Export clean readouts to Excel, PDF, and Google Sheets, ready to share with stakeholders.",
       },
       {
-        title: "Custom solutions",
+        title: "Analyst-built custom reports",
         description:
-          "Shape every report around the KPIs that matter to your team, your stakeholders, and your decision cycle.",
+          "Work one-on-one with Hatchet analysts to build the exact report your team needs. If you do not see it, we will build it.",
+      },
+      {
+        title: "League, event, and team reporting",
+        description:
+          "Track viewer behavior, churn, and retention, then report team and event performance to support sponsorships.",
+      },
+      {
+        title: "Attribution and first-party data",
+        description:
+          "Connect Shopify conversions, form fills, and clicks for sharper attribution, and push reports into your stack via API.",
       },
     ],
     why: [
       {
-        title: "Tailor-made insights",
+        title: "Ready to share",
         description:
-          "Built with your team at every step, so the report answers the question you actually need to answer.",
+          "Readouts are framed as evidence, formatted for stakeholders, and exportable on demand.",
       },
       {
-        title: "Actionable recommendations",
+        title: "Self-serve or analyst-built",
         description:
-          "Hatchet analysts turn raw data into strategy, content optimization, and next-step recommendations.",
+          "Pull your own dashboard report, or have Hatchet analysts build a tailored deliverable.",
       },
       {
-        title: "Dedicated support",
+        title: "Connected to your stack",
         description:
-          "Expert guidance across every plan keeps the reporting process clear from scope to delivery.",
+          "Attribution and API access tie reporting back to the systems your team already runs.",
       },
     ],
     metaDescription:
-      "Work with Hatchet analysts on custom reports for influencer marketing, leagues, esports teams, sponsorships, brand lift, and market analysis.",
-  },
-  {
-    slug: "api-data-integrations",
-    name: "API & Data Integrations",
-    eyebrow: "API & Data Integration",
-    title: "Connect Hatchet data to your stack",
-    subtitle:
-      "Integrate our live streaming data into your product, or let us build custom dashboards for you. Use the data you need to power strategy and decisions in real time.",
-    summary:
-      "Push Hatchet's live streaming intelligence into your product, BI layer, attribution model, or custom dashboard.",
-    bodyNote:
-      "Bring Hatchet data into your systems, bring your first-party data into ours, or work with our team on a custom dashboard that fits how your organization already operates.",
-    primaryCta: { label: "Talk to a specialist", href: siteConfig.bookDemoUrl },
-    secondaryCta: { label: "Book a demo", href: siteConfig.bookDemoUrl },
-    capabilities: [
-      {
-        title: "All major and minor platforms",
-        description:
-          "Access 20+ live streaming platforms, including Twitch, YouTube, Kick, Facebook Gaming, AfreecaTV, and more.",
-      },
-      {
-        title: "Hundreds of endpoints",
-        description:
-          "Query viewership, engagement, stream metrics, and influencer performance with the detail your systems need.",
-      },
-      {
-        title: "Attribution data",
-        description:
-          "Track campaign performance and conversions to understand the ROI of your streaming initiatives.",
-      },
-      {
-        title: "First-party analytics",
-        description:
-          "Connect your own data, including Shopify conversions, form fills, and clicks, for more accurate attribution.",
-      },
-      {
-        title: "Dedicated account management",
-        description:
-          "Get support to integrate, maintain, and run the API effectively for your business.",
-      },
-      {
-        title: "Custom by design",
-        description:
-          "Tailor integrations and APIs to your team's needs, whether you are building one workflow or a full intelligence layer.",
-      },
-    ],
-    why: [
-      {
-        title: "Flexible solutions",
-        description:
-          "Push our data into your systems, or bring your first-party data into Hatchet for richer analysis.",
-      },
-      {
-        title: "The most accurate data on the market",
-        description:
-          "Minute-level granularity across 20+ platforms combines with demographics and social data for a sharper read.",
-      },
-      {
-        title: "Dedicated support channels",
-        description:
-          "Get help building custom solutions, then keep them running with ongoing maintenance and support.",
-      },
-    ],
-    metaDescription:
-      "Connect Hatchet live streaming data to your stack with APIs, integrations, attribution data, first-party analytics, and custom dashboards.",
+      "Report on campaigns with Hatchet: EMV, engagement, and per-creator breakdowns, brand-lift measurement, analyst-built custom reports, and ready-to-use exports.",
   },
 ] satisfies Omit<ProductSolution, "href">[];
 

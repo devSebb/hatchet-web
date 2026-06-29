@@ -14,7 +14,7 @@ export function generateMetadata(): Metadata {
   return createMetadata({
     title: "Solutions",
     description:
-      "Explore Hatchet products for live streaming analytics, custom reporting, and API data integrations.",
+      "The full creator lifecycle on one platform: find and verify creators, analyze performance, run campaigns, and report results.",
     path: "/solutions",
   });
 }
@@ -24,8 +24,8 @@ export default function SolutionsPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Solutions"
-        subtitle="Use Hatchet as your live-streaming intelligence layer: work in the dashboard, ask our analysts for custom reporting, or connect the data directly to your stack."
-        title="Three ways to turn live signal into decisions."
+        subtitle="From first search to final report — find and verify creators, analyze performance, run campaigns, and report results without switching tools."
+        title="The full creator lifecycle. One platform."
       />
 
       <SectionDivider surface="paper" />
@@ -34,19 +34,19 @@ export default function SolutionsPage() {
         <div className="mx-auto w-full max-w-7xl">
           <Reveal>
             <div className="max-w-3xl">
-              <p className="eyebrow text-muted">Product paths</p>
+              <p className="eyebrow text-muted">The creator lifecycle</p>
               <h2 className="h1 mt-4">
-                Choose the shape that fits how your team works.
+                Four stages. One connected workflow.
               </h2>
               <p className="body-lg text-muted mt-5">
-                Start with a shared web workspace, commission a focused analyst
-                report, or move Hatchet data into the systems your team already
-                uses.
+                Find and verify the right creators, analyze how they perform,
+                run campaigns end to end, and report the results — each stage
+                built on the same live signal.
               </p>
             </div>
           </Reveal>
 
-          <Stagger className="mt-10 grid gap-4 lg:grid-cols-3">
+          <Stagger className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {solutions.map((solution) => (
               <Link
                 className="group border-border bg-card hover:border-signal/60 focus-visible:ring-ring/50 flex min-h-72 flex-col justify-between rounded-xl border p-6 shadow-sm transition-[border-color,background-color,transform] duration-(--dur-base) outline-none hover:-translate-y-1 focus-visible:ring-3"
@@ -84,15 +84,15 @@ export default function SolutionsPage() {
       <SectionDivider />
 
       <FeatureBlock
-        body="Hatchet can serve a self-serve analyst, a strategy team that needs a polished readout, or a product group that needs normalized streaming data inside its own tools. The product path changes, but the signal stays consistent."
+        body="Discovery, intelligence, campaign execution, and reporting all run on the same live signal. Move from finding a creator to reporting their results without re-importing data or switching tools."
         bullets={[
-          "Use the Web Dashboard for recurring discovery and shared analysis.",
-          "Use Custom Reports when the question needs analyst context and a finished deliverable.",
-          "Use API and Data Integrations when Hatchet data needs to power internal systems.",
+          "Start in Discovery to find and verify the right creators.",
+          "Use Intelligence to analyze streaming and social performance in one view.",
+          "Run campaigns end to end in Creator Community, then share results from Reporting.",
         ]}
         className="bg-background py-18 lg:py-24"
         eyebrow="One data layer"
-        heading="Pick the workflow. Keep the same market read."
+        heading="One workflow, start to finish."
         link={{ label: "Compare pricing", href: "/pricing" }}
       />
 
@@ -101,8 +101,18 @@ export default function SolutionsPage() {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Book a demo"
-        secondaryCta={{ label: "Compare audiences", href: "/why-hatchet" }}
-        title="Find the right Hatchet product path for your team."
+        media={{
+          src: "/images/hero-dashboard.png",
+          alt: "Hatchet dashboard showing live-streaming analytics across platforms",
+          width: 2000,
+          height: 1143,
+        }}
+        proof={{
+          kind: "pills",
+          items: ["Creator discovery", "Campaign tracking", "ROI measurement"],
+        }}
+        title="See the full creator lifecycle in action."
+        variant="featured"
       />
     </main>
   );

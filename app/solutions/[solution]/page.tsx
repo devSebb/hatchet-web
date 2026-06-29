@@ -98,7 +98,7 @@ function CapabilitiesSection({ solution }: { solution: ProductSolution }) {
           ))}
         </Stagger>
 
-        {solution.slug === "web-dashboard" ? (
+        {solution.slug === "intelligence" ? (
           <Reveal>
             <div className="border-border bg-card mt-6 rounded-xl border p-6 shadow-sm">
               <p className="body text-muted">
@@ -185,9 +185,8 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
 
       <CTASection
         className="py-18 lg:py-24"
+        cta={solution.primaryCta}
         eyebrow="Book a demo"
-        primaryCta={solution.primaryCta}
-        secondaryCta={{ label: "See all solutions", href: "/solutions" }}
         title={`See how ${solution.name.toLowerCase()} can fit your team.`}
       />
     </main>

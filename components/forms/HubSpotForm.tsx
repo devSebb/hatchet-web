@@ -1,8 +1,7 @@
 "use client";
 
-import { useId } from "react";
+import { useEffect, useId } from "react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getHubSpotFormConfig, type HubSpotFormType } from "@/lib/hubspot";
 import { cn } from "@/lib/utils";
@@ -29,6 +28,18 @@ export function HubSpotForm({
   const hasFormId = Boolean(config.formId);
   const generatedId = useId().replace(/:/g, "");
   const fieldPrefix = `${type}-${generatedId}`;
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production" && (!hasPortal || !hasFormId)) {
+      console.warn(
+        `[HubSpotForm] "${type}" not wired: ${
+          hasPortal ? "" : "portal id missing"
+        }${!hasPortal && !hasFormId ? ", " : ""}${
+          hasFormId ? "" : "form id missing"
+        }. Set NEXT_PUBLIC_HUBSPOT_* env vars.`,
+      );
+    }
+  }, [type, hasPortal, hasFormId]);
 
   return (
     <form
@@ -93,19 +104,6 @@ export function HubSpotForm({
         </div>
       ) : null}
 
-      <div className="flex flex-wrap gap-2">
-        <Badge variant={hasPortal ? "outline" : "secondary"}>
-          Portal {hasPortal ? "configured" : "missing"}
-        </Badge>
-        <Badge variant={hasFormId ? "outline" : "secondary"}>
-          Form ID {hasFormId ? "configured" : "missing"}
-        </Badge>
-      </div>
-
-      <p className="text-muted text-xs">
-        TODO: Replace this shell with the HubSpot embed/API integration. This
-        form intentionally does not submit.
-      </p>
     </form>
   );
 }

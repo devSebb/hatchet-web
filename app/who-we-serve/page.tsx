@@ -82,7 +82,6 @@ export default function WhoWeServePage() {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="Plan with signal"
-        secondaryCta={{ label: "Why Hatchet", href: "/why-hatchet" }}
         title="Show Hatchet your team's market questions."
       />
     </main>

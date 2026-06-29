@@ -86,7 +86,6 @@ export default async function PressItemPage({ params }: PressItemPageProps) {
       <CTASection
         className="py-18 lg:py-24"
         eyebrow="More from Hatchet"
-        secondaryCta={{ label: "All press", href: "/resources/press" }}
         title="Follow the company news behind the live signal."
       />
     </main>
