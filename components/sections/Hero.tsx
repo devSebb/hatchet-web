@@ -2,7 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { CircuitField } from "@/components/sections/CircuitField";
+import { Counter } from "@/components/motion/Counter";
 import { Reveal } from "@/components/motion/Reveal";
+import { Stagger } from "@/components/motion/Stagger";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
 import { cn } from "@/lib/utils";
@@ -19,7 +21,7 @@ type HeroProps = {
   title: string;
   emphasizedTitle: string;
   subtitle: string;
-  stats?: string[];
+  stats?: Array<{ value: number; suffix?: string; label: string }>;
   primaryCta?: {
     label: string;
     href: string;
@@ -90,33 +92,43 @@ export function Hero({
           {subtitle}
         </p>
         {stats?.length ? (
-          <ul
+          <Stagger
             className={cn(
-              "mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-mono text-sm",
-              isGradient ? "text-white/70" : "text-muted",
+              "mt-8 flex items-stretch justify-center divide-x",
+              isGradient ? "divide-white/15" : "divide-border",
             )}
           >
-            {stats.map((stat, index) => (
-              <li className="flex items-center gap-3" key={stat}>
-                {index > 0 ? (
-                  <span
-                    aria-hidden
-                    className={isGradient ? "text-white/30" : "text-border"}
-                  >
-                    ·
-                  </span>
-                ) : null}
+            {stats.map((stat) => (
+              <div
+                className="flex flex-col items-center px-5 text-center sm:px-8"
+                key={stat.label}
+              >
+                <span className="flex items-baseline gap-0.5">
+                  <Counter
+                    className={isGradient ? "text-white" : "text-foreground"}
+                    style={{ fontSize: "clamp(1.875rem, 4vw, 2.75rem)" }}
+                    to={stat.value}
+                  />
+                  {stat.suffix ? (
+                    <span
+                      className="text-brand-soft font-extrabold"
+                      style={{ fontSize: "clamp(1.25rem, 2.6vw, 1.75rem)" }}
+                    >
+                      {stat.suffix}
+                    </span>
+                  ) : null}
+                </span>
                 <span
                   className={cn(
-                    "font-semibold tabular-nums",
-                    isGradient ? "text-white" : "text-foreground",
+                    "eyebrow mt-2",
+                    isGradient ? "text-white/55" : "text-muted",
                   )}
                 >
-                  {stat}
+                  {stat.label}
                 </span>
-              </li>
+              </div>
             ))}
-          </ul>
+          </Stagger>
         ) : null}
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button asChild>

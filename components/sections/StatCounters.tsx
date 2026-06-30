@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { Counter } from "@/components/motion/Counter";
 import { CircuitField } from "@/components/sections/CircuitField";
 import { Sparkline } from "@/components/signal/Sparkline";
@@ -14,7 +16,7 @@ export type StatItem = {
 
 type StatCountersProps = {
   eyebrow?: string;
-  title?: string;
+  title?: ReactNode;
   stats?: StatItem[];
   className?: string;
 };
@@ -55,7 +57,7 @@ const defaultStats: StatItem[] = [
 ];
 
 export function StatCounters({
-  eyebrow = "Proof at signal scale",
+  eyebrow,
   title = "Numbers that make market movement easier to trust.",
   stats = defaultStats,
   className,
@@ -70,8 +72,8 @@ export function StatCounters({
       <CircuitField density="quiet" />
       <div className="mx-auto w-full max-w-7xl">
         <div className="max-w-3xl">
-          <p className="eyebrow text-muted">{eyebrow}</p>
-          <h2 className="h2 mt-3">{title}</h2>
+          {eyebrow ? <p className="eyebrow text-muted">{eyebrow}</p> : null}
+          <h2 className={cn("h2", eyebrow && "mt-3")}>{title}</h2>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {stats.map((stat) => (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 
 import { MOTION_DURATION_MS } from "@/lib/motion";
@@ -14,6 +14,7 @@ type CounterProps = {
   suffix?: string;
   decimals?: number;
   className?: string;
+  style?: CSSProperties;
 };
 
 export function Counter({
@@ -23,6 +24,7 @@ export function Counter({
   suffix = "",
   decimals = 0,
   className,
+  style,
 }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.45 });
@@ -70,6 +72,7 @@ export function Counter({
     <span
       className={cn("stat-figure tabular-nums", className)}
       ref={ref}
+      style={style}
       suppressHydrationWarning
     >
       {prefix}

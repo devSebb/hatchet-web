@@ -20,41 +20,47 @@ export function FooterNewsletter() {
   }
 
   return (
-    <div className="w-full max-w-md">
-      {/* {{VERIFY}} eyebrow copy */}
-      <p className="eyebrow text-muted">Newsletter</p>
-      {/* config.title is the content-owned line; eyebrow/helper still {{VERIFY}} */}
-      <p className="font-display text-foreground mt-2 text-lg font-semibold tracking-[-0.01em]">
-        {config.title}
-      </p>
+    <div className="border-brand/25 bg-surface/40 cta-panel-frame relative flex h-full w-full max-w-lg flex-col justify-center gap-2 overflow-hidden rounded-2xl border p-6 backdrop-blur-sm sm:p-7">
+      {/* Brand-aware glow so the card reads as part of the brand system. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-16 -right-12 -z-10 h-40 w-40 rounded-full bg-[var(--gradient-cta-glow)] blur-3xl"
+      />
 
-      <form className="mt-4" noValidate onSubmit={handleSubmit}>
-        <label className="sr-only" htmlFor={`${fieldId}-email`}>
-          Work email
-        </label>
-        {/* Single joined control: input + button share one height, button inset 4px. */}
-        <div className="border-border bg-elevated focus-within:ring-ring/50 flex h-12 items-center rounded-lg border p-1 transition-shadow focus-within:ring-3">
-          <input
-            autoComplete="email"
-            className="text-foreground placeholder:text-muted h-full min-w-0 flex-1 bg-transparent px-3 text-sm outline-none"
-            id={`${fieldId}-email`}
-            name="email"
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="name@company.com"
-            type="email"
-            value={email}
-          />
-          <button
-            className="bg-gradient-brand text-primary-foreground focus-visible:ring-ring/50 inline-flex h-full shrink-0 items-center rounded-md px-4 text-sm font-medium transition-[filter] outline-none hover:brightness-105 focus-visible:ring-3"
-            type="submit"
-          >
-            {/* {{VERIFY}} button copy (from content config) */}
-            {config.submitLabel}
-          </button>
-        </div>
-        {/* {{VERIFY}} helper microcopy */}
-        <p className="small text-muted mt-2">No spam. Unsubscribe anytime.</p>
-      </form>
+      <div>
+        <p className="eyebrow text-brand-soft">Newsletter</p>
+        <p className="font-display text-foreground mt-2 text-base leading-snug font-semibold tracking-[-0.01em]">
+          {config.title}
+        </p>
+      </div>
+
+      <div>
+        <form className="mt-1" noValidate onSubmit={handleSubmit}>
+          <label className="sr-only" htmlFor={`${fieldId}-email`}>
+            Work email
+          </label>
+          {/* White field so the input pops off the navy footer; navy text inside. */}
+          <div className="focus-within:ring-brand/40 flex h-8 items-center rounded-lg bg-white p-1 shadow-sm transition-shadow focus-within:ring-3">
+            <input
+              autoComplete="email"
+              className="h-full min-w-0 flex-1 bg-transparent px-3 text-sm text-[var(--bg)] outline-none placeholder:text-[color-mix(in_srgb,var(--bg)_45%,var(--white))]"
+              id={`${fieldId}-email`}
+              name="email"
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="name@company.com"
+              type="email"
+              value={email}
+            />
+            <button
+              className="bg-gradient-brand text-primary-foreground focus-visible:ring-ring/50 inline-flex h-full shrink-0 items-center rounded-md px-4 text-sm font-medium transition-[filter] outline-none hover:brightness-105 focus-visible:ring-3"
+              type="submit"
+            >
+              {config.submitLabel}
+            </button>
+          </div>
+          <p className="small text-muted mt-2">No spam. Unsubscribe anytime.</p>
+        </form>
+      </div>
     </div>
   );
 }

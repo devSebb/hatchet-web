@@ -40,11 +40,11 @@ export function Footer() {
 
       {/* Band A — brand + newsletter */}
       <Reveal>
-        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 pt-8 pb-6 sm:px-6 lg:grid-cols-2 lg:px-8 lg:pt-10">
-          <div>
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 pt-8 pb-6 sm:px-6 lg:grid-cols-2 lg:items-stretch lg:px-8 lg:pt-10">
+          <div className="flex flex-col justify-between">
             <Link
               aria-label="Hatchet home"
-              className="focus-visible:ring-ring/50 -ml-1 inline-flex min-h-11 items-center rounded-lg outline-none focus-visible:ring-3"
+              className="focus-visible:ring-ring/50 -ml-1 inline-flex min-h-11 items-center self-start rounded-lg outline-none focus-visible:ring-3"
               href="/"
             >
               <BrandLogo alt="" className="h-16" variant="white" />
@@ -55,7 +55,7 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="lg:justify-self-end">
+          <div className="flex lg:justify-end">
             <FooterNewsletter />
           </div>
         </div>

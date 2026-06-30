@@ -254,19 +254,19 @@ function WhyHatchet() {
         className="pointer-events-none absolute -top-24 left-0 -z-10 h-80 w-80 rounded-full bg-[var(--gradient-cta-glow)] blur-3xl"
       />
       <CircuitField density="quiet" />
-      <div className="mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-12 lg:gap-16">
-        <Reveal className="lg:col-span-4">
-          <div className="lg:sticky lg:top-28">
+      <div className="mx-auto w-full max-w-3xl">
+        <Reveal>
+          <div className="text-center">
             <p className="eyebrow text-muted">Why Hatchet</p>
             <h2 className="h1 mt-4">
               Five reasons teams{" "}
               <span className="text-gradient-brand">bet on Hatchet.</span>
             </h2>
-            <p className="body-lg text-muted mt-5">
+            <p className="body-lg text-muted mx-auto mt-5 max-w-2xl">
               The broadest coverage, the deepest verified history, and the
               workflow gaming teams actually run on.
             </p>
-            <div className="mt-8">
+            <div className="mt-8 flex justify-center">
               <Button asChild>
                 <Link href={siteConfig.bookDemoUrl}>
                   Book a Demo
@@ -279,14 +279,14 @@ function WhyHatchet() {
 
         <Stagger
           childClassName="border-border border-t"
-          className="border-border border-b lg:col-span-8"
+          className="border-border mt-12 border-b"
         >
           {whyHatchetReasons.map((reason, index) => {
             const Icon = reason.icon;
 
             return (
               <article
-                className="group flex gap-5 py-7 sm:gap-7 sm:py-8"
+                className="group flex gap-5 py-5 sm:gap-7 sm:py-6"
                 key={reason.title}
               >
                 <div className="flex shrink-0 flex-col items-center gap-3">
@@ -304,7 +304,7 @@ function WhyHatchet() {
                   <p className="text-brand-soft mt-1 font-medium">
                     {reason.tagline}
                   </p>
-                  <p className="body text-muted mt-3 max-w-2xl">{reason.body}</p>
+                  <p className="body text-muted mt-2">{reason.body}</p>
                 </div>
               </article>
             );
@@ -446,7 +446,11 @@ export default function Home() {
             label: "See It In Action",
             href: "https://www.youtube.com/@StreamHatchet",
           }}
-          stats={["30+ platforms", "10+ years of data", "50M+ creators"]}
+          stats={[
+            { value: 30, suffix: "+", label: "Platforms" },
+            { value: 10, suffix: "+", label: "Years of data" },
+            { value: 50, suffix: "M+", label: "Creators" },
+          ]}
           subtitle="Creator Marketing Analytics built for gaming. Cover creator discovery, campaign tracking, and ROI measurement in one place, across every social network."
           surface="gradient"
           title="Complete Gaming Intelligence"
@@ -468,9 +472,13 @@ export default function Home() {
 
       <StatCounters
         className="bg-background py-18 lg:py-24"
-        eyebrow="Proof at signal scale"
         stats={proofStats}
-        title="A measurement layer built for the scale of gaming culture."
+        title={
+          <>
+            A measurement layer built for the scale of{" "}
+            <span className="text-gradient-brand">gaming culture.</span>
+          </>
+        }
       />
 
       <div className="surface-paper bg-background text-foreground">
