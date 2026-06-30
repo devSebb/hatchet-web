@@ -159,7 +159,7 @@ export function CTASection({
     >
       <div
         className={cn(
-          "bg-gradient-cta cta-panel-frame relative mx-auto w-full max-w-7xl rounded-3xl px-6 py-12 sm:px-10 lg:px-16 lg:py-16",
+          "bg-gradient-cta cta-panel-frame relative mx-auto w-full max-w-7xl rounded-3xl px-6 py-8 sm:px-10 lg:px-16 lg:py-10",
           isFeatured
             ? "overflow-hidden md:overflow-visible"
             : "overflow-hidden",

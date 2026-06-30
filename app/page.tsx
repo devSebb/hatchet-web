@@ -25,7 +25,6 @@ import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
 import { CTASection } from "@/components/sections/CTASection";
 import { Hero } from "@/components/sections/Hero";
 import { LogoWall } from "@/components/sections/LogoWall";
-import { StatCounters } from "@/components/sections/StatCounters";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
 import { siteConfig } from "@/lib/config/site";
 import { buildMetadata } from "@/lib/seo";
@@ -126,41 +125,6 @@ const useCases = [
   },
 ];
 
-const proofStats = [
-  {
-    label: "Live platforms tracked",
-    value: 20,
-    suffix: "+",
-    description:
-      "Twitch, YouTube, Kick, and more — major and emerging platforms in one normalized view.",
-    sparkline: [9, 11, 12, 14, 16, 18, 21],
-  },
-  {
-    label: "History since 2016",
-    value: 10,
-    suffix: "+ yrs",
-    description:
-      "Minute-level viewership data going back to 2016, ready for trend and benchmark analysis.",
-    sparkline: [3, 4, 5, 6, 7, 8, 10],
-  },
-  {
-    label: "Data granularity",
-    value: 1,
-    suffix: "-min",
-    description:
-      "Every stream measured at one-minute resolution — the industry's highest standard.",
-    sparkline: [12, 14, 13, 15, 16, 18, 20],
-  },
-  {
-    label: "Core metrics tracked",
-    value: 10,
-    suffix: "+",
-    description:
-      "Hours watched, concurrent viewers, airtime, EMV, CPM, logo presence share, and more.",
-    sparkline: [4, 5, 5, 7, 8, 9, 11],
-  },
-];
-
 const testimonials = [
   {
     quote:
@@ -193,12 +157,7 @@ const testimonials = [
 
 function Pillars() {
   return (
-    <section className="bg-background text-foreground relative isolate overflow-hidden px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-24 right-0 -z-10 h-80 w-80 rounded-full bg-[var(--gradient-cta-glow)] blur-3xl"
-      />
-      <CircuitField density="quiet" />
+    <section className="surface-paper bg-background text-foreground px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
       <div className="mx-auto w-full max-w-7xl">
         <Reveal>
           <div className="max-w-3xl">
@@ -215,24 +174,18 @@ function Pillars() {
         </Reveal>
 
         <Stagger className="mt-12 grid gap-5 lg:grid-cols-3">
-          {pillars.map((pillar, index) => {
+          {pillars.map((pillar) => {
             const Icon = pillar.icon;
 
             return (
               <article
-                className="group border-border bg-surface relative overflow-hidden rounded-2xl border p-7 shadow-sm transition-[transform,border-color,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:border-brand/40 hover:shadow-glow-brand"
+                className="group border-border bg-card hover:border-brand/40 hover:shadow-glow-brand relative overflow-hidden rounded-2xl border p-7 shadow-sm transition-[transform,border-color,box-shadow] duration-(--dur-base) hover:-translate-y-1"
                 key={pillar.title}
               >
-                <span
-                  aria-hidden="true"
-                  className="font-display pointer-events-none absolute -top-3 right-5 text-7xl font-extrabold text-white/[0.04] select-none"
-                >
-                  {`0${index + 1}`}
-                </span>
                 <div className="bg-gradient-brand shadow-glow-brand flex size-12 items-center justify-center rounded-xl text-white">
                   <Icon aria-hidden="true" className="size-6" />
                 </div>
-                <p className="eyebrow text-brand-soft mt-6">{pillar.kicker}</p>
+                <p className="eyebrow text-brand mt-6">{pillar.kicker}</p>
                 <h3 className="font-display mt-2 text-xl font-semibold tracking-[-0.01em]">
                   {pillar.title}
                 </h3>
@@ -248,7 +201,7 @@ function Pillars() {
 
 function WhyHatchet() {
   return (
-    <section className="bg-background text-foreground relative isolate overflow-hidden px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
+    <section className="bg-background text-foreground relative isolate overflow-hidden px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-24 left-0 -z-10 h-80 w-80 rounded-full bg-[var(--gradient-cta-glow)] blur-3xl"
@@ -268,10 +221,7 @@ function WhyHatchet() {
             </p>
             <div className="mt-8 flex justify-center">
               <Button asChild>
-                <Link href={siteConfig.bookDemoUrl}>
-                  Book a Demo
-                  <ArrowRightIcon aria-hidden="true" />
-                </Link>
+                <Link href={siteConfig.bookDemoUrl}>Book a Demo</Link>
               </Button>
             </div>
           </div>
@@ -317,7 +267,7 @@ function WhyHatchet() {
 
 function BuiltForYourTeam() {
   return (
-    <section className="surface-paper bg-background text-foreground px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
+    <section className="surface-paper bg-background text-foreground px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
       <div className="mx-auto w-full max-w-7xl">
         <Reveal>
           <div className="max-w-3xl">
@@ -350,12 +300,12 @@ function BuiltForYourTeam() {
                   {useCase.label}
                 </h3>
                 <p className="body text-muted mt-3 flex-1">{useCase.body}</p>
-                <span className="text-foreground mt-6 inline-flex items-center gap-1.5 text-sm font-semibold underline-offset-4 group-hover:underline">
-                  Explore
-                  <ArrowRightIcon
+                <span className="text-foreground mt-6 inline-flex items-center gap-2 text-sm font-semibold">
+                  <span
                     aria-hidden="true"
-                    className="size-4 transition-transform duration-(--dur-base) group-hover:translate-x-0.5"
+                    className="bg-brand h-px w-0 transition-all duration-(--dur-base) group-hover:w-3"
                   />
+                  Explore
                 </span>
               </Link>
             );
@@ -375,12 +325,12 @@ function BuiltForYourTeam() {
               Tell us about your team and we&apos;ll map the fastest path to
               value.
             </p>
-            <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold">
-              Book a demo
-              <ArrowRightIcon
+            <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold">
+              <span
                 aria-hidden="true"
-                className="size-4 transition-transform duration-(--dur-base) group-hover:translate-x-0.5"
+                className="h-px w-0 bg-white transition-all duration-(--dur-base) group-hover:w-3"
               />
+              Book a demo
             </span>
           </Link>
         </Stagger>
@@ -391,7 +341,7 @@ function BuiltForYourTeam() {
 
 function Plans() {
   return (
-    <section className="bg-background text-foreground relative isolate overflow-hidden px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
+    <section className="bg-background text-foreground relative isolate overflow-hidden px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-[var(--gradient-cta-glow)] blur-3xl"
@@ -409,10 +359,7 @@ function Plans() {
           </p>
           <div className="mt-8 flex justify-center">
             <Button asChild>
-              <Link href="/pricing">
-                See Plans
-                <ArrowRightIcon aria-hidden="true" />
-              </Link>
+              <Link href="/pricing">See Plans</Link>
             </Button>
           </div>
         </Reveal>
@@ -457,7 +404,7 @@ export default function Home() {
         />
 
         <LogoWall
-          className="surface-paper pb-18 lg:pb-24"
+          className="surface-paper pb-14 lg:pb-20"
           title="Trusted by the biggest names in the gaming industry."
         />
       </div>
@@ -470,20 +417,9 @@ export default function Home() {
 
       <BuiltForYourTeam />
 
-      <StatCounters
-        className="bg-background py-18 lg:py-24"
-        stats={proofStats}
-        title={
-          <>
-            A measurement layer built for the scale of{" "}
-            <span className="text-gradient-brand">gaming culture.</span>
-          </>
-        }
-      />
-
       <div className="surface-paper bg-background text-foreground">
         <TestimonialCarousel
-          className="py-18 lg:py-24"
+          className="py-14 lg:py-20"
           eyebrow="Customer signal"
           testimonials={testimonials}
           title="Teams use Hatchet when the live audience read has to hold up."
@@ -494,7 +430,7 @@ export default function Home() {
 
       <CTASection
         body="Book a demo and see how Hatchet runs your entire creator program, from first search to final report."
-        className="py-18 lg:py-24"
+        className="py-14 lg:py-20"
         cta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
         eyebrow="Book a demo"
         media={{

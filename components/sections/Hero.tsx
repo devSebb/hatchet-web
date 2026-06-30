@@ -92,15 +92,10 @@ export function Hero({
           {subtitle}
         </p>
         {stats?.length ? (
-          <Stagger
-            className={cn(
-              "mt-8 flex items-stretch justify-center divide-x",
-              isGradient ? "divide-white/15" : "divide-border",
-            )}
-          >
+          <Stagger className="mt-8 flex items-stretch justify-center">
             {stats.map((stat) => (
               <div
-                className="flex flex-col items-center px-5 text-center sm:px-8"
+                className="flex flex-col items-center px-3 text-center sm:px-4"
                 key={stat.label}
               >
                 <span className="flex items-baseline gap-0.5">
