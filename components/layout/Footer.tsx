@@ -89,17 +89,8 @@ export function Footer() {
         ))}
       </nav>
 
-      {/* Band C — signature watermark + legal bar, read as one anchored unit */}
+      {/* Band C — legal bar */}
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div aria-hidden="true" className="-mb-3 overflow-hidden select-none">
-          <span
-            className="font-display text-foreground/[0.07] block leading-[0.78] font-extrabold tracking-[-0.04em] whitespace-nowrap"
-            style={{ fontSize: "clamp(2.75rem, 16vw, 12rem)" }}
-          >
-            {siteConfig.name}
-          </span>
-        </div>
-
         <div className="border-border text-muted flex flex-col gap-4 border-t py-6 text-sm md:flex-row md:items-center md:justify-between">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
             <p>

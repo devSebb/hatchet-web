@@ -29,6 +29,8 @@ type HeroProps = {
     href: string;
   };
   image?: HeroImage;
+  /** "paper" flips the hero to a light surface (white bg, navy headline). */
+  surface?: "dark" | "paper";
   className?: string;
 };
 
@@ -41,12 +43,16 @@ export function Hero({
   primaryCta = { label: "Book a demo", href: siteConfig.bookDemoUrl },
   secondaryCta = { label: "Sign up", href: siteConfig.signUpUrl },
   image,
+  surface = "dark",
   className,
 }: HeroProps) {
+  const isPaper = surface === "paper";
+
   return (
     <section
       className={cn(
         "bg-background relative isolate overflow-hidden px-4 pt-12 pb-16 sm:px-6 lg:px-8 lg:pt-18 lg:pb-20",
+        isPaper && "surface-paper",
         className,
       )}
     >
@@ -56,9 +62,20 @@ export function Hero({
         <Reveal>
           <div className="mx-auto flex max-w-3xl flex-col items-center">
             {eyebrow ? <p className="eyebrow text-muted">{eyebrow}</p> : null}
-            <h1 className="display">
+            <h1
+              className="display"
+              style={isPaper ? { color: "var(--bg)" } : undefined}
+            >
               {title}{" "}
-              <span className="text-gradient-brand">{emphasizedTitle}</span>
+              <span
+                className="bg-clip-text text-transparent"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(135deg, var(--brand-highlight) 0%, var(--brand) 24%, var(--brand) 94%, var(--brand-lowlight) 100%)",
+                }}
+              >
+                {emphasizedTitle}
+              </span>
             </h1>
             <p className="body-lg text-muted mt-4 max-w-2xl">{subtitle}</p>
             {stats?.length ? (

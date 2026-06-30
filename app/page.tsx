@@ -22,13 +22,11 @@ import { Stagger } from "@/components/motion/Stagger";
 import { CircuitField } from "@/components/sections/CircuitField";
 import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
 import { CTASection } from "@/components/sections/CTASection";
-import { FeatureBlock } from "@/components/sections/FeatureBlock";
 import { Hero } from "@/components/sections/Hero";
 import { LogoWall } from "@/components/sections/LogoWall";
 import { StatCounters } from "@/components/sections/StatCounters";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
 import { PulseDivider } from "@/components/signal/PulseDivider";
-import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
 import { buildMetadata } from "@/lib/seo";
 
@@ -92,21 +90,6 @@ const whyHatchetReasons = [
     title: "One Platform, Built for You",
     tagline: "Everything your team needs. Nothing it doesn't.",
     body: "Discovery, execution, reporting — tailored to your workflow, not a generic tool you have to bend to fit.",
-  },
-];
-
-const differentiators = [
-  {
-    label: "One normalized market read",
-    body: "Connect creator activity, game demand, audience movement, press coverage, and community reactions without stitching together platform exports.",
-  },
-  {
-    label: "Built for gaming decisions",
-    body: "Track the signals that matter to launches, sponsorships, media plans, category sizing, and executive readouts.",
-  },
-  {
-    label: "Proof, not vanity metrics",
-    body: "Frame hours watched, creator velocity, chat movement, and platform spread as evidence your team can act on.",
   },
 ];
 
@@ -338,72 +321,6 @@ function WhyHatchet() {
   );
 }
 
-function DifferentiatorTrio() {
-  return (
-    <section className="surface-paper bg-background text-foreground px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
-      <div className="mx-auto w-full max-w-7xl">
-        <Reveal>
-          <div className="max-w-3xl">
-            <p className="eyebrow text-muted">What makes Hatchet different</p>
-            <h2 className="h1 mt-4">
-              We supply the data. You conquer the stream.
-            </h2>
-            <p className="body-lg text-muted mt-5">
-              Hatchet turns fragmented live-streaming behavior into business
-              intelligence for gaming, esports, and live streaming teams.
-            </p>
-          </div>
-        </Reveal>
-
-        <Stagger className="mt-10 grid gap-4 lg:grid-cols-3">
-          {differentiators.map((item) => (
-            <article
-              className="border-border bg-card rounded-xl border p-6 shadow-sm"
-              key={item.label}
-            >
-              <div className="bg-signal mb-6 h-1 w-10 rounded-full" />
-              <h3 className="h3">{item.label}</h3>
-              <p className="body text-muted mt-4">{item.body}</p>
-            </article>
-          ))}
-        </Stagger>
-      </div>
-    </section>
-  );
-}
-
-function ReportsMedia() {
-  return (
-    <div className="surface-paper border-border bg-background text-foreground min-h-88 rounded-xl border p-5 shadow-md">
-      <p className="eyebrow text-muted">Reports and integrations</p>
-      <div className="mt-6 grid gap-3">
-        {[
-          ["Publisher launch report", "Creator lift, game demand, geo split"],
-          [
-            "Brand partner readout",
-            "Audience fit, sponsor value, campaign timing",
-          ],
-          [
-            "Research data feed",
-            "Normalized platform exports for BI workflows",
-          ],
-        ].map(([title, body]) => (
-          <div
-            className="border-border bg-card rounded-lg border p-4"
-            key={title}
-          >
-            <p className="text-sm font-semibold">{title}</p>
-            <p className="small text-muted mt-1">{body}</p>
-          </div>
-        ))}
-      </div>
-      <Button asChild className="mt-6" variant="outline">
-        <Link href="/resources/guides">View guide library</Link>
-      </Button>
-    </div>
-  );
-}
-
 function BuiltForYourTeam() {
   return (
     <section className="surface-paper bg-background text-foreground px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
@@ -496,6 +413,7 @@ export default function Home() {
         }}
         stats={["30+ platforms", "10+ years of data", "55M+ creators"]}
         subtitle="The only Creator Marketing Analytics platform built for gaming. Covering creator discovery, campaign tracking, and ROI measurement in one place, across every social network."
+        surface="paper"
         title="Complete Gaming Intelligence"
       />
 
@@ -521,42 +439,6 @@ export default function Home() {
       <SectionDivider surface="paper" />
 
       <BuiltForYourTeam />
-
-      <SectionDivider surface="paper" />
-
-      <DifferentiatorTrio />
-
-      <SectionDivider surface="paper" />
-
-      <FeatureBlock
-        body="Track creators, games, hours watched, chat velocity, and platform spread in one normalized view. Hatchet helps teams understand what is gaining attention, who is driving it, and where the audience is moving next."
-        bullets={[
-          "Measure live-streaming performance across major gaming platforms.",
-          "Compare creator velocity before, during, and after launch beats.",
-          "Connect audience movement to games, genres, publishers, and events.",
-        ]}
-        className="surface-paper bg-background py-18 lg:py-24"
-        eyebrow="Live-streaming intelligence"
-        heading="See the market while it is still moving."
-        link={{ label: "Explore solutions", href: "/solutions" }}
-      />
-
-      <SectionDivider surface="paper" />
-
-      <FeatureBlock
-        body="From executive-ready market reports to structured data integrations, Hatchet turns fragmented gaming signals into workflows your research, publishing, partnerships, and strategy teams can use."
-        bullets={[
-          "Build recurring reports around launches, sponsorships, and categories.",
-          "Feed normalized creator and audience data into internal dashboards.",
-          "Benchmark events, campaigns, and competitors with the same source of truth.",
-        ]}
-        className="surface-paper bg-background text-foreground py-18 lg:py-24"
-        eyebrow="Reports and data integrations"
-        heading="Turn the live read into decisions your business can share."
-        link={{ label: "View resources", href: "/resources" }}
-        media={<ReportsMedia />}
-        reverse
-      />
 
       <SectionDivider />
 

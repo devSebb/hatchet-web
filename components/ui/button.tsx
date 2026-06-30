@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-gradient-brand bg-gradient-brand-hover shadow-glow-brand text-primary-foreground hover:brightness-105",
+          "bg-brand text-primary-foreground hover:bg-brand-strong hover:shadow-[0_0_0_1px_color-mix(in_oklch,var(--brand)_55%,transparent),0_6px_28px_-2px_color-mix(in_oklch,var(--brand)_60%,transparent)]",
         outline:
           "border-border bg-background text-foreground shadow-xs hover:bg-muted-surface hover:text-foreground aria-expanded:bg-muted-surface aria-expanded:text-foreground",
         secondary:
