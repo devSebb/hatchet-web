@@ -6,7 +6,6 @@ import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
 import { FeatureBlock } from "@/components/sections/FeatureBlock";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { Button } from "@/components/ui/button";
 import { createMetadata } from "@/lib/seo";
 
@@ -129,11 +128,7 @@ export default function PricingPage() {
         title="Pricing shaped around your market questions."
       />
 
-      <SectionDivider surface="paper" />
-
       {pricingMode === "tiers" ? <TierPricing /> : <ContactSalesPricing />}
-
-      <SectionDivider />
 
       <FeatureBlock
         body="A brand sponsorship team, a publisher launch team, and a research agency often need the same market signal in different shapes. Hatchet packages coverage, reporting, and data access around the way your team actually makes decisions."
@@ -146,8 +141,6 @@ export default function PricingPage() {
         eyebrow="Flexible model"
         heading="Pricing that scales with the questions you're asking."
       />
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

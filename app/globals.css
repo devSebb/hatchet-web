@@ -150,6 +150,23 @@
   --paper-border: color-mix(in srgb, var(--bg) 22%, var(--white));
   --paper-ink: #000000;
   --paper-muted: color-mix(in srgb, var(--bg) 78%, var(--white));
+
+  /* Hero blend — strong navy held through the headline, then evolving through a
+     steel blue and a light blue-gray into white. Stops are percentages of the
+     combined hero + trusted-by span the gradient is painted behind, so the navy
+     bleeds past the hero and only resolves to white once it reaches the logo
+     wall. Tune the accent blue and the four stop positions below. */
+  --hero-blue-accent: #4a78b5;
+  --hero-steel: color-mix(in srgb, var(--bg) 55%, var(--hero-blue-accent));
+  --hero-mist: color-mix(in srgb, var(--paper) 80%, var(--hero-blue-accent));
+  --hero-gradient: linear-gradient(
+    to bottom,
+    var(--bg) 0%,
+    var(--bg) 24%,
+    var(--hero-steel) 48%,
+    var(--hero-mist) 74%,
+    var(--paper) 88%
+  );
   --white: #ffffff;
   --black: #000000;
   --signal: var(--brand);

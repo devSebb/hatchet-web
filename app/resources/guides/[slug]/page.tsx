@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { GuideGate } from "@/components/resources/GuideGate";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { Badge } from "@/components/ui/badge";
 import { content } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
@@ -56,8 +55,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
         subtitle={guide.summary}
         title={guide.title}
       />
-
-      <SectionDivider surface="paper" />
 
       <article className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-start">
@@ -114,8 +111,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
           )}
         </div>
       </article>
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

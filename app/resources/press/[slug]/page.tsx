@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { formatContentDate } from "@/components/resources/ResourceCards";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { content } from "@/lib/content";
@@ -54,8 +53,6 @@ export default async function PressItemPage({ params }: PressItemPageProps) {
     <main className="bg-background text-foreground">
       <PageHeader eyebrow="Press" subtitle={item.excerpt} title={item.title} />
 
-      <SectionDivider surface="paper" />
-
       <article className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="border-border bg-card mx-auto w-full max-w-4xl rounded-xl border p-6 shadow-sm lg:p-10">
           <div className="flex flex-wrap items-center gap-3">
@@ -80,8 +77,6 @@ export default async function PressItemPage({ params }: PressItemPageProps) {
           ) : null}
         </div>
       </article>
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

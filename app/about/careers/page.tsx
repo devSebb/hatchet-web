@@ -4,7 +4,6 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { Badge } from "@/components/ui/badge";
 import { careersOpenings } from "@/lib/config/marketing";
 import { createMetadata } from "@/lib/seo";
@@ -26,8 +25,6 @@ export default function CareersPage() {
         subtitle="We are a small, data-obsessed team building the market intelligence layer for gaming, esports, and live streaming. Explore where you can help shape it."
         title="Build the market intelligence layer for gaming."
       />
-
-      <SectionDivider surface="paper" />
 
       <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto w-full max-w-7xl">
@@ -57,8 +54,6 @@ export default function CareersPage() {
           </Stagger>
         </div>
       </section>
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

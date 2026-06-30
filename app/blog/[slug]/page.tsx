@@ -6,7 +6,6 @@ import { ArticleProse } from "@/components/resources/ArticleProse";
 import { formatContentDate } from "@/components/resources/ResourceCards";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { Badge } from "@/components/ui/badge";
 import { content } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
@@ -58,8 +57,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         title={post.title}
       />
 
-      <SectionDivider surface="paper" />
-
       <article className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto w-full max-w-4xl">
           <div className="flex flex-wrap items-center gap-3">
@@ -98,8 +95,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           ) : null}
         </div>
       </article>
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

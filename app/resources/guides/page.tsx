@@ -6,7 +6,6 @@ import { EmptyState } from "@/components/resources/EmptyState";
 import { GuideCard } from "@/components/resources/ResourceCards";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { content } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
@@ -29,8 +28,6 @@ export default async function GuidesPage() {
         subtitle="Templates, scorecards, and frameworks for teams turning gaming market movement into repeatable decisions."
         title="Practical ways to structure the signal."
       />
-
-      <SectionDivider surface="paper" />
 
       <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto w-full max-w-7xl">
@@ -59,8 +56,6 @@ export default async function GuidesPage() {
           )}
         </div>
       </section>
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

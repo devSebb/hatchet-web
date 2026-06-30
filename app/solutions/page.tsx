@@ -6,7 +6,6 @@ import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
 import { FeatureBlock } from "@/components/sections/FeatureBlock";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { solutions } from "@/lib/config/solutions";
 import { createMetadata } from "@/lib/seo";
 
@@ -27,8 +26,6 @@ export default function SolutionsPage() {
         subtitle="From first search to final report — find and verify creators, analyze performance, run campaigns, and report results without switching tools."
         title="The full creator lifecycle. One platform."
       />
-
-      <SectionDivider surface="paper" />
 
       <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto w-full max-w-7xl">
@@ -81,8 +78,6 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      <SectionDivider />
-
       <FeatureBlock
         body="Discovery, intelligence, campaign execution, and reporting all run on the same live signal. Move from finding a creator to reporting their results without re-importing data or switching tools."
         bullets={[
@@ -95,8 +90,6 @@ export default function SolutionsPage() {
         heading="One workflow, start to finish."
         link={{ label: "Compare pricing", href: "/pricing" }}
       />
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

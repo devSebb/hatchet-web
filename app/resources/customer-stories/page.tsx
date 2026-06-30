@@ -5,7 +5,6 @@ import { Stagger } from "@/components/motion/Stagger";
 import { CustomerStoryCard } from "@/components/resources/ResourceCards";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { content } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
@@ -28,8 +27,6 @@ export default async function CustomerStoriesPage() {
         subtitle="Customer story templates show the metric, quote, and use-case framing each story will carry when final copy lands."
         title="How teams turn live signal into decisions."
       />
-
-      <SectionDivider surface="paper" />
 
       <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto w-full max-w-7xl">
@@ -60,8 +57,6 @@ export default async function CustomerStoriesPage() {
           )}
         </div>
       </section>
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

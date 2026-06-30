@@ -5,7 +5,6 @@ import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
 import { FeatureBlock } from "@/components/sections/FeatureBlock";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { createMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
@@ -41,8 +40,6 @@ export default function AboutPage() {
         title="We supply the data behind the stream."
       />
 
-      <SectionDivider surface="paper" />
-
       <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto w-full max-w-7xl">
           <Reveal>
@@ -69,8 +66,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <SectionDivider />
-
       <FeatureBlock
         body="Hatchet brings live-streaming, gaming, creator, esports, and community intelligence into one market read, then meets each team where they work — from self-serve dashboards to analyst-built reports and data integrations."
         bullets={[
@@ -83,8 +78,6 @@ export default function AboutPage() {
         heading="One intelligence layer for the business of gaming."
         link={{ label: "View careers", href: "/about/careers" }}
       />
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { ArticleProse } from "@/components/resources/ArticleProse";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { Badge } from "@/components/ui/badge";
 import { content } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
@@ -59,8 +58,6 @@ export default async function CustomerStoryPage({
         title={`${story.company} uses Hatchet to read the market signal.`}
       />
 
-      <SectionDivider surface="paper" />
-
       <article className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[0.75fr_1fr] lg:items-start">
           <aside className="border-border bg-card rounded-xl border p-6 shadow-sm lg:sticky lg:top-28">
@@ -96,8 +93,6 @@ export default async function CustomerStoryPage({
           </div>
         </div>
       </article>
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

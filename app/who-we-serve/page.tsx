@@ -6,7 +6,6 @@ import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
 import { FeatureBlock } from "@/components/sections/FeatureBlock";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { verticals } from "@/lib/config/marketing";
 import { createMetadata } from "@/lib/seo";
 
@@ -27,8 +26,6 @@ export default function WhoWeServePage() {
         subtitle="Different teams ask different questions of the live-streaming market. Hatchet gives each one a signal layer they can act on."
         title="Built for the teams watching gaming move."
       />
-
-      <SectionDivider surface="paper" />
 
       <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto w-full max-w-7xl">
@@ -62,8 +59,6 @@ export default function WhoWeServePage() {
         </div>
       </section>
 
-      <SectionDivider />
-
       <FeatureBlock
         body="Hatchet keeps the same underlying market signal consistent, then frames it around the jobs each team needs to finish: planning, launch analysis, research delivery, sponsor reporting, and executive readouts."
         bullets={[
@@ -76,8 +71,6 @@ export default function WhoWeServePage() {
         heading="The same data becomes clearer when it speaks to the work."
         link={{ label: "Explore solutions", href: "/solutions" }}
       />
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

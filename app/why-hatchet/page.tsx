@@ -5,7 +5,6 @@ import { Stagger } from "@/components/motion/Stagger";
 import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { StatCounters } from "@/components/sections/StatCounters";
 import { differentiators, proofStats } from "@/lib/config/marketing";
 import { createMetadata } from "@/lib/seo";
@@ -27,8 +26,6 @@ export default function WhyHatchetPage() {
         subtitle="Gaming culture moves through creators, games, platforms, press, events, and communities. Hatchet measures that movement as one live signal."
         title="Market intelligence built for live gaming behavior."
       />
-
-      <SectionDivider surface="paper" />
 
       <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto w-full max-w-7xl">
@@ -56,11 +53,7 @@ export default function WhyHatchetPage() {
         </div>
       </section>
 
-      <SectionDivider />
-
       <CreatorLifecycle />
-
-      <SectionDivider />
 
       <StatCounters
         className="bg-elevated py-18 lg:py-24"
@@ -68,8 +61,6 @@ export default function WhyHatchetPage() {
         stats={proofStats}
         title="A measurement layer built for the scale of gaming culture."
       />
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

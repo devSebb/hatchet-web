@@ -6,7 +6,6 @@ import { EmptyState } from "@/components/resources/EmptyState";
 import { PressCard } from "@/components/resources/ResourceCards";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { content } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
@@ -31,8 +30,6 @@ export default async function PressPage() {
         subtitle="Company announcements and coverage related to Hatchet's live-streaming, gaming, and esports intelligence work."
         title="News from the signal layer."
       />
-
-      <SectionDivider surface="paper" />
 
       <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto w-full max-w-7xl">
@@ -61,8 +58,6 @@ export default async function PressPage() {
           )}
         </div>
       </section>
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

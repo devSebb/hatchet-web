@@ -4,7 +4,6 @@ import { Counter } from "@/components/motion/Counter";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { LiveDot } from "@/components/signal/LiveDot";
-import { PulseDivider } from "@/components/signal/PulseDivider";
 import { Sparkline } from "@/components/signal/Sparkline";
 import { CTASection } from "@/components/sections/CTASection";
 import { FeatureBlock } from "@/components/sections/FeatureBlock";
@@ -305,7 +304,6 @@ export default function StyleguidePage() {
 
             <div>
               <p className="eyebrow text-muted">Pulse divider</p>
-              <PulseDivider className="mt-4" />
             </div>
 
             <div>
@@ -331,15 +329,11 @@ export default function StyleguidePage() {
             </p>
           </div>
 
-          <PulseDivider />
-
           <PageHeader
             eyebrow="Page header"
             subtitle="Interior pages use a direct setup: a mono eyebrow, a display-scale title, and clear supporting copy."
             title="Every market read starts with live signal"
           />
-
-          <PulseDivider />
 
           <Hero
             emphasizedTitle="as it moves."
@@ -347,11 +341,7 @@ export default function StyleguidePage() {
             title="Measure gaming attention"
           />
 
-          <PulseDivider />
-
           <LogoWall />
-
-          <PulseDivider />
 
           <FeatureBlock
             body="Bring creator pickup, platform spread, chat movement, and press context into the same readout so launch teams can separate durable demand from short spikes."
@@ -365,19 +355,11 @@ export default function StyleguidePage() {
             link={{ label: "View solutions", href: "/solutions" }}
           />
 
-          <PulseDivider />
-
           <StatCounters />
-
-          <PulseDivider />
 
           <TestimonialCarousel />
 
-          <PulseDivider />
-
           <CTASection eyebrow="Book a demo" />
-
-          <PulseDivider />
 
           <CTASection
             eyebrow="Book a demo"

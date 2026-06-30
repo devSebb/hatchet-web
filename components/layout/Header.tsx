@@ -38,10 +38,10 @@ export function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 mt-3 border-b transition-[background-color,box-shadow,border-color] duration-(--dur-fast)",
+        "sticky top-0 z-40 border-b transition-[background-color,box-shadow,border-color] duration-(--dur-fast)",
         isElevated
-          ? "border-white/20 bg-background/92 shadow-[0_8px_28px_-8px_rgba(255,255,255,0.22)] backdrop-blur-xl"
-          : "border-white/15 bg-background/82 shadow-[0_4px_20px_-8px_rgba(255,255,255,0.15)] backdrop-blur-md",
+          ? "border-white/10 bg-background/92 shadow-[0_8px_28px_-8px_rgba(0,0,0,0.45)] backdrop-blur-xl"
+          : "border-transparent bg-background/70 backdrop-blur-md",
       )}
     >
       <div className="mx-auto flex h-18 w-full max-w-[96rem] items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">

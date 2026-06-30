@@ -6,7 +6,6 @@ import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
 import { FeatureBlock } from "@/components/sections/FeatureBlock";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import { Badge } from "@/components/ui/badge";
 import { getVertical, verticals } from "@/lib/config/marketing";
 import { createMetadata } from "@/lib/seo";
@@ -106,11 +105,7 @@ export default async function VerticalPage({ params }: VerticalPageProps) {
         title={vertical.title}
       />
 
-      <SectionDivider surface="paper" />
-
       <VerticalFraming vertical={vertical} />
-
-      <SectionDivider />
 
       <FeatureBlock
         body={vertical.proof}
@@ -120,8 +115,6 @@ export default async function VerticalPage({ params }: VerticalPageProps) {
         heading="Make the live audience read practical for the team in the room."
         link={{ label: "See all verticals", href: "/who-we-serve" }}
       />
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

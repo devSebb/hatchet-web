@@ -7,7 +7,6 @@ import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
 import { LogoWall } from "@/components/sections/LogoWall";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { SectionDivider } from "@/components/sections/SectionDivider";
 import {
   getSolution,
   type ProductSolution,
@@ -173,15 +172,9 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
         title="Trusted by Riot, YouTube, Microsoft, NASCAR, Activision Blizzard, and PlayStation."
       />
 
-      <SectionDivider surface="paper" />
-
       <CapabilitiesSection solution={solution} />
 
-      <SectionDivider />
-
       <WhySection solution={solution} />
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"

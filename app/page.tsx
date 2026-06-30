@@ -26,7 +26,6 @@ import { Hero } from "@/components/sections/Hero";
 import { LogoWall } from "@/components/sections/LogoWall";
 import { StatCounters } from "@/components/sections/StatCounters";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
-import { PulseDivider } from "@/components/signal/PulseDivider";
 import { siteConfig } from "@/lib/config/site";
 import { buildMetadata } from "@/lib/seo";
 
@@ -190,20 +189,6 @@ const testimonials = [
     logoSrc: "/images/logos/nascar.png",
   },
 ];
-
-function SectionDivider({ surface = "dark" }: { surface?: "dark" | "paper" }) {
-  return (
-    <div
-      className={
-        surface === "paper" ? "surface-paper bg-background" : "bg-background"
-      }
-    >
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <PulseDivider />
-      </div>
-    </div>
-  );
-}
 
 function Pillars() {
   return (
@@ -398,49 +383,47 @@ function BuiltForYourTeam() {
 export default function Home() {
   return (
     <main className="bg-background text-foreground">
-      <Hero
-        emphasizedTitle="Across Socials and Streaming"
-        image={{
-          src: "/images/hero-dashboard.png",
-          alt: "Hatchet Creator Discovery dashboard showing live-streaming analytics across platforms",
-          width: 2000,
-          height: 1143,
-        }}
-        primaryCta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
-        secondaryCta={{
-          label: "See It In Action",
-          href: "https://www.youtube.com/@StreamHatchet",
-        }}
-        stats={["30+ platforms", "10+ years of data", "55M+ creators"]}
-        subtitle="The only Creator Marketing Analytics platform built for gaming. Covering creator discovery, campaign tracking, and ROI measurement in one place, across every social network."
-        surface="paper"
-        title="Complete Gaming Intelligence"
-      />
+      {/* Shared navy→white background bleeds from the hero across the divider
+          into the trusted-by section, so the blend resolves to white only once
+          it reaches the logo wall. All three children stay transparent. */}
+      <div className="relative isolate overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{ backgroundImage: "var(--hero-gradient)" }}
+        />
+        <Hero
+          emphasizedTitle="Across Socials and Streaming"
+          image={{
+            src: "/images/hero-dashboard.png",
+            alt: "Hatchet Creator Discovery dashboard showing live-streaming analytics across platforms",
+            width: 2000,
+            height: 1143,
+          }}
+          primaryCta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
+          secondaryCta={{
+            label: "See It In Action",
+            href: "https://www.youtube.com/@StreamHatchet",
+          }}
+          stats={["30+ platforms", "10+ years of data", "55M+ creators"]}
+          subtitle="The only Creator Marketing Analytics platform built for gaming. Covering creator discovery, campaign tracking, and ROI measurement in one place, across every social network."
+          surface="gradient"
+          title="Complete Gaming Intelligence"
+        />
 
-      <SectionDivider surface="paper" />
-
-      <LogoWall
-        className="surface-paper bg-background pb-18 lg:pb-24"
-        title="Trusted by the teams running gaming's biggest campaigns"
-      />
-
-      <SectionDivider />
+        <LogoWall
+          className="surface-paper pb-18 lg:pb-24"
+          title="Trusted by the teams running gaming's biggest campaigns"
+        />
+      </div>
 
       <Pillars />
 
-      <SectionDivider />
-
       <CreatorLifecycle />
-
-      <SectionDivider />
 
       <WhyHatchet />
 
-      <SectionDivider surface="paper" />
-
       <BuiltForYourTeam />
-
-      <SectionDivider />
 
       <StatCounters
         className="bg-background py-18 lg:py-24"
@@ -448,8 +431,6 @@ export default function Home() {
         stats={proofStats}
         title="A measurement layer built for the scale of gaming culture."
       />
-
-      <SectionDivider surface="paper" />
 
       <div className="surface-paper bg-background text-foreground">
         <TestimonialCarousel
@@ -459,8 +440,6 @@ export default function Home() {
           title="Teams use Hatchet when the live audience read has to hold up."
         />
       </div>
-
-      <SectionDivider />
 
       <CTASection
         className="py-18 lg:py-24"
