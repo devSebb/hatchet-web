@@ -36,10 +36,11 @@ const formCopy = {
   },
   newsletter: {
     eyebrow: "Streamlined",
-    title: "Get a concise read on gaming and live-streaming movement.",
+    title:
+      "To keep up to date with the latest tools & trends across streaming & socials, follow Hatchet's free newsletter and receive exclusive content.",
     description:
       "This footer shell will connect to the HubSpot newsletter form in a later phase.",
-    submitLabel: "Notify me",
+    submitLabel: "Subscribe",
   },
   guide: {
     eyebrow: "Guide access",

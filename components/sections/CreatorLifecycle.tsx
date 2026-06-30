@@ -22,6 +22,7 @@ type Stage = {
   num: string;
   stage: string;
   tagline: string;
+  ctaLabel: string;
   href: string;
   Icon: LucideIcon;
   /** Unit direction from the core. 0 top → clockwise. */
@@ -33,7 +34,8 @@ const STAGES: Stage[] = [
     num: "01",
     stage: "Find & Verify",
     tagline:
-      "Describe the creator you need, get a match — and know they're real before you commit.",
+      "Describe the creator you need and get a match. AI-powered search surfaces the right fit fast, and fake audience scoring flags suspicious channels before you commit.",
+    ctaLabel: "Explore Creator Discovery",
     href: "/solutions/discovery",
     Icon: SearchCheckIcon,
     dir: { x: 0, y: -1 },
@@ -42,7 +44,8 @@ const STAGES: Stage[] = [
     num: "02",
     stage: "Analyze",
     tagline:
-      "Streaming and social performance, side by side in one cross-platform view.",
+      "Streaming and social in one view. Track performance across every platform your campaign touches, without switching tools or stitching spreadsheets together.",
+    ctaLabel: "Explore Intelligence",
     href: "/solutions/intelligence",
     Icon: LineChartIcon,
     dir: { x: 1, y: 0 },
@@ -51,7 +54,8 @@ const STAGES: Stage[] = [
     num: "03",
     stage: "Execute",
     tagline:
-      "Run campaigns end to end — roster, contracts, payments, and deliverables in one place.",
+      "Manage your entire creator roster from one place. Brief, track, and coordinate campaigns end-to-end via a single, customizable hub.",
+    ctaLabel: "Explore Creator Community",
     href: "/solutions/creator-community",
     Icon: WorkflowIcon,
     dir: { x: 0, y: 1 },
@@ -60,7 +64,8 @@ const STAGES: Stage[] = [
     num: "04",
     stage: "Report",
     tagline:
-      "EMV, engagement, and per-creator results — ready-to-use exports for stakeholders.",
+      "Every campaign metric in one dashboard. Per-creator breakdowns, engagement, and export-ready reports your clients or stakeholders can easily understand.",
+    ctaLabel: "Explore Reporting",
     href: "/solutions/reporting",
     Icon: FileTextIcon,
     dir: { x: -1, y: 0 },
@@ -540,7 +545,7 @@ export function CreatorLifecycle({ className }: { className?: string }) {
                 <div className="mt-auto pt-8">
                   <Button asChild>
                     <Link href={activeStage.href}>
-                      Explore {activeStage.stage}
+                      {activeStage.ctaLabel}
                       <ArrowRightIcon aria-hidden="true" />
                     </Link>
                   </Button>

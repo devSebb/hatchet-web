@@ -19,6 +19,7 @@ import {
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
+import { Button } from "@/components/ui/button";
 import { CircuitField } from "@/components/sections/CircuitField";
 import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
 import { CTASection } from "@/components/sections/CTASection";
@@ -43,19 +44,19 @@ const pillars = [
     icon: WorkflowIcon,
     kicker: "Data + execution",
     title: "One Platform, Full Lifecycle",
-    body: "From discovery to reporting — find the creator, run the campaign, and prove the ROI. All in one tool, with nothing stitched together.",
+    body: "Find creators. Run campaigns. Prove ROI. Other tools make you choose between data and execution, but Hatchet gives you both, all in one place, from first search to final report.",
   },
   {
     icon: ShieldCheckIcon,
     kicker: "Verified precision",
     title: "The Data Nobody Else Has",
-    body: "10 years of verified data from streaming and social across 30+ platforms. No estimates. No fake audiences — every number is real.",
+    body: "Ten years of verified data from streaming and social, across 30+ platforms: Every number is real and confirmed. No estimates, no fake audiences, no shortcuts.",
   },
   {
     icon: Gamepad2Icon,
     kicker: "Native, not retrofitted",
     title: "Built for Gaming from Day One",
-    body: "This isn't a generic analytics tool with a gaming skin. Hatchet was built for gaming from the inside out — never retrofitted to it.",
+    body: "Hatchet wasn't retrofitted for gaming. It was built for it. That means every feature, every data point, and every workflow was designed around how gaming campaigns actually run.",
   },
 ];
 
@@ -64,31 +65,31 @@ const whyHatchetReasons = [
     icon: Share2Icon,
     title: "Platform Coverage",
     tagline: "Name a platform. We probably track it.",
-    body: "Twitch, YouTube, TikTok, Instagram, X and 25+ more. Where gaming lives, Hatchet is already there.",
+    body: "Twitch, YouTube, TikTok, Instagram, X, and 25+ more. Where gaming lives, Hatchet is already there.",
   },
   {
     icon: BadgeCheckIcon,
     title: "Verified Data, Longest History",
     tagline: "10+ years of data. Zero tolerance for fake.",
-    body: "The deepest verified dataset in gaming — streaming and social, no estimates, no inflated audiences, no shortcuts.",
+    body: "The deepest verified dataset in gaming, covering streaming and social with no estimates, no inflated audiences, and no shortcuts.",
   },
   {
     icon: TrophyIcon,
-    title: "Industry Leader",
+    title: "Experience with Global Gaming Brands",
     tagline: "The teams running gaming trust Hatchet.",
-    body: "Riot, EA, Ubisoft, Capcom and hundreds more use Hatchet to make every campaign decision with confidence.",
+    body: "Riot, EA, Ubisoft, Capcom, and hundreds more use Hatchet to make every campaign decision with confidence.",
   },
   {
     icon: TrendingUpIcon,
     title: "Stay Ahead of the Industry",
     tagline: "Always know what's happening in gaming.",
-    body: "Access analyst-written reports, trend data, and market intelligence — so you're never caught off guard.",
+    body: "Always know what's happening in the social & streaming space with analyst-written reports, trend data, and market intelligence.",
   },
   {
     icon: LayoutGridIcon,
     title: "One Platform, Built for You",
     tagline: "Everything your team needs. Nothing it doesn't.",
-    body: "Discovery, execution, reporting — tailored to your workflow, not a generic tool you have to bend to fit.",
+    body: "Discovery, execution, and reporting tailored to your workflow, not a generic tool you have to bend to fit.",
   },
 ];
 
@@ -96,31 +97,31 @@ const useCases = [
   {
     icon: MegaphoneIcon,
     label: "Brands",
-    body: "Understand gaming before you commit a budget. Reach Gen Z the right way, with an expert beside you.",
+    body: "Use data to discover creator partners that tap into your target audience, then call them to action.",
     href: "/who-we-serve/brands",
   },
   {
     icon: RocketIcon,
     label: "Game Publishers",
-    body: "Launch campaigns and always-on programs in one tool. Conversion, not just reach.",
+    body: "Improve your reach and target players that are hyped about your specific genre and mechanics.",
     href: "/who-we-serve/games-publishers",
   },
   {
     icon: BarChart3Icon,
     label: "Market Research Agencies",
-    body: "Competitor comparisons and trend data, built on verified, accurate numbers.",
+    body: "Competitor comparisons, trend tracking, and verified data your clients can trust. No estimates, no guesswork.",
     href: "/who-we-serve/market-research-agencies",
   },
   {
     icon: SwordsIcon,
-    label: "Esports Orgs",
-    body: "Viewership, sponsorship, and audience data in one repeatable read.",
+    label: "Esports Organizations",
+    body: "Viewership, audience demographics, chat reactions: Get everything you need to show partners the value of what you've built.",
     href: "/who-we-serve/esports-teams",
   },
   {
     icon: UsersIcon,
     label: "Marketing & Talent Agencies",
-    body: "Run creator programs at scale for multiple clients, all from one workspace.",
+    body: "Run creator programs at scale across multiple clients. One platform, every campaign, no chaos.",
     href: "/who-we-serve/marketing-and-talent-agencies",
   },
 ];
@@ -265,6 +266,14 @@ function WhyHatchet() {
               The broadest coverage, the deepest verified history, and the
               workflow gaming teams actually run on.
             </p>
+            <div className="mt-8">
+              <Button asChild>
+                <Link href={siteConfig.bookDemoUrl}>
+                  Book a Demo
+                  <ArrowRightIcon aria-hidden="true" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </Reveal>
 
@@ -313,7 +322,7 @@ function BuiltForYourTeam() {
         <Reveal>
           <div className="max-w-3xl">
             <p className="eyebrow text-muted">Use cases</p>
-            <h2 className="h1 mt-4">Built for your team.</h2>
+            <h2 className="h1 mt-4">Apply Our Data To Suit Your Needs</h2>
             <p className="body-lg text-muted mt-5">
               Whatever your role in gaming, Hatchet meets your workflow. Pick the
               path that fits how your team works.
@@ -380,6 +389,38 @@ function BuiltForYourTeam() {
   );
 }
 
+function Plans() {
+  return (
+    <section className="bg-background text-foreground relative isolate overflow-hidden px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-[var(--gradient-cta-glow)] blur-3xl"
+      />
+      <CircuitField density="quiet" />
+      <div className="mx-auto w-full max-w-3xl text-center">
+        <Reveal>
+          <p className="eyebrow text-muted">Plans</p>
+          <h2 className="h1 mt-4">
+            Find your <span className="text-gradient-brand">fit.</span>
+          </h2>
+          <p className="body-lg text-muted mt-5">
+            Our data adapts to brands, studios, and agencies of all sizes. Find
+            the plan that fits yours.
+          </p>
+          <div className="mt-8 flex justify-center">
+            <Button asChild>
+              <Link href="/pricing">
+                See Plans
+                <ArrowRightIcon aria-hidden="true" />
+              </Link>
+            </Button>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   return (
     <main className="bg-background text-foreground">
@@ -405,15 +446,15 @@ export default function Home() {
             label: "See It In Action",
             href: "https://www.youtube.com/@StreamHatchet",
           }}
-          stats={["30+ platforms", "10+ years of data", "55M+ creators"]}
-          subtitle="The only Creator Marketing Analytics platform built for gaming. Covering creator discovery, campaign tracking, and ROI measurement in one place, across every social network."
+          stats={["30+ platforms", "10+ years of data", "50M+ creators"]}
+          subtitle="Creator Marketing Analytics built for gaming. Cover creator discovery, campaign tracking, and ROI measurement in one place, across every social network."
           surface="gradient"
           title="Complete Gaming Intelligence"
         />
 
         <LogoWall
           className="surface-paper pb-18 lg:pb-24"
-          title="Trusted by the teams running gaming's biggest campaigns"
+          title="Trusted by the biggest names in the gaming industry."
         />
       </div>
 
@@ -441,8 +482,12 @@ export default function Home() {
         />
       </div>
 
+      <Plans />
+
       <CTASection
+        body="Book a demo and see how Hatchet runs your entire creator program, from first search to final report."
         className="py-18 lg:py-24"
+        cta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
         eyebrow="Book a demo"
         media={{
           src: "/images/Laptop-Asset1.png",
@@ -450,8 +495,7 @@ export default function Home() {
           width: 3488,
           height: 2243,
         }}
-        proof={{ kind: "stat", value: "{{VERIFY}}", label: "creators tracked" }}
-        title="Bring the live-streaming market read into your next decision."
+        title="Full picture. Verified data. Gaming expertise."
         variant="featured"
       />
     </main>
