@@ -12,7 +12,7 @@ type CircuitFieldProps = {
   pulseCount?: number;
   /** Pulse travel duration, ms (~1.5–2.5s). */
   pulseDurationMs?: number;
-  /** Base gap between new pulses, ms (randomized ±50%, ~5–10s). */
+  /** Base gap between new pulses, ms (randomized ±50%, ~2.5–5s). */
   pulseIntervalMs?: number;
   className?: string;
   style?: CSSProperties;
@@ -32,6 +32,15 @@ const TRACES = [
   "M 1440 470 H 1250 V 300",
   "M 250 60 H 470 V 220",
   "M 1190 840 H 1390",
+  // Right-side fill: reach further inward so the space beside the headline
+  // carries the same trace density as the left.
+  "M 1440 100 H 1230 V 300",
+  "M 940 640 H 1150 V 470",
+  "M 1080 900 V 730 H 1310 V 600",
+  "M 1440 560 H 1320 V 420 H 1200",
+  // Top-right corner accents.
+  "M 1440 40 H 1360 V 160 H 1250",
+  "M 1150 0 V 120 H 1340",
 ];
 
 // Vias at a curated subset of junctions (used sparingly).
@@ -49,6 +58,17 @@ const VIAS: [number, number][] = [
   [170, 430],
   [1250, 300],
   [470, 220],
+  // Junctions for the new right-side traces.
+  [1230, 300],
+  [1150, 640],
+  [1150, 470],
+  [1310, 730],
+  [1320, 420],
+  [1200, 420],
+  // Top-right corner junctions.
+  [1360, 160],
+  [1250, 160],
+  [1340, 120],
 ];
 
 const NEGATIVE_SPACE_MASK =
@@ -66,13 +86,17 @@ export function CircuitField({
   density = "quiet",
   pulseCount = 3,
   pulseDurationMs = 2100,
-  pulseIntervalMs = 7000,
+  pulseIntervalMs = 5000,
   className,
   style,
 }: CircuitFieldProps) {
   const reduceMotion = useHydratedReducedMotion();
   const rootRef = useRef<HTMLDivElement>(null);
   const pulseRefs = useRef<(SVGCircleElement | null)[]>([]);
+  // One glowing trail path per pulse slot: the trace segment behind the
+  // travelling dot lights up in-brand, then fades — reads as a signal
+  // energizing the path rather than a lone dot drifting across it.
+  const trailRefs = useRef<(SVGPathElement | null)[]>([]);
 
   useEffect(() => {
     if (reduceMotion) {
@@ -112,12 +136,11 @@ export function CircuitField({
         return;
       }
       const d = TRACES[Math.floor(Math.random() * TRACES.length)];
+      const color = PULSE_COLORS[colorTick++ % PULSE_COLORS.length];
       busy.add(slot);
-      el.style.setProperty(
-        "--cf-pulse-color",
-        PULSE_COLORS[colorTick++ % PULSE_COLORS.length],
-      );
+      el.style.setProperty("--cf-pulse-color", color);
       el.style.offsetPath = `path('${d}')`;
+      const easing = "cubic-bezier(0.4, 0, 0.2, 1)";
       const anim = el.animate(
         [
           { offsetDistance: "0%", opacity: 0 },
@@ -125,14 +148,44 @@ export function CircuitField({
           { offsetDistance: "86%", opacity: 1, offset: 0.86 },
           { offsetDistance: "100%", opacity: 0 },
         ],
-        { duration: pulseDurationMs, easing: "cubic-bezier(0.4, 0, 0.2, 1)" },
+        { duration: pulseDurationMs, easing },
       );
+
+      // Light up the trace behind the dot: a short dash whose leading edge
+      // tracks the dot travels the same path, matched color + easing so the
+      // two read as one signal.
+      const trail = trailRefs.current[slot];
+      let trailAnim: Animation | undefined;
+      if (trail) {
+        trail.setAttribute("d", d);
+        trail.style.stroke = color;
+        trail.style.color = color;
+        const total = trail.getTotalLength();
+        const seg = Math.min(150, total * 0.5);
+        trail.style.strokeDasharray = `${seg} ${total + seg}`;
+        // strokeDashoffset = seg - head, so the lit dash spans [head-seg, head]
+        // as the head sweeps 0 → total in lockstep with the dot.
+        trailAnim = trail.animate(
+          [
+            { strokeDashoffset: seg, opacity: 0 },
+            { strokeDashoffset: seg - total * 0.14, opacity: 0.9, offset: 0.14 },
+            { strokeDashoffset: seg - total * 0.86, opacity: 0.9, offset: 0.86 },
+            { strokeDashoffset: seg - total, opacity: 0 },
+          ],
+          { duration: pulseDurationMs, easing },
+        );
+      }
+
       const done = () => {
         busy.delete(slot);
         el.style.opacity = "0";
+        if (trail) {
+          trail.style.opacity = "0";
+        }
       };
       anim.addEventListener("finish", done);
       anim.addEventListener("cancel", done);
+      trailAnim?.addEventListener("cancel", done);
     };
 
     const schedule = () => {
@@ -168,8 +221,8 @@ export function CircuitField({
   }, [reduceMotion, pulseCount, pulseDurationMs, pulseIntervalMs]);
 
   const rootStyle = {
-    "--cf-trace-color": "color-mix(in srgb, var(--white) 9%, transparent)",
-    "--cf-via-color": "color-mix(in srgb, var(--white) 20%, transparent)",
+    "--cf-trace-color": "color-mix(in srgb, var(--white) 20%, transparent)",
+    "--cf-via-color": "color-mix(in srgb, var(--white) 32%, transparent)",
     "--cf-pulse-color": "var(--brand)",
     "--cf-field-opacity": density === "quiet" ? "1" : "1",
     "--cf-pitch": "120px",
@@ -213,18 +266,33 @@ export function CircuitField({
           />
         ))}
         {Array.from({ length: pulseCount }, (_, i) => (
+          <path
+            fill="none"
+            key={`trail-${i}`}
+            ref={(el) => {
+              trailRefs.current[i] = el;
+            }}
+            strokeLinecap="round"
+            strokeWidth={2.2}
+            style={{
+              opacity: 0,
+              filter: "drop-shadow(0 0 4px currentColor)",
+            }}
+          />
+        ))}
+        {Array.from({ length: pulseCount }, (_, i) => (
           <circle
             cx={0}
             cy={0}
             fill="var(--cf-pulse-color)"
             key={`pulse-${i}`}
-            r={3}
+            r={3.5}
             ref={(el) => {
               pulseRefs.current[i] = el;
             }}
             style={{
               opacity: 0,
-              filter: "drop-shadow(0 0 3px var(--cf-pulse-color))",
+              filter: "drop-shadow(0 0 6px var(--cf-pulse-color))",
             }}
           />
         ))}

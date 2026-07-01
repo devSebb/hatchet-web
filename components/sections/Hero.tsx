@@ -2,6 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { CircuitField } from "@/components/sections/CircuitField";
+import {
+  HeroStatVisual,
+  type HeroStatVisualVariant,
+} from "@/components/sections/HeroStatVisual";
 import { Counter } from "@/components/motion/Counter";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
@@ -21,7 +25,12 @@ type HeroProps = {
   title: string;
   emphasizedTitle: string;
   subtitle: string;
-  stats?: Array<{ value: number; suffix?: string; label: string }>;
+  stats?: Array<{
+    value: number;
+    suffix?: string;
+    label: string;
+    visual?: HeroStatVisualVariant;
+  }>;
   primaryCta?: {
     label: string;
     href: string;
@@ -54,6 +63,16 @@ export function Hero({
 }: HeroProps) {
   const isPaper = surface === "paper";
   const isGradient = surface === "gradient";
+  const hasVisuals = stats?.some((stat) => stat.visual);
+
+  // When stats carry a bespoke visual, they render as glass "stat modules"
+  // instead of a bare centered row.
+  const statCardClass = cn(
+    "flex flex-col rounded-2xl border p-5 text-left backdrop-blur-sm",
+    isGradient
+      ? "border-white/10 bg-white/[0.05] shadow-lg"
+      : "border-border bg-surface shadow-sm",
+  );
 
   const headlineStyle = isPaper
     ? { color: "var(--bg)" }
@@ -92,38 +111,81 @@ export function Hero({
           {subtitle}
         </p>
         {stats?.length ? (
-          <Stagger className="mt-8 flex items-stretch justify-center">
-            {stats.map((stat) => (
-              <div
-                className="flex flex-col items-center px-3 text-center sm:px-4"
-                key={stat.label}
-              >
-                <span className="flex items-baseline gap-0.5">
-                  <Counter
-                    className={isGradient ? "text-white" : "text-foreground"}
-                    style={{ fontSize: "clamp(1.875rem, 4vw, 2.75rem)" }}
-                    to={stat.value}
-                  />
-                  {stat.suffix ? (
-                    <span
-                      className="text-brand-soft font-extrabold"
-                      style={{ fontSize: "clamp(1.25rem, 2.6vw, 1.75rem)" }}
-                    >
-                      {stat.suffix}
-                    </span>
+          hasVisuals ? (
+            <Stagger
+              childClassName={statCardClass}
+              className="mt-10 grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3"
+            >
+              {stats.map((stat) => (
+                <div className="flex h-full flex-col" key={stat.label}>
+                  {stat.visual ? (
+                    <HeroStatVisual
+                      className={isGradient ? "text-white/70" : "text-muted"}
+                      variant={stat.visual}
+                    />
                   ) : null}
-                </span>
-                <span
-                  className={cn(
-                    "eyebrow mt-2",
-                    isGradient ? "text-white/55" : "text-muted",
-                  )}
+                  <div className="mt-auto flex flex-col items-start pt-4">
+                    <span className="flex items-baseline gap-0.5">
+                      <Counter
+                        className={isGradient ? "text-white" : "text-foreground"}
+                        style={{ fontSize: "clamp(1.875rem, 4vw, 2.75rem)" }}
+                        to={stat.value}
+                      />
+                      {stat.suffix ? (
+                        <span
+                          className="text-brand-soft font-extrabold"
+                          style={{ fontSize: "clamp(1.25rem, 2.6vw, 1.75rem)" }}
+                        >
+                          {stat.suffix}
+                        </span>
+                      ) : null}
+                    </span>
+                    <span
+                      className={cn(
+                        "eyebrow mt-2",
+                        isGradient ? "text-white/55" : "text-muted",
+                      )}
+                    >
+                      {stat.label}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </Stagger>
+          ) : (
+            <Stagger className="mt-8 flex items-stretch justify-center">
+              {stats.map((stat) => (
+                <div
+                  className="flex flex-col items-center px-3 text-center sm:px-4"
+                  key={stat.label}
                 >
-                  {stat.label}
-                </span>
-              </div>
-            ))}
-          </Stagger>
+                  <span className="flex items-baseline gap-0.5">
+                    <Counter
+                      className={isGradient ? "text-white" : "text-foreground"}
+                      style={{ fontSize: "clamp(1.875rem, 4vw, 2.75rem)" }}
+                      to={stat.value}
+                    />
+                    {stat.suffix ? (
+                      <span
+                        className="text-brand-soft font-extrabold"
+                        style={{ fontSize: "clamp(1.25rem, 2.6vw, 1.75rem)" }}
+                      >
+                        {stat.suffix}
+                      </span>
+                    ) : null}
+                  </span>
+                  <span
+                    className={cn(
+                      "eyebrow mt-2",
+                      isGradient ? "text-white/55" : "text-muted",
+                    )}
+                  >
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </Stagger>
+          )
         ) : null}
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button asChild>

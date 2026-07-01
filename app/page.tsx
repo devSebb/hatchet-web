@@ -1,20 +1,18 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRightIcon,
   BadgeCheckIcon,
   BarChart3Icon,
-  Gamepad2Icon,
   LayoutGridIcon,
   MegaphoneIcon,
   RocketIcon,
   Share2Icon,
-  ShieldCheckIcon,
   SwordsIcon,
   TrendingUpIcon,
   TrophyIcon,
   UsersIcon,
-  WorkflowIcon,
 } from "lucide-react";
 
 import { Reveal } from "@/components/motion/Reveal";
@@ -40,19 +38,19 @@ export function generateMetadata(): Metadata {
 
 const pillars = [
   {
-    icon: WorkflowIcon,
+    image: "/images/content/data+execution.png",
     kicker: "Data + execution",
     title: "One Platform, Full Lifecycle",
     body: "Find creators. Run campaigns. Prove ROI. Other tools make you choose between data and execution, but Hatchet gives you both, all in one place, from first search to final report.",
   },
   {
-    icon: ShieldCheckIcon,
+    image: "/images/content/verified_precision.png",
     kicker: "Verified precision",
     title: "The Data Nobody Else Has",
     body: "Ten years of verified data from streaming and social, across 30+ platforms: Every number is real and confirmed. No estimates, no fake audiences, no shortcuts.",
   },
   {
-    icon: Gamepad2Icon,
+    image: "/images/content/Native.png",
     kicker: "Native, not retrofitted",
     title: "Built for Gaming from Day One",
     body: "Hatchet wasn't retrofitted for gaming. It was built for it. That means every feature, every data point, and every workflow was designed around how gaming campaigns actually run.",
@@ -175,15 +173,16 @@ function Pillars() {
 
         <Stagger className="mt-12 grid gap-5 lg:grid-cols-3">
           {pillars.map((pillar) => {
-            const Icon = pillar.icon;
-
             return (
-              <article
-                className="group border-border bg-card hover:border-brand/40 hover:shadow-glow-brand relative overflow-hidden rounded-2xl border p-7 shadow-sm transition-[transform,border-color,box-shadow] duration-(--dur-base) hover:-translate-y-1"
-                key={pillar.title}
-              >
-                <div className="bg-gradient-brand shadow-glow-brand flex size-12 items-center justify-center rounded-xl text-white">
-                  <Icon aria-hidden="true" className="size-6" />
+              <article className="relative" key={pillar.title}>
+                <div className="mx-auto w-fit overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:shadow-glow-brand">
+                  <Image
+                    alt=""
+                    className="size-48 object-cover"
+                    height={1254}
+                    src={pillar.image}
+                    width={1254}
+                  />
                 </div>
                 <p className="eyebrow text-brand mt-6">{pillar.kicker}</p>
                 <h3 className="font-display mt-2 text-xl font-semibold tracking-[-0.01em]">
@@ -395,9 +394,9 @@ export default function Home() {
             href: "https://www.youtube.com/@StreamHatchet",
           }}
           stats={[
-            { value: 30, suffix: "+", label: "Platforms" },
-            { value: 10, suffix: "+", label: "Years of data" },
-            { value: 50, suffix: "M+", label: "Creators" },
+            { value: 30, suffix: "+", label: "Platforms", visual: "cluster" },
+            { value: 10, suffix: "+", label: "Years of data", visual: "timeline" },
+            { value: 50, suffix: "M+", label: "Creators", visual: "density" },
           ]}
           subtitle="Creator Marketing Analytics built for gaming. Cover creator discovery, campaign tracking, and ROI measurement in one place, across every social network."
           surface="gradient"
