@@ -212,8 +212,10 @@ function WhyHatchet() {
           <div className="text-center">
             <p className="eyebrow text-muted">Why Hatchet</p>
             <h2 className="h1 mt-4">
-              Five reasons teams{" "}
-              <span className="text-gradient-brand">bet on Hatchet.</span>
+              Reasons Why Hatchet is{" "}
+              <span className="text-gradient-brand">
+                The Sharpest Analytics Tool
+              </span>
             </h2>
             <p className="body-lg text-muted mx-auto mt-5 max-w-2xl">
               The broadest coverage, the deepest verified history, and the
@@ -271,12 +273,11 @@ function BuiltForYourTeam() {
       <div className="mx-auto w-full max-w-7xl">
         <Reveal>
           <div className="max-w-3xl">
-            <p className="eyebrow text-muted">Use cases</p>
-            <h2 className="h1 mt-4">Apply Our Data To Suit Your Needs</h2>
-            <p className="body-lg text-muted mt-5">
-              Whatever your role in gaming, Hatchet meets your workflow. Pick the
-              path that fits how your team works.
-            </p>
+            <h2 className="h1">
+              Apply Our Data
+              <br />
+              To Suit Your Needs
+            </h2>
           </div>
         </Reveal>
 
@@ -422,7 +423,7 @@ export default function Home() {
           className="py-14 lg:py-20"
           eyebrow="Customer signal"
           testimonials={testimonials}
-          title="Teams use Hatchet when the live audience read has to hold up."
+          title="Curious what our clients say about Hatchet?"
         />
       </div>
 

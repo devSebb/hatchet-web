@@ -82,9 +82,9 @@ const CX = 80;
 const CY = 40;
 const CORE_R = 14; // outer radius of the faceted core (circular gem)
 const TABLE_R = 5.5; // inner "table" of the cut gem
-const RX = 60; // horizontal station radius (wide field)
+const RX = 56; // horizontal station radius (wide field)
 const RY = 28; // vertical station radius (short field)
-const RING_RX = 64; // ring sits just outside the stations
+const RING_RX = 61; // ring sits just outside the stations
 const RING_RY = 31;
 const DIAG = 0.707;
 const TRACE_BACK = 8; // trace stops this far short of the station
@@ -348,30 +348,17 @@ export function CreatorLifecycle({ className }: { className?: string }) {
       />
 
       <div className="relative mx-auto w-full max-w-7xl">
-        <div className="flex flex-col items-start gap-10 lg:flex-row lg:justify-between lg:gap-12">
-          <div className="max-w-3xl">
-            <p className="eyebrow text-muted">How it works</p>
-            <h2 className="h1 mt-4">
-              The full creator lifecycle. One platform.
-            </h2>
-            <p className="body-lg text-muted mt-5">
-              From first search to final report — without switching tools.
-            </p>
-          </div>
-
-          {/* Detail card — a separate element in the top-right, above the
-              orbital, so the cross below stays clean and symmetric. */}
-          <DetailPanel
-            className="hidden w-[22rem] shrink-0 lg:mt-6 lg:block"
-            motionKey={active}
-            panelId={panelId}
-            reduceMotion={reduceMotion}
-            stage={activeStage}
-          />
+        <div className="max-w-3xl">
+          <p className="eyebrow text-muted">How it works</p>
+          <h2 className="h1 mt-4">The full creator lifecycle. One platform.</h2>
+          <p className="body-lg text-muted mt-5">
+            From first search to final report — without switching tools.
+          </p>
         </div>
 
-        {/* ── Desktop: full-width centered orbital + floating detail card ── */}
-        <div className="relative mt-2 hidden aspect-[2/1] w-full lg:mt-2 lg:block">
+        {/* ── Desktop: orbital (~70%) + fixed detail panel on the right ── */}
+        <div className="mt-8 hidden lg:grid lg:grid-cols-[minmax(0,1fr)_23rem] lg:items-center lg:gap-10">
+          <div className="relative aspect-[2/1] w-full">
           {animateRouting ? (
             <motion.div
               animate={{ rotate: 360 }}
@@ -553,7 +540,18 @@ export function CreatorLifecycle({ className }: { className?: string }) {
               </Link>
             );
           })}
+          </div>
 
+          {/* Detail panel — fixed width (grid column) + a min-height sized to
+              the tallest tagline, so it stays a consistent size across stages
+              and always contains both the text and the button. */}
+          <DetailPanel
+            className="w-full lg:min-h-[25rem]"
+            motionKey={active}
+            panelId={panelId}
+            reduceMotion={reduceMotion}
+            stage={activeStage}
+          />
         </div>
 
         {/* ── Mobile / tablet: vertical faceted stepper ──────────── */}
