@@ -41,18 +41,12 @@ type HeroProps = {
   };
   image?: HeroImage;
   /**
-   * "paper" flips the hero to a light surface (white bg, navy headline).
-   * "gradient" blends navy (under the nav) down through a faint red-violet to
-   * white where the trusted-signal band begins — white text rides the dark top.
-   * "light" stays transparent like "gradient" but assumes a pale backdrop
-   * (hero theme lab), so text takes the paper treatments instead of white.
+   * "dark" renders on a solid navy section background (interior pages).
+   * "gradient" stays transparent so the shared navy→white background that
+   * bleeds from the hero into the trusted-by band shows through — white text
+   * rides the dark top.
    */
-  surface?: "dark" | "paper" | "gradient" | "light";
-  /**
-   * "compact" swaps the glass stat modules for smaller light cards — a brand
-   * rail, tighter number, and a miniature visual. Used by hero theme 3.
-   */
-  statStyle?: "default" | "compact";
+  surface?: "dark" | "gradient";
   className?: string;
 };
 
@@ -66,27 +60,11 @@ export function Hero({
   secondaryCta = { label: "Sign up", href: siteConfig.signUpUrl },
   image,
   surface = "dark",
-  statStyle = "default",
   className,
 }: HeroProps) {
-  const isPaper = surface === "paper";
   const isGradient = surface === "gradient";
-  const isLight = surface === "light";
-  const hasVisuals = stats?.some((stat) => stat.visual);
 
-  // When stats carry a bespoke visual, they render as glass "stat modules"
-  // instead of a bare centered row.
-  const statCardClass = cn(
-    "flex flex-col rounded-2xl px-4 py-2.5 text-left",
-    isGradient ? "bg-white/[0.03]" : "bg-surface/50",
-  );
-
-  const headlineStyle =
-    isPaper || isLight
-      ? { color: "var(--bg)" }
-      : isGradient
-        ? { color: "var(--white)" }
-        : undefined;
+  const headlineStyle = isGradient ? { color: "var(--white)" } : undefined;
 
   // The headline/subtitle/stats sit on the dark navy top of the gradient, so
   // they need light treatments rather than the paper foreground tokens.
@@ -104,8 +82,7 @@ export function Hero({
           </p>
         ) : null}
         <h1 className="display" style={headlineStyle}>
-          {title}{" "}
-          <span className="text-brand">{emphasizedTitle}</span>
+          {title} <span className="text-brand">{emphasizedTitle}</span>
         </h1>
         <p
           className={cn(
@@ -116,163 +93,75 @@ export function Hero({
           {subtitle}
         </p>
         {stats?.length ? (
-          statStyle === "compact" ? (
-            // Light-hero "data cards": tinted frosted glass. A translucent fill
-            // over heavy backdrop blur, a faint cool frost tint, a diagonal
-            // light-catch sheen and a bright white rim make the glass read
-            // clearly even on the pale surface (which gives the blur little to
-            // refract). A gradient hero number sits up top; its data graphic
-            // bleeds to the bottom edge. No hard border, no divider.
-            <Stagger
-              childClassName="group relative flex flex-col overflow-hidden rounded-2xl bg-white/25 shadow-[0_18px_50px_-14px_rgba(21,31,44,0.34)] ring-1 ring-inset ring-white/70 backdrop-blur-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:shadow-glow-brand"
-              className="mt-6 grid w-full max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3"
-            >
-              {stats.map((stat) => (
-                <div
-                  className="relative flex h-full flex-col pt-5 text-left"
-                  key={stat.label}
-                >
-                  {/* Cool frost tint — gives the glass a visible frosted body
-                      instead of vanishing into the near-white backdrop. */}
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(150deg, color-mix(in srgb, var(--hero-blue-accent) 20%, transparent) 0%, color-mix(in srgb, var(--hero-blue-accent) 6%, transparent) 45%, color-mix(in srgb, var(--brand) 7%, transparent) 100%)",
-                    }}
-                  />
-                  {/* Full-card warm fade — spans the whole card (weighted to the
-                      base where the graphic sits) so no white strips show
-                      beside the chart. */}
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      background:
-                        "radial-gradient(135% 78% at 50% 100%, color-mix(in srgb, var(--brand) 13%, transparent) 0%, transparent 60%)",
-                    }}
-                  />
-                  {/* Diagonal light-catch sheen — the tell that reads as glass. */}
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(130deg, color-mix(in srgb, var(--white) 78%, transparent) 0%, color-mix(in srgb, var(--white) 18%, transparent) 30%, transparent 58%)",
-                    }}
-                  />
-                  <div className="relative px-5">
-                    <span className="eyebrow text-muted whitespace-nowrap">
-                      {stat.label}
-                    </span>
-                    <span className="mt-1.5 flex items-baseline gap-0.5">
-                      <Counter
-                        className="text-gradient-brand"
-                        style={{ fontSize: "clamp(2rem, 3.4vw, 2.75rem)" }}
-                        to={stat.value}
-                      />
-                      {stat.suffix ? (
-                        <span
-                          className="text-gradient-brand font-extrabold"
-                          style={{ fontSize: "clamp(1.25rem, 2.2vw, 1.625rem)" }}
-                        >
-                          {stat.suffix}
-                        </span>
-                      ) : null}
-                    </span>
-                  </div>
-                  {stat.visual ? (
-                    // Full-bleed chart foundation; a hair of side padding keeps
-                    // the marks off the rounded corners.
-                    <div className="relative mt-5 flex flex-1 items-end px-2">
-                      <HeroStatVisual
-                        className="relative"
-                        tone="light"
-                        variant={stat.visual}
-                      />
-                    </div>
-                  ) : null}
-                </div>
-              ))}
-            </Stagger>
-          ) : hasVisuals ? (
-            <Stagger
-              childClassName={statCardClass}
-              className="mt-6 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3"
-            >
-              {stats.map((stat) => (
-                <div className="flex h-full flex-col" key={stat.label}>
-                  {stat.visual ? (
-                    <HeroStatVisual
-                      className={isGradient ? "text-white/70" : "text-muted"}
-                      variant={stat.visual}
-                    />
-                  ) : null}
-                  <div className="flex flex-col items-start pt-1">
-                    <span className="flex items-baseline gap-0.5">
-                      <Counter
-                        className={
-                          isGradient ? "text-white" : "text-foreground"
-                        }
-                        style={{ fontSize: "clamp(1.75rem, 3.8vw, 2.5rem)" }}
-                        to={stat.value}
-                      />
-                      {stat.suffix ? (
-                        <span
-                          className="text-brand-soft font-extrabold"
-                          style={{ fontSize: "clamp(1.125rem, 2.4vw, 1.5rem)" }}
-                        >
-                          {stat.suffix}
-                        </span>
-                      ) : null}
-                    </span>
-                    <span
-                      className={cn(
-                        "eyebrow mt-0.5",
-                        isGradient ? "text-white/55" : "text-muted",
-                      )}
-                    >
-                      {stat.label}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </Stagger>
-          ) : (
-            <Stagger className="mt-8 flex items-stretch justify-center">
-              {stats.map((stat) => (
-                <div
-                  className="flex flex-col items-center px-3 text-center sm:px-4"
-                  key={stat.label}
-                >
-                  <span className="flex items-baseline gap-0.5">
+          // "Data cards": dark glass tuned for the navy top of the gradient
+          // hero. The fill is an opaque lifted-navy (a whisper of white over
+          // --bg) rather than a near-transparent tint, so the faint circuit
+          // traces behind the hero can't bleed through the card as uneven
+          // banding. A low-opacity white rim and a soft top sheen read as glass,
+          // and a brand-red bloom at the base ties into the chart. A gradient
+          // hero number sits up top; its data graphic bleeds to the bottom edge.
+          <Stagger
+            childClassName="group relative flex flex-col overflow-hidden rounded-2xl bg-[color-mix(in_srgb,var(--white)_7%,var(--bg))] shadow-[0_18px_50px_-14px_rgba(0,0,0,0.55)] ring-1 ring-inset ring-white/15 transition-[transform,background-color,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:bg-[color-mix(in_srgb,var(--white)_11%,var(--bg))] hover:shadow-glow-brand"
+            className="mt-6 grid w-full max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3"
+          >
+            {stats.map((stat) => (
+              <div
+                className="relative flex h-full flex-col pt-5 text-left"
+                key={stat.label}
+              >
+                {/* Brand-red bloom at the base — warms the card into the chart
+                    and echoes the headline against the navy. */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      "radial-gradient(130% 82% at 50% 100%, color-mix(in srgb, var(--brand) 22%, transparent) 0%, transparent 62%)",
+                  }}
+                />
+                {/* Soft top sheen — a faint light-catch on the top edge that
+                    reads as glass without milking out the dark fill. */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(160deg, color-mix(in srgb, var(--white) 12%, transparent) 0%, color-mix(in srgb, var(--white) 4%, transparent) 26%, transparent 52%)",
+                  }}
+                />
+                <div className="relative px-5">
+                  <span className="eyebrow whitespace-nowrap text-white/55">
+                    {stat.label}
+                  </span>
+                  <span className="mt-1.5 flex items-baseline gap-0.5">
                     <Counter
-                      className={isGradient ? "text-white" : "text-foreground"}
-                      style={{ fontSize: "clamp(1.875rem, 4vw, 2.75rem)" }}
+                      className="text-gradient-brand"
+                      style={{ fontSize: "clamp(2rem, 3.4vw, 2.75rem)" }}
                       to={stat.value}
                     />
                     {stat.suffix ? (
                       <span
-                        className="text-brand-soft font-extrabold"
-                        style={{ fontSize: "clamp(1.25rem, 2.6vw, 1.75rem)" }}
+                        className="text-gradient-brand font-extrabold"
+                        style={{ fontSize: "clamp(1.25rem, 2.2vw, 1.625rem)" }}
                       >
                         {stat.suffix}
                       </span>
                     ) : null}
                   </span>
-                  <span
-                    className={cn(
-                      "eyebrow mt-2",
-                      isGradient ? "text-white/55" : "text-muted",
-                    )}
-                  >
-                    {stat.label}
-                  </span>
                 </div>
-              ))}
-            </Stagger>
-          )
+                {stat.visual ? (
+                  // Full-bleed chart foundation; a hair of side padding keeps
+                  // the marks off the rounded corners.
+                  <div className="relative mt-5 flex flex-1 items-end px-2">
+                    <HeroStatVisual
+                      className="relative"
+                      variant={stat.visual}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            ))}
+          </Stagger>
         ) : null}
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button asChild>
@@ -309,10 +198,9 @@ export function Hero({
     <section
       className={cn(
         "relative isolate overflow-hidden px-4 pt-4 pb-16 sm:px-6 lg:px-8 lg:pt-6 lg:pb-20",
-        // "gradient" and "light" stay transparent so the shared background that
-        // bleeds across the hero + trusted-by sections shows through.
-        isGradient || isLight ? "surface-paper" : "bg-background",
-        isPaper && "surface-paper",
+        // "gradient" stays transparent so the shared background that bleeds
+        // across the hero + trusted-by sections shows through.
+        isGradient ? "surface-paper" : "bg-background",
         className,
       )}
     >
