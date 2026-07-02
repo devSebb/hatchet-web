@@ -316,7 +316,7 @@ export function Hero({
   return (
     <section
       className={cn(
-        "relative isolate overflow-hidden px-4 pt-12 pb-16 sm:px-6 lg:px-8 lg:pt-18 lg:pb-20",
+        "relative isolate overflow-hidden px-4 pt-4 pb-16 sm:px-6 lg:px-8 lg:pt-6 lg:pb-20",
         // "gradient" and "light" stay transparent so the shared background that
         // bleeds across the hero + trusted-by sections shows through.
         isGradient || isLight ? "surface-paper" : "bg-background",

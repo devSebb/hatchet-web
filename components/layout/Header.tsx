@@ -38,7 +38,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 border-b pt-2 transition-[background-color,box-shadow,border-color] duration-(--dur-fast)",
+        "sticky top-0 z-40 border-b pt-2 pb-2 transition-[background-color,box-shadow,border-color] duration-(--dur-fast)",
         isElevated
           ? "border-white/10 bg-background/92 shadow-[0_8px_28px_-8px_rgba(0,0,0,0.45)] backdrop-blur-xl"
           : "border-transparent bg-background/70 backdrop-blur-md",
