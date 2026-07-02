@@ -68,10 +68,8 @@ export function Hero({
   // When stats carry a bespoke visual, they render as glass "stat modules"
   // instead of a bare centered row.
   const statCardClass = cn(
-    "flex flex-col rounded-2xl border p-5 text-left backdrop-blur-sm",
-    isGradient
-      ? "border-white/10 bg-white/[0.05] shadow-lg"
-      : "border-border bg-surface shadow-sm",
+    "flex flex-col rounded-2xl px-4 py-2.5 text-left",
+    isGradient ? "bg-white/[0.03]" : "bg-surface/50",
   );
 
   const headlineStyle = isPaper
@@ -114,7 +112,7 @@ export function Hero({
           hasVisuals ? (
             <Stagger
               childClassName={statCardClass}
-              className="mt-10 grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3"
+              className="mt-6 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3"
             >
               {stats.map((stat) => (
                 <div className="flex h-full flex-col" key={stat.label}>
@@ -124,17 +122,17 @@ export function Hero({
                       variant={stat.visual}
                     />
                   ) : null}
-                  <div className="mt-auto flex flex-col items-start pt-4">
+                  <div className="flex flex-col items-start pt-1">
                     <span className="flex items-baseline gap-0.5">
                       <Counter
                         className={isGradient ? "text-white" : "text-foreground"}
-                        style={{ fontSize: "clamp(1.875rem, 4vw, 2.75rem)" }}
+                        style={{ fontSize: "clamp(1.75rem, 3.8vw, 2.5rem)" }}
                         to={stat.value}
                       />
                       {stat.suffix ? (
                         <span
                           className="text-brand-soft font-extrabold"
-                          style={{ fontSize: "clamp(1.25rem, 2.6vw, 1.75rem)" }}
+                          style={{ fontSize: "clamp(1.125rem, 2.4vw, 1.5rem)" }}
                         >
                           {stat.suffix}
                         </span>
@@ -142,7 +140,7 @@ export function Hero({
                     </span>
                     <span
                       className={cn(
-                        "eyebrow mt-2",
+                        "eyebrow mt-0.5",
                         isGradient ? "text-white/55" : "text-muted",
                       )}
                     >

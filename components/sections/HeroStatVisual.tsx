@@ -22,8 +22,8 @@ const VIEWPORT = { once: true, amount: 0.5 } as const;
 function Cluster({ reduce }: { reduce: boolean }) {
   const cols = 10;
   const rows = 3;
-  const gap = 16;
-  const r = 3;
+  const gap = 13;
+  const r = 2.5;
   const pad = r + 1;
   const width = (cols - 1) * gap + pad * 2;
   const height = (rows - 1) * gap + pad * 2;
@@ -77,9 +77,9 @@ function Cluster({ reduce }: { reduce: boolean }) {
  * "2016" tick and a live-pulsing point at "now".
  */
 function Timeline({ reduce }: { reduce: boolean }) {
-  const width = 172;
-  const height = 56;
-  const pad = 8;
+  const width = 150;
+  const height = 46;
+  const pad = 7;
   const data = [2, 3, 4, 5, 6, 7, 9, 10];
 
   const min = Math.min(...data);
@@ -159,8 +159,8 @@ function Timeline({ reduce }: { reduce: boolean }) {
 function Density({ reduce }: { reduce: boolean }) {
   const cols = 14;
   const rows = 5;
-  const gap = 11;
-  const r = 2.2;
+  const gap = 9;
+  const r = 2;
   const pad = r + 1;
   const width = (cols - 1) * gap + pad * 2;
   const height = (rows - 1) * gap + pad * 2;
@@ -221,7 +221,7 @@ export function HeroStatVisual({ variant, className }: HeroStatVisualProps) {
   const reduce = Boolean(useHydratedReducedMotion());
 
   return (
-    <div aria-hidden="true" className={cn("flex h-14 items-center", className)}>
+    <div aria-hidden="true" className={cn("flex h-11 items-end", className)}>
       {variant === "cluster" ? <Cluster reduce={reduce} /> : null}
       {variant === "timeline" ? <Timeline reduce={reduce} /> : null}
       {variant === "density" ? <Density reduce={reduce} /> : null}
