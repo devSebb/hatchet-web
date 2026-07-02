@@ -125,52 +125,77 @@ export function Hero({
         </p>
         {stats?.length ? (
           statStyle === "compact" ? (
-            // "Instrument tiles" for the light hero: label + counter up top,
-            // then each stat's bespoke data visual as a chart footer under a
-            // hairline — the visual is the only loud element on the tile.
+            // Light-hero "data cards": tinted frosted glass. A translucent fill
+            // over heavy backdrop blur, a faint cool frost tint, a diagonal
+            // light-catch sheen and a bright white rim make the glass read
+            // clearly even on the pale surface (which gives the blur little to
+            // refract). A gradient hero number sits up top; its data graphic
+            // bleeds to the bottom edge. No hard border, no divider.
             <Stagger
-              childClassName="group relative overflow-hidden rounded-2xl border border-(--paper-border) bg-white/85 shadow-sm backdrop-blur-sm transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:shadow-glow-brand"
-              className="mt-6 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3"
+              childClassName="group relative flex flex-col overflow-hidden rounded-2xl bg-white/25 shadow-[0_18px_50px_-14px_rgba(21,31,44,0.34)] ring-1 ring-inset ring-white/70 backdrop-blur-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:shadow-glow-brand"
+              className="mt-6 grid w-full max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3"
             >
               {stats.map((stat) => (
                 <div
-                  className="relative flex h-full flex-col p-4 text-left"
+                  className="relative flex h-full flex-col pt-5 text-left"
                   key={stat.label}
                 >
-                  {/* Faint warm bloom in the corner so the white tile doesn't
-                      read flat against the pale gradient. */}
+                  {/* Cool frost tint — gives the glass a visible frosted body
+                      instead of vanishing into the near-white backdrop. */}
                   <span
                     aria-hidden="true"
                     className="pointer-events-none absolute inset-0"
                     style={{
                       background:
-                        "radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--brand) 6%, transparent) 0%, transparent 55%)",
+                        "linear-gradient(150deg, color-mix(in srgb, var(--hero-blue-accent) 20%, transparent) 0%, color-mix(in srgb, var(--hero-blue-accent) 6%, transparent) 45%, color-mix(in srgb, var(--brand) 7%, transparent) 100%)",
                     }}
                   />
-                  <span className="eyebrow text-muted whitespace-nowrap">
-                    {stat.label}
-                  </span>
-                  <span className="mt-1 flex items-baseline gap-0.5">
-                    <Counter
-                      style={{
-                        fontSize: "clamp(1.625rem, 2.8vw, 2.125rem)",
-                        color: "var(--bg)",
-                      }}
-                      to={stat.value}
-                    />
-                    {stat.suffix ? (
-                      <span
-                        className="text-brand font-extrabold"
-                        style={{ fontSize: "clamp(1.125rem, 2vw, 1.375rem)" }}
-                      >
-                        {stat.suffix}
-                      </span>
-                    ) : null}
-                  </span>
+                  {/* Full-card warm fade — spans the whole card (weighted to the
+                      base where the graphic sits) so no white strips show
+                      beside the chart. */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "radial-gradient(135% 78% at 50% 100%, color-mix(in srgb, var(--brand) 13%, transparent) 0%, transparent 60%)",
+                    }}
+                  />
+                  {/* Diagonal light-catch sheen — the tell that reads as glass. */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(130deg, color-mix(in srgb, var(--white) 78%, transparent) 0%, color-mix(in srgb, var(--white) 18%, transparent) 30%, transparent 58%)",
+                    }}
+                  />
+                  <div className="relative px-5">
+                    <span className="eyebrow text-muted whitespace-nowrap">
+                      {stat.label}
+                    </span>
+                    <span className="mt-1.5 flex items-baseline gap-0.5">
+                      <Counter
+                        className="text-gradient-brand"
+                        style={{ fontSize: "clamp(2rem, 3.4vw, 2.75rem)" }}
+                        to={stat.value}
+                      />
+                      {stat.suffix ? (
+                        <span
+                          className="text-gradient-brand font-extrabold"
+                          style={{ fontSize: "clamp(1.25rem, 2.2vw, 1.625rem)" }}
+                        >
+                          {stat.suffix}
+                        </span>
+                      ) : null}
+                    </span>
+                  </div>
                   {stat.visual ? (
-                    <div className="border-(--paper-border) mt-3 flex flex-1 items-end border-t pt-3">
+                    // Full-bleed chart foundation; a hair of side padding keeps
+                    // the marks off the rounded corners.
+                    <div className="relative mt-5 flex flex-1 items-end px-2">
                       <HeroStatVisual
-                        className="text-muted"
+                        className="relative"
                         tone="light"
                         variant={stat.visual}
                       />

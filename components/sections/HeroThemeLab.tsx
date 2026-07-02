@@ -69,6 +69,9 @@ export function HeroThemeLab({ children, ...heroProps }: HeroThemeLabProps) {
   const theme = override ?? urlTheme;
   const setTheme = setOverride;
   const active = THEMES[theme];
+  // Crossfade only once the user actually clicks a tab; a deep-linked theme
+  // paints instantly instead of flashing theme 1 first.
+  const animate = override !== null;
 
   return (
     <div className="relative isolate overflow-hidden">
@@ -78,7 +81,8 @@ export function HeroThemeLab({ children, ...heroProps }: HeroThemeLabProps) {
         <div
           aria-hidden="true"
           className={cn(
-            "pointer-events-none absolute inset-0 -z-10 transition-opacity duration-700",
+            "pointer-events-none absolute inset-0 -z-10",
+            animate && "transition-opacity duration-700",
             index === theme ? "opacity-100" : "opacity-0",
           )}
           key={t.number}
