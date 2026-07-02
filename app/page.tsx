@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowRightIcon,
-  BadgeCheckIcon,
-  BarChart3Icon,
-  LayoutGridIcon,
-  MegaphoneIcon,
-  RocketIcon,
-  Share2Icon,
-  SwordsIcon,
-  TrendingUpIcon,
-  TrophyIcon,
-  UsersIcon,
-} from "lucide-react";
+  ArrowRight,
+  ChartBar,
+  Megaphone,
+  RocketLaunch,
+  SealCheck,
+  ShareNetwork,
+  SquaresFour,
+  Sword,
+  TrendUp,
+  Trophy,
+  Users,
+} from "@phosphor-icons/react/ssr";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
@@ -59,31 +59,31 @@ const pillars = [
 
 const whyHatchetReasons = [
   {
-    icon: Share2Icon,
+    icon: ShareNetwork,
     title: "Platform Coverage",
     tagline: "Name a platform. We probably track it.",
     body: "Twitch, YouTube, TikTok, Instagram, X, and 25+ more. Where gaming lives, Hatchet is already there.",
   },
   {
-    icon: BadgeCheckIcon,
+    icon: SealCheck,
     title: "Verified Data, Longest History",
     tagline: "10+ years of data. Zero tolerance for fake.",
     body: "The deepest verified dataset in gaming, covering streaming and social with no estimates, no inflated audiences, and no shortcuts.",
   },
   {
-    icon: TrophyIcon,
+    icon: Trophy,
     title: "Experience with Global Gaming Brands",
     tagline: "The teams running gaming trust Hatchet.",
     body: "Riot, EA, Ubisoft, Capcom, and hundreds more use Hatchet to make every campaign decision with confidence.",
   },
   {
-    icon: TrendingUpIcon,
+    icon: TrendUp,
     title: "Stay Ahead of the Industry",
     tagline: "Always know what's happening in gaming.",
     body: "Always know what's happening in the social & streaming space with analyst-written reports, trend data, and market intelligence.",
   },
   {
-    icon: LayoutGridIcon,
+    icon: SquaresFour,
     title: "One Platform, Built for You",
     tagline: "Everything your team needs. Nothing it doesn't.",
     body: "Discovery, execution, and reporting tailored to your workflow, not a generic tool you have to bend to fit.",
@@ -92,31 +92,31 @@ const whyHatchetReasons = [
 
 const useCases = [
   {
-    icon: MegaphoneIcon,
+    icon: Megaphone,
     label: "Brands",
     body: "Use data to discover creator partners that tap into your target audience, then call them to action.",
     href: "/who-we-serve/brands",
   },
   {
-    icon: RocketIcon,
+    icon: RocketLaunch,
     label: "Game Publishers",
     body: "Improve your reach and target players that are hyped about your specific genre and mechanics.",
     href: "/who-we-serve/games-publishers",
   },
   {
-    icon: BarChart3Icon,
+    icon: ChartBar,
     label: "Market Research Agencies",
     body: "Competitor comparisons, trend tracking, and verified data your clients can trust. No estimates, no guesswork.",
     href: "/who-we-serve/market-research-agencies",
   },
   {
-    icon: SwordsIcon,
+    icon: Sword,
     label: "Esports Organizations",
     body: "Viewership, audience demographics, chat reactions: Get everything you need to show partners the value of what you've built.",
     href: "/who-we-serve/esports-teams",
   },
   {
-    icon: UsersIcon,
+    icon: Users,
     label: "Marketing & Talent Agencies",
     body: "Run creator programs at scale across multiple clients. One platform, every campaign, no chaos.",
     href: "/who-we-serve/marketing-and-talent-agencies",
@@ -164,14 +164,14 @@ function Pillars() {
                 <div className="hover:shadow-glow-brand mx-auto w-fit overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1">
                   <Image
                     alt=""
-                    className="size-64 object-cover"
+                    className="size-80 object-cover"
                     height={1254}
                     src={pillar.image}
                     width={1254}
                   />
                 </div>
                 <p className="eyebrow text-brand mt-6">{pillar.kicker}</p>
-                <h3 className="font-display mt-2 text-xl font-semibold tracking-[-0.01em]">
+                <h3 className="font-display mt-2 text-2xl font-bold tracking-[-0.01em] sm:text-3xl">
                   {pillar.title}
                 </h3>
                 <p className="body text-muted mt-3">{pillar.body}</p>
@@ -302,7 +302,7 @@ function BuiltForYourTeam() {
             href={siteConfig.bookDemoUrl}
           >
             <span className="flex size-12 items-center justify-center rounded-xl bg-white/15 text-white">
-              <ArrowRightIcon aria-hidden="true" className="size-6" />
+              <ArrowRight aria-hidden="true" className="size-6" />
             </span>
             <h3 className="font-display mt-6 text-xl font-semibold tracking-[-0.01em]">
               Not sure where you fit.
@@ -376,7 +376,8 @@ export default function Home() {
           primaryCta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
           secondaryCta={{
             label: "See It In Action",
-            href: "https://www.youtube.com/@StreamHatchet",
+            href: "https://www.youtube.com/watch?v=XtzwA_VLr1o",
+            external: true,
           }}
           stats={[
             { value: 30, suffix: "+", label: "Platforms", visual: "cluster" },
@@ -388,7 +389,7 @@ export default function Home() {
             },
             { value: 50, suffix: "M+", label: "Creators", visual: "density" },
           ]}
-          subtitle="Creator Marketing Analytics built for gaming. Cover creator discovery, campaign tracking, and ROI measurement in one place, across every social network."
+          subtitle="Creator Marketing Analytics built for gaming: Creator discovery, campaign tracking, and ROI measurement across every social network."
           surface="gradient"
           title="Complete Gaming Intelligence"
         />

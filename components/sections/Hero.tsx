@@ -38,6 +38,7 @@ type HeroProps = {
   secondaryCta?: {
     label: string;
     href: string;
+    external?: boolean;
   };
   image?: HeroImage;
   /**
@@ -168,7 +169,14 @@ export function Hero({
             <Link href={primaryCta.href}>{primaryCta.label}</Link>
           </Button>
           <Button asChild variant="secondary">
-            <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
+            <Link
+              href={secondaryCta.href}
+              {...(secondaryCta.external
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+            >
+              {secondaryCta.label}
+            </Link>
           </Button>
         </div>
       </div>

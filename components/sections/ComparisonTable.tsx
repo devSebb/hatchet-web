@@ -1,4 +1,4 @@
-import { CheckIcon, XIcon, ZapIcon } from "lucide-react";
+import { Check, X } from "@phosphor-icons/react/ssr";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { cn } from "@/lib/utils";
@@ -49,7 +49,7 @@ const COMPARISON_ROWS: ComparisonRow[] = [
 function IncludedMark() {
   return (
     <span className="inline-flex size-7 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600">
-      <CheckIcon aria-hidden="true" className="size-4" strokeWidth={2.5} />
+      <Check aria-hidden="true" className="size-4" weight="bold" />
       <span className="sr-only">Included</span>
     </span>
   );
@@ -58,7 +58,7 @@ function IncludedMark() {
 function NotIncludedMark() {
   return (
     <span className="bg-brand/10 text-brand inline-flex size-7 items-center justify-center rounded-full">
-      <XIcon aria-hidden="true" className="size-4" strokeWidth={2.5} />
+      <X aria-hidden="true" className="size-4" weight="bold" />
       <span className="sr-only">Not included</span>
     </span>
   );
@@ -95,10 +95,6 @@ export function ComparisonTable({ className }: { className?: string }) {
                 </th>
                 <th className="w-24 pb-4 text-center sm:w-32" scope="col">
                   <span className="bg-bg inline-flex items-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold text-white">
-                    <ZapIcon
-                      aria-hidden="true"
-                      className="text-brand-highlight size-3.5"
-                    />
                     Hatchet
                   </span>
                 </th>

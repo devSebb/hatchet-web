@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react/ssr";
 
 import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import { Button } from "@/components/ui/button";
@@ -127,7 +127,7 @@ export function TestimonialCarousel({
               type="button"
               variant="outline"
             >
-              <ArrowLeftIcon aria-hidden="true" />
+              <ArrowLeft aria-hidden="true" />
             </Button>
             <Button
               aria-label="Next testimonial"
@@ -136,7 +136,7 @@ export function TestimonialCarousel({
               type="button"
               variant="outline"
             >
-              <ArrowRightIcon aria-hidden="true" />
+              <ArrowRight aria-hidden="true" />
             </Button>
           </div>
         </div>

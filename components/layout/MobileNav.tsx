@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MenuIcon } from "lucide-react";
+import { List } from "@phosphor-icons/react/ssr";
 
 import { primaryNav } from "@/lib/config/nav";
 import { siteConfig } from "@/lib/config/site";
@@ -37,7 +37,7 @@ export function MobileNav({ className }: MobileNavProps) {
           size="icon-lg"
           variant="ghost"
         >
-          <MenuIcon aria-hidden="true" />
+          <List aria-hidden="true" />
         </Button>
       </SheetTrigger>
       <SheetContent

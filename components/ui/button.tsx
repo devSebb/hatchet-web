@@ -14,7 +14,7 @@ const buttonVariants = cva(
         outline:
           "border-border bg-background text-foreground shadow-xs hover:bg-muted-surface hover:text-foreground aria-expanded:bg-muted-surface aria-expanded:text-foreground",
         secondary:
-          "border-border bg-muted-surface text-foreground shadow-xs hover:bg-[color-mix(in_oklch,var(--muted-surface),var(--foreground)_6%)] aria-expanded:bg-muted-surface aria-expanded:text-foreground",
+          "border-border bg-muted-surface text-foreground shadow-xs hover:border-[color-mix(in_oklch,var(--brand)_40%,var(--border))] hover:bg-[color-mix(in_oklch,var(--paper),var(--brand)_4%)] hover:text-brand hover:shadow-[0_0_0_1px_color-mix(in_oklch,var(--brand)_20%,transparent),0_8px_26px_-8px_color-mix(in_oklch,var(--brand)_38%,transparent)] aria-expanded:bg-muted-surface aria-expanded:text-foreground",
         inverse:
           "bg-paper text-brand shadow-sm hover:bg-[color-mix(in_oklch,var(--paper),var(--brand)_8%)] hover:shadow-md focus-visible:ring-white/70",
         ghost:
