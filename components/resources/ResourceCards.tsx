@@ -52,6 +52,11 @@ export function PostCard({ post }: { post: Post }) {
 }
 
 export function CustomerStoryCard({ story }: { story: CustomerStory }) {
+  const [metricFigure, ...metricLabelParts] = story.metric
+    ? story.metric.trim().split(/\s+/)
+    : [];
+  const metricLabel = metricLabelParts.join(" ");
+
   return (
     <Link
       className="group border-border bg-card hover:border-signal/60 focus-visible:ring-ring/50 flex min-h-80 flex-col justify-between rounded-xl border p-6 shadow-sm transition-[border-color,transform] duration-(--dur-base) outline-none hover:-translate-y-1 focus-visible:ring-3"
@@ -68,9 +73,16 @@ export function CustomerStoryCard({ story }: { story: CustomerStory }) {
           />
         </div>
         {story.metric ? (
-          <p className="stat-figure text-foreground mt-8 text-[clamp(2.5rem,5vw,4rem)]">
-            {story.metric}
-          </p>
+          <div className="mt-8">
+            <p className="stat-figure text-foreground text-[clamp(2.5rem,5vw,4rem)] break-words">
+              {metricFigure}
+            </p>
+            {metricLabel ? (
+              <p className="font-display text-foreground mt-2 text-lg leading-snug font-semibold text-balance">
+                {metricLabel}
+              </p>
+            ) : null}
+          </div>
         ) : null}
         <blockquote className="body text-muted mt-6">
           &ldquo;{story.quote}&rdquo;
