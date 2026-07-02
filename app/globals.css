@@ -167,6 +167,20 @@
     var(--hero-mist) 74%,
     var(--paper) 88%
   );
+  /* Compact variant for interior heroes with no dashboard image (e.g. the
+     solutions PageHeader). The header's white text ends around 45% of the span
+     and the trusted-by logo wall (dark text) doesn't begin until ~65%, leaving
+     an empty gap to resolve the whole navy→white fade — so the header rides the
+     navy top, the logo carousel rides the white end, and the transition falls
+     in the dead zone between them. */
+  --hero-gradient-compact: linear-gradient(
+    to bottom,
+    var(--bg) 0%,
+    var(--bg) 38%,
+    var(--hero-steel) 50%,
+    var(--hero-mist) 61%,
+    var(--paper) 66%
+  );
 
   --white: #ffffff;
   --black: #000000;

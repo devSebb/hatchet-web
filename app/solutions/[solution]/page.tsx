@@ -157,20 +157,30 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
 
   return (
     <main className="bg-background text-foreground">
-      <PageHeader
-        eyebrow={solution.eyebrow}
-        primaryCta={solution.primaryCta}
-        secondaryCta={solution.secondaryCta}
-        subtitle={solution.subtitle}
-        title={solution.title}
-      />
+      {/* Shared navy→white background bleeds from the page header across into
+          the trusted-by band, so the blend resolves to white only once it
+          reaches the logo wall. Both stay transparent; this wrapper owns the
+          gradient. Mirrors the home hero. */}
+      <div
+        className="relative isolate overflow-hidden"
+        style={{ backgroundImage: "var(--hero-gradient-compact)" }}
+      >
+        <PageHeader
+          eyebrow={solution.eyebrow}
+          primaryCta={solution.primaryCta}
+          secondaryCta={solution.secondaryCta}
+          subtitle={solution.subtitle}
+          surface="gradient"
+          title={solution.title}
+        />
 
-      <LogoWall
-        className="pt-0 pb-16 lg:pb-20"
-        eyebrow="Trusted by market leaders"
-        logos={trustedLogos}
-        title="Trusted by Riot, YouTube, Microsoft, NASCAR, Activision Blizzard, and PlayStation."
-      />
+        <LogoWall
+          className="surface-paper pt-0 pb-16 lg:pb-20"
+          eyebrow="Trusted by market leaders"
+          logos={trustedLogos}
+          title="Trusted by Riot, YouTube, Microsoft, NASCAR, Activision Blizzard, and PlayStation."
+        />
+      </div>
 
       <CapabilitiesSection solution={solution} />
 

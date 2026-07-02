@@ -157,28 +157,14 @@ function Pillars() {
   return (
     <section className="surface-paper bg-background text-foreground px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
       <div className="mx-auto w-full max-w-7xl">
-        <Reveal>
-          <div className="max-w-3xl">
-            <p className="eyebrow text-muted">Why Hatchet</p>
-            <h2 className="h1 mt-4">
-              Other tools make you choose.{" "}
-              <span className="text-gradient-brand">Hatchet doesn&apos;t.</span>
-            </h2>
-            <p className="body-lg text-muted mt-5">
-              One platform for the entire creator-marketing lifecycle, powered
-              by verified gaming data — and built for gaming from day one.
-            </p>
-          </div>
-        </Reveal>
-
-        <Stagger className="mt-12 grid gap-5 lg:grid-cols-3">
+        <Stagger className="grid gap-5 lg:grid-cols-3">
           {pillars.map((pillar) => {
             return (
               <article className="relative" key={pillar.title}>
                 <div className="hover:shadow-glow-brand mx-auto w-fit overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1">
                   <Image
                     alt=""
-                    className="size-48 object-cover"
+                    className="size-64 object-cover"
                     height={1254}
                     src={pillar.image}
                     width={1254}
