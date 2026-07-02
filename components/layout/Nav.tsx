@@ -24,34 +24,21 @@ export function Nav({ items, className }: NavProps) {
     >
       <NavigationMenuList className="gap-1">
         {items.map((item) => (
-          <NavigationMenuItem key={item.href}>
-            {item.children?.length ? (
+          <NavigationMenuItem key={item.label}>
+            {"children" in item ? (
               <>
                 <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div className="grid w-56 gap-1 p-2">
-                    <NavigationMenuLink asChild>
-                      <Link
-                        className="bg-muted-surface/60 block rounded-lg px-3 py-2 transition-colors outline-none"
-                        href={item.href}
-                      >
-                        <span className="font-display text-foreground block text-sm font-semibold">
-                          {item.label}
-                        </span>
-                      </Link>
-                    </NavigationMenuLink>
-
-                    <div className="grid gap-1">
-                      {item.children.map((child) => (
-                        <NavigationMenuLink asChild key={child.href}>
-                          <Link href={child.href}>
-                            <span className="text-foreground block text-sm font-medium">
-                              {child.label}
-                            </span>
-                          </Link>
-                        </NavigationMenuLink>
-                      ))}
-                    </div>
+                    {item.children.map((child) => (
+                      <NavigationMenuLink asChild key={child.href}>
+                        <Link href={child.href}>
+                          <span className="text-foreground block text-sm font-medium">
+                            {child.label}
+                          </span>
+                        </Link>
+                      </NavigationMenuLink>
+                    ))}
                   </div>
                 </NavigationMenuContent>
               </>

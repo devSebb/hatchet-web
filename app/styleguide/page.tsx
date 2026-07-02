@@ -352,7 +352,7 @@ export default function StyleguidePage() {
             ]}
             eyebrow="Feature block"
             heading="Track the signals that explain why a game is moving."
-            link={{ label: "View solutions", href: "/solutions" }}
+            link={{ label: "View solutions", href: "/solutions/discovery" }}
           />
 
           <StatCounters />

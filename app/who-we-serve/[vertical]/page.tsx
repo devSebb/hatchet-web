@@ -113,7 +113,6 @@ export default async function VerticalPage({ params }: VerticalPageProps) {
         className="bg-background py-18 lg:py-24"
         eyebrow={vertical.audience}
         heading="Make the live audience read practical for the team in the room."
-        link={{ label: "See all verticals", href: "/who-we-serve" }}
       />
 
       <CTASection

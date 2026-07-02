@@ -1,19 +1,22 @@
-export type NavItem = {
+export type NavLink = {
   label: string;
   href: string;
   description?: string;
-  children?: NavItem[];
 };
+
+// A top-level nav entry is either a direct link or a dropdown group. Groups
+// intentionally have no href of their own — the tab only opens the dropdown,
+// there is no section-summary landing page.
+export type NavItem = NavLink | { label: string; children: NavLink[] };
 
 export type FooterColumn = {
   label: string;
-  items: NavItem[];
+  items: NavLink[];
 };
 
-export const primaryNav = [
+export const primaryNav: NavItem[] = [
   {
     label: "Solutions",
-    href: "/solutions",
     children: [
       {
         label: "Discovery",
@@ -43,7 +46,6 @@ export const primaryNav = [
   },
   {
     label: "Who We Serve",
-    href: "/who-we-serve",
     children: [
       {
         label: "Brands",
@@ -74,7 +76,6 @@ export const primaryNav = [
   },
   {
     label: "Resources",
-    href: "/resources",
     children: [
       {
         label: "Customer Stories",
@@ -100,7 +101,6 @@ export const primaryNav = [
   },
   {
     label: "About",
-    href: "/about",
     children: [
       {
         label: "Mission & Values",
@@ -122,18 +122,27 @@ export const primaryNav = [
     label: "Why Hatchet",
     href: "/why-hatchet",
   },
-] satisfies NavItem[];
+];
 
-export const legalNav = [
+export const legalNav: NavLink[] = [
   { label: "Privacy", href: "/privacy-policy" },
   { label: "Terms", href: "/terms-of-service" },
   { label: "Cookies", href: "/cookie-policy" },
-] satisfies NavItem[];
+];
 
-export const footerColumns = [
+// Columns 1-3 reuse the Solutions / Who We Serve / Resources dropdown groups,
+// listing their child links only (no section-root entry — those pages are gone).
+const sectionFooterColumns: FooterColumn[] = [
   primaryNav[0],
   primaryNav[1],
   primaryNav[2],
+].map((item) => ({
+  label: item.label,
+  items: "children" in item ? item.children : [item],
+}));
+
+export const footerColumns: FooterColumn[] = [
+  ...sectionFooterColumns,
   {
     label: "Company",
     items: [
@@ -143,8 +152,4 @@ export const footerColumns = [
       { label: "Careers", href: "/about/careers" },
     ],
   },
-].map((column) => ({
-  label: column.label,
-  items:
-    "items" in column ? column.items : [column, ...(column.children ?? [])],
-})) satisfies FooterColumn[];
+];

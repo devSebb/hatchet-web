@@ -16,10 +16,9 @@ function route(
   };
 }
 
-const navPaths = primaryNav.flatMap((item) => [
-  item.href,
-  ...(item.children?.map((child) => child.href) ?? []),
-]);
+const navPaths = primaryNav.flatMap((item) =>
+  "children" in item ? item.children.map((child) => child.href) : [item.href],
+);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [posts, customerStories, guides, pressItems] = await Promise.all([

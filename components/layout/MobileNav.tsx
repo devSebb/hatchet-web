@@ -54,20 +54,12 @@ export function MobileNav({ className }: MobileNavProps) {
         <nav aria-label="Mobile primary" className="px-5 py-4">
           <Accordion type="multiple">
             {primaryNav.map((item) =>
-              item.children?.length ? (
-                <AccordionItem key={item.href} value={item.href}>
+              "children" in item ? (
+                <AccordionItem key={item.label} value={item.label}>
                   <AccordionTrigger className="text-foreground">
                     {item.label}
                   </AccordionTrigger>
                   <AccordionContent className="grid gap-1 pb-4">
-                    <SheetClose asChild>
-                      <Link
-                        className="hover:bg-muted-surface focus-visible:ring-ring/50 rounded-lg px-3 py-2 text-sm font-medium no-underline transition-colors outline-none focus-visible:ring-3"
-                        href={item.href}
-                      >
-                        {item.label} overview
-                      </Link>
-                    </SheetClose>
                     {item.children.map((child) => (
                       <SheetClose asChild key={child.href}>
                         <Link

@@ -57,10 +57,10 @@ function ContactSalesPricing() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild>
-                <Link href="/solutions">Explore solutions</Link>
+                <Link href="/solutions/discovery">Explore solutions</Link>
               </Button>
               <Button asChild variant="outline">
-                <Link href="/who-we-serve">Find your team</Link>
+                <Link href="/who-we-serve/brands">Find your team</Link>
               </Button>
             </div>
           </div>
