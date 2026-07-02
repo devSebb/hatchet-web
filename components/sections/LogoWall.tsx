@@ -84,7 +84,7 @@ function LogoTrack({
 }
 
 export function LogoWall({
-  eyebrow = "Trusted signal",
+  eyebrow,
   title = "Used by teams that need the market read before it becomes obvious.",
   logos = defaultLogos,
   className,
@@ -93,7 +93,7 @@ export function LogoWall({
     <section className={cn("py-14", className)}>
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
-          <p className="eyebrow text-muted">{eyebrow}</p>
+          {eyebrow ? <p className="eyebrow text-muted">{eyebrow}</p> : null}
           <h2 className="h2 mt-3">{title}</h2>
         </div>
       </div>
