@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { CircuitField } from "@/components/sections/CircuitField";
 import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
 import { CTASection } from "@/components/sections/CTASection";
-import { Hero } from "@/components/sections/Hero";
+import { HeroThemeLab } from "@/components/sections/HeroThemeLab";
 import { LogoWall } from "@/components/sections/LogoWall";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
 import { siteConfig } from "@/lib/config/site";
@@ -165,8 +165,8 @@ function Pillars() {
               <span className="text-gradient-brand">Hatchet doesn&apos;t.</span>
             </h2>
             <p className="body-lg text-muted mt-5">
-              One platform for the entire creator-marketing lifecycle, powered by
-              verified gaming data — and built for gaming from day one.
+              One platform for the entire creator-marketing lifecycle, powered
+              by verified gaming data — and built for gaming from day one.
             </p>
           </div>
         </Reveal>
@@ -175,7 +175,7 @@ function Pillars() {
           {pillars.map((pillar) => {
             return (
               <article className="relative" key={pillar.title}>
-                <div className="mx-auto w-fit overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:shadow-glow-brand">
+                <div className="hover:shadow-glow-brand mx-auto w-fit overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1">
                   <Image
                     alt=""
                     className="size-48 object-cover"
@@ -244,7 +244,7 @@ function WhyHatchet() {
                   <span className="font-display text-brand-soft text-sm font-semibold tabular-nums">
                     {`0${index + 1}`}
                   </span>
-                  <span className="bg-gradient-brand shadow-glow-brand flex size-11 items-center justify-center rounded-xl text-white transition-transform duration-(--dur-base) group-hover:-translate-y-0.5">
+                  <span className="bg-gradient-brand shadow-glow-brand flex items-center justify-center rounded-xl p-3.5 text-white transition-transform duration-(--dur-base) group-hover:-translate-y-0.5">
                     <Icon aria-hidden="true" className="size-5" />
                   </span>
                 </div>
@@ -373,41 +373,40 @@ export default function Home() {
     <main className="bg-background text-foreground">
       {/* Shared navy→white background bleeds from the hero across the divider
           into the trusted-by section, so the blend resolves to white only once
-          it reaches the logo wall. All three children stay transparent. */}
-      <div className="relative isolate overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{ backgroundImage: "var(--hero-gradient)" }}
-        />
-        <Hero
-          emphasizedTitle="Across Socials and Streaming"
-          image={{
-            src: "/images/hero-dashboard.png",
-            alt: "Hatchet Creator Discovery dashboard showing live-streaming analytics across platforms",
-            width: 2000,
-            height: 1143,
-          }}
-          primaryCta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
-          secondaryCta={{
-            label: "See It In Action",
-            href: "https://www.youtube.com/@StreamHatchet",
-          }}
-          stats={[
-            { value: 30, suffix: "+", label: "Platforms", visual: "cluster" },
-            { value: 10, suffix: "+", label: "Years of data", visual: "timeline" },
-            { value: 50, suffix: "M+", label: "Creators", visual: "density" },
-          ]}
-          subtitle="Creator Marketing Analytics built for gaming. Cover creator discovery, campaign tracking, and ROI measurement in one place, across every social network."
-          surface="gradient"
-          title="Complete Gaming Intelligence"
-        />
-
+          it reaches the logo wall. All three children stay transparent.
+          HeroThemeLab (temporary, pre-launch) owns that background so the
+          floating theme tabs can swap it; theme 1 is the production hero. */}
+      <HeroThemeLab
+        emphasizedTitle="Across Socials and Streaming"
+        image={{
+          src: "/images/hero-dashboard.png",
+          alt: "Hatchet Creator Discovery dashboard showing live-streaming analytics across platforms",
+          width: 2000,
+          height: 1143,
+        }}
+        primaryCta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
+        secondaryCta={{
+          label: "See It In Action",
+          href: "https://www.youtube.com/@StreamHatchet",
+        }}
+        stats={[
+          { value: 30, suffix: "+", label: "Platforms", visual: "cluster" },
+          {
+            value: 10,
+            suffix: "+",
+            label: "Years of data",
+            visual: "timeline",
+          },
+          { value: 50, suffix: "M+", label: "Creators", visual: "density" },
+        ]}
+        subtitle="Creator Marketing Analytics built for gaming. Cover creator discovery, campaign tracking, and ROI measurement in one place, across every social network."
+        title="Complete Gaming Intelligence"
+      >
         <LogoWall
           className="surface-paper pb-14 lg:pb-20"
           title="Trusted by the biggest names in the gaming industry."
         />
-      </div>
+      </HeroThemeLab>
 
       <Pillars />
 

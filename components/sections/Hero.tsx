@@ -44,8 +44,15 @@ type HeroProps = {
    * "paper" flips the hero to a light surface (white bg, navy headline).
    * "gradient" blends navy (under the nav) down through a faint red-violet to
    * white where the trusted-signal band begins — white text rides the dark top.
+   * "light" stays transparent like "gradient" but assumes a pale backdrop
+   * (hero theme lab), so text takes the paper treatments instead of white.
    */
-  surface?: "dark" | "paper" | "gradient";
+  surface?: "dark" | "paper" | "gradient" | "light";
+  /**
+   * "compact" swaps the glass stat modules for smaller light cards — a brand
+   * rail, tighter number, and a miniature visual. Used by hero theme 3.
+   */
+  statStyle?: "default" | "compact";
   className?: string;
 };
 
@@ -59,10 +66,12 @@ export function Hero({
   secondaryCta = { label: "Sign up", href: siteConfig.signUpUrl },
   image,
   surface = "dark",
+  statStyle = "default",
   className,
 }: HeroProps) {
   const isPaper = surface === "paper";
   const isGradient = surface === "gradient";
+  const isLight = surface === "light";
   const hasVisuals = stats?.some((stat) => stat.visual);
 
   // When stats carry a bespoke visual, they render as glass "stat modules"
@@ -72,11 +81,12 @@ export function Hero({
     isGradient ? "bg-white/[0.03]" : "bg-surface/50",
   );
 
-  const headlineStyle = isPaper
-    ? { color: "var(--bg)" }
-    : isGradient
-      ? { color: "var(--white)" }
-      : undefined;
+  const headlineStyle =
+    isPaper || isLight
+      ? { color: "var(--bg)" }
+      : isGradient
+        ? { color: "var(--white)" }
+        : undefined;
 
   // The headline/subtitle/stats sit on the dark navy top of the gradient, so
   // they need light treatments rather than the paper foreground tokens.
@@ -84,7 +94,12 @@ export function Hero({
     <Reveal>
       <div className="mx-auto flex max-w-3xl flex-col items-center">
         {eyebrow ? (
-          <p className={cn("eyebrow", isGradient ? "text-white/70" : "text-muted")}>
+          <p
+            className={cn(
+              "eyebrow",
+              isGradient ? "text-white/70" : "text-muted",
+            )}
+          >
             {eyebrow}
           </p>
         ) : null}
@@ -109,7 +124,62 @@ export function Hero({
           {subtitle}
         </p>
         {stats?.length ? (
-          hasVisuals ? (
+          statStyle === "compact" ? (
+            // "Instrument tiles" for the light hero: label + counter up top,
+            // then each stat's bespoke data visual as a chart footer under a
+            // hairline — the visual is the only loud element on the tile.
+            <Stagger
+              childClassName="group relative overflow-hidden rounded-2xl border border-(--paper-border) bg-white/85 shadow-sm backdrop-blur-sm transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:shadow-glow-brand"
+              className="mt-6 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3"
+            >
+              {stats.map((stat) => (
+                <div
+                  className="relative flex h-full flex-col p-4 text-left"
+                  key={stat.label}
+                >
+                  {/* Faint warm bloom in the corner so the white tile doesn't
+                      read flat against the pale gradient. */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--brand) 6%, transparent) 0%, transparent 55%)",
+                    }}
+                  />
+                  <span className="eyebrow text-muted whitespace-nowrap">
+                    {stat.label}
+                  </span>
+                  <span className="mt-1 flex items-baseline gap-0.5">
+                    <Counter
+                      style={{
+                        fontSize: "clamp(1.625rem, 2.8vw, 2.125rem)",
+                        color: "var(--bg)",
+                      }}
+                      to={stat.value}
+                    />
+                    {stat.suffix ? (
+                      <span
+                        className="text-brand font-extrabold"
+                        style={{ fontSize: "clamp(1.125rem, 2vw, 1.375rem)" }}
+                      >
+                        {stat.suffix}
+                      </span>
+                    ) : null}
+                  </span>
+                  {stat.visual ? (
+                    <div className="border-(--paper-border) mt-3 flex flex-1 items-end border-t pt-3">
+                      <HeroStatVisual
+                        className="text-muted"
+                        tone="light"
+                        variant={stat.visual}
+                      />
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+            </Stagger>
+          ) : hasVisuals ? (
             <Stagger
               childClassName={statCardClass}
               className="mt-6 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3"
@@ -125,7 +195,9 @@ export function Hero({
                   <div className="flex flex-col items-start pt-1">
                     <span className="flex items-baseline gap-0.5">
                       <Counter
-                        className={isGradient ? "text-white" : "text-foreground"}
+                        className={
+                          isGradient ? "text-white" : "text-foreground"
+                        }
                         style={{ fontSize: "clamp(1.75rem, 3.8vw, 2.5rem)" }}
                         to={stat.value}
                       />
@@ -220,9 +292,9 @@ export function Hero({
     <section
       className={cn(
         "relative isolate overflow-hidden px-4 pt-12 pb-16 sm:px-6 lg:px-8 lg:pt-18 lg:pb-20",
-        // "gradient" stays transparent so the shared navy→white background that
+        // "gradient" and "light" stay transparent so the shared background that
         // bleeds across the hero + trusted-by sections shows through.
-        isGradient ? "surface-paper" : "bg-background",
+        isGradient || isLight ? "surface-paper" : "bg-background",
         isPaper && "surface-paper",
         className,
       )}

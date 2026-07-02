@@ -8,10 +8,23 @@ import { cn } from "@/lib/utils";
 
 export type HeroStatVisualVariant = "cluster" | "timeline" | "density";
 
-// Tuned for the navy top of the gradient hero, where these render on a faint
-// translucent card. LIT is the brand accent; DIM is a barely-there white.
-const LIT = "var(--brand-highlight)";
-const DIM = "color-mix(in srgb, var(--white) 16%, transparent)";
+export type HeroStatVisualTone = "dark" | "light";
+
+// "dark" is tuned for the navy top of the gradient hero, where these render on
+// a faint translucent card: lit is the brand accent, dim a barely-there white.
+// "light" flips the pair for pale surfaces — full brand red over a faint navy.
+const TONES: Record<HeroStatVisualTone, { lit: string; dim: string }> = {
+  dark: {
+    lit: "var(--brand-highlight)",
+    dim: "color-mix(in srgb, var(--white) 16%, transparent)",
+  },
+  light: {
+    lit: "var(--brand)",
+    dim: "color-mix(in srgb, var(--bg) 22%, transparent)",
+  },
+};
+
+type VisualProps = { reduce: boolean; lit: string; dim: string };
 
 const VIEWPORT = { once: true, amount: 0.5 } as const;
 
@@ -19,7 +32,7 @@ const VIEWPORT = { once: true, amount: 0.5 } as const;
  * Platforms → breadth. A tidy grid of dots that lights up column by column,
  * left to right, like a coverage map switching on.
  */
-function Cluster({ reduce }: { reduce: boolean }) {
+function Cluster({ reduce, lit, dim }: VisualProps) {
   const cols = 10;
   const rows = 3;
   const gap = 13;
@@ -53,7 +66,7 @@ function Cluster({ reduce }: { reduce: boolean }) {
           <motion.circle
             cx={dot.cx}
             cy={dot.cy}
-            fill={reduce ? LIT : undefined}
+            fill={reduce ? lit : undefined}
             key={index}
             r={r}
             transition={{ duration: MOTION_DURATION.base, ease: EASE_OUT }}
@@ -61,8 +74,8 @@ function Cluster({ reduce }: { reduce: boolean }) {
               reduce
                 ? undefined
                 : {
-                    hidden: { fill: DIM, opacity: 0.55 },
-                    visible: { fill: LIT, opacity: 1 },
+                    hidden: { fill: dim, opacity: 0.55 },
+                    visible: { fill: lit, opacity: 1 },
                   }
             }
           />
@@ -76,7 +89,7 @@ function Cluster({ reduce }: { reduce: boolean }) {
  * Years → time. An upward line that draws itself left to right, anchored by a
  * "2016" tick and a live-pulsing point at "now".
  */
-function Timeline({ reduce }: { reduce: boolean }) {
+function Timeline({ reduce, lit, dim }: VisualProps) {
   const width = 150;
   const height = 46;
   const pad = 7;
@@ -94,7 +107,9 @@ function Timeline({ reduce }: { reduce: boolean }) {
     return { x, y };
   });
   const last = points[points.length - 1];
-  const pointsAttr = points.map((p) => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(" ");
+  const pointsAttr = points
+    .map((p) => `${p.x.toFixed(2)},${p.y.toFixed(2)}`)
+    .join(" ");
 
   return (
     <svg
@@ -104,7 +119,7 @@ function Timeline({ reduce }: { reduce: boolean }) {
       width={width}
     >
       <line
-        stroke={DIM}
+        stroke={dim}
         strokeLinecap="round"
         strokeWidth="1"
         x1={pad}
@@ -126,7 +141,7 @@ function Timeline({ reduce }: { reduce: boolean }) {
         fill="none"
         initial={reduce ? undefined : { pathLength: 0 }}
         points={pointsAttr}
-        stroke={LIT}
+        stroke={lit}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
@@ -138,7 +153,7 @@ function Timeline({ reduce }: { reduce: boolean }) {
           animate={{ r: [3, 9], opacity: [0.5, 0] }}
           cx={last.x}
           cy={last.y}
-          fill={LIT}
+          fill={lit}
           transition={{
             duration: MOTION_DURATION.slow,
             ease: EASE_OUT,
@@ -147,7 +162,7 @@ function Timeline({ reduce }: { reduce: boolean }) {
           }}
         />
       )}
-      <circle cx={last.x} cy={last.y} fill={LIT} r="3" />
+      <circle cx={last.x} cy={last.y} fill={lit} r="3" />
     </svg>
   );
 }
@@ -156,7 +171,7 @@ function Timeline({ reduce }: { reduce: boolean }) {
  * Creators → scale. A dense dot field that fills in by scattered order, so the
  * message is sheer volume rather than a countable set.
  */
-function Density({ reduce }: { reduce: boolean }) {
+function Density({ reduce, lit }: Omit<VisualProps, "dim">) {
   const cols = 14;
   const rows = 5;
   const gap = 9;
@@ -166,7 +181,12 @@ function Density({ reduce }: { reduce: boolean }) {
   const height = (rows - 1) * gap + pad * 2;
   const total = cols * rows;
 
-  const dots: Array<{ cx: number; cy: number; opacity: number; delay: number }> = [];
+  const dots: Array<{
+    cx: number;
+    cy: number;
+    opacity: number;
+    delay: number;
+  }> = [];
   let index = 0;
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
@@ -193,7 +213,7 @@ function Density({ reduce }: { reduce: boolean }) {
         <motion.circle
           cx={dot.cx}
           cy={dot.cy}
-          fill={LIT}
+          fill={lit}
           initial={reduce ? undefined : { opacity: 0, scale: 0 }}
           key={i}
           opacity={reduce ? dot.opacity : undefined}
@@ -214,17 +234,27 @@ function Density({ reduce }: { reduce: boolean }) {
 
 type HeroStatVisualProps = {
   variant: HeroStatVisualVariant;
+  tone?: HeroStatVisualTone;
   className?: string;
 };
 
-export function HeroStatVisual({ variant, className }: HeroStatVisualProps) {
+export function HeroStatVisual({
+  variant,
+  tone = "dark",
+  className,
+}: HeroStatVisualProps) {
   const reduce = Boolean(useHydratedReducedMotion());
+  const { lit, dim } = TONES[tone];
 
   return (
     <div aria-hidden="true" className={cn("flex h-11 items-end", className)}>
-      {variant === "cluster" ? <Cluster reduce={reduce} /> : null}
-      {variant === "timeline" ? <Timeline reduce={reduce} /> : null}
-      {variant === "density" ? <Density reduce={reduce} /> : null}
+      {variant === "cluster" ? (
+        <Cluster dim={dim} lit={lit} reduce={reduce} />
+      ) : null}
+      {variant === "timeline" ? (
+        <Timeline dim={dim} lit={lit} reduce={reduce} />
+      ) : null}
+      {variant === "density" ? <Density lit={lit} reduce={reduce} /> : null}
     </div>
   );
 }
