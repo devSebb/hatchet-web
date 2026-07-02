@@ -52,13 +52,12 @@ export function FooterNewsletter() {
               value={email}
             />
             <button
-              className="bg-gradient-brand text-primary-foreground focus-visible:ring-ring/50 inline-flex h-full shrink-0 items-center rounded-md px-4 text-sm font-medium transition-[filter] outline-none hover:brightness-105 focus-visible:ring-3"
+              className="bg-brand text-primary-foreground focus-visible:ring-ring/50 inline-flex h-full shrink-0 items-center rounded-md px-4 text-sm font-medium transition-colors outline-none hover:bg-brand-strong focus-visible:ring-3"
               type="submit"
             >
               {config.submitLabel}
             </button>
           </div>
-          <p className="small text-muted mt-2">No spam. Unsubscribe anytime.</p>
         </form>
       </div>
     </div>

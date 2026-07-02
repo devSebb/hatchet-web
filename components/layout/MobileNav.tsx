@@ -102,7 +102,7 @@ export function MobileNav({ className }: MobileNavProps) {
             </Button>
           </SheetClose>
           <SheetClose asChild>
-            <Button asChild variant="secondary">
+            <Button asChild variant="inverse">
               <Link href={siteConfig.appLoginUrl}>Log in</Link>
             </Button>
           </SheetClose>

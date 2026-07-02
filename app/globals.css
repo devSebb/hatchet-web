@@ -475,10 +475,7 @@
   }
 
   .text-gradient-brand {
-    background-image: var(--gradient-brand-text);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--brand);
   }
 
   .display {

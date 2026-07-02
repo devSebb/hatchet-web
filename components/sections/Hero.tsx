@@ -105,15 +105,7 @@ export function Hero({
         ) : null}
         <h1 className="display" style={headlineStyle}>
           {title}{" "}
-          <span
-            className="bg-clip-text text-transparent"
-            style={{
-              backgroundImage:
-                "linear-gradient(135deg, var(--brand-highlight) 0%, var(--brand) 24%, var(--brand) 94%, var(--brand-lowlight) 100%)",
-            }}
-          >
-            {emphasizedTitle}
-          </span>
+          <span className="text-brand">{emphasizedTitle}</span>
         </h1>
         <p
           className={cn(

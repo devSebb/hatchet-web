@@ -57,7 +57,7 @@ const defaultTestimonials: TestimonialItem[] = [
 ];
 
 export function TestimonialCarousel({
-  eyebrow = "Customer read",
+  eyebrow,
   title = "Teams use Hatchet when live audience movement needs to be clear.",
   testimonials = defaultTestimonials,
   className,
@@ -116,7 +116,7 @@ export function TestimonialCarousel({
       <div className="mx-auto w-full max-w-7xl">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
-            <p className="eyebrow text-muted">{eyebrow}</p>
+            {eyebrow ? <p className="eyebrow text-muted">{eyebrow}</p> : null}
             <h2 className="h2 mt-3">{title}</h2>
           </div>
           <div className="flex gap-2">

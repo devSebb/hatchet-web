@@ -57,7 +57,7 @@ export function Header() {
           <Button asChild className="px-3">
             <Link href={siteConfig.bookDemoUrl}>Book a demo</Link>
           </Button>
-          <Button asChild className="px-3" variant="secondary">
+          <Button asChild className="px-3" variant="inverse">
             <Link href={siteConfig.appLoginUrl}>Log in</Link>
           </Button>
         </div>

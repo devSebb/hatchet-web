@@ -312,18 +312,18 @@ function BuiltForYourTeam() {
           })}
 
           <Link
-            className="group bg-gradient-brand shadow-glow-brand focus-visible:ring-ring/50 flex h-full flex-col rounded-2xl p-7 text-white transition-transform duration-(--dur-base) outline-none hover:-translate-y-1 focus-visible:ring-3"
+            className="group bg-brand shadow-glow-brand focus-visible:ring-ring/50 flex h-full flex-col rounded-2xl p-7 text-white transition-transform duration-(--dur-base) outline-none hover:-translate-y-1 focus-visible:ring-3"
             href={siteConfig.bookDemoUrl}
           >
             <span className="flex size-12 items-center justify-center rounded-xl bg-white/15 text-white">
               <ArrowRightIcon aria-hidden="true" className="size-6" />
             </span>
             <h3 className="font-display mt-6 text-xl font-semibold tracking-[-0.01em]">
-              Not sure where you fit?
+              Not sure where you fit.
             </h3>
             <p className="body mt-3 flex-1 text-white/85">
-              Tell us about your team and we&apos;ll map the fastest path to
-              value.
+              Tell us about your team and we&apos;ll plot a course towards your
+              online community.
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold">
               <span
@@ -419,7 +419,6 @@ export default function Home() {
       <div className="surface-paper bg-background text-foreground">
         <TestimonialCarousel
           className="py-14 lg:py-20"
-          eyebrow="Customer signal"
           testimonials={testimonials}
           title="Curious what our clients say about Hatchet?"
         />

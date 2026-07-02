@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Reveal } from "@/components/motion/Reveal";
-import { LiveDot } from "@/components/signal/LiveDot";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
 import { cn } from "@/lib/utils";
@@ -123,10 +122,6 @@ function CTAMediaPanel({ media }: { media?: CTAMedia }) {
             sizes="(min-width: 768px) 40rem, 100vw"
             src={media.src}
             width={media.width}
-          />
-          <LiveDot
-            className="bg-bg/70 absolute top-4 right-4 rounded-full px-2.5 py-1 text-xs text-white backdrop-blur-sm"
-            label="Live data"
           />
         </div>
       ) : (
