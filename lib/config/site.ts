@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export type SocialLink = {
-  label: "X" | "LinkedIn" | "YouTube" | "Instagram";
+  label: "X" | "LinkedIn" | "Bluesky";
   href: string;
 };
 
@@ -16,13 +16,15 @@ export const siteConfig = {
   signUpUrl: "https://insights.streamhatchet.com/sign-up-free",
   hubspotPortalId: process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID ?? "",
   socials: [
-    { label: "X", href: "https://x.com/StreamHatchet" },
     {
       label: "LinkedIn",
-      href: "https://www.linkedin.com/company/stream-hatchet/",
+      href: "https://www.linkedin.com/company/stream-hatchet",
     },
-    { label: "YouTube", href: "https://www.youtube.com/@StreamHatchet" },
-    { label: "Instagram", href: "https://www.instagram.com/streamhatchet/" },
+    { label: "X", href: "https://x.com/StreamHatchet" },
+    {
+      label: "Bluesky",
+      href: "https://bsky.app/profile/streamhatchet.bsky.social",
+    },
   ] satisfies SocialLink[],
 } as const;
 

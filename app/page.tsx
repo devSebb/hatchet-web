@@ -206,11 +206,6 @@ function WhyHatchet() {
               The broadest coverage, the deepest verified history, and the
               workflow gaming teams actually run on.
             </p>
-            <div className="mt-8 flex justify-center">
-              <Button asChild>
-                <Link href={siteConfig.bookDemoUrl}>Book a Demo</Link>
-              </Button>
-            </div>
           </div>
         </Reveal>
 
@@ -247,6 +242,14 @@ function WhyHatchet() {
             );
           })}
         </Stagger>
+
+        <Reveal>
+          <div className="mt-12 flex justify-center">
+            <Button asChild className="h-14 px-8 text-base" size="lg">
+              <Link href={siteConfig.bookDemoUrl}>Book a Demo</Link>
+            </Button>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

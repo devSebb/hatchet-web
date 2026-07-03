@@ -1,5 +1,6 @@
-import { Check, X } from "@phosphor-icons/react/ssr";
+import { Check, Minus } from "@phosphor-icons/react/ssr";
 
+import { BrandLogo } from "@/components/layout/BrandLogo";
 import { Reveal } from "@/components/motion/Reveal";
 import { cn } from "@/lib/utils";
 
@@ -46,10 +47,16 @@ const COMPARISON_ROWS: ComparisonRow[] = [
   },
 ];
 
+// Value columns share fixed widths so the elevated Hatchet pillar (an
+// absolutely positioned layer behind the middle column) stays aligned with
+// its cells at every viewport. Keep these three width pairs in sync.
+const VALUE_COL = "w-20 sm:w-28";
+const PILLAR_POS = "right-20 w-20 sm:right-28 sm:w-28";
+
 function IncludedMark() {
   return (
-    <span className="inline-flex size-7 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600">
-      <Check aria-hidden="true" className="size-4" weight="bold" />
+    <span className="bg-brand inline-flex size-6 items-center justify-center rounded-full text-white shadow-[0_0_14px_color-mix(in_srgb,var(--brand)_45%,transparent)]">
+      <Check aria-hidden="true" className="size-3.5" weight="bold" />
       <span className="sr-only">Included</span>
     </span>
   );
@@ -57,8 +64,8 @@ function IncludedMark() {
 
 function NotIncludedMark() {
   return (
-    <span className="bg-brand/10 text-brand inline-flex size-7 items-center justify-center rounded-full">
-      <X aria-hidden="true" className="size-4" weight="bold" />
+    <span className="text-muted/60 inline-flex size-6 items-center justify-center">
+      <Minus aria-hidden="true" className="size-4" weight="bold" />
       <span className="sr-only">Not included</span>
     </span>
   );
@@ -73,7 +80,7 @@ export function ComparisonTable({ className }: { className?: string }) {
       )}
       id="comparison"
     >
-      <div className="mx-auto w-full max-w-5xl">
+      <div className="mx-auto w-full max-w-4xl">
         <Reveal>
           <div className="max-w-3xl">
             <p className="eyebrow text-muted">Competitor comparison</p>
@@ -87,44 +94,79 @@ export function ComparisonTable({ className }: { className?: string }) {
         </Reveal>
 
         <Reveal delay={0.08}>
-          <table className="mt-12 w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="sr-only" scope="col">
-                  Capability
-                </th>
-                <th className="w-24 pb-4 text-center sm:w-32" scope="col">
-                  <span className="bg-bg inline-flex items-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold text-white">
-                    Hatchet
-                  </span>
-                </th>
-                <th
-                  className="text-muted w-24 pb-4 text-center text-sm font-semibold sm:w-32"
-                  scope="col"
-                >
-                  Other Tools
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-border border-border divide-y border-y">
-              {COMPARISON_ROWS.map((row) => (
-                <tr key={row.title}>
-                  <th className="py-5 pr-4 text-left align-top" scope="row">
-                    <p className="text-foreground font-semibold">{row.title}</p>
-                    <p className="small text-muted mt-1 font-normal">
-                      {row.description}
-                    </p>
+          <div className="relative mt-12">
+            {/* Frame around the whole table */}
+            <div
+              aria-hidden="true"
+              className="border-border bg-elevated/10 absolute inset-0 rounded-2xl border"
+            />
+
+            {/* Elevated Hatchet pillar behind the middle column */}
+            <div
+              aria-hidden="true"
+              className={cn(
+                "bg-bg cta-panel-frame absolute -inset-y-3 overflow-hidden rounded-xl shadow-[0_24px_48px_-20px_color-mix(in_srgb,var(--bg)_50%,transparent),0_8px_22px_-12px_color-mix(in_srgb,var(--bg)_38%,transparent)] sm:-inset-y-4",
+                PILLAR_POS,
+              )}
+            >
+              <div className="h-[3px] w-full bg-[image:var(--gradient-brand)]" />
+            </div>
+
+            <table className="relative w-full border-collapse">
+              <thead>
+                <tr>
+                  <th className="sr-only" scope="col">
+                    Capability
                   </th>
-                  <td className="bg-bg/5 py-5 text-center align-middle">
-                    <IncludedMark />
-                  </td>
-                  <td className="py-5 text-center align-middle">
-                    <NotIncludedMark />
-                  </td>
+                  <th
+                    className={cn("py-3.5 text-center align-middle", VALUE_COL)}
+                    scope="col"
+                  >
+                    <BrandLogo
+                      alt="Hatchet"
+                      className="mx-auto h-3.5 w-auto max-w-[80%] object-contain object-center sm:h-4"
+                      variant="white"
+                    />
+                  </th>
+                  <th
+                    className={cn(
+                      "text-muted py-3.5 text-center align-middle text-xs font-semibold sm:text-sm",
+                      VALUE_COL,
+                    )}
+                    scope="col"
+                  >
+                    Other Tools
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {COMPARISON_ROWS.map((row) => (
+                  <tr
+                    className="hover:bg-bg/3 transition-colors"
+                    key={row.title}
+                  >
+                    <th
+                      className="border-border border-t py-3 pr-4 pl-5 text-left align-middle sm:pl-6"
+                      scope="row"
+                    >
+                      <p className="text-foreground text-sm font-semibold">
+                        {row.title}
+                      </p>
+                      <p className="text-muted mt-0.5 hidden text-xs font-normal sm:block">
+                        {row.description}
+                      </p>
+                    </th>
+                    <td className="border-t border-white/10 py-3 text-center align-middle">
+                      <IncludedMark />
+                    </td>
+                    <td className="border-border border-t py-3 text-center align-middle">
+                      <NotIncludedMark />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </Reveal>
       </div>
     </section>
