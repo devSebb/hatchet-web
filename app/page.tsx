@@ -164,7 +164,7 @@ function Pillars() {
                 <div className="hover:shadow-glow-brand mx-auto w-fit overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1">
                   <Image
                     alt=""
-                    className="size-80 object-cover"
+                    className="size-96 object-contain"
                     height={1254}
                     src={pillar.image}
                     width={1254}
@@ -307,8 +307,8 @@ function BuiltForYourTeam() {
             <span className="flex size-12 items-center justify-center rounded-xl bg-white/15 text-white">
               <ArrowRight aria-hidden="true" className="size-6" />
             </span>
-            <h3 className="font-display mt-6 text-xl font-semibold tracking-[-0.01em]">
-              Not sure where you fit.
+            <h3 className="font-display mt-6 text-xl font-semibold tracking-[-0.01em] text-white">
+              Not sure where you fit?
             </h3>
             <p className="body mt-3 flex-1 text-white/85">
               Tell us about your team and we&apos;ll plot a course towards your
