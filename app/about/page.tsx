@@ -84,9 +84,21 @@ export default function AboutPage() {
                 their own audiences. It grew into something bigger — the
                 leading creator marketing analytics platform for gaming.
               </p>
-              <div className="mt-6">
+              <a
+                className="mt-6 inline-flex items-center gap-3 transition-opacity hover:opacity-80"
+                href="https://www.gamesquare.com/"
+                rel="noreferrer"
+                target="_blank"
+              >
                 <Badge variant="outline">Part of GameSquare</Badge>
-              </div>
+                <Image
+                  alt="GameSquare"
+                  className="h-7 w-auto"
+                  height={450}
+                  src="/images/logos/gamesquare_logo.png"
+                  width={1000}
+                />
+              </a>
               <p className="body text-muted mt-6">
                 Trusted by{" "}
                 <span className="text-foreground font-medium">Riot</span>,{" "}
