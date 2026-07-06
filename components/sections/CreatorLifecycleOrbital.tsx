@@ -80,8 +80,7 @@ const VBW = 160;
 const VBH = 80; // 160/80 = 2/1 → matches the aspect-[2/1] canvas (no distortion)
 const CX = 80;
 const CY = 40;
-const CORE_R = 14; // outer radius of the faceted core (circular gem)
-const TABLE_R = 5.5; // inner "table" of the cut gem
+const CORE_R = 14; // radius the traces stop at + the core glow footprint
 const RX = 56; // horizontal station radius (wide field)
 const RY = 28; // vertical station radius (short field)
 const RING_RX = 61; // ring sits just outside the stations
@@ -89,19 +88,8 @@ const RING_RY = 31;
 const DIAG = 0.707;
 const TRACE_BACK = 8; // trace stops this far short of the station
 
-const octagon = (r: number) =>
-  Array.from({ length: 8 }, (_, k) => {
-    const a = ((-90 + k * 45) * Math.PI) / 180;
-    return { x: CX + r * Math.cos(a), y: CY + r * Math.sin(a) };
-  });
-
 const fmt = (p: { x: number; y: number }) =>
   `${p.x.toFixed(2)},${p.y.toFixed(2)}`;
-
-const CORE_OUTER = octagon(CORE_R);
-const CORE_TABLE = octagon(TABLE_R);
-const CORE_OUTER_PTS = CORE_OUTER.map(fmt).join(" ");
-const CORE_TABLE_PTS = CORE_TABLE.map(fmt).join(" ");
 
 // Faceted outer ring — a wide octagon (rectangular, not round).
 const RING = [
@@ -137,34 +125,6 @@ const traceFor = (dir: { x: number; y: number }) => {
   };
 };
 
-// Light-from-above facet ramp (composed from charcoal tokens, no raw hex).
-const FACET_FILLS = [
-  "color-mix(in srgb, var(--elevated) 64%, var(--white) 16%)", // top — brightest
-  "var(--elevated)", // top-right
-  "color-mix(in srgb, var(--elevated) 58%, var(--surface) 42%)", // right
-  "var(--surface)", // bottom-right
-  "color-mix(in srgb, var(--surface) 52%, var(--bg) 48%)", // bottom — darkest
-  "var(--surface)", // bottom-left
-  "color-mix(in srgb, var(--elevated) 58%, var(--surface) 42%)", // left
-  "var(--elevated)", // top-left
-];
-
-const CROWN_FACETS = CORE_OUTER.map((_, k) => {
-  const n = (k + 1) % 8;
-  return {
-    points: [CORE_TABLE[k], CORE_TABLE[n], CORE_OUTER[n], CORE_OUTER[k]]
-      .map(fmt)
-      .join(" "),
-    fill: FACET_FILLS[k],
-  };
-});
-
-// Faceted octagon — used only by the mobile core badge (the core, unchanged).
-const CORE_CLIP =
-  "polygon(18% 0%, 82% 0%, 100% 18%, 100% 82%, 82% 100%, 18% 100%, 0% 82%, 0% 18%)";
-
-const FACE_BG =
-  "linear-gradient(160deg, var(--elevated) 0%, var(--surface) 60%, color-mix(in srgb, var(--surface) 70%, var(--bg)) 100%)";
 const UNDERGLOW =
   "radial-gradient(120% 100% at 50% 120%, color-mix(in srgb, var(--brand) 60%, transparent) 0%, transparent 70%)";
 
@@ -232,23 +192,6 @@ function StationFacet({
         </span>
       </span>
     </span>
-  );
-}
-
-function CoreLabel({ compact = false }: { compact?: boolean }) {
-  return (
-    <div className="flex flex-col items-center gap-1 px-2 text-center">
-      <Image
-        alt="Hatchet"
-        className={cn("h-auto object-contain", compact ? "w-16" : "w-4/5")}
-        height={832}
-        src="/brand/hatchet_hatchet_white.png"
-        width={2102}
-      />
-      <span className="eyebrow text-muted text-[0.5rem]">
-        Gaming Intelligence
-      </span>
-    </div>
   );
 }
 
@@ -387,9 +330,6 @@ export function CreatorLifecycleOrbital({ className }: { className?: string }) {
                 />
                 <stop offset="100%" stopColor="transparent" />
               </radialGradient>
-              <clipPath id={`${gradientId}-core`}>
-                <polygon points={CORE_OUTER_PTS} />
-              </clipPath>
             </defs>
 
             {/* Faceted outer ring (draws itself in on first reveal). */}
@@ -424,30 +364,17 @@ export function CreatorLifecycleOrbital({ className }: { className?: string }) {
               );
             })}
 
-            {/* Faceted core: crown facets + lit table. */}
-            {CROWN_FACETS.map((facet, i) => (
-              <polygon
-                fill={facet.fill}
-                key={i}
-                points={facet.points}
-                stroke="color-mix(in srgb, var(--bg) 55%, transparent)"
-                strokeWidth={0.15}
-              />
-            ))}
-            <polygon fill={`url(#${gradientId}-table)`} points={CORE_TABLE_PTS} />
-
-            {/* Sub-surface red glow, contained inside the core (breathing). */}
+            {/* Sub-surface red glow (breathing) — sits behind the shield. */}
             <motion.circle
               animate={
                 animateRouting ? { opacity: [0.32, 0.6, 0.32] } : undefined
               }
-              clipPath={`url(#${gradientId}-core)`}
               cx={CX}
               cy={CY}
               fill={`url(#${gradientId}-glow)`}
               initial={false}
               opacity={reduceMotion ? 0.42 : 0.32}
-              r={CORE_R}
+              r={CORE_R * 1.3}
               transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
             />
 
@@ -490,15 +417,22 @@ export function CreatorLifecycleOrbital({ className }: { className?: string }) {
             })()}
           </svg>
 
-          {/* Core label overlay. */}
+          {/* Core shield — the graphic at the heart of the orbital. */}
           <div
-            className="absolute flex aspect-square w-[15%] -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+            className="absolute flex aspect-square w-[16%] -translate-x-1/2 -translate-y-1/2 items-center justify-center"
             style={{
               left: `${(CX / VBW) * 100}%`,
               top: `${(CY / VBH) * 100}%`,
             }}
           >
-            <CoreLabel />
+            <Image
+              alt="Hatchet"
+              className="h-auto w-full object-contain"
+              height={633}
+              priority
+              src="/brand/hatchet_shield_red.png"
+              width={665}
+            />
           </div>
 
           {/* Stations — real links; hover/focus activates, click navigates. */}
@@ -545,12 +479,13 @@ export function CreatorLifecycleOrbital({ className }: { className?: string }) {
               className="bg-brand/25 absolute inset-2 rounded-full blur-2xl"
             />
           ) : null}
-          <div
-            className="border-border/70 relative flex items-center justify-center border p-4"
-            style={{ clipPath: CORE_CLIP, background: FACE_BG }}
-          >
-            <CoreLabel compact />
-          </div>
+          <Image
+            alt="Hatchet"
+            className="relative h-auto w-24 object-contain"
+            height={633}
+            src="/brand/hatchet_shield_red.png"
+            width={665}
+          />
         </div>
 
         <div className="relative pl-7">

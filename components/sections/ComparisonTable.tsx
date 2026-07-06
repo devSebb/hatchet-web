@@ -94,7 +94,7 @@ export function ComparisonTable({ className }: { className?: string }) {
         </Reveal>
 
         <Reveal delay={0.08}>
-          <div className="relative mt-12">
+          <div className="relative mt-6">
             {/* Frame around the whole table */}
             <div
               aria-hidden="true"
@@ -105,12 +105,10 @@ export function ComparisonTable({ className }: { className?: string }) {
             <div
               aria-hidden="true"
               className={cn(
-                "bg-bg cta-panel-frame absolute -inset-y-3 overflow-hidden rounded-xl shadow-[0_24px_48px_-20px_color-mix(in_srgb,var(--bg)_50%,transparent),0_8px_22px_-12px_color-mix(in_srgb,var(--bg)_38%,transparent)] sm:-inset-y-4",
+                "bg-bg cta-panel-frame absolute -inset-y-1 overflow-hidden rounded-xl shadow-[0_24px_48px_-20px_color-mix(in_srgb,var(--bg)_50%,transparent),0_8px_22px_-12px_color-mix(in_srgb,var(--bg)_38%,transparent)] sm:-inset-y-1.5",
                 PILLAR_POS,
               )}
-            >
-              <div className="h-[3px] w-full bg-[image:var(--gradient-brand)]" />
-            </div>
+            />
 
             <table className="relative w-full border-collapse">
               <thead>
@@ -146,7 +144,7 @@ export function ComparisonTable({ className }: { className?: string }) {
                     key={row.title}
                   >
                     <th
-                      className="border-border border-t py-3 pr-4 pl-5 text-left align-middle sm:pl-6"
+                      className="border-border border-t py-2 pr-4 pl-5 text-left align-middle sm:pl-6"
                       scope="row"
                     >
                       <p className="text-foreground text-sm font-semibold">
@@ -156,10 +154,10 @@ export function ComparisonTable({ className }: { className?: string }) {
                         {row.description}
                       </p>
                     </th>
-                    <td className="border-t border-white/10 py-3 text-center align-middle">
+                    <td className="border-t border-white/10 py-2 text-center align-middle">
                       <IncludedMark />
                     </td>
-                    <td className="border-border border-t py-3 text-center align-middle">
+                    <td className="border-border border-t py-2 text-center align-middle">
                       <NotIncludedMark />
                     </td>
                   </tr>

@@ -164,7 +164,7 @@ function Pillars() {
                 <div className="hover:shadow-glow-brand mx-auto w-fit overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1">
                   <Image
                     alt=""
-                    className="size-96 object-contain"
+                    className="size-80 object-contain"
                     height={1254}
                     src={pillar.image}
                     width={1254}
@@ -221,7 +221,15 @@ function WhyHatchet() {
                   <span className="font-display text-brand-soft text-sm font-semibold tabular-nums">
                     {`0${index + 1}`}
                   </span>
-                  <span className="bg-gradient-brand shadow-glow-brand flex items-center justify-center rounded-xl p-3.5 text-white transition-transform duration-(--dur-base) group-hover:-translate-y-0.5">
+                  <span
+                    className="shadow-glow-brand flex items-center justify-center rounded-xl p-3.5 text-white transition-transform duration-(--dur-base) group-hover:-translate-y-0.5"
+                    style={{
+                      // All-red gradient (no brand orange), matching the data-card
+                      // assets. Bright red #e23c42 stands in for the light end.
+                      backgroundImage:
+                        "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, #e23c42 100%)",
+                    }}
+                  >
                     <Icon aria-hidden="true" className="size-5" />
                   </span>
                 </div>
@@ -229,7 +237,7 @@ function WhyHatchet() {
                   <h3 className="font-display text-xl font-semibold tracking-[-0.01em]">
                     {reason.title}
                   </h3>
-                  <p className="text-brand-soft mt-1 font-medium">
+                  <p className="text-brand mt-1 font-medium">
                     {reason.tagline}
                   </p>
                   <p className="body text-muted mt-2">{reason.body}</p>

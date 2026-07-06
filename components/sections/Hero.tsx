@@ -94,44 +94,34 @@ export function Hero({
           {subtitle}
         </p>
         {stats?.length ? (
-          // "Data cards": dark glass tuned for the navy top of the gradient
-          // hero. The fill is an opaque lifted-navy (a whisper of white over
-          // --bg) rather than a near-transparent tint, so the faint circuit
-          // traces behind the hero can't bleed through the card as uneven
-          // banding. A low-opacity white rim and a soft top sheen read as glass,
-          // and a brand-red bloom at the base ties into the chart. A gradient
-          // hero number sits up top; its data graphic bleeds to the bottom edge.
+          // "Data cards": clean white paper cards sitting on the navy top of the
+          // gradient hero, so they read as bright, high-contrast panels against
+          // the dark. An opaque white fill keeps the faint circuit traces behind
+          // the hero from bleeding through; a light paper-border rim and a soft
+          // drop shadow lift them off the navy, and a wide brand-red bloom at the
+          // base makes the chart asset glow. A gradient hero number sits up top;
+          // its data graphic bleeds to the bottom edge.
           <Stagger
-            childClassName="group relative flex flex-col overflow-hidden rounded-2xl bg-[color-mix(in_srgb,var(--white)_7%,var(--bg))] shadow-[0_18px_50px_-14px_rgba(0,0,0,0.55)] ring-1 ring-inset ring-white/15 transition-[transform,background-color,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:bg-[color-mix(in_srgb,var(--white)_11%,var(--bg))] hover:shadow-glow-brand"
+            childClassName="group relative flex flex-col overflow-hidden rounded-2xl bg-[var(--paper-surface)] shadow-[0_18px_50px_-14px_rgba(0,0,0,0.45)] ring-1 ring-inset ring-[var(--paper-border)] transition-[transform,background-color,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:bg-[color-mix(in_srgb,var(--bg)_3%,var(--white))] hover:shadow-glow-brand"
             className="mt-6 grid w-full max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3"
           >
             {stats.map((stat) => (
               <div
-                className="relative flex h-full flex-col pt-5 text-left"
+                className="relative flex h-full flex-col pt-3 text-left"
                 key={stat.label}
               >
-                {/* Brand-red bloom at the base — warms the card into the chart
-                    and echoes the headline against the navy. */}
+                {/* Brand-red bloom at the base — a wide glow that warms the white
+                    card into the chart asset and echoes the headline. */}
                 <span
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-0"
                   style={{
                     background:
-                      "radial-gradient(130% 82% at 50% 100%, color-mix(in srgb, var(--brand) 22%, transparent) 0%, transparent 62%)",
-                  }}
-                />
-                {/* Soft top sheen — a faint light-catch on the top edge that
-                    reads as glass without milking out the dark fill. */}
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(160deg, color-mix(in srgb, var(--white) 12%, transparent) 0%, color-mix(in srgb, var(--white) 4%, transparent) 26%, transparent 52%)",
+                      "radial-gradient(150% 100% at 50% 100%, color-mix(in srgb, var(--brand) 20%, transparent) 0%, color-mix(in srgb, var(--brand) 8%, transparent) 40%, transparent 74%)",
                   }}
                 />
                 <div className="relative px-5">
-                  <span className="eyebrow whitespace-nowrap text-white/55">
+                  <span className="eyebrow whitespace-nowrap text-[var(--paper-muted)]">
                     {stat.label}
                   </span>
                   <span className="mt-1.5 flex items-baseline gap-0.5">
@@ -153,9 +143,9 @@ export function Hero({
                 {stat.visual ? (
                   // Full-bleed chart foundation; a hair of side padding keeps
                   // the marks off the rounded corners.
-                  <div className="relative mt-5 flex flex-1 items-end px-2">
+                  <div className="relative mt-3 flex flex-1 items-end px-2">
                     <HeroStatVisual
-                      className="relative"
+                      className="relative [filter:drop-shadow(0_1px_8px_color-mix(in_srgb,var(--brand)_50%,transparent))]"
                       variant={stat.visual}
                     />
                   </div>

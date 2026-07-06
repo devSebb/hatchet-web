@@ -9,15 +9,19 @@ import { cn } from "@/lib/utils";
 
 export type HeroStatVisualVariant = "cluster" | "timeline" | "density";
 
-// Baseline tick color for the timeline graphic — a barely-there light rule
-// that reads on the dark glass card.
-const DIM = "color-mix(in srgb, var(--white) 12%, transparent)";
+// Baseline tick color for the timeline graphic — a barely-there dark rule
+// that reads on the white paper card.
+const DIM = "color-mix(in srgb, var(--bg) 14%, transparent)";
+
+// The data-card graphics stay strictly in the red family — no brand orange
+// (--brand-highlight). A bright red stands in for the light end of the gradient.
+const RED_BRIGHT = "#e23c42";
 
 const VIEWPORT = { once: true, amount: 0.5 } as const;
 
 /* ------------------------------------------------------------------------- *
  * Full-width, bottom-anchored data graphics that bleed to the card edges.
- * Warm red→orange gradient echoes the headline.
+ * All-red gradient (no brand orange) echoes the headline.
  * ------------------------------------------------------------------------- */
 
 // Wide viewBox + w-full so the SVG stretches across the card while scaling
@@ -27,20 +31,21 @@ const FLUID_H = 52;
 
 type LightVisualProps = { reduce: boolean; gradientId: string };
 
-/** Shared gradient defs: `${id}v` runs orange→red top-to-bottom (fills);
- *  `${id}h` runs red→orange left-to-right (strokes & dots). */
+/** Shared gradient defs, all-red: `${id}v` runs bright-red→red→dark-red
+ *  top-to-bottom (fills); `${id}h` runs dark-red→red→bright-red
+ *  left-to-right (strokes & dots). */
 function GradientDefs({ id }: { id: string }) {
   return (
     <defs>
       <linearGradient id={`${id}v`} x1="0" x2="0" y1="0" y2="1">
-        <stop offset="0%" stopColor="var(--brand-highlight)" />
+        <stop offset="0%" stopColor={RED_BRIGHT} />
         <stop offset="55%" stopColor="var(--brand)" />
         <stop offset="100%" stopColor="var(--brand-lowlight)" />
       </linearGradient>
       <linearGradient id={`${id}h`} x1="0" x2="1" y1="0" y2="0">
         <stop offset="0%" stopColor="var(--brand-lowlight)" />
         <stop offset="50%" stopColor="var(--brand)" />
-        <stop offset="100%" stopColor="var(--brand-highlight)" />
+        <stop offset="100%" stopColor={RED_BRIGHT} />
       </linearGradient>
     </defs>
   );
@@ -170,7 +175,7 @@ function TimelineLight({ reduce, gradientId }: LightVisualProps) {
           animate={{ r: [3, 10], opacity: [0.55, 0] }}
           cx={last.x}
           cy={last.y}
-          fill="var(--brand-highlight)"
+          fill={RED_BRIGHT}
           transition={{
             duration: MOTION_DURATION.slow,
             ease: EASE_OUT,
@@ -182,7 +187,7 @@ function TimelineLight({ reduce, gradientId }: LightVisualProps) {
       <circle
         cx={last.x}
         cy={last.y}
-        fill="var(--brand-highlight)"
+        fill={RED_BRIGHT}
         r="3.5"
         stroke="var(--white)"
         strokeWidth="1.5"
