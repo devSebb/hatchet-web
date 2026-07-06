@@ -18,7 +18,7 @@ export const verticals = [
   },
   {
     slug: "games-publishers",
-    label: "Games & Publishers",
+    label: "Game Publishers",
     href: "/who-we-serve/games-publishers",
     title: "Read game demand while the market is still moving.",
     subtitle:

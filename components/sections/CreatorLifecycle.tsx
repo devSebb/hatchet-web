@@ -20,11 +20,7 @@ export function CreatorLifecycle({ className }: { className?: string }) {
 
       <div className="relative mx-auto w-full max-w-7xl">
         <div className="max-w-3xl">
-          <p className="eyebrow text-muted">How Hatchet Works</p>
-          <h2 className="h1 mt-4">The full creator lifecycle. One platform.</h2>
-          <p className="body-lg text-muted mt-5">
-            From first search to final report — without switching tools.
-          </p>
+          <h2 className="h1">How Hatchet Works</h2>
         </div>
 
         <CreatorLifecycleOrbital className="mt-8" />

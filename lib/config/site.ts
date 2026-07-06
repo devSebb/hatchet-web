@@ -14,6 +14,7 @@ export const siteConfig = {
     process.env.NEXT_PUBLIC_APP_LOGIN_URL ?? "https://app.streamhatchet.com",
   bookDemoUrl: "https://insights.streamhatchet.com/get-a-demo",
   signUpUrl: "https://insights.streamhatchet.com/sign-up-free",
+  openPositionsUrl: "https://stream-hatchet.factorialhr.com/#jobs",
   hubspotPortalId: process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID ?? "",
   socials: [
     {

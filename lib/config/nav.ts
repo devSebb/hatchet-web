@@ -53,7 +53,7 @@ export const primaryNav: NavItem[] = [
         description: "Track creator, audience, and sponsorship signals.",
       },
       {
-        label: "Games & Publishers",
+        label: "Game Publishers",
         href: "/who-we-serve/games-publishers",
         description: "Measure launch demand, creator lift, and game momentum.",
       },

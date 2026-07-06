@@ -84,10 +84,13 @@ function CapabilitiesSection({ solution }: { solution: ProductSolution }) {
           </div>
         </Reveal>
 
-        <Stagger className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <Stagger
+          childClassName="h-full"
+          className="mt-10 grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-3"
+        >
           {solution.capabilities.map((capability) => (
             <article
-              className="border-border bg-card hover:border-signal/60 rounded-xl border p-6 shadow-sm transition-[border-color,transform,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:shadow-md"
+              className="border-border bg-card hover:border-signal/60 h-full rounded-xl border p-6 shadow-sm transition-[border-color,transform,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:shadow-md"
               key={capability.title}
             >
               <div className="bg-signal mb-6 h-1 w-10 rounded-full" />
@@ -175,7 +178,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
         />
 
         <LogoWall
-          className="surface-paper pt-0 pb-16 lg:pb-20"
+          className="surface-paper pt-14 pb-16 lg:pt-24 lg:pb-20"
           eyebrow="Trusted by market leaders"
           logos={trustedLogos}
           title="Trusted by Riot, YouTube, Microsoft, NASCAR, Activision Blizzard, and PlayStation."

@@ -155,7 +155,7 @@ const testimonials = [
 
 function Pillars() {
   return (
-    <section className="surface-paper bg-background text-foreground px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+    <section className="surface-paper bg-background text-foreground px-4 pt-10 pb-20 sm:px-6 lg:px-8 lg:pt-14 lg:pb-28">
       <div className="mx-auto w-full max-w-7xl">
         <Stagger className="grid gap-5 lg:grid-cols-3">
           {pillars.map((pillar) => {
@@ -170,7 +170,7 @@ function Pillars() {
                     width={1254}
                   />
                 </div>
-                <p className="eyebrow text-brand mt-6">{pillar.kicker}</p>
+                <p className="eyebrow text-brand mt-10">{pillar.kicker}</p>
                 <h3 className="font-display mt-2 text-2xl font-bold tracking-[-0.01em] sm:text-3xl">
                   {pillar.title}
                 </h3>
@@ -202,10 +202,6 @@ function WhyHatchet() {
                 The Sharpest Analytics Tool
               </span>
             </h2>
-            <p className="body-lg text-muted mx-auto mt-5 max-w-2xl">
-              The broadest coverage, the deepest verified history, and the
-              workflow gaming teams actually run on.
-            </p>
           </div>
         </Reveal>
 

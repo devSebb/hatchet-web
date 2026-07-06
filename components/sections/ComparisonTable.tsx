@@ -1,4 +1,4 @@
-import { Check, Minus } from "@phosphor-icons/react/ssr";
+import { Check, X } from "@phosphor-icons/react/ssr";
 
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { Reveal } from "@/components/motion/Reveal";
@@ -55,7 +55,7 @@ const PILLAR_POS = "right-20 w-20 sm:right-28 sm:w-28";
 
 function IncludedMark() {
   return (
-    <span className="bg-brand inline-flex size-6 items-center justify-center rounded-full text-white shadow-[0_0_14px_color-mix(in_srgb,var(--brand)_45%,transparent)]">
+    <span className="inline-flex size-6 items-center justify-center rounded-full bg-green-500 text-white shadow-[0_0_14px_color-mix(in_srgb,#22c55e_45%,transparent)]">
       <Check aria-hidden="true" className="size-3.5" weight="bold" />
       <span className="sr-only">Included</span>
     </span>
@@ -64,8 +64,8 @@ function IncludedMark() {
 
 function NotIncludedMark() {
   return (
-    <span className="text-muted/60 inline-flex size-6 items-center justify-center">
-      <Minus aria-hidden="true" className="size-4" weight="bold" />
+    <span className="inline-flex size-6 items-center justify-center text-red-500">
+      <X aria-hidden="true" className="size-4" weight="bold" />
       <span className="sr-only">Not included</span>
     </span>
   );

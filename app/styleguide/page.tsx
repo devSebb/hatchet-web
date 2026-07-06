@@ -50,6 +50,16 @@ const coreSwatches: Swatch[] = [
     variable: "--brand-soft",
     className: "bg-brand-soft",
   },
+  {
+    label: "Blue transitional",
+    variable: "--blue-transitional",
+    className: "bg-blue-transitional",
+  },
+  {
+    label: "Blue transitional soft",
+    variable: "--blue-transitional-soft",
+    className: "bg-blue-transitional-soft",
+  },
   { label: "Ink", variable: "--ink", className: "bg-ink" },
   { label: "Background", variable: "--bg", className: "bg-bg" },
   { label: "Surface", variable: "--surface", className: "bg-surface" },

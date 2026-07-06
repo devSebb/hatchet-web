@@ -39,6 +39,10 @@ export async function generateMetadata({
   });
 }
 
+// Verticals that suppress the generic framing headline (they read cleaner with
+// just the "Audience, jobs, proof" label above the cards).
+const HIDE_FRAMING_HEADING = new Set(["games-publishers", "market-research-agencies"]);
+
 function VerticalFraming({
   vertical,
 }: {
@@ -50,9 +54,11 @@ function VerticalFraming({
         <Reveal>
           <div className="max-w-3xl">
             <p className="eyebrow text-muted">Audience, jobs, proof</p>
-            <h2 className="h1 mt-4">
-              Same signal, framed for the way your team works.
-            </h2>
+            {HIDE_FRAMING_HEADING.has(vertical.slug) ? null : (
+              <h2 className="h1 mt-4">
+                Same signal, framed for the way your team works.
+              </h2>
+            )}
           </div>
         </Reveal>
 

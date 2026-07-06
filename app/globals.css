@@ -10,6 +10,8 @@
   --color-brand-soft: var(--brand-soft);
   --color-brand-highlight: var(--brand-highlight);
   --color-brand-lowlight: var(--brand-lowlight);
+  --color-blue-transitional: var(--blue-transitional);
+  --color-blue-transitional-soft: var(--blue-transitional-soft);
   --color-ink: var(--ink);
   --color-bg: var(--bg);
   --color-surface: var(--surface);
@@ -100,6 +102,17 @@
   --brand-lowlight: #911b20;
   --brand-strong: var(--brand-lowlight);
   --brand-soft: color-mix(in srgb, var(--brand) 76%, var(--white));
+
+  /* Transitional blue — deep royal navy. Second brand color (merch + gradient
+     anchor + secondary accents). Red stays the lead action color; this is the
+     cool counterpoint that deepens gradients and seeds the accent/ring system. */
+  --blue-transitional: #022658;
+  --blue-transitional-soft: color-mix(
+    in srgb,
+    var(--blue-transitional) 62%,
+    var(--white)
+  );
+
   --ink: #000000;
   --bg: #151f2c;
   --surface: color-mix(in srgb, var(--bg) 82%, var(--white));
@@ -136,7 +149,8 @@
   --gradient-cta: linear-gradient(
     135deg,
     var(--ink) 0%,
-    var(--bg) 28%,
+    var(--blue-transitional) 18%,
+    var(--bg) 42%,
     var(--brand-strong) 78%,
     var(--brand) 100%
   );
@@ -162,30 +176,32 @@
   --hero-gradient: linear-gradient(
     to bottom,
     var(--bg) 0%,
-    var(--bg) 24%,
-    var(--hero-steel) 48%,
+    var(--bg) 20%,
+    var(--blue-transitional) 36%,
+    var(--hero-steel) 50%,
     var(--hero-mist) 74%,
     var(--paper) 88%
   );
   /* Compact variant for interior heroes with no dashboard image (e.g. the
-     solutions PageHeader). The header's white text ends around 45% of the span
-     and the trusted-by logo wall (dark text) doesn't begin until ~65%, leaving
-     an empty gap to resolve the whole navy→white fade — so the header rides the
-     navy top, the logo carousel rides the white end, and the transition falls
-     in the dead zone between them. */
+     solutions PageHeader). The header's white text rides the navy top and the
+     trusted-by logo wall (dark text) sits lower with its own top padding, so
+     the navy→white fade can stretch across the long dead zone between them
+     instead of snapping — navy holds through the headline, then eases through
+     the transitional blues and only resolves to white near the logo carousel. */
   --hero-gradient-compact: linear-gradient(
     to bottom,
     var(--bg) 0%,
-    var(--bg) 38%,
-    var(--hero-steel) 50%,
-    var(--hero-mist) 61%,
-    var(--paper) 66%
+    var(--bg) 26%,
+    var(--blue-transitional) 38%,
+    var(--hero-steel) 52%,
+    var(--hero-mist) 68%,
+    var(--paper) 84%
   );
 
   --white: #ffffff;
   --black: #000000;
   --signal: var(--brand);
-  --signal-2: var(--bg);
+  --signal-2: var(--blue-transitional);
   --signal-grid: color-mix(in srgb, var(--white) 24%, transparent);
 
   /* Featured CTA texture & depth system (decorative) */
