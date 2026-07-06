@@ -192,13 +192,13 @@ function StationFacet({
           padding + a clear number→title hierarchy so it reads, not mushes. */}
       <span
         className={cn(
-          "cta-panel-frame relative flex items-center gap-4 rounded-2xl border px-4 py-3.5 backdrop-blur-sm transition-[border-color,background-color] duration-[250ms]",
+          "cta-panel-frame relative flex items-center gap-4 rounded-2xl border px-4 py-2.5 backdrop-blur-sm transition-[border-color,background-color] duration-[250ms]",
           isActive ? "border-brand bg-card/85" : "border-border bg-card/60",
         )}
       >
         <span
           className={cn(
-            "flex size-10 shrink-0 items-center justify-center rounded-lg border transition-colors duration-[250ms]",
+            "flex size-8 shrink-0 items-center justify-center rounded-lg border transition-colors duration-[250ms]",
             isActive
               ? "border-brand/40 bg-brand/10"
               : "border-border bg-elevated/60",
@@ -207,15 +207,15 @@ function StationFacet({
           <Icon
             aria-hidden="true"
             className={cn(
-              "size-5 transition-colors duration-[250ms]",
-              isActive ? "text-brand-highlight" : "text-muted",
+              "size-4 transition-colors duration-[250ms]",
+              isActive ? "text-brand" : "text-muted",
             )}
           />
         </span>
         <span className="flex min-w-0 flex-col gap-1">
           <span
             className={cn(
-              "font-mono text-[0.65rem] font-semibold tracking-[0.18em] tabular-nums transition-colors duration-[250ms]",
+              "font-mono text-[0.72rem] font-semibold tracking-[0.18em] tabular-nums transition-colors duration-[250ms]",
               isActive ? "text-brand" : "text-muted/80",
             )}
           >
@@ -223,7 +223,7 @@ function StationFacet({
           </span>
           <span
             className={cn(
-              "text-[0.95rem] leading-none font-semibold transition-colors duration-[250ms]",
+              "text-[1.08rem] leading-none font-semibold transition-colors duration-[250ms]",
               isActive ? "text-foreground" : "text-muted",
             )}
           >
@@ -246,7 +246,7 @@ function CoreLabel({ compact = false }: { compact?: boolean }) {
         width={2102}
       />
       <span className="eyebrow text-muted text-[0.5rem]">
-        Creator Intelligence
+        Gaming Intelligence
       </span>
     </div>
   );
@@ -472,7 +472,7 @@ export function CreatorLifecycleOrbital({ className }: { className?: string }) {
                         cy: [a.y, b.y],
                         opacity: [0, 1, 1, 0],
                       }}
-                      fill="var(--brand-highlight)"
+                      fill="var(--brand-soft)"
                       r={1.4}
                       style={{
                         filter: "drop-shadow(0 0 1.5px var(--brand))",
