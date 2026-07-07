@@ -20,7 +20,7 @@ import { Stagger } from "@/components/motion/Stagger";
 import { Button } from "@/components/ui/button";
 import { CircuitField } from "@/components/sections/CircuitField";
 import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
-import { CTASection } from "@/components/sections/CTASection";
+import { CTACarousel } from "@/components/sections/CTACarousel";
 import { Hero } from "@/components/sections/Hero";
 import { LogoWall } from "@/components/sections/LogoWall";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
@@ -432,7 +432,7 @@ export default function Home() {
 
       <Plans />
 
-      <CTASection
+      <CTACarousel
         body="Book a demo and see how Hatchet runs your entire creator program, from first search to final report."
         className="py-14 lg:py-20"
         cta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}

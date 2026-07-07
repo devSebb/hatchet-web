@@ -173,8 +173,8 @@ const FADE_BOTTOM_MASK =
 export function CircuitField({
   density = "quiet",
   pulseCount = 6,
-  pulseDurationMs = 2100,
-  pulseIntervalMs = 3000,
+  pulseDurationMs = 2200,
+  pulseIntervalMs = 1500,
   fadeBottom = false,
   className,
   style,
