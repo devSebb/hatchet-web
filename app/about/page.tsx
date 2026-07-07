@@ -3,7 +3,6 @@ import Image from "next/image";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
-import { CircuitField } from "@/components/sections/CircuitField";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { Badge } from "@/components/ui/badge";
@@ -127,8 +126,9 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* White (surface-paper) section — the circuit board stays on navy
+          backgrounds only. */}
       <section className="surface-paper bg-background text-foreground relative isolate overflow-hidden px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-        <CircuitField density="quiet" />
         <Reveal className="mx-auto w-full max-w-4xl text-center">
           <div>
             <p className="eyebrow text-muted">Our mission</p>

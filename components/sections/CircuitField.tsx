@@ -14,14 +14,20 @@ type CircuitFieldProps = {
   pulseDurationMs?: number;
   /** Base gap between new pulses, ms (randomized ±50%, ~2.5–5s). */
   pulseIntervalMs?: number;
+  /**
+   * Fades the board out toward the bottom. For sections whose background
+   * blends from navy into white (e.g. the gradient hero): the board lives on
+   * the dark top only and is gone before the background turns light.
+   */
+  fadeBottom?: boolean;
   className?: string;
   style?: CSSProperties;
 };
 
 // PCB routing conventions used throughout: segments run at 0°/90° with 45°
-// jogs only (never arbitrary angles), every trace terminates in a via, a chip
-// pin, or the board edge, and widths come in three tiers like real copper —
-// thin signal lines, medium routes, and a few fat power rails.
+// jogs only (never arbitrary angles), every trace terminates in a via or the
+// board edge, and widths come in three tiers like real copper — thin signal
+// lines, medium routes, and a few fat power rails.
 type Tier = "signal" | "medium" | "power";
 
 const TRACE_WIDTH: Record<Tier, number> = {
@@ -30,25 +36,23 @@ const TRACE_WIDTH: Record<Tier, number> = {
   power: 3.2,
 };
 
-// ViewBox 1440×900, slice-scaled. Traces are authored per region and mostly
-// originate at a chip or board edge so pulses read as signals leaving parts.
+// ViewBox 1440×900, slice-scaled. Traces are authored per region: long
+// continuous runs sweep through dense via fields (the former chip zones) so
+// pulses read as signals travelling across the whole board.
 const TRACES: { d: string; tier: Tier }[] = [
   // Power rails.
-  { d: "M 0 544 H 90", tier: "power" }, // left edge → U1
+  { d: "M 0 544 H 90", tier: "power" }, // left edge → via field
   { d: "M 360 900 V 830 l 36 -36 H 500 l 24 -24 V 672", tier: "power" },
-  { d: "M 1344 120 H 1400 l 40 40", tier: "power" }, // U2 → right edge
-  { d: "M 1440 584 H 1360 l -36 36 V 744 l -28 28 H 1200", tier: "power" }, // right edge → U3
-  // U1 (left chip): right-side bus fanning down, plus top/bottom breakouts.
+  { d: "M 1344 120 H 1400 l 40 40", tier: "power" }, // via field → right edge
+  { d: "M 1440 584 H 1360 l -36 36 V 744 l -28 28 H 1200", tier: "power" },
+  // Left via field: bus fanning down-right, long through-runs top↔bottom.
   { d: "M 178 544 H 316 l 48 48 V 700 l 32 32 H 452", tier: "medium" },
   { d: "M 178 560 H 300 l 48 48 V 716 l 32 32 H 428", tier: "signal" },
   { d: "M 178 576 H 284 l 48 48 V 732 l 32 32 H 404", tier: "signal" },
-  { d: "M 112 520 V 384 l -28 -28 H 0", tier: "signal" },
-  { d: "M 134 520 V 440", tier: "signal" },
-  { d: "M 156 520 V 248 l -36 -36 H 60", tier: "medium" },
+  { d: "M 0 356 H 84 l 28 28 V 672", tier: "signal" },
+  { d: "M 134 440 V 692 l 28 28 H 240 l 36 36 V 830", tier: "signal" },
+  { d: "M 60 212 H 120 l 36 36 V 656 l 36 36 H 260", tier: "medium" },
   { d: "M 90 592 H 36 l -24 24 V 648", tier: "signal" },
-  { d: "M 112 608 V 672", tier: "signal" },
-  { d: "M 134 608 V 692 l 28 28 H 240 l 36 36 V 830", tier: "signal" },
-  { d: "M 156 608 V 656 l 36 36 H 260", tier: "signal" },
   // Left edge and corners.
   { d: "M 150 0 V 200 l 36 36 H 300 l 24 24 V 360", tier: "signal" },
   { d: "M 250 60 H 420 l 28 28 V 220", tier: "signal" },
@@ -57,25 +61,21 @@ const TRACES: { d: string; tier: Tier }[] = [
   // Bottom center.
   { d: "M 560 900 V 812 l 36 -36 H 700", tier: "signal" },
   { d: "M 640 900 V 840 l 28 -28 H 780 l 36 -36 V 700", tier: "medium" },
-  // U2 (top-right chip): left-side bus, top breakouts, corner accents.
-  { d: "M 1244 100 H 1120 l -40 40 V 260", tier: "signal" },
+  // Top-right via field: long snakes climbing from mid-board to the top edge.
+  { d: "M 1080 260 V 140 l 40 -40 H 1276 l 16 -16 V 36 l -24 -24 V 0", tier: "signal" },
   { d: "M 1244 116 H 1136 l -40 40 V 276 l -28 28 H 1040", tier: "signal" },
-  { d: "M 1244 132 H 1152 l -40 40 V 320 l -32 32 H 1000", tier: "medium" },
-  { d: "M 1292 84 V 36 l -24 -24 V 0", tier: "signal" },
-  { d: "M 1316 84 V 0", tier: "signal" },
+  { d: "M 1000 352 H 1080 l 32 -32 V 172 l 40 -40 H 1268 l 48 -48 V 0", tier: "medium" },
   { d: "M 1064 0 V 180 l -32 32 V 280", tier: "signal" },
   { d: "M 1440 40 H 1400 l -24 24 V 84", tier: "signal" },
   // Right edge, mid-board.
   { d: "M 1440 470 H 1300 l -40 -40 V 330", tier: "medium" },
   { d: "M 1440 520 H 1332 l -32 32 V 640", tier: "signal" },
-  // U3 (bottom-right chip): top-side bus climbing left, side/bottom breakouts.
-  { d: "M 1132 700 V 628 l -36 -36 H 984 l -28 -28 V 520", tier: "signal" },
-  { d: "M 1156 700 V 612 l -36 -36 H 1000 l -28 -28 V 484", tier: "signal" },
-  { d: "M 1180 700 V 596 l -36 -36 H 1016 l -28 -28 V 448", tier: "medium" },
+  // Bottom-right via field: sweeping runs from mid-board to the bottom edge.
+  { d: "M 956 520 V 564 l 28 28 H 1096 l 36 36 V 776 l 8 8 V 840 l 24 24 H 1252", tier: "signal" },
+  { d: "M 972 484 V 548 l 28 28 H 1120 l 36 36 V 776 l 8 8 V 820 l 28 28 H 1324 l 24 24 V 900", tier: "medium" },
+  { d: "M 988 448 V 532 l 28 28 H 1144 l 36 36 V 752 l 20 20", tier: "medium" },
   { d: "M 1116 724 H 1000 l -40 40 H 900", tier: "signal" },
   { d: "M 1116 748 H 1016 l -40 40 V 900", tier: "signal" },
-  { d: "M 1140 784 V 840 l 24 24 H 1252", tier: "signal" },
-  { d: "M 1164 784 V 820 l 28 28 H 1324 l 24 24 V 900", tier: "medium" },
   { d: "M 1440 812 H 1392 l -24 -24 V 720", tier: "signal" },
 ];
 
@@ -110,53 +110,19 @@ const VIAS: [number, number][] = [
   [900, 764],
   [1252, 864],
   [1368, 720],
-];
-
-// IC footprints: body outline, pin stubs on all four sides, pin-1 dot,
-// silkscreen designator. Pin coordinates line up with the trace anchors.
-const CHIPS = [
-  {
-    x: 90,
-    y: 520,
-    w: 88,
-    h: 88,
-    label: "U1",
-    sub: "HTCH-01",
-    pins: {
-      top: [112, 134, 156],
-      bottom: [112, 134, 156],
-      left: [544, 560, 576, 592],
-      right: [544, 560, 576, 592],
-    },
-  },
-  {
-    x: 1244,
-    y: 84,
-    w: 100,
-    h: 72,
-    label: "U2",
-    sub: "AXE-256",
-    pins: {
-      top: [1268, 1292, 1316],
-      bottom: [1268, 1292, 1316],
-      left: [100, 116, 132],
-      right: [104, 120, 136],
-    },
-  },
-  {
-    x: 1116,
-    y: 700,
-    w: 84,
-    h: 84,
-    label: "U3",
-    sub: "TIMBER",
-    pins: {
-      top: [1132, 1156, 1180],
-      bottom: [1140, 1164, 1188],
-      left: [724, 748, 772],
-      right: [724, 748, 772],
-    },
-  },
+  // Fan-out via fields where the bus traces break out (former chip zones):
+  // tight clusters that read as deliberate via stitching.
+  [90, 544],
+  [90, 592],
+  [178, 544],
+  [178, 560],
+  [178, 576],
+  [1244, 116],
+  [1344, 120],
+  [1116, 724],
+  [1116, 748],
+  [1200, 772], // power rail meets the bottom-right bus run
+  [250, 60],
 ];
 
 // Two-pad SMD footprints (resistors/caps) sitting on straight trace runs.
@@ -169,7 +135,16 @@ const SMD_PADS: { x: number; y: number; vertical?: boolean; label: string }[] =
     { x: 1324, y: 676, vertical: true, label: "C7" },
     { x: 724, y: 812, label: "C3" },
     { x: 1372, y: 470, label: "R21" },
+    { x: 134, y: 560, vertical: true, label: "C4" },
+    { x: 1176, y: 100, label: "C11" },
+    { x: 1060, y: 592, label: "R9" },
   ];
+
+// Fiducial marks (annular ring + crosshair) in open board regions.
+const FIDUCIALS: [number, number][] = [
+  [84, 132],
+  [1348, 560],
+];
 
 const TEST_POINTS: { x: number; y: number; label: string }[] = [
   { x: 222, y: 800, label: "TP1" },
@@ -182,19 +157,25 @@ const SILK_FONT =
 const NEGATIVE_SPACE_MASK =
   "radial-gradient(120% 95% at 50% 32%, transparent 0%, transparent 24%, #000 66%)";
 
-// Pulses cycle through the brand palette so the motion reads as on-theme
-// rather than a single flat red.
+// Pulses stay strictly in the red family (never the orange highlight):
+// core brand red, a brighter red for punch, and the soft red for variety.
 const PULSE_COLORS = [
   "var(--brand)",
-  "var(--brand-highlight)",
+  "#e23c42",
   "var(--brand-soft)",
 ];
 
+// Board fade for navy→white gradient sections: fully present on the dark
+// top, fully gone before the background turns light.
+const FADE_BOTTOM_MASK =
+  "linear-gradient(to bottom, #000 0%, #000 32%, transparent 58%)";
+
 export function CircuitField({
   density = "quiet",
-  pulseCount = 4,
+  pulseCount = 6,
   pulseDurationMs = 2100,
-  pulseIntervalMs = 4200,
+  pulseIntervalMs = 3000,
+  fadeBottom = false,
   className,
   style,
 }: CircuitFieldProps) {
@@ -311,9 +292,31 @@ export function CircuitField({
       const trace = TRACES[Math.floor(Math.random() * TRACES.length)];
       const d = trace.d;
       const color = PULSE_COLORS[colorTick++ % PULSE_COLORS.length];
+      // Power rails always surge (bigger dot, hotter trail); a fraction of
+      // signal pulses do too, so the board occasionally flares alive.
+      const surge = trace.tier === "power" || Math.random() < 0.18;
       busy.add(slot);
+
+      const trail = trailRefs.current[slot];
+      let total = 0;
+      if (trail) {
+        trail.setAttribute("d", d);
+        total = trail.getTotalLength();
+      }
+      // Constant travel speed: long cross-board runs take longer than short
+      // stubs instead of every pulse crawling or sprinting to fit a fixed
+      // duration.
+      const duration = total
+        ? Math.min(
+            pulseDurationMs * 1.3,
+            Math.max(pulseDurationMs * 0.5, total * 2.6),
+          )
+        : pulseDurationMs;
+
       el.style.setProperty("--cf-pulse-color", color);
       el.style.offsetPath = `path('${d}')`;
+      el.setAttribute("r", surge ? "5.2" : "4");
+      el.style.filter = `drop-shadow(0 0 ${surge ? 12 : 8}px var(--cf-pulse-color))`;
       const easing = "cubic-bezier(0.4, 0, 0.2, 1)";
       const anim = el.animate(
         [
@@ -322,20 +325,19 @@ export function CircuitField({
           { offsetDistance: "86%", opacity: 1, offset: 0.86 },
           { offsetDistance: "100%", opacity: 0 },
         ],
-        { duration: pulseDurationMs, easing },
+        { duration, easing },
       );
 
       // Light up the trace behind the dot: a short dash whose leading edge
       // tracks the dot travels the same path, matched color + easing so the
       // two read as one signal.
-      const trail = trailRefs.current[slot];
       let trailAnim: Animation | undefined;
       if (trail) {
-        trail.setAttribute("d", d);
         trail.style.stroke = color;
         trail.style.color = color;
-        const total = trail.getTotalLength();
-        const seg = Math.min(150, total * 0.5);
+        trail.style.strokeWidth = surge ? "3.4" : "2.4";
+        const peakOpacity = surge ? 1 : 0.9;
+        const seg = Math.min(surge ? 210 : 160, total * 0.5);
         trail.style.strokeDasharray = `${seg} ${total + seg}`;
         // strokeDashoffset = seg - head, so the lit dash spans [head-seg, head]
         // as the head sweeps 0 → total in lockstep with the dot.
@@ -344,17 +346,17 @@ export function CircuitField({
             { strokeDashoffset: seg, opacity: 0 },
             {
               strokeDashoffset: seg - total * 0.14,
-              opacity: 0.9,
+              opacity: peakOpacity,
               offset: 0.14,
             },
             {
               strokeDashoffset: seg - total * 0.86,
-              opacity: 0.9,
+              opacity: peakOpacity,
               offset: 0.86,
             },
             { strokeDashoffset: seg - total, opacity: 0 },
           ],
-          { duration: pulseDurationMs, easing },
+          { duration, easing },
         );
 
         // Bloom each via on the path as the dot reaches it. The dot's
@@ -373,11 +375,11 @@ export function CircuitField({
             [
               { opacity: 0, offset: 0 },
               { opacity: 0, offset: from },
-              { opacity: 0.9, offset: peak },
+              { opacity: 1, offset: peak },
               { opacity: 0, offset: to },
               { opacity: 0, offset: 1 },
             ],
-            { duration: pulseDurationMs, easing },
+            { duration, easing },
           );
         }
       }
@@ -456,6 +458,14 @@ export function CircuitField({
         fill="none"
         preserveAspectRatio="xMidYMid slice"
         ref={svgRef}
+        style={
+          fadeBottom
+            ? {
+                maskImage: FADE_BOTTOM_MASK,
+                WebkitMaskImage: FADE_BOTTOM_MASK,
+              }
+            : undefined
+        }
         viewBox="0 0 1440 900"
       >
         <defs>
@@ -509,93 +519,14 @@ export function CircuitField({
           />
         ))}
 
-        {/* IC footprints. */}
-        {CHIPS.map((chip) => (
-          <g key={chip.label}>
-            {chip.pins.top.map((px) => (
-              <line
-                key={`t-${px}`}
-                stroke="var(--cf-trace-color)"
-                strokeWidth={4}
-                x1={px}
-                x2={px}
-                y1={chip.y - 9}
-                y2={chip.y}
-              />
-            ))}
-            {chip.pins.bottom.map((px) => (
-              <line
-                key={`b-${px}`}
-                stroke="var(--cf-trace-color)"
-                strokeWidth={4}
-                x1={px}
-                x2={px}
-                y1={chip.y + chip.h}
-                y2={chip.y + chip.h + 9}
-              />
-            ))}
-            {chip.pins.left.map((py) => (
-              <line
-                key={`l-${py}`}
-                stroke="var(--cf-trace-color)"
-                strokeWidth={4}
-                x1={chip.x - 9}
-                x2={chip.x}
-                y1={py}
-                y2={py}
-              />
-            ))}
-            {chip.pins.right.map((py) => (
-              <line
-                key={`r-${py}`}
-                stroke="var(--cf-trace-color)"
-                strokeWidth={4}
-                x1={chip.x + chip.w}
-                x2={chip.x + chip.w + 9}
-                y1={py}
-                y2={py}
-              />
-            ))}
-            <rect
-              fill="var(--cf-chip-fill)"
-              height={chip.h}
-              rx={5}
-              stroke="var(--cf-via-color)"
-              strokeWidth={1.6}
-              width={chip.w}
-              x={chip.x}
-              y={chip.y}
-            />
-            {/* Pin-1 dot. */}
-            <circle
-              cx={chip.x + 11}
-              cy={chip.y + 11}
-              fill="var(--cf-silk-color)"
-              r={2.4}
-            />
-            <text
-              fill="var(--cf-silk-color)"
-              fontFamily={SILK_FONT}
-              fontSize={13}
-              letterSpacing={1.5}
-              textAnchor="middle"
-              x={chip.x + chip.w / 2}
-              y={chip.y + chip.h / 2 - 2}
-            >
-              {chip.label}
-            </text>
-            <text
-              fill="var(--cf-silk-color)"
-              fontFamily={SILK_FONT}
-              fontSize={8.5}
-              letterSpacing={1}
-              opacity={0.8}
-              textAnchor="middle"
-              x={chip.x + chip.w / 2}
-              y={chip.y + chip.h / 2 + 13}
-            >
-              {chip.sub}
-            </text>
+        {/* Fiducial marks: annular ring + crosshair. */}
+        {FIDUCIALS.map(([cx, cy]) => (
+          <g key={`fid-${cx}-${cy}`} stroke="var(--cf-via-color)">
+            <circle cx={cx} cy={cy} r={5} strokeWidth={1.2} />
+            <line strokeWidth={1} x1={cx - 8} x2={cx - 5} y1={cy} y2={cy} />
+            <line strokeWidth={1} x1={cx + 5} x2={cx + 8} y1={cy} y2={cy} />
+            <line strokeWidth={1} x1={cx} x2={cx} y1={cy - 8} y2={cy - 5} />
+            <line strokeWidth={1} x1={cx} x2={cx} y1={cy + 5} y2={cy + 8} />
           </g>
         ))}
 
@@ -767,7 +698,7 @@ export function CircuitField({
             cy={0}
             fill="var(--cf-pulse-color)"
             key={`pulse-${i}`}
-            r={3.8}
+            r={4}
             ref={(el) => {
               pulseRefs.current[i] = el;
             }}

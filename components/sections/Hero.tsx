@@ -202,7 +202,9 @@ export function Hero({
         className,
       )}
     >
-      <CircuitField density="quiet" />
+      {/* On the gradient surface the board fades out before the navy resolves
+          to white — the circuit lives on dark backgrounds only. */}
+      <CircuitField density="quiet" fadeBottom={isGradient} />
 
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center text-center">
         {textBlock}

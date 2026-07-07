@@ -275,7 +275,7 @@ function BuiltForYourTeam() {
 
         <Stagger
           childClassName="h-full"
-          className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
           {useCases.map((useCase) => {
             const Icon = useCase.icon;
@@ -286,7 +286,15 @@ function BuiltForYourTeam() {
                 href={useCase.href}
                 key={useCase.href}
               >
-                <span className="bg-gradient-brand shadow-glow-brand flex size-12 items-center justify-center rounded-xl text-white">
+                <span
+                  className="shadow-glow-brand flex size-12 items-center justify-center rounded-xl text-white"
+                  style={{
+                    // All-red gradient (no brand orange), matching the
+                    // "Why Hatchet" reason icons above.
+                    backgroundImage:
+                      "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, #e23c42 100%)",
+                  }}
+                >
                   <Icon aria-hidden="true" className="size-6" />
                 </span>
                 <h3 className="font-display mt-6 text-xl font-semibold tracking-[-0.01em]">
