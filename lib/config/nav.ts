@@ -112,6 +112,11 @@ export const primaryNav: NavItem[] = [
         href: "/about/careers",
         description: "Join the team measuring live signal.",
       },
+      {
+        label: "Contact",
+        href: "/about/contact",
+        description: "Book a demo or send our gaming-native team a message.",
+      },
     ],
   },
   {
@@ -150,6 +155,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "Pricing", href: "/pricing" },
       { label: "Mission & Values", href: "/about" },
       { label: "Careers", href: "/about/careers" },
+      { label: "Contact", href: "/about/contact" },
     ],
   },
 ];

@@ -34,7 +34,7 @@ const STAGES: Stage[] = [
     stage: "Find & Verify",
     tagline:
       "Describe the creator you need and get a match. AI-powered search surfaces the right fit fast, and fake audience scoring flags suspicious channels before you commit.",
-    ctaLabel: "Explore Creator Discovery",
+    ctaLabel: "Creator Discovery",
     href: "/solutions/discovery",
     Icon: MagnifyingGlass,
     dir: { x: 0, y: -1 },
@@ -44,7 +44,7 @@ const STAGES: Stage[] = [
     stage: "Analyze",
     tagline:
       "Streaming and social in one view. Track performance across every platform your campaign touches, without switching tools or stitching spreadsheets together.",
-    ctaLabel: "Explore Intelligence",
+    ctaLabel: "Intelligence",
     href: "/solutions/intelligence",
     Icon: ChartLine,
     dir: { x: 1, y: 0 },
@@ -54,7 +54,7 @@ const STAGES: Stage[] = [
     stage: "Execute",
     tagline:
       "Manage your entire creator roster from one place. Brief, track, and coordinate campaigns end-to-end via a single, customizable hub.",
-    ctaLabel: "Explore Creator Community",
+    ctaLabel: "Creator Community",
     href: "/solutions/creator-community",
     Icon: FlowArrow,
     dir: { x: 0, y: 1 },
@@ -64,7 +64,7 @@ const STAGES: Stage[] = [
     stage: "Report",
     tagline:
       "Every campaign metric in one dashboard. Per-creator breakdowns, engagement, and export-ready reports your clients or stakeholders can easily understand.",
-    ctaLabel: "Explore Reporting",
+    ctaLabel: "Reporting",
     href: "/solutions/reporting",
     Icon: FileText,
     dir: { x: -1, y: 0 },
@@ -522,9 +522,10 @@ export function CreatorLifecycleOrbital({ className }: { className?: string }) {
           </ol>
         </div>
 
-        {/* Detail panel below the stepper on small screens. */}
+        {/* Detail panel below the stepper on small screens. Fixed floor sized
+            to the tallest tagline so it doesn't jump between stages. */}
         <DetailPanel
-          className="mt-8"
+          className="mt-8 min-h-[17rem] sm:min-h-[15rem]"
           motionKey={active}
           panelId={`${panelId}-mobile`}
           reduceMotion={reduceMotion}

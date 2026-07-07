@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
+import { BookDemoProvider } from "@/components/booking/BookDemoProvider";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { defaultMetadata } from "@/lib/config/site";
@@ -23,9 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${montserrat.variable} h-full antialiased`}>
       <body className="font-body flex min-h-full flex-col">
-        <Header />
-        <div className="flex-1">{children}</div>
-        <Footer />
+        <BookDemoProvider>
+          <Header />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </BookDemoProvider>
       </body>
     </html>
   );
