@@ -50,13 +50,13 @@ const COMPARISON_ROWS: ComparisonRow[] = [
 // Value columns share fixed widths so the elevated Hatchet pillar (an
 // absolutely positioned layer behind the middle column) stays aligned with
 // its cells at every viewport. Keep these three width pairs in sync.
-const VALUE_COL = "w-20 sm:w-28";
-const PILLAR_POS = "right-20 w-20 sm:right-28 sm:w-28";
+const VALUE_COL = "w-24 sm:w-32";
+const PILLAR_POS = "right-24 w-24 sm:right-32 sm:w-32";
 
 function IncludedMark() {
   return (
-    <span className="inline-flex size-6 items-center justify-center rounded-full bg-green-500 text-white shadow-[0_0_14px_color-mix(in_srgb,#22c55e_45%,transparent)]">
-      <Check aria-hidden="true" className="size-3.5" weight="bold" />
+    <span className="inline-flex size-4 items-center justify-center rounded-full bg-green-500 text-white shadow-[0_0_14px_color-mix(in_srgb,#22c55e_45%,transparent)]">
+      <Check aria-hidden="true" className="size-[11px]" weight="bold" />
       <span className="sr-only">Included</span>
     </span>
   );
@@ -64,8 +64,8 @@ function IncludedMark() {
 
 function NotIncludedMark() {
   return (
-    <span className="inline-flex size-6 items-center justify-center text-red-500">
-      <X aria-hidden="true" className="size-4" weight="bold" />
+    <span className="inline-flex size-5 items-center justify-center text-red-500">
+      <X aria-hidden="true" className="size-3.5" weight="bold" />
       <span className="sr-only">Not included</span>
     </span>
   );
@@ -85,7 +85,7 @@ export function ComparisonTable({ className }: { className?: string }) {
           <div className="max-w-3xl">
             <p className="eyebrow text-muted">Competitor comparison</p>
             <h2 className="h1 mt-4">The only platform that does it all.</h2>
-            <p className="body-lg text-muted mt-5">
+            <p className="body-lg text-muted mt-3">
               Most tools give you data or execution, gaming or social, a
               snapshot or a workflow. Hatchet is the only platform that covers
               the full picture — built for gaming from day one.
@@ -117,18 +117,18 @@ export function ComparisonTable({ className }: { className?: string }) {
                     Capability
                   </th>
                   <th
-                    className={cn("py-3.5 text-center align-middle", VALUE_COL)}
+                    className={cn("py-2.5 text-center align-middle", VALUE_COL)}
                     scope="col"
                   >
                     <BrandLogo
                       alt="Hatchet"
-                      className="mx-auto h-3.5 w-auto max-w-[80%] object-contain object-center sm:h-4"
+                      className="mx-auto h-4 w-auto max-w-[80%] object-contain object-center sm:h-5"
                       variant="white"
                     />
                   </th>
                   <th
                     className={cn(
-                      "text-muted py-3.5 text-center align-middle text-xs font-semibold sm:text-sm",
+                      "text-muted py-2.5 text-center align-middle text-sm font-semibold sm:text-base",
                       VALUE_COL,
                     )}
                     scope="col"
@@ -144,7 +144,7 @@ export function ComparisonTable({ className }: { className?: string }) {
                     key={row.title}
                   >
                     <th
-                      className="border-border border-t py-2 pr-4 pl-5 text-left align-middle sm:pl-6"
+                      className="border-border border-t py-1.5 pr-4 pl-5 text-left align-middle sm:pl-6"
                       scope="row"
                     >
                       <p className="text-foreground text-sm font-semibold">
@@ -154,10 +154,10 @@ export function ComparisonTable({ className }: { className?: string }) {
                         {row.description}
                       </p>
                     </th>
-                    <td className="border-t border-white/10 py-2 text-center align-middle">
+                    <td className="border-t border-white/10 py-1.5 text-center align-middle">
                       <IncludedMark />
                     </td>
-                    <td className="border-border border-t py-2 text-center align-middle">
+                    <td className="border-border border-t py-1.5 text-center align-middle">
                       <NotIncludedMark />
                     </td>
                   </tr>
