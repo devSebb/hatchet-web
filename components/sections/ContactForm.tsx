@@ -52,7 +52,7 @@ export function ContactForm({ className }: { className?: string }) {
                 </span>
                 <h3 className="h3 mt-6">Message received.</h3>
                 <p className="body text-muted mt-3 max-w-sm">
-                  Thanks for reaching out — our team will get back to you
+                  Thanks for reaching out. Our team will get back to you
                   shortly.
                 </p>
               </div>

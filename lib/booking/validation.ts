@@ -3,6 +3,7 @@
  * returns either a normalized payload or a list of field errors so the route can
  * map them to a 422.
  */
+import { REFERRAL_OPTIONS, REFERRAL_OTHER, TOPIC_OPTIONS } from "./options";
 
 export interface RawRequestBody {
   slot_start_utc?: unknown;
@@ -10,8 +11,11 @@ export interface RawRequestBody {
   name?: unknown;
   email?: unknown;
   job_title?: unknown;
+  company?: unknown;
   company_website?: unknown;
-  notes?: unknown;
+  topic?: unknown;
+  referral_source?: unknown;
+  referral_other?: unknown;
   /** Honeypot — must be empty. */
   website?: unknown;
 }
@@ -22,9 +26,15 @@ export interface NormalizedRequest {
   name: string;
   email: string;
   jobTitle: string;
+  company: string;
   companyWebsite: string;
   companyHost: string;
-  notes: string | null;
+  /** "What would you like to cover?" — one of TOPIC_OPTIONS. */
+  topic: string;
+  /** "How did you hear about us?" — one of REFERRAL_OPTIONS. */
+  referralSource: string;
+  /** Free text accompanying the "Other" referral choice. */
+  referralOther: string | null;
 }
 
 export interface ValidationResult {
@@ -80,10 +90,30 @@ export function validateRequest(body: RawRequestBody): ValidationResult {
   const jobTitle = asString(body.job_title);
   if (!jobTitle) errors.job_title = "required";
 
+  const company = asString(body.company);
+  if (!company) errors.company = "required";
+
   const companyRaw = asString(body.company_website);
-  const company = companyRaw ? normalizeCompanyUrl(companyRaw) : null;
+  const companyUrl = companyRaw ? normalizeCompanyUrl(companyRaw) : null;
   if (!companyRaw) errors.company_website = "required";
-  else if (!company) errors.company_website = "invalid";
+  else if (!companyUrl) errors.company_website = "invalid";
+
+  const topic = asString(body.topic);
+  if (!topic) errors.topic = "required";
+  else if (!(TOPIC_OPTIONS as readonly string[]).includes(topic))
+    errors.topic = "invalid";
+
+  const referralSource = asString(body.referral_source);
+  if (!referralSource) errors.referral_source = "required";
+  else if (!(REFERRAL_OPTIONS as readonly string[]).includes(referralSource))
+    errors.referral_source = "invalid";
+
+  const referralOtherRaw = asString(body.referral_other);
+  const referralOther = referralOtherRaw
+    ? referralOtherRaw.slice(0, 500)
+    : null;
+  if (referralSource === REFERRAL_OTHER && !referralOther)
+    errors.referral_other = "required";
 
   const bookerTimezone = asString(body.booker_timezone) || "UTC";
 
@@ -97,9 +127,6 @@ export function validateRequest(body: RawRequestBody): ValidationResult {
     else slotStartUtc = d;
   }
 
-  const notesRaw = asString(body.notes);
-  const notes = notesRaw.length ? notesRaw.slice(0, 2000) : null;
-
   if (Object.keys(errors).length > 0) return { ok: false, errors };
 
   return {
@@ -111,9 +138,12 @@ export function validateRequest(body: RawRequestBody): ValidationResult {
       name,
       email,
       jobTitle,
-      companyWebsite: (company as { url: string; host: string }).url,
-      companyHost: (company as { url: string; host: string }).host,
-      notes,
+      company,
+      companyWebsite: (companyUrl as { url: string; host: string }).url,
+      companyHost: (companyUrl as { url: string; host: string }).host,
+      topic,
+      referralSource,
+      referralOther,
     },
   };
 }

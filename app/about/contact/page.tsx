@@ -68,7 +68,7 @@ export default function ContactPage() {
             </h1>
             <p className="body-lg text-muted mt-5">
               Ready to see Hatchet in action, or just have questions? Our team
-              is built around gaming — they&apos;ll know what you&apos;re up
+              is built around gaming. They&apos;ll know what you&apos;re up
               against.
             </p>
           </div>

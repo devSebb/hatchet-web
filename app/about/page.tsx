@@ -28,18 +28,18 @@ const storyStats = [
 const values = [
   {
     number: "01",
-    label: "Teamwork Makes the Dream Work",
-    body: "We're only as good as the team behind the product. We invest in each other's growth, protect work-life balance, and build a place where creativity actually thrives.",
+    label: "We Thrive As A Community, For Communities",
+    body: "We're only as good as the team behind the product. We invest in each other's growth, protect work-life balance, and build a place where good ideas get heard.",
   },
   {
     number: "02",
     label: "Data Without Compromise",
-    body: "We're obsessed with accuracy. From methodology to delivery, we build the most reliable data in gaming — because one wrong number costs real decisions.",
+    body: "We're obsessed with accuracy. From methodology to delivery, we build the most reliable data in gaming, because one wrong number costs real decisions.",
   },
   {
     number: "03",
     label: "Client-Focused, Always",
-    body: "Our clients' success is our success. We listen, we adapt, and we build solutions that fit real workflows — not the other way around.",
+    body: "We take pride in solving real problems for real teams. That means listening first, adapting fast, and building something that fits how people work, not the other way around.",
   },
 ] as const;
 
@@ -49,8 +49,8 @@ export default function AboutPage() {
       <PageHeader
         className="pb-10 lg:pb-12"
         eyebrow="Mission & Values"
-        subtitle="We've spent nearly a decade building the tools that power creator marketing decisions for the world's biggest publishers, brands, and agencies."
-        title="Built in gaming. Backed by data. Since 2016."
+        subtitle="We've spent a decade crafting tools that power creator marketing decisions for the world's biggest publishers, brands, and agencies."
+        title="Connecting Data, Gaming, and Creators Since 2016."
       />
 
       {/* Full-width team photo riding directly under the header copy. */}
@@ -80,30 +80,34 @@ export default function AboutPage() {
               <p className="body-lg text-muted mt-5">
                 Founded in Barcelona in 2016 by Eduard Montserrat and Albert
                 Alemany, Hatchet started as a tool for streamers to understand
-                their own audiences. It grew into something bigger — the
-                leading creator marketing analytics platform for gaming.
+                their own audiences. Realizing just how opaque the online
+                landscape could be, and how many people wanted to be a bigger
+                part of it, Hatchet&apos;s ambitions began to expand. It grew
+                from a streamer analytics tool into the leading creator
+                marketing analytics provider for gaming, built for publishers,
+                brands, and agencies.
               </p>
               <a
-                className="mt-6 inline-flex items-center gap-3 transition-opacity hover:opacity-80"
+                className="mt-8 inline-flex items-center gap-3 transition-opacity hover:opacity-80"
                 href="https://www.gamesquare.com/"
                 rel="noreferrer"
                 target="_blank"
               >
-                <Badge variant="outline">Part of GameSquare</Badge>
+                <span className="body text-muted">Part of</span>
                 <Image
                   alt="GameSquare"
-                  className="h-7 w-auto"
+                  className="h-9 w-auto sm:h-10"
                   height={450}
                   src="/images/logos/gamesquare_logo.png"
                   width={1000}
                 />
               </a>
               <p className="body text-muted mt-6">
-                Trusted by{" "}
-                <span className="text-foreground font-medium">Riot</span>,{" "}
+                Now part of GameSquare, Hatchet is trusted by industry leaders
+                like <span className="text-foreground font-medium">Riot</span>,{" "}
                 <span className="text-foreground font-medium">EA</span>,{" "}
                 <span className="text-foreground font-medium">Ubisoft</span>,{" "}
-                <span className="text-foreground font-medium">Capcom</span> and
+                <span className="text-foreground font-medium">Capcom</span>, and
                 hundreds more.
               </p>
             </div>
@@ -133,12 +137,13 @@ export default function AboutPage() {
           <div>
             <p className="eyebrow text-muted">Our mission</p>
             <h2 className="h1 mt-4">
-              We make creator marketing decisions easier to make and harder to
-              get wrong.
+              Cut through the noise of the online landscape, helping businesses
+              to understand what communities really want.
             </h2>
             <p className="body-lg text-muted mx-auto mt-6 max-w-2xl">
-              From the first creator search to the final report. We&apos;re
-              here to make sure the data is always there when you need it.
+              It&apos;s the question behind every dataset we tap into and every
+              line of code we write: Is this making things easier to understand
+              for the people who use it?
             </p>
           </div>
         </Reveal>
@@ -166,8 +171,8 @@ export default function AboutPage() {
               <p className="eyebrow text-muted">Values</p>
               <h2 className="h2 mt-4">What drives us.</h2>
               <p className="body-lg text-muted mt-5">
-                An ambitious team with a shared mission — here&apos;s what
-                keeps us aligned.
+                What we build reflects who we are. Here&apos;s what we stand
+                for, inside the team and out.
               </p>
             </div>
           </Reveal>

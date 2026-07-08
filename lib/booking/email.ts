@@ -73,8 +73,9 @@ function salesHtml(
       ${row("Name", h(r.name))}
       ${row("Email", `<a href="mailto:${h(r.email)}" style="color:#0a0a0a">${h(r.email)}</a>`)}
       ${row("Job title", h(r.jobTitle))}
-      ${row("Company", `<a href="${h(r.companyWebsite)}" style="color:#0a0a0a">${h(r.companyWebsite)}</a>`)}
-      ${r.notes ? row("Notes", h(r.notes)) : ""}
+      ${row("Company", `${h(r.company)} — <a href="${h(r.companyWebsite)}" style="color:#0a0a0a">${h(r.companyWebsite)}</a>`)}
+      ${row("Wants to cover", h(r.topic))}
+      ${row("Heard about us", h(r.referralSource) + (r.referralOther ? ` — ${h(r.referralOther)}` : ""))}
       ${row("Request ID", `<code style="font-size:12px;color:#6b7280">${h(ctx.requestId)}</code>`)}
     </table>
     <p style="font-size:12px;color:#9ca3af;margin:24px 0 0">A proposed-time .ics is attached. Reply to this email to reach ${h(r.name)} directly.</p>
@@ -106,7 +107,7 @@ export async function sendDemoRequestEmails(
     end: ctx.slotEnd,
     dtstamp: ctx.now,
     summary: `Demo with ${ctx.request.name} — ${ctx.request.companyHost}`,
-    description: ctx.request.notes ?? undefined,
+    description: `Wants to cover: ${ctx.request.topic}`,
     organizerEmail: notifyTo,
     organizerName: "Hatchet",
     attendeeEmail: ctx.request.email,

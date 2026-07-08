@@ -47,7 +47,7 @@ export function Footer() {
               className="focus-visible:ring-ring/50 -ml-1 inline-flex min-h-11 items-center self-start rounded-lg outline-none focus-visible:ring-3"
               href="/"
             >
-              <BrandLogo alt="" className="h-[3.75rem]" variant="white" />
+              <BrandLogo alt="" className="h-16" variant="white" />
             </Link>
             <p className="body text-muted mt-4 max-w-md">
               Creator Marketing Analytics built for gaming: Creator discovery,

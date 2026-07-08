@@ -27,7 +27,7 @@ const defaultStats: StatItem[] = [
     value: 20,
     suffix: "+",
     description:
-      "Twitch, YouTube, Kick, and more — major and emerging platforms in one normalized view.",
+      "Twitch, YouTube, Kick, and more: major and emerging platforms in one normalized view.",
     sparkline: [9, 11, 12, 14, 16, 18, 21],
   },
   {
@@ -43,7 +43,7 @@ const defaultStats: StatItem[] = [
     value: 1,
     suffix: "-min",
     description:
-      "Every stream measured at one-minute resolution — the industry's highest standard.",
+      "Every stream measured at one-minute resolution, the industry's highest standard.",
     sparkline: [12, 14, 13, 15, 16, 18, 20],
   },
   {

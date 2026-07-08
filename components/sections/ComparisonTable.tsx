@@ -26,12 +26,12 @@ const COMPARISON_ROWS: ComparisonRow[] = [
   {
     title: "API-sourced, verified viewership data",
     description:
-      "Real numbers from the source — not algorithmic estimates or browser-extension samples.",
+      "Real numbers from the source, not algorithmic estimates or browser-extension samples.",
   },
   {
     title: "Gaming-native intelligence",
     description:
-      "Twitch drops, game launch benchmarking, Hours Watched — the metrics that matter for you.",
+      "Twitch drops, game launch benchmarking, Hours Watched: the metrics that matter for you.",
   },
   {
     title: "10+ years of historical streaming data",
@@ -88,7 +88,7 @@ export function ComparisonTable({ className }: { className?: string }) {
             <p className="body-lg text-muted mt-3">
               Most tools give you data or execution, gaming or social, a
               snapshot or a workflow. Hatchet is the only platform that covers
-              the full picture — built for gaming from day one.
+              the full picture, built for gaming from day one.
             </p>
           </div>
         </Reveal>

@@ -14,7 +14,7 @@ export const verticals = [
       "Explain sponsorship choices with audience and community evidence.",
     ],
     proof:
-      "Hatchet covers the full partnership workflow — discover creators, manage contracts and payments, and attribute results — on one trusted read of hours watched, creator momentum, and chat movement.",
+      "Hatchet covers the full partnership workflow: discover creators, manage contracts and payments, and attribute results. All on one trusted read of hours watched, creator momentum, and chat movement.",
   },
   {
     slug: "games-publishers",
@@ -110,7 +110,7 @@ export const proofStats = [
     value: 20,
     suffix: "+",
     description:
-      "Twitch, YouTube, Kick, and more — major and emerging platforms in one normalized view.",
+      "Twitch, YouTube, Kick, and more: major and emerging platforms in one normalized view.",
     sparkline: [9, 11, 12, 14, 16, 18, 21],
   },
   {
@@ -126,7 +126,7 @@ export const proofStats = [
     value: 1,
     suffix: "-min",
     description:
-      "Every stream measured at one-minute resolution — the industry's highest standard.",
+      "Every stream measured at one-minute resolution, the industry's highest standard.",
     sparkline: [12, 14, 13, 15, 16, 18, 20],
   },
   {

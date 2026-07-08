@@ -14,7 +14,6 @@ import {
 import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
 
 import { CreatorLifecycleOrbital } from "@/components/sections/CreatorLifecycleOrbital";
-import { Sparkline } from "@/components/signal/Sparkline";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
 import { cn } from "@/lib/utils";
@@ -41,7 +40,7 @@ const POINTS: Point[] = [
     eyebrow: "Platform coverage",
     headline: "Name a platform. We probably track it.",
     tagline: "Where gaming lives, Hatchet is already there.",
-    body: "Twitch, YouTube, TikTok, Instagram, X and 25+ more. Streaming and social in one view — no stitching, no gaps. Every platform your audience is on, tracked and verified.",
+    body: "Twitch, YouTube, TikTok, Instagram, X and 25+ more. Streaming and social in one view. No stitching, no gaps. Every platform your audience is on, tracked and verified.",
     visual: { kind: "platforms" },
   },
   {
@@ -49,7 +48,7 @@ const POINTS: Point[] = [
     eyebrow: "Verified data, longest history",
     headline: "10+ years of data. Zero tolerance for fake.",
     tagline: "Every campaign decision backed by a real number.",
-    body: "The deepest verified dataset in gaming — plus fake audience and suspicious channel detection built in.",
+    body: "The deepest verified dataset in gaming, plus fake audience and suspicious channel detection built in.",
     visual: { kind: "history" },
   },
   {
@@ -330,54 +329,98 @@ function PlatformExplorer() {
 
 function HistoryVisual() {
   return (
-    <VisualCard>
-      <StatLine label="years of history" value="10+" />
-      <Sparkline className="mt-5" data={[3, 4, 4, 5, 6, 7, 8, 10]} />
-      <ul className="mt-5 flex flex-wrap gap-2">
-        {["Fake audience detection", "Suspicious channel flags"].map((item) => (
-          <li
-            className="border-border bg-elevated/60 text-foreground inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-medium"
-            key={item}
-          >
-            <ShieldCheck aria-hidden="true" className="text-brand size-3.5" />
-            {item}
-          </li>
-        ))}
-      </ul>
-    </VisualCard>
+    <div className="border-border bg-card/70 cta-panel-frame overflow-hidden rounded-2xl border">
+      <Image
+        alt="Hatchet creator profile dashboard showing verified follower counts, engagement, and growth history across platforms"
+        className="h-auto w-full"
+        height={1170}
+        sizes="(min-width: 1024px) 26rem, 100vw"
+        src="/images/product-mockup.png"
+        width={2048}
+      />
+      <div className="border-border/60 flex items-center gap-2 border-t px-5 py-3.5">
+        <ShieldCheck aria-hidden="true" className="text-brand size-3.5 shrink-0" />
+        <p className="text-foreground text-xs font-medium">
+          Verified creator data, refreshed daily
+        </p>
+      </div>
+    </div>
   );
 }
 
 // ── 03 · Industry leader ───────────────────────────────────────────────────
 
-const TRUST_LOGOS: { name: string; src: string }[] = [
-  { name: "Riot Games", src: "/images/logos/riot-games.png" },
-  { name: "EA", src: "/images/logos/ea.png" },
-  { name: "Blizzard", src: "/images/logos/blizzard.png" },
-  { name: "PlayStation", src: "/images/logos/sony.png" },
-  { name: "BLAST", src: "/images/logos/BLAST.png" },
-  { name: "Kings League", src: "/images/logos/Kingsleague_logo.png" },
+// `box` sizes each logo's slot. Riot stays the baseline size; everything
+// else is larger, with EA and Activision Blizzard largest of all.
+const TRUST_LOGOS: { name: string; src: string; box: string }[] = [
+  {
+    name: "Riot Games",
+    src: "/images/logos/riot-games.png",
+    box: "h-12 w-32 sm:h-14 sm:w-36",
+  },
+  {
+    name: "EA",
+    src: "/images/logos/ea.png",
+    box: "h-20 w-44 sm:h-24 sm:w-52",
+  },
+  {
+    name: "Blizzard",
+    src: "/images/logos/blizzard.png",
+    box: "h-20 w-44 sm:h-24 sm:w-52",
+  },
+  {
+    name: "PlayStation",
+    src: "/images/logos/sony.png",
+    box: "h-16 w-40 sm:h-20 sm:w-44",
+  },
+  {
+    name: "BLAST",
+    src: "/images/logos/BLAST.png",
+    box: "h-16 w-40 sm:h-20 sm:w-44",
+  },
+  {
+    name: "Kings League",
+    src: "/images/logos/Kingsleague_logo.png",
+    box: "h-16 w-40 sm:h-20 sm:w-44",
+  },
 ];
+
+function TrustLogosTrack({ ariaHidden = false }: { ariaHidden?: boolean }) {
+  return (
+    <div
+      aria-hidden={ariaHidden || undefined}
+      className="flex shrink-0 items-center"
+    >
+      {TRUST_LOGOS.map(({ name, src, box }) => (
+        <div
+          className="flex shrink-0 items-center justify-center px-4 sm:px-5"
+          key={`${ariaHidden ? "dup-" : ""}${name}`}
+        >
+          <span className={cn("relative block", box)}>
+            <Image
+              alt={`${name} logo`}
+              className="object-contain"
+              fill
+              sizes="220px"
+              src={src}
+            />
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function TrustLogosVisual() {
   return (
     <VisualCard>
       <p className="eyebrow text-muted text-[0.65rem]">Trusted by</p>
-      <ul className="mt-5 grid grid-cols-2 items-center gap-x-8 gap-y-7 sm:grid-cols-3">
-        {TRUST_LOGOS.map(({ name, src }) => (
-          <li className="flex items-center justify-center" key={name}>
-            <span className="relative block h-8 w-full">
-              <Image
-                alt={`${name} logo`}
-                className="object-contain"
-                fill
-                sizes="140px"
-                src={src}
-              />
-            </span>
-          </li>
-        ))}
-      </ul>
+      <div className="logo-marquee-mask group mt-6 -mx-6 overflow-hidden">
+        <div className="animate-logo-marquee flex w-max group-hover:[animation-play-state:paused]">
+          <TrustLogosTrack />
+          <TrustLogosTrack ariaHidden />
+        </div>
+      </div>
     </VisualCard>
   );
 }

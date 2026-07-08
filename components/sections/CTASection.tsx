@@ -42,7 +42,7 @@ type CTASectionProps = CTAContentProps & {
 // PROVISIONAL copy — pending content-team finalization (see PR summary).
 const DEFAULT_TITLE = "Turn live signal into decisions.";
 const DEFAULT_BODY =
-  "Creator, audience, and campaign intelligence for gaming teams — in one place.";
+  "Creator, audience, and campaign intelligence for gaming teams, in one place.";
 
 function ProofBlock({ proof, tone }: { proof: CTAProof; tone: CTATone }) {
   const isLight = tone === "light";

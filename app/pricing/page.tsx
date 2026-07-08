@@ -124,7 +124,7 @@ export default function PricingPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Pricing"
-        subtitle="Hatchet pricing is built around the scope of the signal you need — the markets and platforms you track, the reporting you run, and the teams you support. Start with a conversation and we will shape it to fit."
+        subtitle="Hatchet pricing is built around the scope of the signal you need: the markets and platforms you track, the reporting you run, and the teams you support. Start with a conversation and we will shape it to fit."
         title="Pricing shaped around your market questions."
       />
 

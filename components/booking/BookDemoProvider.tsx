@@ -9,8 +9,11 @@ import {
   useState,
 } from "react";
 
+import { X } from "@phosphor-icons/react/ssr";
+
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogTitle,
@@ -97,15 +100,29 @@ export function BookDemoProvider({ children }: { children: React.ReactNode }) {
     <BookDemoContext.Provider value={value}>
       {children}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="surface-paper max-h-[88vh] max-w-2xl overflow-y-auto">
+        <DialogContent
+          showCloseButton={false}
+          className="block w-[min(960px,calc(100vw-2rem))] max-w-none overflow-hidden p-0"
+        >
           {/* Visible copy lives inside <BookDemo>; these satisfy Radix's a11y
               requirement for a labelled dialog without duplicating the UI. */}
           <DialogTitle className="sr-only">Book a demo</DialogTitle>
           <DialogDescription className="sr-only">
-            Request a 30-minute demo. Pick a time that works for you and
-            we&apos;ll email you to confirm.
+            Book a 30-minute demo. Pick a time that works and we&apos;ll walk
+            through Hatchet live.
           </DialogDescription>
           <BookDemo onClose={close} />
+          {/* Custom close button: it overlaps the dark sidebar on mobile and the
+              light panel on desktop, so its color flips at the breakpoint. */}
+          <DialogClose asChild>
+            <button
+              type="button"
+              className="absolute top-3.5 right-3.5 z-10 inline-flex size-[32px] items-center justify-center rounded-md text-white/70 transition-colors hover:bg-white/10 hover:text-white md:text-black/40 md:hover:bg-black/5 md:hover:text-black"
+            >
+              <X className="size-[16px]" />
+              <span className="sr-only">Close</span>
+            </button>
+          </DialogClose>
         </DialogContent>
       </Dialog>
     </BookDemoContext.Provider>

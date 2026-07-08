@@ -42,7 +42,8 @@ function partMap(
   return out;
 }
 
-function dayKey(d: Date, tz: string): string {
+/** Stable YYYY-MM-DD key for an instant, read in `tz`. */
+export function dayKey(d: Date, tz: string): string {
   const p = partMap(d, {
     timeZone: tz,
     year: "numeric",
@@ -61,11 +62,50 @@ export function dayLabel(d: Date, tz: string, locale: string): string {
   }).format(d);
 }
 
-export function timeLabel(d: Date, tz: string, locale: string): string {
+export function timeLabel(
+  d: Date,
+  tz: string,
+  locale: string,
+  hour12 = true,
+): string {
+  const label = new Intl.DateTimeFormat(locale, {
+    timeZone: tz,
+    hour: hour12 ? "numeric" : "2-digit",
+    minute: "2-digit",
+    hour12,
+  }).format(d);
+  // "9:00 AM" → "9:00am" to match the compact widget style.
+  return hour12 ? label.replace(/\s/g, "").toLowerCase() : label;
+}
+
+/**
+ * Compact time range, e.g. "9:00 – 9:30am" (shared am/pm collapses onto the
+ * end time) or "09:00 – 09:30" in 24h mode.
+ */
+export function rangeLabel(
+  start: Date,
+  end: Date,
+  tz: string,
+  locale: string,
+  hour12 = true,
+): string {
+  let a = timeLabel(start, tz, locale, hour12);
+  const b = timeLabel(end, tz, locale, hour12);
+  if (hour12) {
+    const suffix = a.slice(-2);
+    if (suffix === b.slice(-2)) a = a.slice(0, -2);
+  }
+  return `${a} – ${b}`;
+}
+
+/** Full date for the sidebar summary, e.g. "Wednesday, July 8, 2026". */
+export function dateLabel(d: Date, tz: string, locale: string): string {
   return new Intl.DateTimeFormat(locale, {
     timeZone: tz,
-    hour: "numeric",
-    minute: "2-digit",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
   }).format(d);
 }
 

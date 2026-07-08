@@ -42,7 +42,7 @@ const rawSolutions = [
     slug: "discovery",
     name: "Discovery",
     eyebrow: "Find & Verify",
-    title: "Find the right creators — and verify them before you commit.",
+    title: "Find the right creators and verify them before you commit.",
     subtitle:
       "Describe the creator you need and get a match. Hatchet's AI search surfaces the right channels, then scores audience quality so you know who is real before a dollar moves.",
     summary:
@@ -80,7 +80,7 @@ const rawSolutions = [
       {
         title: "Shortlist to roster",
         description:
-          "Move verified creators straight into outreach and your roster — no spreadsheets, no copy-paste between tools.",
+          "Move verified creators straight into outreach and your roster. No spreadsheets, no copy-paste between tools.",
       },
     ],
     why: [
@@ -111,7 +111,7 @@ const rawSolutions = [
     subtitle:
       "Measure live viewership, esports, and social performance side by side. Hatchet unifies cross-platform signal so your team reads the market from one place instead of stitching exports.",
     summary:
-      "Track real-time and historical performance across streaming and social — viewership, esports, competitors, and audience — in one workspace.",
+      "Track real-time and historical performance across streaming and social: viewership, esports, competitors, and audience, all in one workspace.",
     bodyNote:
       "Intelligence draws on minute-level data going back to 2016 across 20+ platforms, so every read is grounded in the same source the rest of your team uses.",
     primaryCta: { label: "Book a demo", href: siteConfig.bookDemoUrl },
@@ -174,7 +174,7 @@ const rawSolutions = [
     eyebrow: "Execute",
     title: "Run every creator relationship end to end.",
     subtitle:
-      "My Creators is your roster and CRM in one. Manage outreach, contracts, payments, and deliverables for every creator and campaign — no spreadsheets, with attribution built in.",
+      "My Creators is your roster and CRM in one. Manage outreach, contracts, payments, and deliverables for every creator and campaign. No spreadsheets, with attribution built in.",
     summary:
       "Manage your creator roster and campaigns end to end: outreach, contracts, payments, deliverables, and conversion-level attribution.",
     bodyNote:
@@ -185,7 +185,7 @@ const rawSolutions = [
       {
         title: "My Creators roster and CRM",
         description:
-          "Keep every creator relationship in one roster — contacts, status, history, and notes in a single place. {{VERIFY}}",
+          "Keep every creator relationship in one roster: contacts, status, history, and notes in a single place. {{VERIFY}}",
       },
       {
         title: "End-to-end campaign management",
@@ -241,7 +241,7 @@ const rawSolutions = [
     subtitle:
       "Turn live signal into ready-to-use readouts: EMV, engagement, and per-creator breakdowns in a campaigns dashboard, plus analyst-built custom reports and clean exports.",
     summary:
-      "Report on campaigns with EMV, engagement, and per-creator breakdowns — self-serve in the dashboard or analyst-built for strategic decisions.",
+      "Report on campaigns with EMV, engagement, and per-creator breakdowns, self-serve in the dashboard or analyst-built for strategic decisions.",
     bodyNote:
       "Reports can be delivered as PDFs, inside your Hatchet dashboard, or pushed to your stack via API, with first-party data connected for sharper attribution.",
     primaryCta: { label: "Get a custom quote", href: siteConfig.bookDemoUrl },
