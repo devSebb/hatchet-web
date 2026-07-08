@@ -20,7 +20,7 @@ export function FooterNewsletter() {
   }
 
   return (
-    <div className="border-brand/25 bg-surface/40 cta-panel-frame relative flex h-full w-full max-w-lg flex-col justify-center gap-2 overflow-hidden rounded-2xl border p-6 backdrop-blur-sm sm:p-7">
+    <div className="border-brand/25 bg-surface/40 cta-panel-frame relative flex h-full w-full flex-col justify-center gap-2 overflow-hidden rounded-2xl border p-6 backdrop-blur-sm sm:p-7">
       {/* Brand-aware glow so the card reads as part of the brand system. */}
       <div
         aria-hidden="true"

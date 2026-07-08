@@ -40,18 +40,19 @@ export function Footer() {
 
       {/* Band A — brand + newsletter */}
       <Reveal>
-        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 pt-8 pb-6 sm:px-6 lg:grid-cols-2 lg:items-stretch lg:px-8 lg:pt-10">
-          <div className="flex flex-col justify-between">
+        <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 pt-8 pb-6 sm:px-6 lg:grid-cols-[46fr_54fr] lg:items-stretch lg:px-8 lg:pt-10">
+          <div className="flex flex-col">
             <Link
               aria-label="Hatchet home"
               className="focus-visible:ring-ring/50 -ml-1 inline-flex min-h-11 items-center self-start rounded-lg outline-none focus-visible:ring-3"
               href="/"
             >
-              <BrandLogo alt="" className="h-16" variant="white" />
+              <BrandLogo alt="" className="h-[3.75rem]" variant="white" />
             </Link>
-            <p className="body text-muted mt-2 max-w-[300px]">
-              Live-streaming, gaming, esports, creator, press, and community
-              signals for teams that need market intelligence.
+            <p className="body text-muted mt-4 max-w-md">
+              Creator Marketing Analytics built for gaming: Creator discovery,
+              campaign tracking, and ROI measurement across every social
+              network.
             </p>
           </div>
 
