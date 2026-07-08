@@ -218,7 +218,7 @@ function WhyHatchet() {
                     {`0${index + 1}`}
                   </span>
                   <span
-                    className="shadow-glow-brand flex items-center justify-center rounded-xl p-3 text-white transition-transform duration-(--dur-base) group-hover:-translate-y-0.5"
+                    className="shadow-glow-brand flex items-center justify-center rounded-xl p-2 text-white transition-transform duration-(--dur-base) group-hover:-translate-y-0.5"
                     style={{
                       // All-red gradient (no brand orange), matching the data-card
                       // assets. Bright red #e23c42 stands in for the light end.
