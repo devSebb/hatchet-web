@@ -38,7 +38,7 @@ const COMPARISON_ROWS: ComparisonRow[] = [
     description: "Real benchmarks for real budget conversations.",
   },
   {
-    title: "55M+ creators across 32 platforms",
+    title: "50M+ creators across 32 platforms",
     description: "Live streaming and social in one unified view.",
   },
   {
@@ -86,9 +86,9 @@ export function ComparisonTable({ className }: { className?: string }) {
             <p className="eyebrow text-muted">Competitor comparison</p>
             <h2 className="h1 mt-4">The only platform that does it all.</h2>
             <p className="body-lg text-muted mt-3">
-              Most tools give you data or execution, gaming or social, a
-              snapshot or a workflow. Hatchet is the only platform that covers
-              the full picture, built for gaming from day one.
+              Hatchet is multi-purpose: no need to choose when you can have
+              everything. Data AND execution. Socials AND streaming. Gaming
+              AND lifestyle.
             </p>
           </div>
         </Reveal>

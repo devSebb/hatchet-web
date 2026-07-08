@@ -39,19 +39,16 @@ export function generateMetadata(): Metadata {
 const pillars = [
   {
     image: "/images/content/data+execution.png",
-    kicker: "Data + execution",
     title: "One Platform, Full Lifecycle",
     body: "Find creators. Run campaigns. Prove ROI. Other tools make you choose between data and execution, but Hatchet gives you both, all in one place, from first search to final report.",
   },
   {
     image: "/images/content/verified_precision.png",
-    kicker: "Verified precision",
     title: "The Data Nobody Else Has",
     body: "Ten years of verified data from streaming and social, across 30+ platforms: Every number is real and confirmed. No estimates, no fake audiences, no shortcuts.",
   },
   {
     image: "/images/content/Native.png",
-    kicker: "Native, not retrofitted",
     title: "Built for Gaming from Day One",
     body: "Hatchet wasn't retrofitted for gaming. It was built for it. That means every feature, every data point, and every workflow was designed around how gaming campaigns actually run.",
   },
@@ -170,8 +167,7 @@ function Pillars() {
                     width={1254}
                   />
                 </div>
-                <p className="eyebrow text-brand mt-10">{pillar.kicker}</p>
-                <h3 className="font-display mt-2 text-2xl font-bold tracking-[-0.01em] sm:text-3xl">
+                <h3 className="font-display mt-10 text-2xl font-bold tracking-[-0.01em] sm:text-3xl">
                   {pillar.title}
                 </h3>
                 <p className="body text-muted mt-3">{pillar.body}</p>

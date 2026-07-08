@@ -29,7 +29,6 @@ type Point = {
   id: string;
   eyebrow: string;
   headline: string;
-  tagline: string;
   body: string;
   visual: PointVisual;
 };
@@ -38,41 +37,36 @@ const POINTS: Point[] = [
   {
     id: "01",
     eyebrow: "Platform coverage",
-    headline: "Name a platform. We probably track it.",
-    tagline: "Where gaming lives, Hatchet is already there.",
-    body: "Twitch, YouTube, TikTok, Instagram, X and 25+ more. Streaming and social in one view. No stitching, no gaps. Every platform your audience is on, tracked and verified.",
+    headline: "Name a Platform, Any Platform...",
+    body: "Twitch, YouTube, TikTok, Instagram, X, and many more. That's socials and streaming all connected without a single gap in coverage.",
     visual: { kind: "platforms" },
   },
   {
     id: "02",
     eyebrow: "Verified data, longest history",
-    headline: "10+ years of data. Zero tolerance for fake.",
-    tagline: "Every campaign decision backed by a real number.",
-    body: "The deepest verified dataset in gaming, plus fake audience and suspicious channel detection built in.",
+    headline: "Solid bedrock of vetted viewership over 10+ years.",
+    body: "Build your benchmarks based on real data. Hatchet flags fake and suspicious channels so you can safely navigate past inflated audiences and botted viewership.",
     visual: { kind: "history" },
   },
   {
     id: "03",
-    eyebrow: "Industry leader",
-    headline: "The teams running gaming trust Hatchet.",
-    tagline: "Not just used by the industry, built for it.",
-    body: "Riot, EA, Ubisoft, Capcom and hundreds more use Hatchet to make every campaign decision with confidence.",
+    eyebrow: "Experience with global gaming brands",
+    headline: "The teams running gaming depend on Hatchet's guidance.",
+    body: "Riot, EA, Ubisoft, Capcom and dozens more use Hatchet's insights to make campaign decisions with confidence, from game launches to esports tournaments.",
     visual: { kind: "logos" },
   },
   {
     id: "04",
     eyebrow: "Stay ahead of the industry",
-    headline: "Always know what's happening in gaming.",
-    tagline: "Never get caught off guard.",
-    body: "Access analyst-written reports, trend data, and market intelligence so you always know what your competitors are doing before they announce it.",
+    headline: "Get the inside track on emerging trends in gaming & online culture.",
+    body: "Analyst-written reports, expert insights, and market intelligence parse public sentiment so you can act before competitors.",
     visual: { kind: "intelligence" },
   },
   {
     id: "05",
     eyebrow: "One platform, built for you",
-    headline: "Everything your team needs. Nothing it doesn't.",
-    tagline: "Tailored to your workflow, not the other way around.",
-    body: "Discovery, execution, reporting. Find the creator, run the campaign, prove the ROI. Not a generic tool you have to bend to fit.",
+    headline: "Everything your team needs in one place.",
+    body: "Find, analyze, execute, report: Do it all from a single, customized space that fits seamlessly into your style and workflow.",
     visual: { kind: "lifecycle" },
   },
 ];
@@ -529,10 +523,7 @@ export function WhyHatchetPoints({ className }: { className?: string }) {
                       )}
                     >
                       <div className="max-w-xl">
-                        <p className="text-muted text-sm italic">
-                          {point.tagline}
-                        </p>
-                        <p className="body text-foreground/90 mt-3">
+                        <p className="body text-foreground/90">
                           {point.body}
                         </p>
                       </div>
