@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  ArrowRight,
-  CalendarCheck,
-  ChatCircleDots,
-  LinkedinLogo,
-} from "@phosphor-icons/react/ssr";
+import { LinkedinLogo } from "@phosphor-icons/react/ssr";
 
+import { Calendar, ChatBubble } from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { ContactForm } from "@/components/sections/ContactForm";
@@ -80,15 +76,15 @@ export default function ContactPage() {
         >
           {/* Book a Demo — primary */}
           <article className="border-brand/30 bg-card ring-brand/10 flex h-full flex-col rounded-2xl border p-7 shadow-sm ring-1">
-            <span className="bg-brand/10 text-brand inline-flex size-11 items-center justify-center rounded-xl">
-              <CalendarCheck aria-hidden="true" className="size-5" />
+            <span className="bg-accent ring-border/60 inline-flex size-[84px] items-center justify-center rounded-2xl ring-1 ring-inset">
+              <Calendar aria-hidden="true" className="size-[60px]" />
             </span>
-            <h2 className="h3 mt-5">Book a demo</h2>
-            <p className="body text-muted mt-3 grow">
+            <h2 className="h3 mt-4">Book a demo</h2>
+            <p className="body text-muted mt-2 grow">
               30 minutes. We&apos;ll show you exactly what Hatchet can do for
               your campaign.
             </p>
-            <div className="mt-6">
+            <div className="mt-4">
               <Button asChild>
                 <a
                   href={siteConfig.bookDemoUrl}
@@ -96,7 +92,6 @@ export default function ContactPage() {
                   target="_blank"
                 >
                   Book a demo
-                  <ArrowRight aria-hidden="true" />
                 </a>
               </Button>
             </div>
@@ -104,19 +99,20 @@ export default function ContactPage() {
 
           {/* Send Us a Message — secondary, scrolls to the inline form */}
           <article className="border-border bg-card flex h-full flex-col rounded-2xl border p-7 shadow-sm">
-            <span className="bg-elevated text-foreground inline-flex size-11 items-center justify-center rounded-xl">
-              <ChatCircleDots aria-hidden="true" className="size-5" />
+            <span className="bg-accent ring-border/60 inline-flex size-[84px] items-center justify-center rounded-2xl ring-1 ring-inset">
+              <ChatBubble aria-hidden="true" className="size-[60px]" />
             </span>
-            <h2 className="h3 mt-5">Send us a message</h2>
-            <p className="body text-muted mt-3 grow">
+            <h2 className="h3 mt-4">Send us a message</h2>
+            <p className="body text-muted mt-2 grow">
               Any doubt? Drop us a message and we&apos;ll get back to you.
             </p>
-            <div className="mt-6">
-              <Button asChild variant="secondary">
-                <Link href="#contact-form">
-                  Send us a message
-                  <ArrowRight aria-hidden="true" />
-                </Link>
+            <div className="mt-4">
+              <Button
+                asChild
+                className="border-border bg-white text-[#022658] transition-all hover:-translate-y-0.5 hover:border-brand/50 hover:text-brand hover:shadow-[0_0_0_1px_color-mix(in_oklch,var(--brand)_20%,transparent),0_10px_28px_-8px_color-mix(in_oklch,var(--brand)_40%,transparent)]"
+                variant="secondary"
+              >
+                <Link href="#contact-form">Send us a message</Link>
               </Button>
             </div>
           </article>

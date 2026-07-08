@@ -458,6 +458,32 @@
     }
   }
 
+  /* CircuitDivider signal pulse: travels the run, then the trace idles quiet
+     for the rest of the cycle. Stays hidden entirely under reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .circuit-divider-pulse {
+      animation: circuit-divider-pulse 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+  }
+
+  @keyframes circuit-divider-pulse {
+    0% {
+      offset-distance: 0%;
+      opacity: 0;
+    }
+    4% {
+      opacity: 1;
+    }
+    30% {
+      opacity: 1;
+    }
+    34%,
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+    }
+  }
+
   /* Light-from-above hairline + crisp inner frame for the panel. */
   .cta-panel-frame {
     box-shadow:

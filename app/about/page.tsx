@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 
+import {
+  ChartLine,
+  type IsoIcon,
+  RocketLaunch,
+  SealCheck,
+  ShareNetwork,
+  Users,
+} from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
@@ -18,30 +26,30 @@ export function generateMetadata(): Metadata {
   });
 }
 
-const storyStats = [
-  { value: "2016", label: "Founded" },
-  { value: "Barcelona", label: "Where it started" },
-  { value: "10+ yrs", label: "Of live data" },
-  { value: "55M+", label: "Creators tracked" },
-] as const;
+const storyStats: { value: string; label: string; Icon: IsoIcon }[] = [
+  { value: "2016", label: "Founded", Icon: RocketLaunch },
+  { value: "Barcelona", label: "Where it started", Icon: ShareNetwork },
+  { value: "10+ yrs", label: "Of live data", Icon: ChartLine },
+  { value: "55M+", label: "Creators tracked", Icon: Users },
+];
 
-const values = [
+const values: { label: string; body: string; Icon: IsoIcon }[] = [
   {
-    number: "01",
     label: "We Thrive As A Community, For Communities",
     body: "We're only as good as the team behind the product. We invest in each other's growth, protect work-life balance, and build a place where good ideas get heard.",
+    Icon: Users,
   },
   {
-    number: "02",
     label: "Data Without Compromise",
     body: "We're obsessed with accuracy. From methodology to delivery, we build the most reliable data in gaming, because one wrong number costs real decisions.",
+    Icon: SealCheck,
   },
   {
-    number: "03",
     label: "Client-Focused, Always",
     body: "We take pride in solving real problems for real teams. That means listening first, adapting fast, and building something that fits how people work, not the other way around.",
+    Icon: ShareNetwork,
   },
-] as const;
+];
 
 export default function AboutPage() {
   return (
@@ -116,11 +124,13 @@ export default function AboutPage() {
           <Stagger className="grid grid-cols-2 gap-4" step={0.09}>
             {storyStats.map((stat) => (
               <div
-                className="border-border bg-card rounded-xl border p-5 shadow-sm"
+                className="border-border bg-card flex flex-col rounded-xl border p-5 shadow-sm transition-shadow duration-300 hover:shadow-md"
                 key={stat.label}
               >
-                <div className="bg-signal mb-5 h-1 w-10 rounded-full" />
-                <p className="font-display text-foreground text-2xl font-semibold tracking-tight sm:text-3xl">
+                <span className="bg-accent ring-border/60 flex size-[72px] items-center justify-center rounded-2xl ring-1 ring-inset">
+                  <stat.Icon aria-hidden="true" className="size-[52px]" />
+                </span>
+                <p className="font-display text-foreground mt-5 text-2xl font-semibold tracking-tight sm:text-3xl">
                   {stat.value}
                 </p>
                 <p className="small text-muted mt-2">{stat.label}</p>
@@ -186,13 +196,12 @@ export default function AboutPage() {
                 className="border-border bg-card h-full rounded-xl border p-6 shadow-sm"
                 key={value.label}
               >
-                <div className="flex items-center gap-4">
-                  <span className="font-mono text-muted text-sm font-semibold tabular-nums">
-                    {value.number}
+                <div className="flex items-start gap-4">
+                  <span className="bg-accent ring-border/60 flex size-[52px] shrink-0 items-center justify-center rounded-xl ring-1 ring-inset">
+                    <value.Icon aria-hidden="true" className="size-[36px]" />
                   </span>
-                  <div className="bg-signal h-1 w-10 rounded-full" />
+                  <h3 className="h3">{value.label}</h3>
                 </div>
-                <h3 className="h3 mt-6">{value.label}</h3>
                 <p className="body text-muted mt-4">{value.body}</p>
               </article>
             ))}

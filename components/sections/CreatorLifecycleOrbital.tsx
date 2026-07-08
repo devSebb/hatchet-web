@@ -77,14 +77,14 @@ const AUTO_ADVANCE_MS = 4200;
 //    core centered. The four corners stay empty; the detail card floats in ──
 //    the top-right one without disturbing the layout. ────────────────────────
 const VBW = 160;
-const VBH = 80; // 160/80 = 2/1 → matches the aspect-[2/1] canvas (no distortion)
+const VBH = 100; // 160/100 = 8/5 → matches the aspect-[8/5] canvas (no distortion)
 const CX = 80;
-const CY = 40;
+const CY = 50;
 const CORE_R = 14; // radius the traces stop at + the core glow footprint
 const RX = 56; // horizontal station radius (wide field)
-const RY = 28; // vertical station radius (short field)
+const RY = 38; // vertical station radius (taller field — more air above/below the core)
 const RING_RX = 61; // ring sits just outside the stations
-const RING_RY = 31;
+const RING_RY = 42;
 const DIAG = 0.707;
 const TRACE_BACK = 8; // trace stops this far short of the station
 
@@ -283,7 +283,7 @@ export function CreatorLifecycleOrbital({ className }: { className?: string }) {
     <div className={cn("relative", className)} ref={rootRef}>
       {/* ── Desktop: orbital (~70%) + fixed detail panel on the right ── */}
       <div className="hidden lg:grid lg:grid-cols-[minmax(0,1fr)_23rem] lg:items-center lg:gap-10">
-        <div className="relative aspect-[2/1] w-full">
+        <div className="relative aspect-[8/5] w-full">
           {animateRouting ? (
             <motion.div
               animate={{ rotate: 360 }}

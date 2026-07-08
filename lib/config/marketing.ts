@@ -3,9 +3,9 @@ export const verticals = [
     slug: "brands",
     label: "Brands",
     href: "/who-we-serve/brands",
-    title: "Plan gaming partnerships around live audience movement.",
+    title: "Gaming Is Already Your Audience. Now Prove It.",
     subtitle:
-      "See which creators, games, communities, and moments can carry a brand message before media plans are already fixed.",
+      "Enter gaming with data, not guesswork. See which creators reach your target demo, size the audience overlap before you commit budget, and report results everyone can understand.",
     audience: "Brand, sponsorship, influencer marketing, and media teams",
     jobs: [
       "Find creators whose live audiences match the campaign brief.",

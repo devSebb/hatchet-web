@@ -18,6 +18,7 @@ import {
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { Button } from "@/components/ui/button";
+import { CircuitDivider } from "@/components/sections/CircuitDivider";
 import { CircuitField } from "@/components/sections/CircuitField";
 import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
 import { CTACarousel } from "@/components/sections/CTACarousel";
@@ -38,17 +39,17 @@ export function generateMetadata(): Metadata {
 
 const pillars = [
   {
-    image: "/images/content/data+execution.png",
+    image: "/images/content/pillar_3.png",
     title: "One Platform, Full Lifecycle",
     body: "Find creators. Run campaigns. Prove ROI. Other tools make you choose between data and execution, but Hatchet gives you both, all in one place, from first search to final report.",
   },
   {
-    image: "/images/content/verified_precision.png",
+    image: "/images/content/pillar_2.png",
     title: "The Data Nobody Else Has",
     body: "Ten years of verified data from streaming and social, across 30+ platforms: Every number is real and confirmed. No estimates, no fake audiences, no shortcuts.",
   },
   {
-    image: "/images/content/Native.png",
+    image: "/images/content/pillar_1.png",
     title: "Built for Gaming from Day One",
     body: "Hatchet wasn't retrofitted for gaming. It was built for it. That means every feature, every data point, and every workflow was designed around how gaming campaigns actually run.",
   },
@@ -152,7 +153,7 @@ const testimonials = [
 
 function Pillars() {
   return (
-    <section className="surface-paper bg-background text-foreground px-4 pt-10 pb-20 sm:px-6 lg:px-8 lg:pt-14 lg:pb-28">
+    <section className="surface-paper bg-background text-foreground px-4 pt-20 pb-28 sm:px-6 lg:px-8 lg:pt-28 lg:pb-36">
       <div className="mx-auto w-full max-w-7xl">
         <Stagger className="grid gap-5 lg:grid-cols-3">
           {pillars.map((pillar) => {
@@ -410,6 +411,8 @@ export default function Home() {
         />
       </div>
 
+      <CircuitDivider />
+
       <Pillars />
 
       <CreatorLifecycle />
@@ -417,6 +420,8 @@ export default function Home() {
       <WhyHatchet />
 
       <BuiltForYourTeam />
+
+      <CircuitDivider pulseDelaySeconds={-4.5} />
 
       <div className="surface-paper bg-background text-foreground">
         <TestimonialCarousel
