@@ -22,8 +22,8 @@ export default function CareersPage() {
     <main className="bg-background text-foreground">
       <PageHeader
         eyebrow="Careers"
-        subtitle="We are a small, data-obsessed team building the market intelligence layer for gaming, esports, and live streaming. Explore where you can help shape it."
-        title="Build the market intelligence layer for gaming."
+        subtitle="We hire people who care about getting the data right and want to build the tools gaming's biggest names rely on. If you want your work to count, you're in the right place."
+        title="Join The Team Behind The Most Trusted Creator Data"
       />
 
       <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
