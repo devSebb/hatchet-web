@@ -3,15 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView } from "framer-motion";
+
 import {
   ChartLine,
   FileText,
   FlowArrow,
+  type IsoIcon,
   MagnifyingGlass,
-} from "@phosphor-icons/react/ssr";
-import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
-import { AnimatePresence, motion, useInView } from "framer-motion";
-
+} from "@/components/icons/iso-icons";
 import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import { Button } from "@/components/ui/button";
 import { EASE_OUT, MOTION_DURATION } from "@/lib/motion";
@@ -23,7 +23,7 @@ type Stage = {
   tagline: string;
   ctaLabel: string;
   href: string;
-  Icon: PhosphorIcon;
+  Icon: IsoIcon;
   /** Unit direction from the core (cardinal); scaled by the station radii. */
   dir: { x: number; y: number };
 };
@@ -167,7 +167,7 @@ function StationFacet({
           <Icon
             aria-hidden="true"
             className={cn(
-              "size-4 transition-colors duration-[250ms]",
+              "size-8 transition-colors duration-[250ms]",
               isActive ? "text-brand" : "text-muted",
             )}
           />

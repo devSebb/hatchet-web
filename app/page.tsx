@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "@phosphor-icons/react/ssr";
+
 import {
-  ArrowRight,
   ChartBar,
   Megaphone,
   RocketLaunch,
@@ -13,8 +14,7 @@ import {
   TrendUp,
   Trophy,
   Users,
-} from "@phosphor-icons/react/ssr";
-
+} from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { Button } from "@/components/ui/button";
@@ -218,7 +218,7 @@ function WhyHatchet() {
                     {`0${index + 1}`}
                   </span>
                   <span
-                    className="shadow-glow-brand flex items-center justify-center rounded-xl p-3.5 text-white transition-transform duration-(--dur-base) group-hover:-translate-y-0.5"
+                    className="shadow-glow-brand flex items-center justify-center rounded-xl p-3 text-white transition-transform duration-(--dur-base) group-hover:-translate-y-0.5"
                     style={{
                       // All-red gradient (no brand orange), matching the data-card
                       // assets. Bright red #e23c42 stands in for the light end.
@@ -226,7 +226,7 @@ function WhyHatchet() {
                         "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, #e23c42 100%)",
                     }}
                   >
-                    <Icon aria-hidden="true" className="size-5" />
+                    <Icon aria-hidden="true" className="size-8" />
                   </span>
                 </div>
                 <div className="min-w-0">
@@ -291,7 +291,7 @@ function BuiltForYourTeam() {
                       "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, #e23c42 100%)",
                   }}
                 >
-                  <Icon aria-hidden="true" className="size-6" />
+                  <Icon aria-hidden="true" className="size-8" />
                 </span>
                 <h3 className="font-display mt-6 text-xl font-semibold tracking-[-0.01em]">
                   {useCase.label}

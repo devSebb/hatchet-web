@@ -4,15 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Accordion as AccordionPrimitive } from "radix-ui";
+import { Plus, ShieldCheck } from "@phosphor-icons/react/ssr";
+
 import {
   ChartLine,
   FileText,
-  Plus,
-  ShieldCheck,
+  type IsoIcon,
   TrendUp,
-} from "@phosphor-icons/react/ssr";
-import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
-
+} from "@/components/icons/iso-icons";
 import { CreatorLifecycleOrbital } from "@/components/sections/CreatorLifecycleOrbital";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
@@ -421,7 +420,7 @@ function TrustLogosVisual() {
 
 // ── 04 · Stay ahead of the industry ────────────────────────────────────────
 
-const INTELLIGENCE_ITEMS: { label: string; Icon: PhosphorIcon }[] = [
+const INTELLIGENCE_ITEMS: { label: string; Icon: IsoIcon }[] = [
   { label: "Quarterly industry trend reports", Icon: FileText },
   { label: "Game launch benchmark trackers", Icon: TrendUp },
   { label: "Competitor campaign watch", Icon: ChartLine },
@@ -437,7 +436,7 @@ function IntelligenceVisual() {
             className="border-border bg-elevated/60 flex items-center gap-3 rounded-lg border px-3.5 py-2.5"
             key={label}
           >
-            <Icon aria-hidden="true" className="text-brand size-4 shrink-0" />
+            <Icon aria-hidden="true" className="text-brand size-6 shrink-0" />
             <span className="text-foreground text-sm font-medium">{label}</span>
           </li>
         ))}
