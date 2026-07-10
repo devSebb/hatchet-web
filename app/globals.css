@@ -182,20 +182,24 @@
     var(--hero-mist) 74%,
     var(--paper) 88%
   );
-  /* Compact variant for interior heroes with no dashboard image (e.g. the
-     solutions PageHeader). The header's white text rides the navy top and the
-     trusted-by logo wall (dark text) sits lower with its own top padding, so
-     the navy→white fade can stretch across the long dead zone between them
-     instead of snapping — navy holds through the headline, then eases through
-     the transitional blues and only resolves to white near the logo carousel. */
+  /* Compact variant for interior heroes with no dashboard image (the
+     solutions hero). Navy holds through the headline, CTAs, and stat strip
+     (white copy rides it), then a long transitional-blue band fills the
+     hero's padded tail and only resolves to paper at the wrapper's bottom
+     edge — so the first content section below starts on fully-resolved
+     white with no dead band inside the hero. */
   --hero-gradient-compact: linear-gradient(
     to bottom,
     var(--bg) 0%,
-    var(--bg) 26%,
-    var(--blue-transitional) 38%,
-    var(--hero-steel) 52%,
-    var(--hero-mist) 68%,
-    var(--paper) 84%
+    var(--bg) 28%,
+    color-mix(in srgb, var(--bg) 55%, var(--blue-transitional)) 40%,
+    var(--blue-transitional) 51%,
+    color-mix(in srgb, var(--blue-transitional) 50%, var(--hero-steel)) 59%,
+    var(--hero-steel) 67%,
+    color-mix(in srgb, var(--hero-steel) 50%, var(--hero-mist)) 76%,
+    var(--hero-mist) 86%,
+    color-mix(in srgb, var(--hero-mist) 35%, var(--paper)) 93%,
+    var(--paper) 100%
   );
 
   --white: #ffffff;

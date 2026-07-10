@@ -1,18 +1,28 @@
+import type { ComponentType, SVGProps } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import {
+  ChartLine,
+  FileText,
+  FlowArrow,
+  MagnifyingGlass,
+} from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
-import { LogoWall } from "@/components/sections/LogoWall";
-import { PageHeader } from "@/components/sections/PageHeader";
+import { SolutionVisual } from "@/components/solutions/SolutionVisual";
+import { Button } from "@/components/ui/button";
 import {
   getSolution,
   type ProductSolution,
+  type SolutionFeature,
+  type SolutionHeroIcon,
   solutions,
 } from "@/lib/config/solutions";
 import { createMetadata } from "@/lib/seo";
+import { cn } from "@/lib/utils";
 
 type SolutionPageProps = {
   params: Promise<{
@@ -43,110 +53,198 @@ export async function generateMetadata({
   });
 }
 
-const trustedLogos = [
-  {
-    name: "Riot Games",
-    src: "/images/logos/riot-games.png",
-  },
-  {
-    name: "YouTube",
-    src: "/images/logos/youtube.png",
-  },
-  {
-    name: "Microsoft",
-    src: "/images/logos/microsoft.png",
-  },
-  {
-    name: "NASCAR",
-    src: "/images/logos/nascar.png",
-  },
-  {
-    name: "Activision Blizzard",
-    src: "/images/logos/blizzard.png",
-  },
-  {
-    name: "PlayStation",
-    src: "/images/logos/sony.png",
-  },
-] satisfies { name: string; src?: string }[];
+const heroIcons: Record<
+  SolutionHeroIcon,
+  ComponentType<SVGProps<SVGSVGElement>>
+> = {
+  find: MagnifyingGlass,
+  analyze: ChartLine,
+  execute: FlowArrow,
+  report: FileText,
+};
 
-function CapabilitiesSection({ solution }: { solution: ProductSolution }) {
+function CtaLink({
+  cta,
+  variant,
+}: {
+  cta: NonNullable<ProductSolution["secondaryCta"]>;
+  variant?: "default" | "secondary";
+}) {
   return (
-    <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-      <div className="mx-auto w-full max-w-7xl">
-        <Reveal>
-          <div className="max-w-3xl">
-            <p className="eyebrow text-muted">Capabilities</p>
-            <h2 className="h1 mt-4">
-              What {solution.name.toLowerCase()} helps your team do.
-            </h2>
-            <p className="body-lg text-muted mt-5">{solution.bodyNote}</p>
+    <Button asChild variant={variant}>
+      {cta.external ? (
+        <a href={cta.href} rel="noopener noreferrer" target="_blank">
+          {cta.label}
+        </a>
+      ) : (
+        <Link href={cta.href}>{cta.label}</Link>
+      )}
+    </Button>
+  );
+}
+
+/** Navy-gradient hero following the mockups: stage eyebrow with the route
+ *  path, display title, sub, CTA pair, then a stat strip (or the lifecycle
+ *  icon when the copy doc calls for one). */
+function SolutionHero({ solution }: { solution: ProductSolution }) {
+  const HeroIcon = heroIcons[solution.heroIcon];
+
+  // The tall bottom padding is the canvas for the gradient's blue→white
+  // tail; keep it in sync with --hero-gradient-compact's stops.
+  return (
+    <section className="relative mx-auto w-full max-w-7xl px-4 pt-6 pb-52 sm:px-6 lg:px-8 lg:pt-8 lg:pb-80">
+      <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto]">
+        <div className="max-w-4xl">
+          <p className="eyebrow text-white/70">{solution.eyebrow}</p>
+          <h1 className="display mt-4" style={{ color: "var(--white)" }}>
+            {solution.title}
+          </h1>
+          <p className="body-lg mt-5 max-w-3xl text-white/75">
+            {solution.subtitle}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <CtaLink cta={solution.primaryCta} variant="default" />
+            {solution.secondaryCta ? (
+              <CtaLink cta={solution.secondaryCta} variant="secondary" />
+            ) : null}
           </div>
-        </Reveal>
-
-        <Stagger
-          childClassName="h-full"
-          className="mt-10 grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-3"
-        >
-          {solution.capabilities.map((capability) => (
-            <article
-              className="border-border bg-card hover:border-signal/60 h-full rounded-xl border p-6 shadow-sm transition-[border-color,transform,box-shadow] duration-(--dur-base) hover:-translate-y-1 hover:shadow-md"
-              key={capability.title}
-            >
-              <div className="bg-signal mb-6 h-1 w-10 rounded-full" />
-              <h2 className="h3">{capability.title}</h2>
-              <p className="body text-muted mt-4">{capability.description}</p>
-            </article>
-          ))}
-        </Stagger>
-
-        {solution.slug === "intelligence" ? (
-          <Reveal>
-            <div className="border-border bg-card mt-6 rounded-xl border p-6 shadow-sm">
-              <p className="body text-muted">
-                Looking for access levels?{" "}
-                <Link
-                  className="text-foreground font-semibold underline-offset-4 hover:underline"
-                  href="/pricing"
+          {solution.heroStats ? (
+            <dl className="mt-12 flex flex-wrap gap-x-[40px] gap-y-[20px]">
+              {solution.heroStats.map((stat) => (
+                <div
+                  className="border-signal border-l-2 pl-[14px]"
+                  key={stat.label}
                 >
-                  View pricing options
-                </Link>{" "}
-                instead of sorting tiers on the product page.
-              </p>
-            </div>
-          </Reveal>
+                  <dd className="font-display text-3xl font-bold text-white tabular-nums">
+                    {stat.value}
+                  </dd>
+                  <dt className="eyebrow mt-[4px] text-white/60">
+                    {stat.label}
+                  </dt>
+                </div>
+              ))}
+            </dl>
+          ) : null}
+        </div>
+        {!solution.heroStats ? (
+          <div aria-hidden="true" className="hidden justify-end pr-8 lg:flex">
+            {/* Red under-glow lifts the iso icon off the navy, echoing the
+                lifecycle orbital's treatment. */}
+            <span className="relative z-10 block">
+              <span className="bg-brand/25 absolute inset-4 rounded-full blur-2xl" />
+              <HeroIcon className="relative size-64 drop-shadow-[0_18px_40px_rgba(0,0,0,0.45)]" />
+            </span>
+          </div>
         ) : null}
       </div>
     </section>
   );
 }
 
-function WhySection({ solution }: { solution: ProductSolution }) {
+function FeatureHeader({
+  feature,
+  index,
+}: {
+  feature: SolutionFeature;
+  index: number;
+}) {
   return (
-    <section className="bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-      <div className="mx-auto w-full max-w-7xl">
-        <Reveal>
-          <div className="max-w-3xl">
-            <p className="eyebrow text-muted">Why it works</p>
-            <h2 className="h1 mt-4">
-              Built for teams that need a defensible market read.
-            </h2>
-          </div>
-        </Reveal>
+    <div className="max-w-3xl">
+      <p className="eyebrow text-muted">
+        <span className="text-signal font-mono">
+          {String(index).padStart(2, "0")}
+        </span>{" "}
+        — {feature.name}
+      </p>
+      <h2 className="h1 mt-4">{feature.headline}</h2>
+      {feature.body.map((paragraph) => (
+        <p className="body-lg text-muted mt-5" key={paragraph.slice(0, 32)}>
+          {paragraph}
+        </p>
+      ))}
+    </div>
+  );
+}
 
-        <Stagger className="mt-10 grid gap-4 md:grid-cols-3">
-          {solution.why.map((item) => (
-            <article
-              className="border-border bg-elevated rounded-xl border p-6 shadow-sm"
-              key={item.title}
-            >
-              <h2 className="h3">{item.title}</h2>
-              <p className="body text-muted mt-4">{item.description}</p>
-            </article>
-          ))}
-        </Stagger>
+function SubFeatureGrid({ feature }: { feature: SolutionFeature }) {
+  if (!feature.subFeatures?.length) {
+    return null;
+  }
+
+  return (
+    <Stagger className="mt-12 grid gap-10 border-t border-border pt-10 md:grid-cols-2">
+      {feature.subFeatures.map((sub, index) => (
+        <article key={sub.name}>
+          <p className="eyebrow text-muted">
+            <span className="text-signal font-mono">
+              {String(index + 1).padStart(2, "0")}
+            </span>{" "}
+            — {sub.name}
+          </p>
+          <h3 className="h3 mt-3">{sub.headline}</h3>
+          <p className="body text-muted mt-3">{sub.body}</p>
+        </article>
+      ))}
+    </Stagger>
+  );
+}
+
+/** One numbered feature section. "stacked" runs copy → full-width visual →
+ *  sub-feature grid (wide tables); "split" is a two-column block whose visual
+ *  alternates sides down the page. */
+function FeatureSection({
+  feature,
+  index,
+  splitIndex,
+}: {
+  feature: SolutionFeature;
+  index: number;
+  splitIndex: number;
+}) {
+  const isStacked = feature.layout === "stacked";
+
+  return (
+    <div className="mx-auto w-full max-w-7xl">
+      {isStacked ? (
+        <>
+          <Reveal>
+            <FeatureHeader feature={feature} index={index} />
+          </Reveal>
+          <Reveal className="mt-10" delay={0.08}>
+            <SolutionVisual visual={feature.visual} />
+          </Reveal>
+          <SubFeatureGrid feature={feature} />
+        </>
+      ) : (
+        <>
+          <div
+            className={cn(
+              "grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14",
+              splitIndex % 2 === 1 && "lg:[&>*:first-child]:order-2",
+            )}
+          >
+            <Reveal>
+              <FeatureHeader feature={feature} index={index} />
+            </Reveal>
+            <Reveal delay={0.08}>
+              <SolutionVisual visual={feature.visual} />
+            </Reveal>
+          </div>
+          <SubFeatureGrid feature={feature} />
+        </>
+      )}
+    </div>
+  );
+}
+
+function GroupHeading({ group }: { group: string }) {
+  return (
+    <Reveal className="mx-auto w-full max-w-7xl">
+      <div className="border-border flex items-center gap-4 border-t pt-8">
+        <span aria-hidden="true" className="bg-signal h-[14px] w-[4px]" />
+        <h2 className="eyebrow text-foreground">{group}</h2>
       </div>
-    </section>
+    </Reveal>
   );
 }
 
@@ -158,42 +256,52 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
     notFound();
   }
 
+  // Split sections alternate their visual side; stacked sections don't count.
+  let splitCount = 0;
+
   return (
     <main className="bg-background text-foreground">
-      {/* Shared navy→white background bleeds from the page header across into
-          the trusted-by band, so the blend resolves to white only once it
-          reaches the logo wall. Both stay transparent; this wrapper owns the
-          gradient. Mirrors the home hero. */}
+      {/* Same navy→white gradient treatment as the home hero; the fade
+          resolves to paper before the first feature section. */}
       <div
         className="relative isolate overflow-hidden"
         style={{ backgroundImage: "var(--hero-gradient-compact)" }}
       >
-        <PageHeader
-          eyebrow={solution.eyebrow}
-          primaryCta={solution.primaryCta}
-          secondaryCta={solution.secondaryCta}
-          subtitle={solution.subtitle}
-          surface="gradient"
-          title={solution.title}
-        />
-
-        <LogoWall
-          className="surface-paper pt-14 pb-16 lg:pt-24 lg:pb-20"
-          eyebrow="Trusted by market leaders"
-          logos={trustedLogos}
-          title="Trusted by Riot, YouTube, Microsoft, NASCAR, Activision Blizzard, and PlayStation."
-        />
+        <SolutionHero solution={solution} />
       </div>
 
-      <CapabilitiesSection solution={solution} />
+      {solution.features.map((feature, index) => {
+        const previousGroup = solution.features[index - 1]?.group;
+        const showGroup = feature.group && feature.group !== previousGroup;
+        const splitIndex = feature.layout === "stacked" ? 0 : splitCount++;
 
-      <WhySection solution={solution} />
+        return (
+          <section
+            className={cn(
+              "surface-paper bg-background px-4 sm:px-6 lg:px-8",
+              index === 0 ? "py-16 lg:py-24" : "pb-16 lg:pb-24",
+            )}
+            key={feature.name}
+          >
+            {showGroup ? (
+              <div className="mb-10">
+                <GroupHeading group={feature.group as string} />
+              </div>
+            ) : null}
+            <FeatureSection
+              feature={feature}
+              index={index + 1}
+              splitIndex={splitIndex}
+            />
+          </section>
+        );
+      })}
 
       <CTASection
+        body={solution.closingCta.subtitle}
         className="py-18 lg:py-24"
-        cta={solution.primaryCta}
-        eyebrow="Book a demo"
-        title={`See how ${solution.name.toLowerCase()} can fit your team.`}
+        cta={solution.closingCta.cta}
+        title={solution.closingCta.headline}
       />
     </main>
   );
