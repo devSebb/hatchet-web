@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Accordion as AccordionPrimitive } from "radix-ui";
-import { Plus, ShieldCheck } from "@phosphor-icons/react/ssr";
+import { Plus } from "@phosphor-icons/react/ssr";
 
 import {
   ChartLine,
@@ -379,16 +379,10 @@ function HistoryVisual() {
         alt="Hatchet creator profile dashboard showing verified follower counts, engagement, and growth history across platforms"
         className="h-auto w-full"
         height={1170}
-        sizes="(min-width: 1024px) 26rem, 100vw"
+        sizes="(min-width: 1024px) 34rem, 100vw"
         src="/images/product-mockup.png"
         width={2048}
       />
-      <div className="border-border/60 flex items-center gap-2 border-t px-5 py-3.5">
-        <ShieldCheck aria-hidden="true" className="text-brand size-3.5 shrink-0" />
-        <p className="text-foreground text-xs font-medium">
-          Verified creator data, refreshed daily
-        </p>
-      </div>
     </div>
   );
 }
@@ -570,7 +564,9 @@ export function WhyHatchetPoints({ className }: { className?: string }) {
                         "grid gap-8 lg:gap-12",
                         point.visual.kind === "logos"
                           ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,32rem)]"
-                          : "lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]",
+                          : point.visual.kind === "history"
+                            ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,34rem)]"
+                            : "lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]",
                       )}
                     >
                       <div className="max-w-xl">

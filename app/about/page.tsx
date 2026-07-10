@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import {
   ChartLine,
+  Globe,
   type IsoIcon,
   RocketLaunch,
   SealCheck,
@@ -28,7 +29,7 @@ export function generateMetadata(): Metadata {
 
 const storyStats: { value: string; label: string; Icon: IsoIcon }[] = [
   { value: "2016", label: "Founded", Icon: RocketLaunch },
-  { value: "Barcelona", label: "Where it started", Icon: ShareNetwork },
+  { value: "Barcelona", label: "Where it started", Icon: Globe },
   { value: "10+ yrs", label: "Of live data", Icon: ChartLine },
   { value: "50M+", label: "Creators tracked", Icon: Users },
 ];
@@ -96,15 +97,15 @@ export default function AboutPage() {
                 brands, and agencies.
               </p>
               <a
-                className="mt-8 inline-flex items-center gap-3 transition-opacity hover:opacity-80"
+                className="border-border bg-background mt-8 inline-flex w-fit items-center gap-3 whitespace-nowrap rounded-xl border px-5 py-3 transition-opacity hover:opacity-80"
                 href="https://www.gamesquare.com/"
                 rel="noreferrer"
                 target="_blank"
               >
-                <span className="body text-muted">Part of</span>
+                <span className="body text-muted shrink-0">Part of</span>
                 <Image
                   alt="GameSquare"
-                  className="h-9 w-auto sm:h-10"
+                  className="h-5 w-auto shrink-0 sm:h-6"
                   height={450}
                   src="/images/logos/gamesquare_logo.png"
                   width={1000}

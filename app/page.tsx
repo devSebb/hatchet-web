@@ -4,8 +4,8 @@ import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/ssr";
 
 import {
+  Broadcast,
   ChartBar,
-  Megaphone,
   RocketLaunch,
   SealCheck,
   ShareNetwork,
@@ -90,7 +90,7 @@ const whyHatchetReasons = [
 
 const useCases = [
   {
-    icon: Megaphone,
+    icon: Broadcast,
     label: "Brands",
     body: "Use data to discover creator partners that tap into your target audience, then call them to action.",
     href: "/who-we-serve/brands",

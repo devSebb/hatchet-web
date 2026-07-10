@@ -64,11 +64,11 @@ export function Footer() {
       </Reveal>
 
       {/* Band B — navigation columns (audited real routes). The get-in-touch
-          button tucks under the first (shortest) column to fill the gap the
-          taller columns would otherwise leave empty. */}
+          button tucks under the last (Company) column, directly below the
+          Contact link. */}
       <nav
         aria-label="Footer navigation"
-        className="border-border/60 mx-auto grid w-full max-w-7xl gap-x-8 gap-y-10 border-t px-4 py-10 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8"
+        className="border-border/60 mx-auto grid w-full max-w-7xl gap-x-8 gap-y-10 border-t px-4 pt-10 pb-5 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8"
       >
         {footerColumns.map((column, index) => (
           <div key={column.label}>
@@ -89,7 +89,7 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-            {index === 0 ? (
+            {index === footerColumns.length - 1 ? (
               <Link
                 className="border-border bg-elevated/50 text-foreground hover:border-brand/50 hover:bg-elevated focus-visible:ring-ring/50 mt-3 inline-flex items-center gap-[2px] rounded-full border py-0.5 pr-2.5 pl-1.5 text-xs font-semibold transition-colors outline-none focus-visible:ring-3"
                 href="/about/contact#contact-form"

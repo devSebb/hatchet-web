@@ -183,6 +183,28 @@ export function Megaphone(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function Broadcast(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg fill="none" viewBox="0 0 64 64" {...props}>
+      <polyline points="42.50,24.43 49.33,17.60" stroke="var(--icon-navy, #022658)" strokeWidth="5.0" fill="none" strokeLinecap="round"/>
+      <polyline points="42.50,24.43 49.33,17.60" stroke="var(--icon-brand, #c4262d)" strokeWidth="2.6" fill="none" strokeLinecap="round"/>
+      <polyline points="32.82,18.17 32.82,7.93" stroke="var(--icon-navy, #022658)" strokeWidth="5.0" fill="none" strokeLinecap="round"/>
+      <polyline points="32.82,18.17 32.82,7.93" stroke="var(--icon-brand, #c4262d)" strokeWidth="2.6" fill="none" strokeLinecap="round"/>
+      <polyline points="48.76,34.11 59.00,34.11" stroke="var(--icon-navy, #022658)" strokeWidth="5.0" fill="none" strokeLinecap="round"/>
+      <polyline points="48.76,34.11 59.00,34.11" stroke="var(--icon-brand, #c4262d)" strokeWidth="2.6" fill="none" strokeLinecap="round"/>
+      <polygon points="23.72,21.59 27.13,18.17 21.28,14.79 17.86,18.21" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="45.34,43.21 23.72,21.59 17.86,18.21 39.49,39.83" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="27.13,18.17 48.76,39.80 45.34,43.21 23.72,21.59" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="17.23,42.41 25.42,23.29 19.57,19.91 11.37,39.03" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="24.51,49.70 17.23,42.41 11.37,39.03 18.66,46.32" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="25.42,23.29 43.63,41.50 24.51,49.70 17.23,42.41" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="10.85,46.28 15.98,41.16 10.12,37.78 5.00,42.90" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="20.64,56.07 10.85,46.28 5.00,42.90 14.79,52.69" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="15.98,41.16 25.76,50.95 20.64,56.07 10.85,46.28" fill="var(--icon-steel, #627897)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
 export function RocketLaunch(props: SVGProps<SVGSVGElement>) {
   return (
     <svg fill="none" viewBox="0 0 64 64" {...props}>
@@ -278,6 +300,22 @@ export function Calendar(props: SVGProps<SVGSVGElement>) {
       <polyline points="41.94,33.24 25.99,42.45" stroke="var(--icon-navy, #022658)" strokeWidth="4.1" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
       <polyline points="41.94,33.24 25.99,42.45" stroke="var(--icon-steel, #627897)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
       <polygon points="34.21,39.97 38.14,42.24 34.21,44.51 30.28,42.24" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+export function Globe(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg fill="none" viewBox="0 0 64 64" {...props}>
+      <polygon points="32.00,46.07 43.20,52.54 32.00,59.00 20.80,52.54" fill="var(--icon-steel, #627897)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="53.31,21.33 54.11,18.74 54.11,28.05 53.31,30.64" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="9.89,18.74 10.69,21.33 10.69,30.64 9.89,28.05" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="51.61,23.77 53.31,21.33 53.31,30.64 51.61,33.08" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="10.69,21.33 12.39,23.77 12.39,33.08 10.69,30.64" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="12.39,23.77 32.00,45.22 32.00,54.53 12.39,33.08" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="32.00,45.22 51.61,23.77 51.61,33.08 32.00,54.53" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="51.61,23.77 53.31,21.33 54.11,18.74 53.97,16.12 52.92,13.56 50.98,11.19 48.24,9.09 44.82,7.36 40.86,6.07 36.53,5.27 32.00,5.00 27.47,5.27 23.14,6.07 19.18,7.36 15.76,9.09 13.02,11.19 11.08,13.56 10.03,16.12 9.89,18.74 10.69,21.33 12.39,23.77 32.00,45.22" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
+      <polygon points="42.13,17.80 41.26,20.18 38.78,22.15 35.13,23.36 30.94,23.62 26.93,22.86 23.80,21.24 22.09,19.01 22.09,16.58 23.80,14.36 26.93,12.73 30.94,11.98 35.13,12.23 38.78,13.45 41.26,15.42" fill="var(--icon-steel, #627897)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
     </svg>
   );
 }

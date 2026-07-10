@@ -55,6 +55,6 @@ export function getAvailabilityConfig(): AvailabilityConfig {
     durationMin: intFromEnv("DEMO_DURATION_MIN", 30),
     intervalMin: intFromEnv("DEMO_INTERVAL_MIN", 30),
     minNoticeMin: intFromEnv("DEMO_MIN_NOTICE_MIN", 240),
-    daysAhead: intFromEnv("DEMO_DAYS_AHEAD", 14),
+    daysAhead: intFromEnv("DEMO_DAYS_AHEAD", 30),
   };
 }
