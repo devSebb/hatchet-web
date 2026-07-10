@@ -174,7 +174,7 @@ export default function StyleguidePage() {
           <CardHeader>
             <CardTitle>Type scale</CardTitle>
             <CardDescription>
-              Montserrat is the single brand typeface across display, body, UI,
+              Golos Text is the single brand typeface across display, body, UI,
               labels, and data figures.
             </CardDescription>
           </CardHeader>
