@@ -149,6 +149,63 @@ const testimonials = [
     logo: "NASCAR",
     logoSrc: "/images/logos/nascar.png",
   },
+  {
+    quote:
+      "We utilize Stream Hatchet to measure the global impact of League of Legends Esports. Their insights and reporting on the LCS, LCK, LEC, LPL, and many of our other regional leagues provide us with crucial viewership KPIs, which help our executives and brand partners make informed decisions to better the sport and fan experience.",
+    name: "Doug Watson",
+    role: "Head of Esports Insights",
+    company: "Riot Games",
+    logo: "Riot Games",
+    logoSrc: "/images/logos/riot-games.png",
+  },
+  {
+    quote:
+      "Stream Hatchet's ability to help us validate data from our internal and partner led streaming activations proves time and time again to be a critical tool and how we capture, report and glean insights from our gaming activations.",
+    name: "Eric Pommer",
+    role: "Lead, Technical Marketing Analytics",
+    company: "Nestle",
+    logo: "Nestle",
+  },
+  {
+    quote:
+      "UTA has been able to successfully and efficiently discover, monitor, and measure influencers through our partnership with Stream Hatchet. Deep analysis of streaming trends and metrics puts us at an advantage when facilitating opportunities to fit specific target markets.",
+    name: "Mike Lee",
+    role: "Esports Agent",
+    company: "UTA",
+    logo: "UTA",
+  },
+  {
+    quote:
+      "Stream Hatchet assists our team with analyzing our esports and gaming program. They help us make tactical and actionable changes to our program through their tools/reporting. The team is incredibly knowledgeable about the shifting landscape; would highly recommend working with their team to help meet the goals of your esports and gaming programs.",
+    name: "Jacob McCourt",
+    role: "Gaming Manager",
+    company: "The Outloud Group",
+    logo: "The Outloud Group",
+  },
+  {
+    quote:
+      "Partnering with Stream Hatchet has allowed us to monitor and analyze our data accurately across our streaming platforms. The readily accessible real-time data is a great benefit for our players, partners, and internal team. As a leading esports organization, we value actionable insights, and that's exactly what Stream Hatchet provides.",
+    name: "Joe Pokrzywa",
+    role: "Chief Data Analyst",
+    company: "NRG",
+    logo: "NRG",
+  },
+  {
+    quote:
+      "Our partnership with Stream Hatchet has been a major difference-maker for Complexity. Tracking our players and campaigns, extracting actionable insights, accurately reporting to our partners and more - Stream Hatchet has put us in a better position across the board. The transparency, flexibility, and hands-on support from our dedicated account team allows us to take our business to another level.",
+    name: "Cam Kelly",
+    role: "CMO",
+    company: "Complexity",
+    logo: "Complexity",
+  },
+  {
+    quote:
+      "The platform is my go-to reporting tool for both my brand partnerships and talent management efforts as it helps partners understand reach and engagement during a campaign, and ultimately value when concluded. Transparency is critical in this business and StreamHatchet provides me the confidence I need to push sales forward.",
+    name: "Joowon Lee",
+    role: "Talent Manager",
+    company: "The Kinetic Group",
+    logo: "The Kinetic Group",
+  },
 ];
 
 function Pillars() {

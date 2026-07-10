@@ -56,7 +56,7 @@ const PILLAR_POS = "right-24 w-24 sm:right-32 sm:w-32";
 function IncludedMark() {
   return (
     <span className="inline-flex size-4 items-center justify-center rounded-full bg-green-500 text-white shadow-[0_0_14px_color-mix(in_srgb,#22c55e_45%,transparent)]">
-      <Check aria-hidden="true" className="size-[11px]" weight="bold" />
+      <Check aria-hidden="true" className="size-[14px]" weight="bold" />
       <span className="sr-only">Included</span>
     </span>
   );
@@ -65,7 +65,7 @@ function IncludedMark() {
 function NotIncludedMark() {
   return (
     <span className="inline-flex size-5 items-center justify-center text-red-500">
-      <X aria-hidden="true" className="size-3.5" weight="bold" />
+      <X aria-hidden="true" className="size-[18px]" weight="bold" />
       <span className="sr-only">Not included</span>
     </span>
   );

@@ -12,7 +12,7 @@ const logoSources: Record<
   { src: string; width: number; height: number }
 > = {
   navy: { src: "/brand/hatchet_all_navy.png", width: 2102, height: 755 },
-  primary: { src: "/brand/hatchet-logo-def.png", width: 2593, height: 633 },
+  primary: { src: "/brand/Hatchet_nav_logo_fin.svg", width: 2238, height: 545 },
   red: { src: "/brand/hatchet_all_red.png", width: 2102, height: 754 },
   white: { src: "/brand/hatchet_all_white.png", width: 2275, height: 569 },
 };

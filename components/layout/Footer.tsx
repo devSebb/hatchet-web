@@ -91,15 +91,15 @@ export function Footer() {
             </ul>
             {index === 0 ? (
               <Link
-                className="border-border bg-elevated/50 text-foreground hover:border-brand/50 hover:bg-elevated focus-visible:ring-ring/50 mt-3 inline-flex items-center gap-1.5 rounded-full border py-1 pr-3 pl-2 text-xs font-medium transition-colors outline-none focus-visible:ring-3"
+                className="border-border bg-elevated/50 text-foreground hover:border-brand/50 hover:bg-elevated focus-visible:ring-ring/50 mt-3 inline-flex items-center gap-[2px] rounded-full border py-0.5 pr-2.5 pl-1.5 text-xs font-semibold transition-colors outline-none focus-visible:ring-3"
                 href="/about/contact#contact-form"
               >
                 <Image
                   alt=""
-                  className="size-4 shrink-0"
-                  height={633}
-                  src="/brand/hatchet_shield_red.png"
-                  width={665}
+                  className="size-5 shrink-0"
+                  height={754}
+                  src="/brand/hatchet_shield_icon.png"
+                  width={780}
                 />
                 Get in touch
               </Link>

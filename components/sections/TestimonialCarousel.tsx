@@ -154,7 +154,7 @@ export function TestimonialCarousel({
                 className="min-w-0 flex-[0_0_100%] pr-5 md:flex-[0_0_64%] lg:flex-[0_0_46%]"
                 key={`${testimonial.company}-${testimonial.name}`}
               >
-                <div className="border-paper-border bg-paper-surface flex min-h-64 flex-col justify-between rounded-xl border-2 p-5">
+                <div className="border-paper-border bg-paper-surface flex h-[450px] flex-col justify-between overflow-hidden rounded-xl border-2 p-5">
                   <div>
                     {testimonial.logoSrc ? (
                       <div className="border-paper-border bg-paper-surface h-12 w-40 rounded-lg border p-2 shadow-sm">
@@ -173,7 +173,7 @@ export function TestimonialCarousel({
                         {testimonial.logo}
                       </div>
                     )}
-                    <blockquote className="body text-paper-ink mt-6">
+                    <blockquote className="body text-paper-ink mt-6 line-clamp-5">
                       “{testimonial.quote}”
                     </blockquote>
                   </div>
@@ -199,7 +199,7 @@ export function TestimonialCarousel({
               className={cn(
                 "focus-visible:ring-ring/50 group/dot inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg outline-none focus-visible:ring-3",
               )}
-              key={`${testimonial.company}-dot`}
+              key={`${testimonial.company}-${testimonial.name}-dot`}
               onClick={() => scrollTo(index)}
               type="button"
             >

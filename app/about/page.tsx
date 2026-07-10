@@ -30,7 +30,7 @@ const storyStats: { value: string; label: string; Icon: IsoIcon }[] = [
   { value: "2016", label: "Founded", Icon: RocketLaunch },
   { value: "Barcelona", label: "Where it started", Icon: ShareNetwork },
   { value: "10+ yrs", label: "Of live data", Icon: ChartLine },
-  { value: "55M+", label: "Creators tracked", Icon: Users },
+  { value: "50M+", label: "Creators tracked", Icon: Users },
 ];
 
 const values: { label: string; body: string; Icon: IsoIcon }[] = [
