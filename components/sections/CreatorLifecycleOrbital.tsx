@@ -428,10 +428,10 @@ export function CreatorLifecycleOrbital({ className }: { className?: string }) {
             <Image
               alt="Hatchet"
               className="h-auto w-full object-contain"
-              height={633}
+              height={721}
               priority
-              src="/brand/hatchet_shield_red.png"
-              width={665}
+              src="/brand/hatchet_shield_redFin.png"
+              width={763}
             />
           </div>
 
@@ -482,9 +482,9 @@ export function CreatorLifecycleOrbital({ className }: { className?: string }) {
           <Image
             alt="Hatchet"
             className="relative h-auto w-24 object-contain"
-            height={633}
-            src="/brand/hatchet_shield_red.png"
-            width={665}
+            height={721}
+            src="/brand/hatchet_shield_redFin.png"
+            width={763}
           />
         </div>
 
