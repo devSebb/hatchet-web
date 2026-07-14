@@ -97,9 +97,9 @@ export function Footer() {
                 <Image
                   alt=""
                   className="size-5 shrink-0"
-                  height={754}
-                  src="/brand/hatchet_shield_icon.png"
-                  width={780}
+                  height={721}
+                  src="/brand/hatchet_shield_redFin.png"
+                  width={763}
                 />
                 Get in touch
               </Link>
