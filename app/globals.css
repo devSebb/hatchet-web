@@ -184,21 +184,23 @@
   );
   /* Compact variant for interior heroes with no dashboard image (the
      solutions hero). Navy holds through the headline, CTAs, and stat strip
-     (white copy rides it), then a long transitional-blue band fills the
-     hero's padded tail and only resolves to paper at the wrapper's bottom
-     edge — so the first content section below starts on fully-resolved
-     white with no dead band inside the hero. */
+     (white copy rides it), then eases continuously through steel and mist to
+     paper by the wrapper's bottom edge. Many evenly-spaced control points keep
+     the blue→white fade smooth with no visible band; stops are tuned to the
+     shorter hero tail (lg:pb-44) so the first content section starts on
+     fully-resolved white without being pushed far down the page. */
   --hero-gradient-compact: linear-gradient(
     to bottom,
     var(--bg) 0%,
-    var(--bg) 28%,
-    color-mix(in srgb, var(--bg) 55%, var(--blue-transitional)) 40%,
-    var(--blue-transitional) 51%,
-    color-mix(in srgb, var(--blue-transitional) 50%, var(--hero-steel)) 59%,
-    var(--hero-steel) 67%,
-    color-mix(in srgb, var(--hero-steel) 50%, var(--hero-mist)) 76%,
-    var(--hero-mist) 86%,
-    color-mix(in srgb, var(--hero-mist) 35%, var(--paper)) 93%,
+    var(--bg) 34%,
+    color-mix(in srgb, var(--bg) 62%, var(--blue-transitional)) 46%,
+    var(--blue-transitional) 56%,
+    color-mix(in srgb, var(--blue-transitional) 60%, var(--hero-steel)) 65%,
+    color-mix(in srgb, var(--blue-transitional) 25%, var(--hero-steel)) 72%,
+    var(--hero-steel) 78%,
+    color-mix(in srgb, var(--hero-steel) 45%, var(--hero-mist)) 85%,
+    var(--hero-mist) 91%,
+    color-mix(in srgb, var(--hero-mist) 40%, var(--paper)) 96%,
     var(--paper) 100%
   );
 

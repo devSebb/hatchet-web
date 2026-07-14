@@ -18,6 +18,7 @@ import {
   getSolution,
   type ProductSolution,
   type SolutionFeature,
+  type SolutionGroupIntro,
   type SolutionHeroIcon,
   solutions,
 } from "@/lib/config/solutions";
@@ -89,10 +90,11 @@ function CtaLink({
 function SolutionHero({ solution }: { solution: ProductSolution }) {
   const HeroIcon = heroIcons[solution.heroIcon];
 
-  // The tall bottom padding is the canvas for the gradient's blue→white
-  // tail; keep it in sync with --hero-gradient-compact's stops.
+  // Bottom padding is the canvas for the gradient's blue→white tail; keep it
+  // in sync with --hero-gradient-compact's stops. Kept modest so the first
+  // feature section sits close under the hero rather than far down the page.
   return (
-    <section className="relative mx-auto w-full max-w-7xl px-4 pt-6 pb-52 sm:px-6 lg:px-8 lg:pt-8 lg:pb-80">
+    <section className="relative mx-auto w-full max-w-7xl px-4 pt-6 pb-28 sm:px-6 lg:px-8 lg:pt-8 lg:pb-44">
       <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto]">
         <div className="max-w-4xl">
           <p className="eyebrow text-white/70">{solution.eyebrow}</p>
@@ -126,16 +128,14 @@ function SolutionHero({ solution }: { solution: ProductSolution }) {
             </dl>
           ) : null}
         </div>
-        {!solution.heroStats ? (
-          <div aria-hidden="true" className="hidden justify-end pr-8 lg:flex">
-            {/* Red under-glow lifts the iso icon off the navy, echoing the
-                lifecycle orbital's treatment. */}
-            <span className="relative z-10 block">
-              <span className="bg-brand/25 absolute inset-4 rounded-full blur-2xl" />
-              <HeroIcon className="relative size-64 drop-shadow-[0_18px_40px_rgba(0,0,0,0.45)]" />
-            </span>
-          </div>
-        ) : null}
+        <div aria-hidden="true" className="hidden justify-end pr-8 lg:flex">
+          {/* Red under-glow lifts the iso icon off the navy, echoing the
+              lifecycle orbital's treatment. */}
+          <span className="relative z-10 block">
+            <span className="bg-brand/25 absolute inset-4 rounded-full blur-2xl" />
+            <HeroIcon className="relative size-64 drop-shadow-[0_18px_40px_rgba(0,0,0,0.45)]" />
+          </span>
+        </div>
       </div>
     </section>
   );
@@ -237,14 +237,61 @@ function FeatureSection({
   );
 }
 
-function GroupHeading({ group }: { group: string }) {
+function GroupHeading({
+  group,
+  intro,
+}: {
+  group: string;
+  intro?: SolutionGroupIntro;
+}) {
   return (
     <Reveal className="mx-auto w-full max-w-7xl">
-      <div className="border-border flex items-center gap-4 border-t pt-8">
-        <span aria-hidden="true" className="bg-signal h-[14px] w-[4px]" />
-        <h2 className="eyebrow text-foreground">{group}</h2>
+      <div className="border-border border-t pt-8">
+        <div className="flex items-center gap-4">
+          <span aria-hidden="true" className="bg-signal h-[14px] w-[4px]" />
+          <p className="eyebrow text-foreground">{group}</p>
+        </div>
+        {intro ? (
+          <div className="mt-5 max-w-3xl">
+            <h2 className="h2">{intro.headline}</h2>
+            <p className="body-lg text-muted mt-4">{intro.body}</p>
+          </div>
+        ) : null}
       </div>
     </Reveal>
+  );
+}
+
+/** The PDF's "Looking For One Tool That Does It All?" lifecycle cross-sell,
+ *  rendered under the closing CTA with a link back to the Solutions index. */
+function CrossSellNote({
+  crossSell,
+}: {
+  crossSell: NonNullable<ProductSolution["closingCta"]["crossSell"]>;
+}) {
+  const linkPhrase = "Check out our other Solutions pages";
+  const [lead, tail] = crossSell.body.split(linkPhrase);
+
+  return (
+    <section className="bg-background px-4 pb-20 sm:px-6 lg:px-8 lg:pb-28">
+      <Reveal className="mx-auto max-w-3xl text-center">
+        <p className="eyebrow text-signal">{crossSell.title}</p>
+        <p className="body text-muted mt-4">
+          {lead}
+          {tail !== undefined ? (
+            <>
+              <Link
+                className="text-foreground hover:text-signal font-medium underline underline-offset-4"
+                href="/solutions"
+              >
+                {linkPhrase}
+              </Link>
+              {tail}
+            </>
+          ) : null}
+        </p>
+      </Reveal>
+    </section>
   );
 }
 
@@ -279,13 +326,16 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
           <section
             className={cn(
               "surface-paper bg-background px-4 sm:px-6 lg:px-8",
-              index === 0 ? "py-16 lg:py-24" : "pb-16 lg:pb-24",
+              index === 0 ? "pt-8 pb-16 lg:pt-12 lg:pb-24" : "pb-16 lg:pb-24",
             )}
             key={feature.name}
           >
             {showGroup ? (
               <div className="mb-10">
-                <GroupHeading group={feature.group as string} />
+                <GroupHeading
+                  group={feature.group as string}
+                  intro={feature.groupIntro}
+                />
               </div>
             ) : null}
             <FeatureSection
@@ -299,10 +349,16 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
 
       <CTASection
         body={solution.closingCta.subtitle}
-        className="py-18 lg:py-24"
+        className={cn(
+          "py-18 lg:py-24",
+          solution.closingCta.crossSell && "pb-10 lg:pb-14",
+        )}
         cta={solution.closingCta.cta}
         title={solution.closingCta.headline}
       />
+      {solution.closingCta.crossSell ? (
+        <CrossSellNote crossSell={solution.closingCta.crossSell} />
+      ) : null}
     </main>
   );
 }

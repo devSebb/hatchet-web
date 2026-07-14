@@ -41,9 +41,19 @@ export type SolutionSubFeature = {
   body: string;
 };
 
+export type SolutionGroupIntro = {
+  headline: string;
+  body: string;
+};
+
 export type SolutionFeature = {
   /** Group heading rendered once when it first appears (e.g. "Deep Analytics"). */
   group?: string;
+  /**
+   * Intro headline + body rendered alongside the group heading when the group
+   * first appears (the PDF's "1. Brand & Audience Intelligence" section lead).
+   */
+  groupIntro?: SolutionGroupIntro;
   /** Section label shown in the numbered eyebrow (e.g. "Creator Discovery"). */
   name: string;
   headline: string;
@@ -73,6 +83,11 @@ export type ProductSolution = {
     headline: string;
     subtitle: string;
     cta: SolutionCta;
+    /** "Looking For One Tool That Does It All?" lifecycle cross-sell block. */
+    crossSell?: {
+      title: string;
+      body: string;
+    };
   };
   metaDescription: string;
   href: `/solutions/${SolutionSlug}`;
@@ -86,16 +101,16 @@ const seeItInActionCta = {
   external: true,
 };
 
-// Copy source: "Hatchet Website (7)" doc from the content team (July 2026).
+// Copy source: "Hatchet Website (8)" doc from the content team (July 2026).
 // Text is verbatim by request — do not paraphrase without a new copy doc.
 const rawSolutions = [
   {
     slug: "discovery",
     name: "Discovery",
     eyebrow: "Find & Verify",
-    title: "Know before you commit.",
+    title: "Find creators and games getting attention online.",
     subtitle:
-      "Find the right creators, and the games that own streaming attention. Search 55M+ creators across 32 platforms with filters that actually matter: game played, audience demographics, language, and more. Flag inauthentic audiences before you sign.",
+      "Search 55M+ creators across 32 platforms, filtering by what your partnership needs: Games played, audience makeup, language, and more.",
     primaryCta: bookDemoCta,
     secondaryCta: seeItInActionCta,
     heroIcon: "find",
@@ -107,9 +122,10 @@ const rawSolutions = [
     features: [
       {
         name: "Creator Discovery",
-        headline: "The leaderboard of every channel, on every platform.",
+        headline: "Every channel across every platform.",
         body: [
-          "Rank by Hours Watched, Peak/Avg CCV, Followers, Chat, or Socials. Filter by platform, game, language, country, gender, VTuber status, Twitch tags, and more. Then go deep: full creator profiles with demographics, stream history, audience overlap, and YouTube VODs broken down minute-by-minute.",
+          "Discover creators worth knowing about, ranked and ready to compare. Sort by hours watched, concurrent viewers, followers, chat activity, or social reach, then narrow things down by platform, game, language, and country, right through to niche filters like VTuber status and Twitch tags.",
+          "Once you've decided someone's worth a closer look, their full profile is waiting: Demographics, stream history, audience overlap, even a minute-by-minute breakdown of their YouTube VODs.",
         ],
         visual: "discovery-leaderboard",
         layout: "stacked",
@@ -117,30 +133,40 @@ const rawSolutions = [
           {
             name: "AI Smart Search",
             headline: "Describe the creator you need. Get a match.",
-            body: "No manual filter setup. Describe the type of creator you're looking for in plain language, and Hatchet sets the filters for you.",
+            body: "Tell Hatchet what you're looking for in plain language, and it sets the search up for you with all relevant filters.",
           },
           {
             name: "Fake Audience Scoring",
-            headline: "Know before you commit.",
-            body: "Flag and exclude channels with inflated metrics before a dollar of budget moves. Bot-inflated followers and fake audiences don't make it past the shortlist.",
+            headline: "Spot a fake before it costs you.",
+            body: "Inflated followers and bot-built audiences get flagged and filtered out automatically, so nothing with a fake footprint makes it onto your shortlist.",
           },
         ],
       },
       {
         name: "Game Discovery",
-        headline: "Every game. Every level of detail.",
+        headline: "Every game at every level of detail.",
         body: [
-          "Leaderboards by title, streaming category, genre, and publisher, across every platform you track. See Hours Watched, Peak/Avg CCV, and unique channels at a glance, then drill into audience overlap, top creators, and VOD performance for any title.",
-          "For new releases, Launch Intelligence benchmarks Day 1 against historical averages and competitor launches, tracks the 7-day viewership trajectory, and surfaces the channels driving the spike, so every partnership decision starts with data, not a hunch.",
+          "The same depth, applied to games instead of channels. Rank games by streaming category, genre, or publisher across every platform, and see hours watched, concurrent viewers, and unique channels at a glance. From there, go deeper: Find out about audience overlap, top creators, and VOD performance for any title you're evaluating.",
         ],
         visual: "discovery-launch-intel",
+        subFeatures: [
+          {
+            name: "Launch Comparison",
+            headline: "Debut viewerships put in perspective.",
+            body: "New releases get their own lens. Track first day, week or months performance and benchmark against historical averages and competitor launches.",
+          },
+        ],
       },
     ],
     closingCta: {
       headline: "See the shortlist for yourself.",
       subtitle:
-        "Book a 30-minute demo — we'll run a search on your next campaign brief.",
+        "Book a 30-minute demo. We'll run a search on your next campaign brief.",
       cta: bookDemoCta,
+      crossSell: {
+        title: "Looking For One Tool That Does It All?",
+        body: "Discovering creators is just the first step in your full creator lifecycle. Check out our other Solutions pages to see how Hatchet can cut down your workload with full creator lifecycle management.",
+      },
     },
     metaDescription:
       "Find the right creators and the games that own streaming attention. Search 55M+ creators across 32 platforms, with AI smart search and fake-audience scoring built in.",
@@ -149,19 +175,23 @@ const rawSolutions = [
     slug: "intelligence",
     name: "Intelligence",
     eyebrow: "Analyze",
-    title: "Every platform. One view.",
+    title: "Analyze streaming and social data in one view.",
     subtitle:
-      "Streaming and social data in one place. Compare, benchmark, and understand what's actually driving performance.",
+      "Audience insights from across the internet combined into a single place. Compare, benchmark, and understand what's driving performance.",
     primaryCta: bookDemoCta,
     secondaryCta: seeItInActionCta,
     heroIcon: "analyze",
     features: [
       {
         group: "Brand & Audience Intelligence",
-        name: "Chat and Stream Titles",
-        headline: "Brand mentions, captured live.",
+        groupIntro: {
+          headline: "Know who's watching and who's chatting.",
+          body: "This is where audience and brand context come together in one place, uncovering the connection between communities and companies they can trust.",
+        },
+        name: "Chat Analysis and Stream Titles",
+        headline: "Brand mentions and sentiment from real-time conversations.",
         body: [
-          "Track every brand mentioned in stream titles and chat, across all platforms. Measure organic vs. campaign-driven presence, and find creators already talking about your brand before you even brief them. 30-day trends by channel, game, and platform.",
+          "Track every brand mentioned in stream titles and chat, across all platforms. Measure organic vs. campaign-driven presence, and find creators already talking about your brand before you've even reached out.",
         ],
         visual: "intelligence-mentions",
       },
@@ -170,16 +200,20 @@ const rawSolutions = [
         name: "Groups",
         headline: "Aggregate any set of creators, instantly.",
         body: [
-          "Bundle your roster, prospects, or competitors and roll up every stat as a collective unit. Track a curated shortlist together in one view, with all standard metrics and filters applied automatically.",
+          "Bundle your roster, prospects, or competitors and roll up every stat as a collective unit for easier comparison. Track a curated shortlist together in one view, with all standard metrics and filters applied automatically.",
         ],
         visual: "intelligence-groups",
       },
       {
         group: "Deep Analytics",
-        name: "YouTube VOD Deep Analytics",
-        headline: "Beyond live. The full video picture.",
+        groupIntro: {
+          headline: "Delve deeper than the headline numbers.",
+          body: "Beyond the standard metrics, drill into video, esports, and cross-platform data at a granular level and in more unique areas of the online landscape.",
+        },
+        name: "YouTube VODs and Shorts",
+        headline: "Go past live and get the full video picture.",
         body: [
-          "Track any VOD or Short — live or uploaded — with views, likes, comments, and performance trends. Same filters as live streaming data, so nothing gets lost switching formats.",
+          "Track views, likes, comments, and performance trends on VODs and Shorts, using the same filters as your live streaming data, so you can see how reach and engagement keep building long after the stream ends.",
         ],
         visual: "intelligence-vod",
       },
@@ -188,24 +222,19 @@ const rawSolutions = [
         name: "Esports",
         headline: "Validate every sponsorship.",
         body: [
-          "Tournament viewership and team profiles, historical event editions, and sponsorship benchmarking — verified numbers, not estimates.",
+          "Tournament viewership and team profiles, historical event editions, and co-streaming impact all custom pulled based on specific events and esports titles.",
         ],
         visual: "intelligence-esports",
       },
-      {
-        group: "Deep Analytics",
-        name: "Comparison & Analytics",
-        headline: "One view. No manual work.",
-        body: [
-          "Custom dashboards and rankings benchmark channels, games, and platforms side by side. Executive-ready comparative views, export-ready when you need them.",
-        ],
-        visual: "intelligence-dashboards",
-      },
     ],
     closingCta: {
-      headline: "See what's actually driving performance.",
-      subtitle: "Book a demo and bring your toughest cross-platform question.",
+      headline: "See what's driving performance.",
+      subtitle: "Book a demo and answer your toughest cross-platform questions.",
       cta: bookDemoCta,
+      crossSell: {
+        title: "Looking For One Tool That Does It All?",
+        body: "Generating insights is just the second step in your full creator lifecycle. Check out our other Solutions pages to see how Hatchet can cut down your workload with full creator lifecycle management.",
+      },
     },
     metaDescription:
       "Streaming and social data in one place. Compare, benchmark, and understand what's actually driving performance with Hatchet Intelligence.",
@@ -214,18 +243,18 @@ const rawSolutions = [
     slug: "creator-community",
     name: "Creator Community",
     eyebrow: "Execute",
-    title: "From first outreach to activated creator without leaving the platform.",
+    title: "Build communities, from outreach to activation.",
     subtitle:
-      "Manage your entire creator roster from one place. Brief, track, and coordinate campaigns end-to-end via a single, customizable hub. No manual tracking.",
+      "Manage your entire creator roster from one place. Brief, track, and coordinate campaigns end-to-end via a single, customizable hub. Every step from outreach to activation happens right where you already manage your roster, so nothing needs tracking twice.",
     primaryCta: bookDemoCta,
     secondaryCta: seeItInActionCta,
     heroIcon: "execute",
     features: [
       {
         name: "My Creators",
-        headline: "Your full roster, every platform.",
+        headline: "Your full roster across every platform.",
         body: [
-          "Add creators from Twitch, YouTube, TikTok, Kick, Facebook, Instagram, X, Tumblr, and more. Organize with custom labels — tier, region, vertical, campaign — and see live metrics: followers, avg viewers, engagement, audience overlap.",
+          "Add creators from Twitch, YouTube, TikTok, Kick, Facebook, Instagram, X, Tumblr, and more. Organize with custom labels to suit your workflow (such as tier, region, vertical, and campaign), and see live metrics like followers, average viewers, engagement, and audience overlap.",
         ],
         visual: "creator-roster",
       },
@@ -233,7 +262,7 @@ const rawSolutions = [
         name: "Messaging",
         headline: "Outreach at any scale.",
         body: [
-          "Message 1:1 or broadcast to a group, straight from the same place you manage creators. Gmail integration tracks delivery status — sent, replied, failed — so nothing falls through the cracks.",
+          "Message 1:1 or broadcast to a group, straight from the same place you manage creators. Gmail integrates with Hatchet to track delivery status so nothing falls through the cracks.",
         ],
         visual: "creator-messaging",
       },
@@ -241,16 +270,20 @@ const rawSolutions = [
         name: "Code Management",
         headline: "Codes that track themselves.",
         body: [
-          "Create, assign, and track promo codes per creator. Live redemption stats and ROI per creator give you direct conversion attribution beyond impressions.",
+          "Create, assign, and track promo codes per creator. Live redemption stats and ROI per creator give you direct conversion attribution beyond simple impressions.",
         ],
         visual: "creator-codes",
       },
     ],
     closingCta: {
-      headline: "Run your next program from one hub.",
+      headline: "See your next program run from one hub.",
       subtitle:
-        "Book a demo and see how a full creator roster moves through Hatchet, start to finish.",
+        "Book a demo and see how a full creator roster comes together in Hatchet.",
       cta: bookDemoCta,
+      crossSell: {
+        title: "Looking For One Tool That Does It All?",
+        body: "Building your creator community is just the third step in your full creator lifecycle. Check out our other Solutions pages to see how Hatchet can cut down your workload with full creator lifecycle management.",
+      },
     },
     metaDescription:
       "Manage your entire creator roster from one place. Brief, track, and coordinate campaigns end-to-end via a single, customizable hub. No manual tracking.",
@@ -259,18 +292,18 @@ const rawSolutions = [
     slug: "reporting",
     name: "Reporting",
     eyebrow: "Report",
-    title: "Your campaign report, auto-built.",
+    title: "Report on your campaign performance automatically.",
     subtitle:
-      "Every campaign metric in one dashboard. Per-creator breakdowns, engagement, and export-ready reports your clients or stakeholders can easily understand.",
+      "Every campaign metric in one dashboard. Generate export-ready reports your clients and stakeholders can understand without translation from you first, including per-creator breakdowns and audience engagement.",
     primaryCta: bookDemoCta,
     secondaryCta: seeItInActionCta,
     heroIcon: "report",
     features: [
       {
         name: "Campaigns",
-        headline: "Campaigns that report themselves.",
+        headline: "Marketing activations that report themselves.",
         body: [
-          "Set up with keywords and creator labels, and Hatchet auto-tracks every post, mention, hour, and viewer from there. One dashboard covers total reach, brand mentions, active creators, and video views, with a per-creator breakdown and platform drill-down. Export to Excel when you need it.",
+          "After setting up with keywords and creator labels, Hatchet auto-tracks every post, mention, hour, and viewer from there. One dashboard covers total reach, brand mentions, active creators, and video views, with creator and platform breakdowns. Export to Excel when you need it.",
         ],
         visual: "reporting-campaigns",
         layout: "stacked",
@@ -279,16 +312,20 @@ const rawSolutions = [
         name: "Custom Reports",
         headline: "Tailor-made by our analyst team.",
         body: [
-          "PDF or custom Hatchet dashboard, built around what your team actually reports on: Influencer Marketing, League & Event, Team Performance, Brand Lift & Sponsorship, Competitive Analysis. Don't see what you need? We'll build it.",
+          "Chat with us to handcraft your own custom dashboard or PDF export, built around what your team reports on: Creator marketing, league & event tracking, team performance, sponsorship impact, and competitive analysis. If you picture it, we craft it.",
         ],
         visual: "reporting-custom",
       },
     ],
     closingCta: {
-      headline: "Prove it worked.",
+      headline: "See exactly what worked.",
       subtitle:
-        "Book a demo and see a real campaign report, built the way yours will be.",
+        "Book a demo and walk through a real campaign report, built the way yours will be.",
       cta: bookDemoCta,
+      crossSell: {
+        title: "Looking For One Tool That Does It All?",
+        body: "Reporting results is just the fourth step in your full creator lifecycle. Check out our other Solutions pages to see how Hatchet can cut down your workload with full creator lifecycle management.",
+      },
     },
     metaDescription:
       "Every campaign metric in one dashboard. Per-creator breakdowns, engagement, and export-ready reports your clients or stakeholders can easily understand.",
@@ -314,6 +351,12 @@ function normalizeFeature(feature: SolutionFeature): SolutionFeature {
   return {
     ...feature,
     group: feature.group ? normalizeBrand(feature.group) : undefined,
+    groupIntro: feature.groupIntro
+      ? {
+          headline: normalizeBrand(feature.groupIntro.headline),
+          body: normalizeBrand(feature.groupIntro.body),
+        }
+      : undefined,
     name: normalizeBrand(feature.name),
     headline: normalizeBrand(feature.headline),
     body: feature.body.map(normalizeBrand),
@@ -339,6 +382,12 @@ function normalizeSolution(
       headline: normalizeBrand(solution.closingCta.headline),
       subtitle: normalizeBrand(solution.closingCta.subtitle),
       cta: normalizeCta(solution.closingCta.cta),
+      crossSell: solution.closingCta.crossSell
+        ? {
+            title: normalizeBrand(solution.closingCta.crossSell.title),
+            body: normalizeBrand(solution.closingCta.crossSell.body),
+          }
+        : undefined,
     },
     metaDescription: normalizeBrand(solution.metaDescription),
     href: `/solutions/${solution.slug}`,
