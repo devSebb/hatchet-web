@@ -14,6 +14,7 @@ type PageHeaderProps = {
   secondaryCta?: {
     label: string;
     href: string;
+    external?: boolean;
   };
   /**
    * "gradient" stays transparent so a shared navy→white background painted by a
@@ -79,7 +80,17 @@ export function PageHeader({
             ) : null}
             {secondaryCta ? (
               <Button asChild variant="secondary">
-                <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
+                {secondaryCta.external ? (
+                  <a
+                    href={secondaryCta.href}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    {secondaryCta.label}
+                  </a>
+                ) : (
+                  <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
+                )}
               </Button>
             ) : null}
           </div>

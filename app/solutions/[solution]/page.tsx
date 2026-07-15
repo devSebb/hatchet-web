@@ -11,6 +11,7 @@ import {
 } from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
+import { CircuitDivider } from "@/components/sections/CircuitDivider";
 import { CTASection } from "@/components/sections/CTASection";
 import { SolutionVisual } from "@/components/solutions/SolutionVisual";
 import { Button } from "@/components/ui/button";
@@ -172,20 +173,18 @@ function SubFeatureGrid({ feature }: { feature: SolutionFeature }) {
   }
 
   return (
-    <Stagger className="mt-12 grid gap-10 border-t border-border pt-10 md:grid-cols-2">
-      {feature.subFeatures.map((sub, index) => (
-        <article key={sub.name}>
-          <p className="eyebrow text-muted">
-            <span className="text-signal font-mono">
-              {String(index + 1).padStart(2, "0")}
-            </span>{" "}
-            — {sub.name}
-          </p>
-          <h3 className="h3 mt-3">{sub.headline}</h3>
-          <p className="body text-muted mt-3">{sub.body}</p>
-        </article>
-      ))}
-    </Stagger>
+    <>
+      <Stagger className="mt-12 grid gap-10 md:grid-cols-2">
+        {feature.subFeatures.map((sub) => (
+          <article key={sub.name}>
+            <p className="eyebrow text-muted">{sub.name}</p>
+            <h3 className="h3 mt-3">{sub.headline}</h3>
+            <p className="body text-muted mt-3">{sub.body}</p>
+          </article>
+        ))}
+      </Stagger>
+      <CircuitDivider className="mt-16" pulseDelaySeconds={-2.5} />
+    </>
   );
 }
 
@@ -246,7 +245,8 @@ function GroupHeading({
 }) {
   return (
     <Reveal className="mx-auto w-full max-w-7xl">
-      <div className="border-border border-t pt-8">
+      <CircuitDivider className="mb-8" />
+      <div>
         <div className="flex items-center gap-4">
           <span aria-hidden="true" className="bg-signal h-[14px] w-[4px]" />
           <p className="eyebrow text-foreground">{group}</p>

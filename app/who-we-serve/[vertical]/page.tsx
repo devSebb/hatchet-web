@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
+import { CircuitDivider } from "@/components/sections/CircuitDivider";
 import { CTASection } from "@/components/sections/CTASection";
 import { FeatureBlock } from "@/components/sections/FeatureBlock";
 import { PageHeader } from "@/components/sections/PageHeader";
@@ -174,7 +175,11 @@ function BrandsVertical({
       <PageHeader
         eyebrow={vertical.label}
         primaryCta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
-        secondaryCta={{ label: "See It In Action", href: "/solutions/discovery" }}
+        secondaryCta={{
+          label: "See It In Action",
+          href: "https://www.youtube.com/watch?v=XtzwA_VLr1o",
+          external: true,
+        }}
         subtitle={vertical.subtitle}
         title={vertical.title}
       />
@@ -208,7 +213,8 @@ function BrandsVertical({
       </section>
 
       {/* Proof — brands already entering gaming with Hatchet. */}
-      <section className="border-border surface-paper bg-background border-y px-4 py-14 sm:px-6 lg:px-8">
+      <CircuitDivider />
+      <section className="surface-paper bg-background px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto w-full max-w-7xl text-center">
           <p className="eyebrow text-muted">Trusted by brands entering gaming</p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
@@ -223,6 +229,7 @@ function BrandsVertical({
           </div>
         </div>
       </section>
+      <CircuitDivider pulseDelaySeconds={-4.5} />
 
       <CTASection
         body="Book a 30-minute demo — we'll pull the audience overlap data for your category."

@@ -38,7 +38,7 @@ const COMPARISON_ROWS: ComparisonRow[] = [
     description: "Real benchmarks for real budget conversations.",
   },
   {
-    title: "50M+ creators across 32 platforms",
+    title: "50M+ creators across 30+ platforms",
     description: "Live streaming and social in one unified view.",
   },
   {

@@ -361,28 +361,28 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
         <ul className="space-y-3 text-[13px] text-white/85">
           <li className="flex items-center gap-2.5">
             <CheckSquare
-              className="text-brand-highlight size-[18px] shrink-0"
+              className="text-brand size-[18px] shrink-0"
               aria-hidden
             />
             {COPY.meta.confirmation}
           </li>
           <li className="flex items-center gap-2.5">
             <Clock
-              className="text-brand-highlight size-[18px] shrink-0"
+              className="text-brand size-[18px] shrink-0"
               aria-hidden
             />
             {COPY.meta.minutes(durationMin)}
           </li>
           <li className="flex items-center gap-2.5">
             <VideoCamera
-              className="text-brand-highlight size-[18px] shrink-0"
+              className="text-brand size-[18px] shrink-0"
               aria-hidden
             />
             {COPY.meta.meeting}
           </li>
           <li className="flex items-start gap-2.5">
             <Globe
-              className="text-brand-highlight mt-0.5 size-[18px] shrink-0"
+              className="text-brand mt-0.5 size-[18px] shrink-0"
               aria-hidden
             />
             {tzPickerOpen ? (

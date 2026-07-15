@@ -225,7 +225,7 @@ function Pillars() {
                     width={1254}
                   />
                 </div>
-                <h3 className="font-display mt-10 text-2xl font-bold tracking-[-0.01em] sm:text-3xl">
+                <h3 className="font-display mt-10 text-2xl font-bold tracking-[-0.01em] text-balance sm:text-3xl lg:min-h-[2lh]">
                   {pillar.title}
                 </h3>
                 <p className="body text-muted mt-3">{pillar.body}</p>

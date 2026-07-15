@@ -2,6 +2,7 @@
   "name": "hatchet-web",
   "version": "0.1.0",
   "private": true,
+  "types": "./dist/types/components/index.d.ts",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

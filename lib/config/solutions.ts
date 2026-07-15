@@ -110,13 +110,13 @@ const rawSolutions = [
     eyebrow: "Find & Verify",
     title: "Find creators and games getting attention online.",
     subtitle:
-      "Search 55M+ creators across 32 platforms, filtering by what your partnership needs: Games played, audience makeup, language, and more.",
+      "Search 50M+ creators across 30+ platforms, filtering by what your partnership needs: Games played, audience makeup, language, and more.",
     primaryCta: bookDemoCta,
     secondaryCta: seeItInActionCta,
     heroIcon: "find",
     heroStats: [
-      { value: "55M+", label: "Creators" },
-      { value: "32", label: "Platforms" },
+      { value: "50M+", label: "Creators" },
+      { value: "30+", label: "Platforms" },
       { value: "10+ yrs", label: "Verified data" },
     ],
     features: [
@@ -169,7 +169,7 @@ const rawSolutions = [
       },
     },
     metaDescription:
-      "Find the right creators and the games that own streaming attention. Search 55M+ creators across 32 platforms, with AI smart search and fake-audience scoring built in.",
+      "Find the right creators and the games that own streaming attention. Search 50M+ creators across 30+ platforms, with AI smart search and fake-audience scoring built in.",
   },
   {
     slug: "intelligence",
