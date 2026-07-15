@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"],
+      "next/image": ["./.design-sync/stubs/next-image"],
+      "next/link": ["./.design-sync/stubs/next-link"]
+    }
+  }
+}

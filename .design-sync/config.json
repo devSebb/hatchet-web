@@ -1,0 +1,13 @@
+{
+  "projectId": "03cc3dbc-5d2c-4b0c-befb-30c3cf40bf21",
+  "pkg": "hatchet-web",
+  "globalName": "hatchetWeb",
+  "shape": "package",
+  "srcDir": "components",
+  "tsconfig": "./tsconfig.bundle.json",
+  "cssEntry": "./.design-sync/compiled-globals.css",
+  "runtimeFontPrefixes": ["Golos Text"],
+  "overrides": {
+    "Counter": { "cardMode": "column" }
+  }
+}
