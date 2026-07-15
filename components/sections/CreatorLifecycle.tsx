@@ -6,8 +6,11 @@ export function CreatorLifecycle({ className }: { className?: string }) {
     <section
       className={cn(
         "bg-background text-foreground relative overflow-hidden px-4 py-16 sm:px-6 lg:px-8 lg:py-24",
+        // Clears the sticky header (~105px) when linked to via /#how-it-works.
+        "scroll-mt-[120px]",
         className,
       )}
+      id="how-it-works"
     >
       <div
         aria-hidden="true"

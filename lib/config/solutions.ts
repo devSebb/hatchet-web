@@ -58,10 +58,12 @@ export type SolutionFeature = {
   name: string;
   headline: string;
   body: string[];
-  visual: SolutionVisualKey;
+  /** Omit for copy-only sections; the copy then runs full-width. */
+  visual?: SolutionVisualKey;
   /**
    * "stacked" puts the visual full-width under the copy (wide tables);
    * "split" is the default two-column layout, alternating sides.
+   * Ignored when there's no visual.
    */
   layout?: "stacked" | "split";
   subFeatures?: SolutionSubFeature[];
@@ -87,6 +89,13 @@ export type ProductSolution = {
     crossSell?: {
       title: string;
       body: string;
+      /**
+       * `phrase` must appear verbatim in `body` — it's the run of text that
+       * becomes the link. normalizeCrossSell throws at module load if it
+       * doesn't match, so a copy edit fails the build instead of silently
+       * rendering the sentence unlinked.
+       */
+      link: { phrase: string; href: string };
     };
   };
   metaDescription: string;
@@ -99,6 +108,12 @@ const seeItInActionCta = {
   label: "See It In Action",
   href: "https://www.youtube.com/watch?v=XtzwA_VLr1o",
   external: true,
+};
+
+/** Points at the home page's lifecycle orbital (CreatorLifecycle's anchor). */
+const lifecycleCrossSellLink = {
+  phrase: "Check out our other Solutions pages",
+  href: "/#how-it-works",
 };
 
 // Copy source: "Hatchet Website (8)" doc from the content team (July 2026).
@@ -122,7 +137,7 @@ const rawSolutions = [
     features: [
       {
         name: "Creator Discovery",
-        headline: "Every channel across every platform.",
+        headline: "Every creator across every platform.",
         body: [
           "Discover creators worth knowing about, ranked and ready to compare. Sort by hours watched, concurrent viewers, followers, chat activity, or social reach, then narrow things down by platform, game, language, and country, right through to niche filters like VTuber status and Twitch tags.",
           "Once you've decided someone's worth a closer look, their full profile is waiting: Demographics, stream history, audience overlap, even a minute-by-minute breakdown of their YouTube VODs.",
@@ -166,6 +181,7 @@ const rawSolutions = [
       crossSell: {
         title: "Looking For One Tool That Does It All?",
         body: "Discovering creators is just the first step in your full creator lifecycle. Check out our other Solutions pages to see how Hatchet can cut down your workload with full creator lifecycle management.",
+        link: lifecycleCrossSellLink,
       },
     },
     metaDescription:
@@ -229,11 +245,13 @@ const rawSolutions = [
     ],
     closingCta: {
       headline: "See what's driving performance.",
-      subtitle: "Book a demo and answer your toughest cross-platform questions.",
+      subtitle:
+        "Book a demo and answer your toughest cross-platform questions.",
       cta: bookDemoCta,
       crossSell: {
         title: "Looking For One Tool That Does It All?",
         body: "Generating insights is just the second step in your full creator lifecycle. Check out our other Solutions pages to see how Hatchet can cut down your workload with full creator lifecycle management.",
+        link: lifecycleCrossSellLink,
       },
     },
     metaDescription:
@@ -242,7 +260,7 @@ const rawSolutions = [
   {
     slug: "creator-community",
     name: "Creator Community",
-    eyebrow: "Execute",
+    eyebrow: "Build",
     title: "Build communities, from outreach to activation.",
     subtitle:
       "Manage your entire creator roster from one place. Brief, track, and coordinate campaigns end-to-end via a single, customizable hub. Every step from outreach to activation happens right where you already manage your roster, so nothing needs tracking twice.",
@@ -283,6 +301,7 @@ const rawSolutions = [
       crossSell: {
         title: "Looking For One Tool That Does It All?",
         body: "Building your creator community is just the third step in your full creator lifecycle. Check out our other Solutions pages to see how Hatchet can cut down your workload with full creator lifecycle management.",
+        link: lifecycleCrossSellLink,
       },
     },
     metaDescription:
@@ -292,18 +311,18 @@ const rawSolutions = [
     slug: "reporting",
     name: "Reporting",
     eyebrow: "Report",
-    title: "Report on your campaign performance automatically.",
+    title: "Your campaign report, auto-built.",
     subtitle:
-      "Every campaign metric in one dashboard. Generate export-ready reports your clients and stakeholders can understand without translation from you first, including per-creator breakdowns and audience engagement.",
+      "Every campaign metric in one dashboard. Per-creator breakdowns, engagement, and export-ready reports your clients or stakeholders can easily understand.",
     primaryCta: bookDemoCta,
     secondaryCta: seeItInActionCta,
     heroIcon: "report",
     features: [
       {
         name: "Campaigns",
-        headline: "Marketing activations that report themselves.",
+        headline: "Campaigns that report themselves.",
         body: [
-          "After setting up with keywords and creator labels, Hatchet auto-tracks every post, mention, hour, and viewer from there. One dashboard covers total reach, brand mentions, active creators, and video views, with creator and platform breakdowns. Export to Excel when you need it.",
+          "Set up with keywords and creator labels, and Hatchet auto-tracks every post, mention, hour, and viewer from there. One dashboard covers total reach, brand mentions, active creators, and video views, with a per-creator breakdown and platform drill-down. Export to Excel when you need it.",
         ],
         visual: "reporting-campaigns",
         layout: "stacked",
@@ -312,19 +331,27 @@ const rawSolutions = [
         name: "Custom Reports",
         headline: "Tailor-made by our analyst team.",
         body: [
-          "Chat with us to handcraft your own custom dashboard or PDF export, built around what your team reports on: Creator marketing, league & event tracking, team performance, sponsorship impact, and competitive analysis. If you picture it, we craft it.",
+          "PDF or custom Hatchet dashboard, built around what your team actually reports on: Influencer Marketing, League & Event, Team Performance, Brand Lift & Sponsorship, Competitive Analysis. Don't see what you need? We'll build it.",
         ],
         visual: "reporting-custom",
       },
+      {
+        name: "Customer Success",
+        headline: "Set up right. Never left on your own.",
+        body: [
+          "Every account starts with an onboarding call, so your team is live and confident from day one. From there, a Customer Success rep stays on as an open line — monthly check-ins, and adjustments as your reporting needs change.",
+        ],
+      },
     ],
     closingCta: {
-      headline: "See exactly what worked.",
+      headline: "Prove it worked.",
       subtitle:
-        "Book a demo and walk through a real campaign report, built the way yours will be.",
+        "Book a demo and see a real campaign report, built the way yours will be.",
       cta: bookDemoCta,
       crossSell: {
         title: "Looking For One Tool That Does It All?",
         body: "Reporting results is just the fourth step in your full creator lifecycle. Check out our other Solutions pages to see how Hatchet can cut down your workload with full creator lifecycle management.",
+        link: lifecycleCrossSellLink,
       },
     },
     metaDescription:
@@ -364,6 +391,31 @@ function normalizeFeature(feature: SolutionFeature): SolutionFeature {
   };
 }
 
+type CrossSell = NonNullable<ProductSolution["closingCta"]["crossSell"]>;
+
+/** normalizeBrand rewrites the body, so the phrase is checked post-normalize —
+ *  that's the string CrossSellNote actually splits on. */
+function normalizeCrossSell(
+  crossSell: CrossSell,
+  slug: SolutionSlug,
+): CrossSell {
+  const body = normalizeBrand(crossSell.body);
+  const phrase = normalizeBrand(crossSell.link.phrase);
+
+  if (!body.includes(phrase)) {
+    throw new Error(
+      `[solutions:${slug}] crossSell.link.phrase ${JSON.stringify(phrase)} is not present in crossSell.body. ` +
+        "The cross-sell link is rendered by splitting the body on that phrase — fix the phrase or the copy so they match.",
+    );
+  }
+
+  return {
+    title: normalizeBrand(crossSell.title),
+    body,
+    link: { phrase, href: crossSell.link.href },
+  };
+}
+
 function normalizeSolution(
   solution: Omit<ProductSolution, "href">,
 ): ProductSolution {
@@ -383,10 +435,7 @@ function normalizeSolution(
       subtitle: normalizeBrand(solution.closingCta.subtitle),
       cta: normalizeCta(solution.closingCta.cta),
       crossSell: solution.closingCta.crossSell
-        ? {
-            title: normalizeBrand(solution.closingCta.crossSell.title),
-            body: normalizeBrand(solution.closingCta.crossSell.body),
-          }
+        ? normalizeCrossSell(solution.closingCta.crossSell, solution.slug)
         : undefined,
     },
     metaDescription: normalizeBrand(solution.metaDescription),

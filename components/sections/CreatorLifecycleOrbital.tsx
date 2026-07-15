@@ -51,7 +51,7 @@ const STAGES: Stage[] = [
   },
   {
     num: "03",
-    stage: "Execute",
+    stage: "Build",
     tagline:
       "Manage your entire creator roster from one place. Brief, track, and coordinate campaigns end-to-end via a single, customizable hub.",
     ctaLabel: "Creator Community",

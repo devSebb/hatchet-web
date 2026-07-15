@@ -190,7 +190,7 @@ function SubFeatureGrid({ feature }: { feature: SolutionFeature }) {
 
 /** One numbered feature section. "stacked" runs copy → full-width visual →
  *  sub-feature grid (wide tables); "split" is a two-column block whose visual
- *  alternates sides down the page. */
+ *  alternates sides down the page. A feature with no visual is copy-only. */
 function FeatureSection({
   feature,
   index,
@@ -201,6 +201,17 @@ function FeatureSection({
   splitIndex: number;
 }) {
   const isStacked = feature.layout === "stacked";
+
+  if (!feature.visual) {
+    return (
+      <div className="mx-auto w-full max-w-7xl">
+        <Reveal>
+          <FeatureHeader feature={feature} index={index} />
+        </Reveal>
+        <SubFeatureGrid feature={feature} />
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto w-full max-w-7xl">
@@ -263,14 +274,16 @@ function GroupHeading({
 }
 
 /** The PDF's "Looking For One Tool That Does It All?" lifecycle cross-sell,
- *  rendered under the closing CTA with a link back to the Solutions index. */
+ *  rendered under the closing CTA with a link to the home page's lifecycle
+ *  orbital. The phrase is guaranteed to be present in the body by
+ *  normalizeCrossSell, so the split always yields a lead and a tail. */
 function CrossSellNote({
   crossSell,
 }: {
   crossSell: NonNullable<ProductSolution["closingCta"]["crossSell"]>;
 }) {
-  const linkPhrase = "Check out our other Solutions pages";
-  const [lead, tail] = crossSell.body.split(linkPhrase);
+  const { phrase, href } = crossSell.link;
+  const [lead, tail] = crossSell.body.split(phrase);
 
   return (
     <section className="bg-background px-4 pb-20 sm:px-6 lg:px-8 lg:pb-28">
@@ -278,17 +291,13 @@ function CrossSellNote({
         <p className="eyebrow text-signal">{crossSell.title}</p>
         <p className="body text-muted mt-4">
           {lead}
-          {tail !== undefined ? (
-            <>
-              <Link
-                className="text-foreground hover:text-signal font-medium underline underline-offset-4"
-                href="/solutions"
-              >
-                {linkPhrase}
-              </Link>
-              {tail}
-            </>
-          ) : null}
+          <Link
+            className="text-foreground hover:text-signal font-medium underline underline-offset-4"
+            href={href}
+          >
+            {phrase}
+          </Link>
+          {tail}
         </p>
       </Reveal>
     </section>
@@ -303,7 +312,8 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
     notFound();
   }
 
-  // Split sections alternate their visual side; stacked sections don't count.
+  // Split sections alternate their visual side; sections without a split visual
+  // (stacked or copy-only) don't count.
   let splitCount = 0;
 
   return (
@@ -320,7 +330,8 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
       {solution.features.map((feature, index) => {
         const previousGroup = solution.features[index - 1]?.group;
         const showGroup = feature.group && feature.group !== previousGroup;
-        const splitIndex = feature.layout === "stacked" ? 0 : splitCount++;
+        const splitIndex =
+          feature.layout === "stacked" || !feature.visual ? 0 : splitCount++;
 
         return (
           <section
