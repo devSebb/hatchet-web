@@ -347,62 +347,85 @@ function HistoryVisual() {
 
 // ── 03 · Industry leader ───────────────────────────────────────────────────
 
-// `box` sizes each logo's slot. Riot stays the baseline size; everything
-// else is larger, with EA and Activision Blizzard largest of all.
-const TRUST_LOGOS: { name: string; src: string; box: string }[] = [
+// Each logo is sized by HEIGHT with an intrinsic width (w-auto) — never a fixed
+// box. Fixed-width slots + object-contain used to leave the square (Blizzard)
+// and tall (Kings League) marks floating in ~56px of dead air per side, while
+// the wide wordmarks filled theirs; since Kings League ends the track, its dead
+// air landed on the wrap seam and read as a ~137px hole in the loop.
+//
+// `height` is optical, not uniform: a square mark must be taller than a wide
+// wordmark to carry the same visual weight. Derived from h = 67 / sqrt(aspect)
+// (equal rendered area), clamped to 48px so the square/tall marks don't tower.
+// `width`/`heightPx` are the real file dimensions — keep in sync if re-exported.
+const TRUST_LOGOS: {
+  name: string;
+  src: string;
+  width: number;
+  height: number;
+  size: string;
+}[] = [
   {
     name: "Riot Games",
     src: "/images/logos/riot-games.png",
-    box: "h-12 w-32 sm:h-14 sm:w-36",
+    width: 300,
+    height: 95,
+    size: "h-[38px]",
   },
   {
     name: "EA",
     src: "/images/logos/ea.png",
-    box: "h-20 w-44 sm:h-24 sm:w-52",
+    width: 444,
+    height: 66,
+    size: "h-[26px]",
   },
   {
     name: "Blizzard",
     src: "/images/logos/blizzard.png",
-    box: "h-20 w-44 sm:h-24 sm:w-52",
+    width: 1500,
+    height: 1500,
+    size: "h-[48px]",
   },
   {
     name: "PlayStation",
     src: "/images/logos/sony.png",
-    box: "h-16 w-40 sm:h-20 sm:w-44",
+    width: 555,
+    height: 165,
+    size: "h-[36px]",
   },
   {
     name: "BLAST",
     src: "/images/logos/BLAST.png",
-    box: "h-16 w-40 sm:h-20 sm:w-44",
+    width: 1880,
+    height: 257,
+    size: "h-[25px]",
   },
   {
     name: "Kings League",
     src: "/images/logos/Kingsleague_logo.png",
-    box: "h-16 w-40 sm:h-20 sm:w-44",
+    width: 277,
+    height: 361,
+    size: "h-[48px]",
   },
 ];
 
+// gap-[56px] between logos plus a matching pr-[56px] tail: the trailing padding
+// is what makes the gap across the wrap seam identical to every other gap, so
+// the loop reads as continuous rather than restarting.
 function TrustLogosTrack({ ariaHidden = false }: { ariaHidden?: boolean }) {
   return (
     <div
       aria-hidden={ariaHidden || undefined}
-      className="flex shrink-0 items-center"
+      className="flex shrink-0 items-center gap-[56px] pr-[56px]"
     >
-      {TRUST_LOGOS.map(({ name, src, box }) => (
-        <div
-          className="flex shrink-0 items-center justify-center px-4 sm:px-5"
+      {TRUST_LOGOS.map(({ name, src, width, height, size }) => (
+        <Image
+          alt={`${name} logo`}
+          className={cn("w-auto shrink-0", size)}
+          height={height}
           key={`${ariaHidden ? "dup-" : ""}${name}`}
-        >
-          <span className={cn("relative block", box)}>
-            <Image
-              alt={`${name} logo`}
-              className="object-contain"
-              fill
-              sizes="220px"
-              src={src}
-            />
-          </span>
-        </div>
+          src={src}
+          width={width}
+        />
       ))}
     </div>
   );
@@ -410,15 +433,15 @@ function TrustLogosTrack({ ariaHidden = false }: { ariaHidden?: boolean }) {
 
 function TrustLogosVisual() {
   return (
-    <VisualCard>
-      <p className="eyebrow text-muted text-[0.65rem]">Trusted by</p>
-      <div className="logo-marquee-mask group mt-6 -mx-6 overflow-hidden">
+    <div>
+      <p className="eyebrow text-brand text-[0.65rem]">Trusted by</p>
+      <div className="logo-marquee-mask-soft group mt-6 overflow-hidden">
         <div className="animate-logo-marquee flex w-max group-hover:[animation-play-state:paused]">
           <TrustLogosTrack />
           <TrustLogosTrack ariaHidden />
         </div>
       </div>
-    </VisualCard>
+    </div>
   );
 }
 

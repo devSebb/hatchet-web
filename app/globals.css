@@ -607,6 +607,28 @@
     );
   }
 
+  /* Wider fade for marquees that float directly on the page with no card frame
+     around them (the why-hatchet trust logos). With no border to stop the eye,
+     the logos need to dissolve well before the track's edge rather than clip.
+     .logo-marquee-mask keeps its tighter 6% fade for the full-bleed LogoWall,
+     where the track edges already sit off the viewport. */
+  .logo-marquee-mask-soft {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 14%,
+      black 86%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 14%,
+      black 86%,
+      transparent
+    );
+  }
+
   .animate-logo-marquee {
     animation: logo-marquee 42s linear infinite;
   }
