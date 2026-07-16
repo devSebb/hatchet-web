@@ -1,6 +1,6 @@
 "use client";
 
-import { type CSSProperties, useEffect, useId, useRef } from "react";
+import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
 
 import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import { cn } from "@/lib/utils";
@@ -36,6 +36,11 @@ const TRACE_WIDTH: Record<Tier, number> = {
   power: 3.2,
 };
 
+// Authored board size. Tall sections repeat the board down the run in
+// BOARD_H-tall tiles (see the resize effect below).
+const BOARD_W = 1440;
+const BOARD_H = 900;
+
 // ViewBox 1440×900, slice-scaled. Traces are authored per region: long
 // continuous runs sweep through dense via fields (the former chip zones) so
 // pulses read as signals travelling across the whole board.
@@ -62,17 +67,29 @@ const TRACES: { d: string; tier: Tier }[] = [
   { d: "M 560 900 V 812 l 36 -36 H 700", tier: "signal" },
   { d: "M 640 900 V 840 l 28 -28 H 780 l 36 -36 V 700", tier: "medium" },
   // Top-right via field: long snakes climbing from mid-board to the top edge.
-  { d: "M 1080 260 V 140 l 40 -40 H 1276 l 16 -16 V 36 l -24 -24 V 0", tier: "signal" },
+  {
+    d: "M 1080 260 V 140 l 40 -40 H 1276 l 16 -16 V 36 l -24 -24 V 0",
+    tier: "signal",
+  },
   { d: "M 1244 116 H 1136 l -40 40 V 276 l -28 28 H 1040", tier: "signal" },
-  { d: "M 1000 352 H 1080 l 32 -32 V 172 l 40 -40 H 1268 l 48 -48 V 0", tier: "medium" },
+  {
+    d: "M 1000 352 H 1080 l 32 -32 V 172 l 40 -40 H 1268 l 48 -48 V 0",
+    tier: "medium",
+  },
   { d: "M 1064 0 V 180 l -32 32 V 280", tier: "signal" },
   { d: "M 1440 40 H 1400 l -24 24 V 84", tier: "signal" },
   // Right edge, mid-board.
   { d: "M 1440 470 H 1300 l -40 -40 V 330", tier: "medium" },
   { d: "M 1440 520 H 1332 l -32 32 V 640", tier: "signal" },
   // Bottom-right via field: sweeping runs from mid-board to the bottom edge.
-  { d: "M 956 520 V 564 l 28 28 H 1096 l 36 36 V 776 l 8 8 V 840 l 24 24 H 1252", tier: "signal" },
-  { d: "M 972 484 V 548 l 28 28 H 1120 l 36 36 V 776 l 8 8 V 820 l 28 28 H 1324 l 24 24 V 900", tier: "medium" },
+  {
+    d: "M 956 520 V 564 l 28 28 H 1096 l 36 36 V 776 l 8 8 V 840 l 24 24 H 1252",
+    tier: "signal",
+  },
+  {
+    d: "M 972 484 V 548 l 28 28 H 1120 l 36 36 V 776 l 8 8 V 820 l 28 28 H 1324 l 24 24 V 900",
+    tier: "medium",
+  },
   { d: "M 988 448 V 532 l 28 28 H 1144 l 36 36 V 752 l 20 20", tier: "medium" },
   { d: "M 1116 724 H 1000 l -40 40 H 900", tier: "signal" },
   { d: "M 1116 748 H 1016 l -40 40 V 900", tier: "signal" },
@@ -157,18 +174,33 @@ const SILK_FONT =
 const NEGATIVE_SPACE_MASK =
   "radial-gradient(120% 95% at 50% 32%, transparent 0%, transparent 24%, #000 66%)";
 
+// Tiled (tall) sections only. NEGATIVE_SPACE_MASK is a single ellipse pinned to
+// the section's upper-middle: copy near the top sits in its clear centre, but
+// copy further down sits out in the falloff, where the mask is mostly opaque
+// and the board reads straight through the text. One board never reached that
+// far, so it never showed. A repeated one does — hence a full-height keep-out
+// corridor over the centre column (max-w-3xl ≈ 23%–77% at desktop), leaving the
+// board to frame the copy from the margins the way it already does up top.
+const COPY_CORRIDOR_MASK =
+  "linear-gradient(to right, #000 0%, #000 7%, transparent 23%, transparent 77%, #000 93%, #000 100%)";
+
 // Pulses stay strictly in the red family (never the orange highlight):
 // core brand red, a brighter red for punch, and the soft red for variety.
-const PULSE_COLORS = [
-  "var(--brand)",
-  "#e23c42",
-  "var(--brand-soft)",
-];
+const PULSE_COLORS = ["var(--brand)", "#e23c42", "var(--brand-soft)"];
 
 // Board fade for navy→white gradient sections: fully present on the dark
 // top, fully gone before the background turns light.
 const FADE_BOTTOM_MASK =
   "linear-gradient(to bottom, #000 0%, #000 32%, transparent 58%)";
+
+// Tiled (tall) sections only. NEGATIVE_SPACE_MASK keeps the board clear of the
+// copy by punching a hole around the section's upper-middle, but it is a single
+// radial — everything past it reads at full strength, so repeated tiles would
+// sit bright behind the copy that runs down the section. Damp the run as it
+// descends. A ramp rather than a step: a flat per-tile opacity would band at
+// the seams.
+const TILE_DAMP_MASK =
+  "linear-gradient(to bottom, #000 0%, #000 42%, rgba(0,0,0,0.38) 68%, rgba(0,0,0,0.28) 100%)";
 
 export function CircuitField({
   density = "quiet",
@@ -193,24 +225,47 @@ export function CircuitField({
   const viaHitCache = useRef(
     new Map<string, { via: number; frac: number }[]>(),
   );
-  const svgRef = useRef<SVGSVGElement>(null);
+  const boardId = useId();
+  const [tiling, setTiling] = useState({
+    viewBoxHeight: BOARD_H,
+    tiles: 1,
+    fit: "xMidYMid slice",
+  });
 
   // Sections vary from short bands to 2000px-tall columns. Cover-cropping
   // ("slice") a tall section blows the board up ~2× and cuts off the chips at
-  // the sides, so tall sections instead pin the full-width board to the top
-  // at authored scale; short/wide sections keep the cover-crop.
+  // the sides, so tall sections instead pin the full-width board to the top at
+  // authored scale — but one board is only BOARD_H tall, which used to leave
+  // everything below it bare. Tall sections therefore grow the viewBox to the
+  // section's own aspect and repeat the board down the run, so the field fills
+  // the full height at authored scale. Short/wide sections keep the cover-crop.
   useEffect(() => {
     const root = rootRef.current;
-    const svg = svgRef.current;
-    if (!root || !svg) {
+    if (!root) {
       return;
     }
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
       const aspect = height > 0 ? width / height : 1.6;
-      svg.setAttribute(
-        "preserveAspectRatio",
-        aspect < 1.45 ? "xMidYMin meet" : "xMidYMid slice",
+      const next =
+        aspect < 1.45 && width > 0
+          ? (() => {
+              // Board units needed to span the section at authored scale.
+              const viewBoxHeight = Math.ceil((height / width) * BOARD_W);
+              return {
+                viewBoxHeight,
+                tiles: Math.ceil(viewBoxHeight / BOARD_H),
+                fit: "xMidYMin meet",
+              };
+            })()
+          : { viewBoxHeight: BOARD_H, tiles: 1, fit: "xMidYMid slice" };
+
+      setTiling((cur) =>
+        cur.viewBoxHeight === next.viewBoxHeight &&
+        cur.tiles === next.tiles &&
+        cur.fit === next.fit
+          ? cur
+          : next,
       );
     });
     observer.observe(root);
@@ -443,6 +498,25 @@ export function CircuitField({
     ...style,
   } as CSSProperties;
 
+  // fadeBottom owns the svg mask where it applies (gradient hero); otherwise a
+  // tiled run damps as it descends so it stays behind the copy, not on top of
+  // it. Untiled sections keep the bare board.
+  const svgMask = fadeBottom
+    ? FADE_BOTTOM_MASK
+    : tiling.tiles > 1
+      ? TILE_DAMP_MASK
+      : undefined;
+
+  // Nested rather than composited onto rootStyle: stacked masks multiply, which
+  // gets the radial ∩ corridor keep-out without mask-composite's compat spread.
+  const corridorStyle: CSSProperties | undefined =
+    tiling.tiles > 1
+      ? {
+          maskImage: COPY_CORRIDOR_MASK,
+          WebkitMaskImage: COPY_CORRIDOR_MASK,
+        }
+      : undefined;
+
   return (
     <div
       aria-hidden="true"
@@ -453,147 +527,175 @@ export function CircuitField({
       ref={rootRef}
       style={rootStyle}
     >
-      <svg
-        className="h-full w-full"
-        fill="none"
-        preserveAspectRatio="xMidYMid slice"
-        ref={svgRef}
-        style={
-          fadeBottom
-            ? {
-                maskImage: FADE_BOTTOM_MASK,
-                WebkitMaskImage: FADE_BOTTOM_MASK,
-              }
-            : undefined
-        }
-        viewBox="0 0 1440 900"
-      >
-        <defs>
-          <pattern
-            height={7}
-            id={patternId}
-            patternTransform="rotate(45)"
-            patternUnits="userSpaceOnUse"
-            width={7}
-          >
-            <line
-              stroke="var(--cf-trace-color)"
-              strokeWidth={1}
-              x1={0}
-              x2={0}
-              y1={0}
-              y2={7}
-            />
-          </pattern>
-        </defs>
-
-        {/* Hatched ground pour, top-left corner (45° chamfered like a real keep-out). */}
-        <path
-          d="M 0 0 H 104 V 40 L 64 80 H 0 Z"
-          fill={`url(#${patternId})`}
-          stroke="var(--cf-trace-color)"
-          strokeWidth={1.2}
-        />
-        <text
-          fill="var(--cf-silk-color)"
-          fontFamily={SILK_FONT}
-          fontSize={9}
-          letterSpacing={1}
-          x={14}
-          y={96}
+      <div className="h-full w-full" style={corridorStyle}>
+        <svg
+          className="h-full w-full"
+          fill="none"
+          preserveAspectRatio={tiling.fit}
+          style={
+            svgMask
+              ? {
+                  maskImage: svgMask,
+                  WebkitMaskImage: svgMask,
+                }
+              : undefined
+          }
+          viewBox={`0 0 ${BOARD_W} ${tiling.viewBoxHeight}`}
         >
-          GND
-        </text>
+          <defs>
+            <pattern
+              height={7}
+              id={patternId}
+              patternTransform="rotate(45)"
+              patternUnits="userSpaceOnUse"
+              width={7}
+            >
+              <line
+                stroke="var(--cf-trace-color)"
+                strokeWidth={1}
+                x1={0}
+                x2={0}
+                y1={0}
+                y2={7}
+              />
+            </pattern>
+          </defs>
 
-        {/* Copper traces, three width tiers. */}
-        {TRACES.map(({ d, tier }) => (
-          <path
-            d={d}
-            key={d}
-            stroke={
-              tier === "power"
-                ? "var(--cf-trace-strong)"
-                : "var(--cf-trace-color)"
-            }
-            strokeWidth={TRACE_WIDTH[tier]}
-          />
-        ))}
+          <g id={boardId}>
+            {/* Hatched ground pour, top-left corner (45° chamfered like a real keep-out). */}
+            <path
+              d="M 0 0 H 104 V 40 L 64 80 H 0 Z"
+              fill={`url(#${patternId})`}
+              stroke="var(--cf-trace-color)"
+              strokeWidth={1.2}
+            />
+            <text
+              fill="var(--cf-silk-color)"
+              fontFamily={SILK_FONT}
+              fontSize={9}
+              letterSpacing={1}
+              x={14}
+              y={96}
+            >
+              GND
+            </text>
 
-        {/* Fiducial marks: annular ring + crosshair. */}
-        {FIDUCIALS.map(([cx, cy]) => (
-          <g key={`fid-${cx}-${cy}`} stroke="var(--cf-via-color)">
-            <circle cx={cx} cy={cy} r={5} strokeWidth={1.2} />
-            <line strokeWidth={1} x1={cx - 8} x2={cx - 5} y1={cy} y2={cy} />
-            <line strokeWidth={1} x1={cx + 5} x2={cx + 8} y1={cy} y2={cy} />
-            <line strokeWidth={1} x1={cx} x2={cx} y1={cy - 8} y2={cy - 5} />
-            <line strokeWidth={1} x1={cx} x2={cx} y1={cy + 5} y2={cy + 8} />
-          </g>
-        ))}
+            {/* Copper traces, three width tiers. */}
+            {TRACES.map(({ d, tier }) => (
+              <path
+                d={d}
+                key={d}
+                stroke={
+                  tier === "power"
+                    ? "var(--cf-trace-strong)"
+                    : "var(--cf-trace-color)"
+                }
+                strokeWidth={TRACE_WIDTH[tier]}
+              />
+            ))}
 
-        {/* Two-pad SMD footprints on trace runs, with silkscreen designators. */}
-        {SMD_PADS.map(({ x, y, vertical, label }) => (
-          <g key={label}>
-            {vertical ? (
-              <>
-                <rect
-                  fill="var(--cf-pad-color)"
-                  height={7}
-                  rx={1}
-                  width={10}
-                  x={x - 5}
-                  y={y - 10.5}
+            {/* Fiducial marks: annular ring + crosshair. */}
+            {FIDUCIALS.map(([cx, cy]) => (
+              <g key={`fid-${cx}-${cy}`} stroke="var(--cf-via-color)">
+                <circle cx={cx} cy={cy} r={5} strokeWidth={1.2} />
+                <line strokeWidth={1} x1={cx - 8} x2={cx - 5} y1={cy} y2={cy} />
+                <line strokeWidth={1} x1={cx + 5} x2={cx + 8} y1={cy} y2={cy} />
+                <line strokeWidth={1} x1={cx} x2={cx} y1={cy - 8} y2={cy - 5} />
+                <line strokeWidth={1} x1={cx} x2={cx} y1={cy + 5} y2={cy + 8} />
+              </g>
+            ))}
+
+            {/* Two-pad SMD footprints on trace runs, with silkscreen designators. */}
+            {SMD_PADS.map(({ x, y, vertical, label }) => (
+              <g key={label}>
+                {vertical ? (
+                  <>
+                    <rect
+                      fill="var(--cf-pad-color)"
+                      height={7}
+                      rx={1}
+                      width={10}
+                      x={x - 5}
+                      y={y - 10.5}
+                    />
+                    <rect
+                      fill="var(--cf-pad-color)"
+                      height={7}
+                      rx={1}
+                      width={10}
+                      x={x - 5}
+                      y={y + 3.5}
+                    />
+                    <rect
+                      fill="var(--cf-chip-fill)"
+                      height={8}
+                      width={7}
+                      x={x - 3.5}
+                      y={y - 4}
+                    />
+                    <text
+                      fill="var(--cf-silk-color)"
+                      fontFamily={SILK_FONT}
+                      fontSize={9}
+                      letterSpacing={0.5}
+                      x={x + 10}
+                      y={y + 3}
+                    >
+                      {label}
+                    </text>
+                  </>
+                ) : (
+                  <>
+                    <rect
+                      fill="var(--cf-pad-color)"
+                      height={10}
+                      rx={1}
+                      width={7}
+                      x={x - 10.5}
+                      y={y - 5}
+                    />
+                    <rect
+                      fill="var(--cf-pad-color)"
+                      height={10}
+                      rx={1}
+                      width={7}
+                      x={x + 3.5}
+                      y={y - 5}
+                    />
+                    <rect
+                      fill="var(--cf-chip-fill)"
+                      height={7}
+                      width={8}
+                      x={x - 4}
+                      y={y - 3.5}
+                    />
+                    <text
+                      fill="var(--cf-silk-color)"
+                      fontFamily={SILK_FONT}
+                      fontSize={9}
+                      letterSpacing={0.5}
+                      textAnchor="middle"
+                      x={x}
+                      y={y - 11}
+                    >
+                      {label}
+                    </text>
+                  </>
+                )}
+              </g>
+            ))}
+
+            {/* Labeled test points. */}
+            {TEST_POINTS.map(({ x, y, label }) => (
+              <g key={label}>
+                <circle
+                  cx={x}
+                  cy={y}
+                  r={4.5}
+                  stroke="var(--cf-via-color)"
+                  strokeWidth={1.6}
                 />
-                <rect
-                  fill="var(--cf-pad-color)"
-                  height={7}
-                  rx={1}
-                  width={10}
-                  x={x - 5}
-                  y={y + 3.5}
-                />
-                <rect
-                  fill="var(--cf-chip-fill)"
-                  height={8}
-                  width={7}
-                  x={x - 3.5}
-                  y={y - 4}
-                />
-                <text
-                  fill="var(--cf-silk-color)"
-                  fontFamily={SILK_FONT}
-                  fontSize={9}
-                  letterSpacing={0.5}
-                  x={x + 10}
-                  y={y + 3}
-                >
-                  {label}
-                </text>
-              </>
-            ) : (
-              <>
-                <rect
-                  fill="var(--cf-pad-color)"
-                  height={10}
-                  rx={1}
-                  width={7}
-                  x={x - 10.5}
-                  y={y - 5}
-                />
-                <rect
-                  fill="var(--cf-pad-color)"
-                  height={10}
-                  rx={1}
-                  width={7}
-                  x={x + 3.5}
-                  y={y - 5}
-                />
-                <rect
-                  fill="var(--cf-chip-fill)"
-                  height={7}
-                  width={8}
-                  x={x - 4}
-                  y={y - 3.5}
-                />
+                <circle cx={x} cy={y} fill="var(--cf-pad-color)" r={1.4} />
                 <text
                   fill="var(--cf-silk-color)"
                   fontFamily={SILK_FONT}
@@ -601,114 +703,109 @@ export function CircuitField({
                   letterSpacing={0.5}
                   textAnchor="middle"
                   x={x}
-                  y={y - 11}
+                  y={y + 18}
                 >
                   {label}
                 </text>
-              </>
-            )}
-          </g>
-        ))}
+              </g>
+            ))}
 
-        {/* Labeled test points. */}
-        {TEST_POINTS.map(({ x, y, label }) => (
-          <g key={label}>
-            <circle
-              cx={x}
-              cy={y}
-              r={4.5}
-              stroke="var(--cf-via-color)"
-              strokeWidth={1.6}
-            />
-            <circle cx={x} cy={y} fill="var(--cf-pad-color)" r={1.4} />
+            {/* Board-edge silkscreen. */}
             <text
               fill="var(--cf-silk-color)"
               fontFamily={SILK_FONT}
-              fontSize={9}
-              letterSpacing={0.5}
-              textAnchor="middle"
-              x={x}
-              y={y + 18}
+              fontSize={10}
+              letterSpacing={1.5}
+              x={420}
+              y={878}
             >
-              {label}
+              HTCH-01 · REV 2.6
             </text>
+
+            {/* Via donuts (annular ring + open hole). */}
+            {VIAS.map(([cx, cy]) => (
+              <circle
+                cx={cx}
+                cy={cy}
+                key={`${cx}-${cy}`}
+                r={3.2}
+                stroke="var(--cf-via-color)"
+                strokeWidth={1.7}
+              />
+            ))}
+            {/* Via glow rings, bloomed by passing pulses. */}
+            {VIAS.map(([cx, cy], i) => (
+              <circle
+                cx={cx}
+                cy={cy}
+                key={`glow-${cx}-${cy}`}
+                r={3.2}
+                ref={(el) => {
+                  viaGlowRefs.current[i] = el;
+                }}
+                stroke="currentColor"
+                strokeWidth={2}
+                style={{
+                  opacity: 0,
+                  filter: "drop-shadow(0 0 5px currentColor)",
+                }}
+              />
+            ))}
+
+            {Array.from({ length: pulseCount }, (_, i) => (
+              <path
+                fill="none"
+                key={`trail-${i}`}
+                ref={(el) => {
+                  trailRefs.current[i] = el;
+                }}
+                strokeLinecap="round"
+                strokeWidth={2.4}
+                style={{
+                  opacity: 0,
+                  filter: "drop-shadow(0 0 6px currentColor)",
+                }}
+              />
+            ))}
+            {Array.from({ length: pulseCount }, (_, i) => (
+              <circle
+                cx={0}
+                cy={0}
+                fill="var(--cf-pulse-color)"
+                key={`pulse-${i}`}
+                r={4}
+                ref={(el) => {
+                  pulseRefs.current[i] = el;
+                }}
+                style={{
+                  opacity: 0,
+                  filter: "drop-shadow(0 0 8px var(--cf-pulse-color))",
+                }}
+              />
+            ))}
           </g>
-        ))}
 
-        {/* Board-edge silkscreen. */}
-        <text
-          fill="var(--cf-silk-color)"
-          fontFamily={SILK_FONT}
-          fontSize={10}
-          letterSpacing={1.5}
-          x={420}
-          y={878}
-        >
-          HTCH-01 · REV 2.6
-        </text>
+          {/* Tall sections: repeat the board down the run. Odd tiles are mirrored
+            vertically so each seam meets its own edge — traces line up across
+            the join instead of butting into an unrelated row. <use> mirrors the
+            live board, so pulses travel every tile. */}
+          {Array.from({ length: tiling.tiles - 1 }, (_, i) => {
+            const tile = i + 1;
 
-        {/* Via donuts (annular ring + open hole). */}
-        {VIAS.map(([cx, cy]) => (
-          <circle
-            cx={cx}
-            cy={cy}
-            key={`${cx}-${cy}`}
-            r={3.2}
-            stroke="var(--cf-via-color)"
-            strokeWidth={1.7}
-          />
-        ))}
-        {/* Via glow rings, bloomed by passing pulses. */}
-        {VIAS.map(([cx, cy], i) => (
-          <circle
-            cx={cx}
-            cy={cy}
-            key={`glow-${cx}-${cy}`}
-            r={3.2}
-            ref={(el) => {
-              viaGlowRefs.current[i] = el;
-            }}
-            stroke="currentColor"
-            strokeWidth={2}
-            style={{
-              opacity: 0,
-              filter: "drop-shadow(0 0 5px currentColor)",
-            }}
-          />
-        ))}
-
-        {Array.from({ length: pulseCount }, (_, i) => (
-          <path
-            fill="none"
-            key={`trail-${i}`}
-            ref={(el) => {
-              trailRefs.current[i] = el;
-            }}
-            strokeLinecap="round"
-            strokeWidth={2.4}
-            style={{
-              opacity: 0,
-              filter: "drop-shadow(0 0 6px currentColor)",
-            }}
-          />
-        ))}
-        {Array.from({ length: pulseCount }, (_, i) => (
-          <circle
-            cx={0}
-            cy={0}
-            fill="var(--cf-pulse-color)"
-            key={`pulse-${i}`}
-            r={4}
-            ref={(el) => {
-              pulseRefs.current[i] = el;
-            }}
-            style={{
-              opacity: 0,
-              filter: "drop-shadow(0 0 8px var(--cf-pulse-color))",
-            }}
-          />
-        ))}
-      </svg>
+            return (
+              <use
+                href={`#${boardId}`}
+                key={tile}
+                transform={
+                  tile % 2 === 1
+                    ? `translate(0 ${(tile + 1) * BOARD_H}) scale(1 -1)`
+                    : `translate(0 ${tile * BOARD_H})`
+                }
+              />
+            );
+          })}
+        </svg>
+      </div>
     </div>
   );
 }

@@ -139,7 +139,6 @@ const testimonials = [
     role: "Director of insights",
     company: "Riot Games",
     logo: "Riot Games",
-    logoSrc: "/images/logos/riot-games.png",
   },
   {
     quote:
@@ -148,7 +147,6 @@ const testimonials = [
     role: "Research lead",
     company: "Microsoft",
     logo: "Microsoft",
-    logoSrc: "/images/logos/microsoft.png",
   },
   {
     quote:
@@ -157,7 +155,6 @@ const testimonials = [
     role: "Partnerships strategy",
     company: "NASCAR",
     logo: "NASCAR",
-    logoSrc: "/images/logos/nascar.png",
   },
   {
     quote:
@@ -166,15 +163,14 @@ const testimonials = [
     role: "Head of Esports Insights",
     company: "Riot Games",
     logo: "Riot Games",
-    logoSrc: "/images/logos/riot-games.png",
   },
   {
     quote:
       "Stream Hatchet's ability to help us validate data from our internal and partner led streaming activations proves time and time again to be a critical tool and how we capture, report and glean insights from our gaming activations.",
     name: "Eric Pommer",
     role: "Lead, Technical Marketing Analytics",
-    company: "Nestle",
-    logo: "Nestle",
+    company: "Nestlé",
+    logo: "Nestlé",
   },
   {
     quote:

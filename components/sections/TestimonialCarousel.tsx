@@ -1,21 +1,24 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react/ssr";
 
+import { CompanyLogo } from "@/components/brand/CompanyLogo";
 import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import { Button } from "@/components/ui/button";
+import { logoSlugForName } from "@/lib/brand/logos";
 import { cn } from "@/lib/utils";
 
+// `logo` doubles as the registry lookup key: a card shows the real mark once
+// lib/brand/logos.ts carries one under that exact name, and the styled text tile
+// until then. Nothing to wire per testimonial.
 export type TestimonialItem = {
   quote: string;
   name: string;
   role: string;
   company: string;
   logo: string;
-  logoSrc?: string;
   headshot?: string;
 };
 
@@ -34,7 +37,6 @@ const defaultTestimonials: TestimonialItem[] = [
     role: "Director of insights",
     company: "Riot Games",
     logo: "Riot Games",
-    logoSrc: "/images/logos/riot-games.png",
   },
   {
     quote:
@@ -43,7 +45,6 @@ const defaultTestimonials: TestimonialItem[] = [
     role: "Research lead",
     company: "Microsoft",
     logo: "Microsoft",
-    logoSrc: "/images/logos/microsoft.png",
   },
   {
     quote:
@@ -52,7 +53,6 @@ const defaultTestimonials: TestimonialItem[] = [
     role: "Partnerships strategy",
     company: "NASCAR",
     logo: "NASCAR",
-    logoSrc: "/images/logos/nascar.png",
   },
 ];
 
@@ -149,45 +149,45 @@ export function TestimonialCarousel({
           ref={emblaRef}
         >
           <div className="flex touch-pan-y">
-            {testimonials.map((testimonial) => (
-              <article
-                className="min-w-0 flex-[0_0_100%] pr-5 md:flex-[0_0_64%] lg:flex-[0_0_46%]"
-                key={`${testimonial.company}-${testimonial.name}`}
-              >
-                <div className="border-paper-border bg-paper-surface flex h-[450px] flex-col justify-between overflow-hidden rounded-xl border-2 p-5">
-                  <div>
-                    {testimonial.logoSrc ? (
-                      <div className="border-paper-border bg-paper-surface h-12 w-40 rounded-lg border p-2 shadow-sm">
-                        <div className="relative h-full w-full">
-                          <Image
-                            alt={`${testimonial.company} logo`}
-                            className="object-contain"
-                            fill
-                            sizes="144px"
-                            src={testimonial.logoSrc}
+            {testimonials.map((testimonial) => {
+              const logoSlug = logoSlugForName(testimonial.logo);
+
+              return (
+                <article
+                  className="min-w-0 flex-[0_0_100%] pr-5 md:flex-[0_0_64%] lg:flex-[0_0_46%]"
+                  key={`${testimonial.company}-${testimonial.name}`}
+                >
+                  <div className="border-paper-border bg-paper-surface flex h-[450px] flex-col justify-between overflow-hidden rounded-xl border-2 p-5">
+                    <div>
+                      {logoSlug ? (
+                        <div className="border-paper-border bg-paper-surface flex h-12 w-40 items-center justify-center rounded-lg border p-2 shadow-sm">
+                          <CompanyLogo
+                            className="text-paper-ink"
+                            height={20}
+                            slug={logoSlug}
                           />
                         </div>
-                      </div>
-                    ) : (
-                      <div className="border-paper-border bg-paper font-display text-paper-ink inline-flex h-10 items-center rounded-lg border px-3 text-sm font-semibold">
-                        {testimonial.logo}
-                      </div>
-                    )}
-                    <blockquote className="body text-paper-ink mt-6 line-clamp-5">
-                      “{testimonial.quote}”
-                    </blockquote>
+                      ) : (
+                        <div className="border-paper-border bg-paper font-display text-paper-ink inline-flex h-10 items-center rounded-lg border px-3 text-sm font-semibold">
+                          {testimonial.logo}
+                        </div>
+                      )}
+                      <blockquote className="body text-paper-ink mt-6 line-clamp-5">
+                        “{testimonial.quote}”
+                      </blockquote>
+                    </div>
+                    <div className="mt-6">
+                      <p className="text-paper-ink text-sm font-semibold">
+                        {testimonial.name}
+                      </p>
+                      <p className="small text-paper-muted">
+                        {testimonial.role}, {testimonial.company}
+                      </p>
+                    </div>
                   </div>
-                  <div className="mt-6">
-                    <p className="text-paper-ink text-sm font-semibold">
-                      {testimonial.name}
-                    </p>
-                    <p className="small text-paper-muted">
-                      {testimonial.role}, {testimonial.company}
-                    </p>
-                  </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
 

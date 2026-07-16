@@ -5,6 +5,7 @@ import { Check, X } from "@phosphor-icons/react/ssr";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { CreatorLifecycleOrbital } from "@/components/sections/CreatorLifecycleOrbital";
+import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
@@ -337,7 +338,7 @@ function ComparePlans() {
 
 function ClosingCTA() {
   return (
-    <section className="bg-background text-foreground relative overflow-hidden px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+    <section className="bg-background text-foreground relative overflow-hidden px-4 pt-16 sm:px-6 lg:px-8 lg:pt-24">
       <div
         aria-hidden="true"
         className="cta-grid pointer-events-none absolute inset-0"
@@ -353,20 +354,6 @@ function ClosingCTA() {
         </Reveal>
 
         <CreatorLifecycleOrbital className="mt-10" />
-
-        <Reveal delay={0.08}>
-          <div className="mx-auto mt-12 max-w-2xl text-center">
-            <p className="body-lg text-muted">
-              Book a 30-minute call and we&apos;ll match your team to the right
-              plan.
-            </p>
-            <div className="mt-6 flex justify-center">
-              <Button asChild>
-                <Link href={siteConfig.bookDemoUrl}>Book a Demo</Link>
-              </Button>
-            </div>
-          </div>
-        </Reveal>
       </div>
     </section>
   );
@@ -387,6 +374,12 @@ export default function PricingPage() {
       <ComparePlans />
 
       <ClosingCTA />
+
+      <CTASection
+        body="Book a 30-minute call and we'll match your team to the right plan."
+        cta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
+        title="Let's talk it through."
+      />
     </main>
   );
 }
