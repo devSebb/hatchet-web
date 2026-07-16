@@ -23,7 +23,6 @@ export * from "./sections/ComparisonTable";
 export * from "./sections/ContactForm";
 export * from "./sections/CreatorLifecycle";
 export * from "./sections/CreatorLifecycleOrbital";
-export * from "./sections/CTACarousel";
 export * from "./sections/CTASection";
 export * from "./sections/FeatureBlock";
 export * from "./sections/Hero";

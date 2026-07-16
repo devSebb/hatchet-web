@@ -28,7 +28,7 @@ export function FooterNewsletter() {
       />
 
       <div>
-        <p className="eyebrow text-brand-soft">Newsletter</p>
+        <p className="eyebrow text-brand">Newsletter</p>
         <p className="font-display text-foreground mt-2 text-base leading-snug font-semibold tracking-[-0.01em]">
           {config.title}
         </p>

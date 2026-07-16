@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { CircuitDivider } from "@/components/sections/CircuitDivider";
 import { CircuitField } from "@/components/sections/CircuitField";
 import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
-import { CTACarousel } from "@/components/sections/CTACarousel";
+import { CTASection } from "@/components/sections/CTASection";
 import { Hero } from "@/components/sections/Hero";
 import { LogoWall } from "@/components/sections/LogoWall";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
@@ -37,19 +37,29 @@ export function generateMetadata(): Metadata {
   });
 }
 
+// width/height are each PNG's true intrinsic size — they differ per file (two
+// portrait, one landscape), so a shared square box letterboxed the landscape
+// one and broke the baseline. Rendering at a common height instead keeps all
+// three artworks the same scale and bottom-aligned.
 const pillars = [
   {
-    image: "/images/content/pillar_3.png",
+    image: "/images/content/pillar_2.png",
+    width: 1106,
+    height: 1422,
     title: "One Platform, Full Lifecycle",
     body: "Find creators. Run campaigns. Prove ROI. Other tools make you choose between data and execution, but Hatchet gives you both, all in one place, from first search to final report.",
   },
   {
-    image: "/images/content/pillar_2.png",
+    image: "/images/content/pillar_1.png",
+    width: 973,
+    height: 1136,
     title: "The Data Nobody Else Has",
     body: "Ten years of verified data from streaming and social, across 30+ platforms: Every number is real and confirmed. No estimates, no fake audiences, no shortcuts.",
   },
   {
-    image: "/images/content/pillar_1.png",
+    image: "/images/content/pillar_3.png",
+    width: 1337,
+    height: 1176,
     title: "Built for Gaming from Day One",
     body: "Hatchet wasn't retrofitted for gaming. It was built for it. That means every feature, every data point, and every workflow was designed around how gaming campaigns actually run.",
   },
@@ -219,10 +229,10 @@ function Pillars() {
                 <div className="hover:shadow-glow-brand mx-auto w-fit overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1">
                   <Image
                     alt=""
-                    className="size-80 object-contain"
-                    height={1254}
+                    className="h-80 w-auto"
+                    height={pillar.height}
                     src={pillar.image}
-                    width={1254}
+                    width={pillar.width}
                   />
                 </div>
                 {/* xl bumps the size so every title wraps to two lines once the
@@ -492,7 +502,7 @@ export default function Home() {
 
       <Plans />
 
-      <CTACarousel
+      <CTASection
         body="Book a demo and see how Hatchet runs your entire creator program, from first search to final report."
         className="py-14 lg:py-20"
         cta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}

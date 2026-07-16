@@ -121,16 +121,21 @@ const PLATFORMS: { name: string; categories: PlatformCategory[] }[] = [
 // Brand glyphs as inline SVG paths (simple-icons), matching the pattern used
 // by FooterSocials. Platforms without a verified glyph fall back to the
 // monogram tile in PlatformIcon rather than guessing at a logo.
-// SOOP Korea (the AfreecaTV rebrand), NimoTV and Openrec are not in any open
-// icon library. SOOP/NimoTV were extracted from the official logo SVGs on
+// SOOP Korea (the AfreecaTV rebrand), NimoTV, Openrec and Rooter are not in any
+// open icon library. SOOP/NimoTV were extracted from the official logo SVGs on
 // Wikipedia/Wikimedia Commons; Openrec was reconstructed analytically from the
 // official raster mark (donut R=12/r=7.212, a 46deg notch closing on the inner
 // circle, a symmetric play triangle) and verified at 98% pixel overlap against
 // the source -- its corners are sharp where the original rounds them at ~0.5px
-// of the rendered size. All are renormalized to single 24x24 currentColor
+// of the rendered size. Rooter is a deliberate simplification: its true mark is
+// two diagonally-offset, interlocking three-colour hooks that neither reduce to
+// clean primitives (best two-ring IoU ~0.45) nor survive flattening to one
+// colour at 18px, where the weave and colour split vanish. It is rendered as
+// two symmetric interlocking ring outlines, which read as the same "chain-link"
+// silhouette at grid size. All are renormalized to single 24x24 currentColor
 // paths. YT Gaming / YT Non-Gaming share YouTube-family marks and FB Live
-// reuses the Facebook mark. Rooter, Chzzk and Bigo Live have no verified glyph
-// and use the monogram fallback intentionally.
+// reuses the Facebook mark. Chzzk and Bigo Live still have no verified glyph and
+// use the monogram fallback intentionally.
 const PLATFORM_ICONS: Record<string, string> = {
   Twitch:
     "M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z",
@@ -194,6 +199,8 @@ const PLATFORM_ICONS: Record<string, string> = {
     "M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z",
   Openrec:
     "M12 0A12 12 0 1 1 8.116.646L12 4.789ZM12 4.789A7.212 7.212 0 0 0 12 19.212A7.212 7.212 0 0 0 12 4.789ZM9.231 8.517L15.328 11.996L9.231 15.475Z",
+  Rooter:
+    "M0 11.954A8.631 8.631 0 1 1 17.262 11.954A8.631 8.631 0 1 1 0 11.954ZM2.631 11.954A6 6 0 1 0 14.631 11.954A6 6 0 1 0 2.631 11.954ZM6.738 11.954A8.631 8.631 0 1 1 24 11.954A8.631 8.631 0 1 1 6.738 11.954ZM9.369 11.954A6 6 0 1 0 21.369 11.954A6 6 0 1 0 9.369 11.954Z",
 };
 
 function PlatformIcon({ name }: { name: string }) {
@@ -245,43 +252,12 @@ function VisualCard({
 
 function StatLine({ value, label }: { value: string; label: string }) {
   return (
-    <p className="flex items-baseline gap-2">
-      <span className="font-display text-foreground text-5xl font-bold tracking-tight tabular-nums">
+    <p className="flex shrink-0 items-baseline gap-2 text-white">
+      <span className="font-display text-5xl font-bold tracking-tight tabular-nums">
         {value}
       </span>
-      <span className="text-muted text-sm">{label}</span>
+      <span className="text-sm">{label}</span>
     </p>
-  );
-}
-
-function PlatformChip({ name }: { name: string }) {
-  return (
-    <span className="border-border bg-elevated/60 text-foreground hover:text-brand flex min-h-[2.25rem] w-full items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all hover:border-[color-mix(in_oklch,var(--brand)_40%,var(--border))] hover:bg-[color-mix(in_oklch,var(--paper),var(--brand)_4%)] hover:shadow-[0_0_0_1px_color-mix(in_oklch,var(--brand)_20%,transparent),0_8px_26px_-8px_color-mix(in_oklch,var(--brand)_38%,transparent)]">
-      <PlatformIcon name={name} />
-      {name}
-    </span>
-  );
-}
-
-function PlatformStatCard() {
-  return (
-    <VisualCard>
-      <StatLine label="platforms" value="30+" />
-      <ul className="mt-4 grid grid-cols-2 gap-2">
-        {["Twitch", "YouTube", "TikTok", "Instagram", "Kick", "Discord"].map(
-          (name) => (
-            <li className="flex" key={name}>
-              <PlatformChip name={name} />
-            </li>
-          ),
-        )}
-        <li className="flex">
-          <span className="border-brand/50 bg-brand/10 text-brand-soft flex min-h-[2.25rem] w-full items-center justify-center rounded-lg border px-3 py-1.5 text-xs font-medium">
-            +28 more
-          </span>
-        </li>
-      </ul>
-    </VisualCard>
   );
 }
 
@@ -486,7 +462,7 @@ function IntelligenceVisual() {
 function PointVisualBlock({ visual }: { visual: PointVisual }) {
   switch (visual.kind) {
     case "platforms":
-      return <PlatformStatCard />;
+      return null;
     case "history":
       return <HistoryVisual />;
     case "logos":
@@ -543,29 +519,52 @@ export function WhyHatchetPoints({ className }: { className?: string }) {
                 </AccordionPrimitive.Trigger>
               </AccordionPrimitive.Header>
               <AccordionPrimitive.Content className="data-open:animate-accordion-down data-closed:animate-accordion-up overflow-hidden">
-                <div className="pb-8 sm:pl-14 lg:pb-10">
-                  {point.visual.kind === "lifecycle" ? (
-                    <CreatorLifecycleOrbital />
-                  ) : (
-                    <div
-                      className={cn(
-                        "grid gap-8 lg:gap-12",
-                        point.visual.kind === "logos"
-                          ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,32rem)]"
-                          : point.visual.kind === "history"
-                            ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,34rem)]"
-                            : "lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]",
-                      )}
-                    >
-                      <div className="max-w-xl">
-                        <p className="body text-foreground/90">{point.body}</p>
+                {/* Mirrors the trigger's number column + gap with an invisible
+                    copy of the id, so the panel's left edge lands exactly on the
+                    eyebrow/headline at every breakpoint. A fixed pl- can't: the
+                    number's width is font-dependent and the gap is responsive. */}
+                <div className="flex gap-5 pb-8 sm:gap-8 lg:pb-10">
+                  <span
+                    aria-hidden="true"
+                    className="invisible font-mono text-xs font-semibold tracking-[0.18em] tabular-nums"
+                  >
+                    {point.id}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    {point.visual.kind === "lifecycle" ? (
+                      <CreatorLifecycleOrbital />
+                    ) : point.visual.kind === "platforms" ? (
+                      /* No visual card here — the stat sits opposite the body
+                         copy and the full platform roster carries the section. */
+                      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-12">
+                        <p className="body text-foreground/90 max-w-xl">
+                          {point.body}
+                        </p>
+                        <StatLine label="platforms" value="30+" />
                       </div>
-                      <PointVisualBlock visual={point.visual} />
-                    </div>
-                  )}
-                  {point.visual.kind === "platforms" ? (
-                    <PlatformExplorer />
-                  ) : null}
+                    ) : (
+                      <div
+                        className={cn(
+                          "grid gap-8 lg:gap-12",
+                          point.visual.kind === "logos"
+                            ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,32rem)]"
+                            : point.visual.kind === "history"
+                              ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,34rem)]"
+                              : "lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]",
+                        )}
+                      >
+                        <div className="max-w-xl">
+                          <p className="body text-foreground/90">
+                            {point.body}
+                          </p>
+                        </div>
+                        <PointVisualBlock visual={point.visual} />
+                      </div>
+                    )}
+                    {point.visual.kind === "platforms" ? (
+                      <PlatformExplorer />
+                    ) : null}
+                  </div>
                 </div>
               </AccordionPrimitive.Content>
             </AccordionPrimitive.Item>

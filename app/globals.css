@@ -145,18 +145,20 @@
     0 10px 30px color-mix(in srgb, var(--brand) 32%, transparent),
     0 2px 10px color-mix(in srgb, var(--brand-highlight) 24%, transparent);
 
-  /* CTA surface — deep ink/navy base with a red bloom (not a flat panel) */
+  /* CTA surface — "Ember red": ink resolving through an all-red ramp (no
+     orange), matching the data-card gradient treatment used elsewhere on the
+     site. Selected from the CTA style gallery; every CTA panel site-wide reads
+     these tokens, so retuning here retunes all of them. */
   --gradient-cta: linear-gradient(
     135deg,
     var(--ink) 0%,
-    var(--blue-transitional) 18%,
-    var(--bg) 42%,
-    var(--brand-strong) 78%,
-    var(--brand) 100%
+    var(--brand-lowlight) 36%,
+    var(--brand) 74%,
+    #e23c42 100%
   );
   --gradient-cta-glow: radial-gradient(
     120% 120% at 100% 0%,
-    color-mix(in srgb, var(--brand) 40%, transparent) 0%,
+    color-mix(in srgb, var(--brand-soft) 40%, transparent) 0%,
     transparent 55%
   );
   --paper: #ffffff;
@@ -227,7 +229,7 @@
   --cta-grain-opacity: 0.05;
   --cta-bloom: radial-gradient(
     92% 78% at 86% 6%,
-    color-mix(in srgb, var(--brand) 36%, transparent) 0%,
+    color-mix(in srgb, #e23c42 38%, transparent) 0%,
     transparent 60%
   );
 

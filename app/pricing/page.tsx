@@ -30,8 +30,12 @@ type Plan = {
   tagline: string;
   features: PlanFeature[];
   recommended?: boolean;
-  closer?: string;
 };
+
+// Closes the whole plan set, so it lives under the grid rather than inside the
+// Full License card.
+const PLAN_CLOSER =
+  "Other tools make you choose between data and execution. Full License means you never have to.";
 
 const PLANS: Plan[] = [
   {
@@ -92,8 +96,6 @@ const PLANS: Plan[] = [
         body: "Auto-tracked dashboards, per-creator breakdowns, custom reports.",
       },
     ],
-    closer:
-      "Other tools make you choose between data and execution. Full License means you never have to.",
   },
 ];
 
@@ -114,7 +116,7 @@ function PlanCard({ plan }: { plan: Plan }) {
       ) : null}
 
       <h2 className="h3">{plan.name}</h2>
-      <p className="text-brand-soft mt-2 text-sm font-medium">{plan.tagline}</p>
+      <p className="text-brand mt-2 text-sm font-medium">{plan.tagline}</p>
 
       <ul className="mt-6 grid gap-4">
         {plan.features.map((feature) => (
@@ -126,10 +128,6 @@ function PlanCard({ plan }: { plan: Plan }) {
           </li>
         ))}
       </ul>
-
-      {plan.closer ? (
-        <p className="text-muted mt-5 text-sm italic">{plan.closer}</p>
-      ) : null}
 
       <div className="mt-auto pt-6">
         <Button
@@ -153,6 +151,12 @@ function PlanGrid() {
             <PlanCard key={plan.name} plan={plan} />
           ))}
         </Stagger>
+
+        <Reveal>
+          <p className="h3 text-foreground mx-auto mt-12 max-w-3xl text-center text-balance">
+            {PLAN_CLOSER}
+          </p>
+        </Reveal>
       </div>
     </section>
   );
@@ -247,14 +251,14 @@ function ComparePlans() {
             {/* Frame around the whole table */}
             <div
               aria-hidden="true"
-              className="border-border bg-elevated/10 absolute inset-0 rounded-2xl border"
+              className="bg-bg absolute inset-0 rounded-2xl border border-white/15"
             />
 
             {/* Elevated Full License pillar behind the last column */}
             <div
               aria-hidden="true"
               className={cn(
-                "bg-bg cta-panel-frame absolute -inset-y-1 overflow-hidden rounded-xl shadow-[0_24px_48px_-20px_color-mix(in_srgb,var(--bg)_50%,transparent),0_8px_22px_-12px_color-mix(in_srgb,var(--bg)_38%,transparent)] sm:-inset-y-1.5",
+                "bg-brand cta-panel-frame absolute -inset-y-1 overflow-hidden rounded-xl shadow-[0_24px_48px_-20px_color-mix(in_srgb,var(--bg)_50%,transparent),0_8px_22px_-12px_color-mix(in_srgb,var(--bg)_38%,transparent)] sm:-inset-y-1.5",
                 PILLAR_POS,
               )}
             />
@@ -267,7 +271,7 @@ function ComparePlans() {
                   </th>
                   <th
                     className={cn(
-                      "text-muted px-[4px] py-2.5 text-center align-middle text-[10px] font-semibold sm:text-sm",
+                      "px-[4px] py-2.5 text-center align-middle text-[10px] font-semibold text-white/70 sm:text-sm",
                       VALUE_COL,
                     )}
                     scope="col"
@@ -276,7 +280,7 @@ function ComparePlans() {
                   </th>
                   <th
                     className={cn(
-                      "text-muted px-[4px] py-2.5 text-center align-middle text-[10px] font-semibold sm:text-sm",
+                      "px-[4px] py-2.5 text-center align-middle text-[10px] font-semibold text-white/70 sm:text-sm",
                       VALUE_COL,
                     )}
                     scope="col"
@@ -296,25 +300,28 @@ function ComparePlans() {
               </thead>
               <tbody>
                 {MODULE_ROWS.map((row) => (
-                  <tr className="hover:bg-bg/3 transition-colors" key={row.title}>
+                  <tr
+                    className="transition-colors hover:bg-white/5"
+                    key={row.title}
+                  >
                     <th
-                      className="border-border border-t py-2 pr-[8px] pl-[16px] text-left align-middle sm:pr-4 sm:pl-6"
+                      className="border-t border-white/15 py-2 pr-[8px] pl-[16px] text-left align-middle sm:pr-4 sm:pl-6"
                       scope="row"
                     >
-                      <p className="text-foreground text-sm font-semibold">
+                      <p className="text-sm font-semibold text-white">
                         {row.title}
                       </p>
-                      <p className="text-muted mt-0.5 hidden text-xs font-normal sm:block">
+                      <p className="mt-0.5 hidden text-xs font-normal text-white/65 sm:block">
                         {row.description}
                       </p>
                     </th>
-                    <td className="border-border border-t py-2 text-center align-middle">
+                    <td className="border-t border-white/15 py-2 text-center align-middle">
                       <Mark included={row.community} />
                     </td>
-                    <td className="border-border border-t py-2 text-center align-middle">
+                    <td className="border-t border-white/15 py-2 text-center align-middle">
                       <Mark included={row.dataLicense} />
                     </td>
-                    <td className="border-t border-white/10 py-2 text-center align-middle">
+                    <td className="border-t border-white/20 py-2 text-center align-middle">
                       <Mark included={row.fullLicense} />
                     </td>
                   </tr>

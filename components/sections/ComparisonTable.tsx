@@ -98,14 +98,14 @@ export function ComparisonTable({ className }: { className?: string }) {
             {/* Frame around the whole table */}
             <div
               aria-hidden="true"
-              className="border-border bg-elevated/10 absolute inset-0 rounded-2xl border"
+              className="bg-bg absolute inset-0 rounded-2xl border border-white/15"
             />
 
             {/* Elevated Hatchet pillar behind the middle column */}
             <div
               aria-hidden="true"
               className={cn(
-                "bg-bg cta-panel-frame absolute -inset-y-1 overflow-hidden rounded-xl shadow-[0_24px_48px_-20px_color-mix(in_srgb,var(--bg)_50%,transparent),0_8px_22px_-12px_color-mix(in_srgb,var(--bg)_38%,transparent)] sm:-inset-y-1.5",
+                "bg-brand cta-panel-frame absolute -inset-y-1 overflow-hidden rounded-xl shadow-[0_24px_48px_-20px_color-mix(in_srgb,var(--bg)_50%,transparent),0_8px_22px_-12px_color-mix(in_srgb,var(--bg)_38%,transparent)] sm:-inset-y-1.5",
                 PILLAR_POS,
               )}
             />
@@ -128,7 +128,7 @@ export function ComparisonTable({ className }: { className?: string }) {
                   </th>
                   <th
                     className={cn(
-                      "text-muted py-2.5 text-center align-middle text-sm font-semibold sm:text-base",
+                      "py-2.5 text-center align-middle text-sm font-semibold text-white/70 sm:text-base",
                       VALUE_COL,
                     )}
                     scope="col"
@@ -140,24 +140,24 @@ export function ComparisonTable({ className }: { className?: string }) {
               <tbody>
                 {COMPARISON_ROWS.map((row) => (
                   <tr
-                    className="hover:bg-bg/3 transition-colors"
+                    className="transition-colors hover:bg-white/5"
                     key={row.title}
                   >
                     <th
-                      className="border-border border-t py-1.5 pr-4 pl-5 text-left align-middle sm:pl-6"
+                      className="border-t border-white/15 py-1.5 pr-4 pl-5 text-left align-middle sm:pl-6"
                       scope="row"
                     >
-                      <p className="text-foreground text-sm font-semibold">
+                      <p className="text-sm font-semibold text-white">
                         {row.title}
                       </p>
-                      <p className="text-muted mt-0.5 hidden text-xs font-normal sm:block">
+                      <p className="mt-0.5 hidden text-xs font-normal text-white/65 sm:block">
                         {row.description}
                       </p>
                     </th>
-                    <td className="border-t border-white/10 py-1.5 text-center align-middle">
+                    <td className="border-t border-white/20 py-1.5 text-center align-middle">
                       <IncludedMark />
                     </td>
-                    <td className="border-border border-t py-1.5 text-center align-middle">
+                    <td className="border-t border-white/15 py-1.5 text-center align-middle">
                       <NotIncludedMark />
                     </td>
                   </tr>

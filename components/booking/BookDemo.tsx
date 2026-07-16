@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -14,6 +13,7 @@ import {
   VideoCamera,
 } from "@phosphor-icons/react/ssr";
 
+import { BrandLogo } from "@/components/layout/BrandLogo";
 import { Button } from "@/components/ui/button";
 import {
   REFERRAL_OPTIONS,
@@ -327,15 +327,8 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
     <div className="surface-paper bg-background text-foreground flex max-h-[88vh] flex-col overflow-y-auto md:flex-row">
       {/* ---- Info sidebar (persistent across steps) ---- */}
       <aside className="bg-bg flex shrink-0 flex-col p-6 text-white md:w-[280px] md:p-7 lg:w-[300px]">
-        <div className="flex items-center gap-2.5">
-          <Image
-            src="/brand/hatchet_shield_red.png"
-            alt=""
-            width={665}
-            height={633}
-            className="h-7 w-auto"
-          />
-          <span className="text-sm font-semibold tracking-wide">Hatchet</span>
+        <div className="flex items-center">
+          <BrandLogo alt="Hatchet" className="h-auto w-[140px]" variant="primary" />
         </div>
 
         <h2 className="mt-6 text-[1.4rem] font-semibold tracking-tight text-white">

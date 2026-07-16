@@ -29,9 +29,17 @@ export function Nav({ items, className }: NavProps) {
               <>
                 <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="grid w-56 gap-1 p-2">
+                  {/* py-0: NavigationMenuContent already pads the panel by 8px,
+                      and stacking p-2 (16px here) on top of it left the first
+                      and last rows floating. Tighter vertical rhythm than the
+                      shared link style's p-2; horizontal padding is untouched. */}
+                  <div className="grid w-56 gap-[4px] px-2 py-0">
                     {item.children.map((child) => (
-                      <NavigationMenuLink asChild key={child.href}>
+                      <NavigationMenuLink
+                        asChild
+                        className="py-[12px]"
+                        key={child.href}
+                      >
                         <Link href={child.href}>
                           <span className="text-foreground block text-sm font-medium">
                             {child.label}
