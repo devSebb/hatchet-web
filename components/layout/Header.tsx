@@ -18,7 +18,12 @@ function Logo() {
       className="focus-visible:ring-ring/50 inline-flex min-h-11 items-center rounded-lg outline-none focus-visible:ring-3"
       href="/"
     >
-      <BrandLogo alt="" className="h-8" priority variant="primary" />
+      {/* Sized by width, not height. The wordmark is ~4.1:1, so height is a
+          coarse handle — and h-* maps to --space-*, which only defines
+          1-6/8/10/12/16. h-7 has no --space-7 and silently falls back to
+          stock Tailwind's 1.75rem (28px), less than half of h-8's 64px.
+          A width in px sidesteps both traps. 248px == 60.4px tall. */}
+      <BrandLogo alt="" className="h-auto w-[248px]" priority variant="primary" />
     </Link>
   );
 }
@@ -44,14 +49,16 @@ export function Header() {
           : "border-transparent bg-background/70 backdrop-blur-md",
       )}
     >
+      {/* Logo, Nav and the button pair are three separate flex children so
+          justify-between splits the free space evenly: the gap from the logo to
+          the nav then always equals the gap from the nav to the buttons, at any
+          width. Grouping the logo and nav together would make the left gap a
+          fixed gap-* while the right one absorbed all the slack. gap-6 is only
+          the floor for when free space runs out. */}
       <div className="mx-auto flex h-18 w-full max-w-[96rem] items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
-        <div className="flex shrink-0 items-center gap-6">
-          <Logo />
-          <Nav
-            className="hidden shrink-0 min-[1400px]:flex"
-            items={primaryNav}
-          />
-        </div>
+        <Logo />
+
+        <Nav className="hidden shrink-0 min-[1400px]:flex" items={primaryNav} />
 
         <div className="hidden shrink-0 items-center gap-3 min-[1400px]:flex">
           <Button asChild className="px-3">

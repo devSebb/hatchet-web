@@ -131,9 +131,12 @@ const UNDERGLOW =
 function StationFacet({
   stage,
   isActive,
+  compact = false,
 }: {
   stage: Stage;
   isActive: boolean;
+  /** Smaller card for tight canvases (e.g. the solution-page hero). */
+  compact?: boolean;
 }) {
   const { Icon } = stage;
   return (
@@ -152,13 +155,17 @@ function StationFacet({
           padding + a clear number→title hierarchy so it reads, not mushes. */}
       <span
         className={cn(
-          "cta-panel-frame relative flex items-center gap-4 rounded-2xl border px-4 py-2.5 backdrop-blur-sm transition-[border-color,background-color] duration-[250ms]",
+          "cta-panel-frame relative flex items-center backdrop-blur-sm transition-[border-color,background-color] duration-[250ms]",
+          compact
+            ? "gap-2.5 rounded-xl border px-3 py-2"
+            : "gap-4 rounded-2xl border px-4 py-2.5",
           isActive ? "border-brand bg-card/85" : "border-border bg-card/60",
         )}
       >
         <span
           className={cn(
-            "flex size-8 shrink-0 items-center justify-center rounded-lg border transition-colors duration-[250ms]",
+            "flex shrink-0 items-center justify-center border transition-colors duration-[250ms]",
+            compact ? "size-6 rounded-md" : "size-8 rounded-lg",
             isActive
               ? "border-brand/40 bg-brand/10"
               : "border-border bg-elevated/60",
@@ -167,15 +174,19 @@ function StationFacet({
           <Icon
             aria-hidden="true"
             className={cn(
-              "size-8 transition-colors duration-[250ms]",
+              "transition-colors duration-[250ms]",
+              compact ? "size-6" : "size-8",
               isActive ? "text-brand" : "text-muted",
             )}
           />
         </span>
-        <span className="flex min-w-0 flex-col gap-1">
+        <span
+          className={cn("flex min-w-0 flex-col", compact ? "gap-0.5" : "gap-1")}
+        >
           <span
             className={cn(
-              "font-mono text-[0.72rem] font-semibold tracking-[0.18em] tabular-nums transition-colors duration-[250ms]",
+              "font-mono font-semibold tracking-[0.18em] tabular-nums transition-colors duration-[250ms]",
+              compact ? "text-[0.58rem]" : "text-[0.72rem]",
               isActive ? "text-brand" : "text-muted/80",
             )}
           >
@@ -183,7 +194,10 @@ function StationFacet({
           </span>
           <span
             className={cn(
-              "text-[1.08rem] leading-none font-semibold transition-colors duration-[250ms]",
+              "leading-none font-semibold transition-colors duration-[250ms]",
+              compact
+                ? "text-[0.8rem] whitespace-nowrap"
+                : "text-[1.08rem]",
               isActive ? "text-foreground" : "text-muted",
             )}
           >
@@ -244,32 +258,258 @@ function DetailPanel({
   );
 }
 
+function OrbitalCanvas({
+  active,
+  activate,
+  onLeave,
+  animateRouting,
+  reduceMotion,
+  gradientId,
+  compact = false,
+}: {
+  active: number;
+  activate: (index: number) => void;
+  onLeave?: () => void;
+  animateRouting: boolean;
+  reduceMotion: boolean | null;
+  gradientId: string;
+  compact?: boolean;
+}) {
+  const activeStage = STAGES[active];
+
+  return (
+    <div className="relative aspect-[8/5] w-full" onMouseLeave={onLeave}>
+      {animateRouting ? (
+        <motion.div
+          animate={{ rotate: 360 }}
+          aria-hidden="true"
+          className="absolute aspect-square w-[26%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.06]"
+          style={{
+            left: `${(CX / VBW) * 100}%`,
+            top: `${(CY / VBH) * 100}%`,
+            background:
+              "conic-gradient(from 0deg, transparent 0deg, var(--brand) 36deg, transparent 84deg)",
+          }}
+          transition={{ duration: 16, ease: "linear", repeat: Infinity }}
+        />
+      ) : null}
+
+      <svg
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full"
+        fill="none"
+        viewBox={`0 0 ${VBW} ${VBH}`}
+      >
+        <defs>
+          <linearGradient
+            id={`${gradientId}-table`}
+            x1="0"
+            x2="0"
+            y1="0"
+            y2="1"
+          >
+            <stop
+              offset="0%"
+              stopColor="color-mix(in srgb, var(--elevated) 58%, var(--white) 24%)"
+            />
+            <stop offset="100%" stopColor="var(--surface)" />
+          </linearGradient>
+          <radialGradient id={`${gradientId}-glow`}>
+            <stop
+              offset="0%"
+              stopColor="color-mix(in srgb, var(--brand) 85%, transparent)"
+            />
+            <stop
+              offset="65%"
+              stopColor="color-mix(in srgb, var(--brand) 22%, transparent)"
+            />
+            <stop offset="100%" stopColor="transparent" />
+          </radialGradient>
+        </defs>
+
+        {/* Faceted outer ring (draws itself in on first reveal). */}
+        <motion.path
+          d={RING_PATH}
+          initial={reduceMotion ? false : { pathLength: 0 }}
+          stroke="var(--signal-grid)"
+          strokeWidth={0.4}
+          transition={{ duration: 1.1, ease: "easeInOut" }}
+          viewport={{ once: true, amount: 0.3 }}
+          whileInView={reduceMotion ? undefined : { pathLength: 1 }}
+        />
+
+        {/* Idle circuit traces (every inactive station). */}
+        {STAGES.map((s, i) => {
+          if (i === active) {
+            return null;
+          }
+          const { a, b } = traceFor(s.dir);
+          return (
+            <line
+              className={animateRouting ? "cta-trace-flow" : undefined}
+              key={s.num}
+              stroke="var(--signal-grid)"
+              strokeDasharray="1 2"
+              strokeWidth={0.3}
+              x1={a.x}
+              x2={b.x}
+              y1={a.y}
+              y2={b.y}
+            />
+          );
+        })}
+
+        {/* Sub-surface red glow (breathing) — sits behind the shield. */}
+        <motion.circle
+          animate={animateRouting ? { opacity: [0.32, 0.6, 0.32] } : undefined}
+          cx={CX}
+          cy={CY}
+          fill={`url(#${gradientId}-glow)`}
+          initial={false}
+          opacity={reduceMotion ? 0.42 : 0.32}
+          r={CORE_R * 1.3}
+          transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
+        />
+
+        {/* Live trace → active station + traveling data packet. */}
+        {(() => {
+          const { a, b } = traceFor(activeStage.dir);
+          return (
+            <g key={`live-${active}`}>
+              <line
+                stroke="var(--brand)"
+                strokeLinecap="round"
+                strokeWidth={0.7}
+                x1={a.x}
+                x2={b.x}
+                y1={a.y}
+                y2={b.y}
+              />
+              {animateRouting ? (
+                <motion.circle
+                  animate={{
+                    cx: [a.x, b.x],
+                    cy: [a.y, b.y],
+                    opacity: [0, 1, 1, 0],
+                  }}
+                  fill="var(--brand-soft)"
+                  r={1.4}
+                  style={{
+                    filter: "drop-shadow(0 0 1.5px var(--brand))",
+                  }}
+                  transition={{
+                    duration: 1.3,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatDelay: 0.2,
+                  }}
+                />
+              ) : null}
+            </g>
+          );
+        })()}
+      </svg>
+
+      {/* Core shield — the graphic at the heart of the orbital. */}
+      <div
+        className="absolute flex aspect-square w-[16%] -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+        style={{
+          left: `${(CX / VBW) * 100}%`,
+          top: `${(CY / VBH) * 100}%`,
+        }}
+      >
+        <Image
+          alt="Hatchet"
+          className="h-auto w-full object-contain"
+          height={721}
+          priority
+          src="/brand/hatchet_shield_redFin.png"
+          width={763}
+        />
+      </div>
+
+      {/* Stations — real links; hover/focus activates, click navigates. */}
+      {STAGES.map((s, i) => {
+        const isActive = i === active;
+        const p = stationPos(s.dir);
+        return (
+          <Link
+            aria-label={`Step ${s.num}: ${s.stage}`}
+            className={cn(
+              "group focus-visible:ring-ring/60 absolute -translate-x-1/2 -translate-y-1/2 rounded-xl no-underline outline-none focus-visible:ring-3",
+              compact ? "w-44" : "w-60",
+            )}
+            href={s.href}
+            key={s.num}
+            onFocus={() => activate(i)}
+            onMouseEnter={() => activate(i)}
+            style={{
+              left: `${(p.x / VBW) * 100}%`,
+              top: `${(p.y / VBH) * 100}%`,
+            }}
+          >
+            <StationFacet compact={compact} isActive={isActive} stage={s} />
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+type CreatorLifecycleOrbitalProps = {
+  className?: string;
+  /**
+   * "full" (default) pairs the orbital with the live detail panel (and the
+   * vertical stepper below lg). "canvas" renders the orbital alone in compact
+   * sizing — no detail panel, no stepper — for tight slots like the solution
+   * heroes; the caller owns responsive visibility.
+   */
+  variant?: "full" | "canvas";
+  /**
+   * Stage href (e.g. "/solutions/discovery") selected at rest. The canvas
+   * variant returns here on mouse-leave and never auto-advances, so the
+   * current page's stage stays lit.
+   */
+  defaultStageHref?: string;
+};
+
 /**
  * The interactive "creator lifecycle" orbital: a faceted core with four
  * stations orbiting it, animated circuit routing, and a live detail panel.
- * Rendered on the home page (under a heading) and inside the Why Hatchet
- * accordion's fifth point. Owns no section chrome — the caller supplies layout.
+ * Rendered on the home page (under a heading), inside the Why Hatchet
+ * accordion's fifth point, on pricing, and (canvas variant) in the solution
+ * heroes. Owns no section chrome — the caller supplies layout.
  */
-export function CreatorLifecycleOrbital({ className }: { className?: string }) {
+export function CreatorLifecycleOrbital({
+  className,
+  variant = "full",
+  defaultStageHref,
+}: CreatorLifecycleOrbitalProps) {
   const reduceMotion = useHydratedReducedMotion();
   const rootRef = useRef<HTMLDivElement>(null);
   const inView = useInView(rootRef, { amount: 0.3 });
-  const [active, setActive] = useState(0);
+  const defaultIndex = Math.max(
+    0,
+    STAGES.findIndex((stage) => stage.href === defaultStageHref),
+  );
+  const [active, setActive] = useState(defaultIndex);
   const [interacted, setInteracted] = useState(false);
   const gradientId = useId().replace(/:/g, "");
   const panelId = `${gradientId}-panel`;
+  const isCanvas = variant === "canvas";
 
   // Demo itself on a gentle interval; hand control to the user on first
-  // interaction and never auto-advance again. Paused while offscreen.
+  // interaction and never auto-advance again. Paused while offscreen. The
+  // canvas variant holds its default stage instead of demoing.
   useEffect(() => {
-    if (reduceMotion || interacted || !inView) {
+    if (reduceMotion || interacted || !inView || isCanvas) {
       return;
     }
     const id = window.setInterval(() => {
       setActive((index) => (index + 1) % STAGES.length);
     }, AUTO_ADVANCE_MS);
     return () => window.clearInterval(id);
-  }, [reduceMotion, interacted, inView]);
+  }, [reduceMotion, interacted, inView, isCanvas]);
 
   const activate = (index: number) => {
     setInteracted(true);
@@ -279,184 +519,33 @@ export function CreatorLifecycleOrbital({ className }: { className?: string }) {
   const activeStage = STAGES[active];
   const animateRouting = !reduceMotion && inView;
 
+  if (isCanvas) {
+    return (
+      <div className={cn("relative", className)} ref={rootRef}>
+        <OrbitalCanvas
+          activate={activate}
+          active={active}
+          animateRouting={animateRouting}
+          compact
+          gradientId={gradientId}
+          onLeave={() => setActive(defaultIndex)}
+          reduceMotion={reduceMotion}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={cn("relative", className)} ref={rootRef}>
       {/* ── Desktop: orbital (~70%) + fixed detail panel on the right ── */}
       <div className="hidden lg:grid lg:grid-cols-[minmax(0,1fr)_23rem] lg:items-center lg:gap-10">
-        <div className="relative aspect-[8/5] w-full">
-          {animateRouting ? (
-            <motion.div
-              animate={{ rotate: 360 }}
-              aria-hidden="true"
-              className="absolute aspect-square w-[26%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.06]"
-              style={{
-                left: `${(CX / VBW) * 100}%`,
-                top: `${(CY / VBH) * 100}%`,
-                background:
-                  "conic-gradient(from 0deg, transparent 0deg, var(--brand) 36deg, transparent 84deg)",
-              }}
-              transition={{ duration: 16, ease: "linear", repeat: Infinity }}
-            />
-          ) : null}
-
-          <svg
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full"
-            fill="none"
-            viewBox={`0 0 ${VBW} ${VBH}`}
-          >
-            <defs>
-              <linearGradient
-                id={`${gradientId}-table`}
-                x1="0"
-                x2="0"
-                y1="0"
-                y2="1"
-              >
-                <stop
-                  offset="0%"
-                  stopColor="color-mix(in srgb, var(--elevated) 58%, var(--white) 24%)"
-                />
-                <stop offset="100%" stopColor="var(--surface)" />
-              </linearGradient>
-              <radialGradient id={`${gradientId}-glow`}>
-                <stop
-                  offset="0%"
-                  stopColor="color-mix(in srgb, var(--brand) 85%, transparent)"
-                />
-                <stop
-                  offset="65%"
-                  stopColor="color-mix(in srgb, var(--brand) 22%, transparent)"
-                />
-                <stop offset="100%" stopColor="transparent" />
-              </radialGradient>
-            </defs>
-
-            {/* Faceted outer ring (draws itself in on first reveal). */}
-            <motion.path
-              d={RING_PATH}
-              initial={reduceMotion ? false : { pathLength: 0 }}
-              stroke="var(--signal-grid)"
-              strokeWidth={0.4}
-              transition={{ duration: 1.1, ease: "easeInOut" }}
-              viewport={{ once: true, amount: 0.3 }}
-              whileInView={reduceMotion ? undefined : { pathLength: 1 }}
-            />
-
-            {/* Idle circuit traces (every inactive station). */}
-            {STAGES.map((s, i) => {
-              if (i === active) {
-                return null;
-              }
-              const { a, b } = traceFor(s.dir);
-              return (
-                <line
-                  className={animateRouting ? "cta-trace-flow" : undefined}
-                  key={s.num}
-                  stroke="var(--signal-grid)"
-                  strokeDasharray="1 2"
-                  strokeWidth={0.3}
-                  x1={a.x}
-                  x2={b.x}
-                  y1={a.y}
-                  y2={b.y}
-                />
-              );
-            })}
-
-            {/* Sub-surface red glow (breathing) — sits behind the shield. */}
-            <motion.circle
-              animate={
-                animateRouting ? { opacity: [0.32, 0.6, 0.32] } : undefined
-              }
-              cx={CX}
-              cy={CY}
-              fill={`url(#${gradientId}-glow)`}
-              initial={false}
-              opacity={reduceMotion ? 0.42 : 0.32}
-              r={CORE_R * 1.3}
-              transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
-            />
-
-            {/* Live trace → active station + traveling data packet. */}
-            {(() => {
-              const { a, b } = traceFor(activeStage.dir);
-              return (
-                <g key={`live-${active}`}>
-                  <line
-                    stroke="var(--brand)"
-                    strokeLinecap="round"
-                    strokeWidth={0.7}
-                    x1={a.x}
-                    x2={b.x}
-                    y1={a.y}
-                    y2={b.y}
-                  />
-                  {animateRouting ? (
-                    <motion.circle
-                      animate={{
-                        cx: [a.x, b.x],
-                        cy: [a.y, b.y],
-                        opacity: [0, 1, 1, 0],
-                      }}
-                      fill="var(--brand-soft)"
-                      r={1.4}
-                      style={{
-                        filter: "drop-shadow(0 0 1.5px var(--brand))",
-                      }}
-                      transition={{
-                        duration: 1.3,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatDelay: 0.2,
-                      }}
-                    />
-                  ) : null}
-                </g>
-              );
-            })()}
-          </svg>
-
-          {/* Core shield — the graphic at the heart of the orbital. */}
-          <div
-            className="absolute flex aspect-square w-[16%] -translate-x-1/2 -translate-y-1/2 items-center justify-center"
-            style={{
-              left: `${(CX / VBW) * 100}%`,
-              top: `${(CY / VBH) * 100}%`,
-            }}
-          >
-            <Image
-              alt="Hatchet"
-              className="h-auto w-full object-contain"
-              height={721}
-              priority
-              src="/brand/hatchet_shield_redFin.png"
-              width={763}
-            />
-          </div>
-
-          {/* Stations — real links; hover/focus activates, click navigates. */}
-          {STAGES.map((s, i) => {
-            const isActive = i === active;
-            const p = stationPos(s.dir);
-            return (
-              <Link
-                aria-label={`Step ${s.num}: ${s.stage}`}
-                className="group focus-visible:ring-ring/60 absolute w-60 -translate-x-1/2 -translate-y-1/2 rounded-xl no-underline outline-none focus-visible:ring-3"
-                href={s.href}
-                key={s.num}
-                onFocus={() => activate(i)}
-                onMouseEnter={() => activate(i)}
-                style={{
-                  left: `${(p.x / VBW) * 100}%`,
-                  top: `${(p.y / VBH) * 100}%`,
-                }}
-              >
-                <StationFacet isActive={isActive} stage={s} />
-              </Link>
-            );
-          })}
-        </div>
+        <OrbitalCanvas
+          activate={activate}
+          active={active}
+          animateRouting={animateRouting}
+          gradientId={gradientId}
+          reduceMotion={reduceMotion}
+        />
 
         {/* Detail panel — fixed width (grid column) + a min-height sized to
             the tallest tagline, so it stays a consistent size across stages

@@ -55,68 +55,70 @@ export default function ContactPage() {
   return (
     <main className="bg-background text-foreground">
       {/* ── Hero + the two primary CTAs ────────────────────────────── */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <Reveal className="max-w-3xl">
-          <div>
-            <p className="eyebrow text-muted">Contact</p>
-            <h1 className="display mt-4">
-              The right data starts with the right conversation.
-            </h1>
-            <p className="body-lg text-muted mt-5">
-              Ready to see Hatchet in action, or just have questions? Our team
-              is built around gaming. They&apos;ll know what you&apos;re up
-              against.
-            </p>
-          </div>
-        </Reveal>
+      <section className="w-full px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div className="mx-auto w-full max-w-7xl">
+          <Reveal className="max-w-3xl">
+            <div>
+              <p className="eyebrow text-muted">Contact</p>
+              <h1 className="display mt-4">
+                The right data starts with the right conversation.
+              </h1>
+              <p className="body-lg text-muted mt-5">
+                Ready to see Hatchet in action, or just have questions? Our team
+                is built around gaming. They&apos;ll know what you&apos;re up
+                against.
+              </p>
+            </div>
+          </Reveal>
 
-        <Stagger
-          childClassName="h-full"
-          className="mt-10 grid gap-4 md:grid-cols-2"
-        >
-          {/* Book a Demo — primary */}
-          <article className="border-brand/30 bg-card ring-brand/10 flex h-full flex-col rounded-2xl border p-7 shadow-sm ring-1">
-            <span className="bg-accent ring-border/60 inline-flex size-[84px] items-center justify-center rounded-2xl ring-1 ring-inset">
-              <Calendar aria-hidden="true" className="size-[60px]" />
-            </span>
-            <h2 className="h3 mt-4">Book a demo</h2>
-            <p className="body text-muted mt-2 grow">
-              30 minutes. We&apos;ll show you exactly what Hatchet can do for
-              your campaign.
-            </p>
-            <div className="mt-4">
-              <Button asChild>
-                <a
-                  href={siteConfig.bookDemoUrl}
-                  rel="noreferrer"
-                  target="_blank"
+          <Stagger
+            childClassName="h-full"
+            className="mt-10 grid gap-4 md:grid-cols-2"
+          >
+            {/* Book a Demo — primary */}
+            <article className="border-brand/30 bg-card ring-brand/10 flex h-full flex-col rounded-2xl border p-7 shadow-sm ring-1">
+              <span className="bg-accent ring-border/60 inline-flex size-[84px] items-center justify-center rounded-2xl ring-1 ring-inset">
+                <Calendar aria-hidden="true" className="size-[60px]" />
+              </span>
+              <h2 className="h3 mt-4">Book a demo</h2>
+              <p className="body text-muted mt-2 grow">
+                30 minutes. We&apos;ll show you exactly what Hatchet can do for
+                your campaign.
+              </p>
+              <div className="mt-4">
+                <Button asChild>
+                  <a
+                    href={siteConfig.bookDemoUrl}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    Book a demo
+                  </a>
+                </Button>
+              </div>
+            </article>
+
+            {/* Send Us a Message — secondary, scrolls to the inline form */}
+            <article className="border-border bg-card flex h-full flex-col rounded-2xl border p-7 shadow-sm">
+              <span className="bg-accent ring-border/60 inline-flex size-[84px] items-center justify-center rounded-2xl ring-1 ring-inset">
+                <ChatBubble aria-hidden="true" className="size-[60px]" />
+              </span>
+              <h2 className="h3 mt-4">Send us a message</h2>
+              <p className="body text-muted mt-2 grow">
+                Any doubt? Drop us a message and we&apos;ll get back to you.
+              </p>
+              <div className="mt-4">
+                <Button
+                  asChild
+                  className="border-border hover:border-brand/50 hover:text-brand bg-white text-[#022658] transition-all hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_color-mix(in_oklch,var(--brand)_20%,transparent),0_10px_28px_-8px_color-mix(in_oklch,var(--brand)_40%,transparent)]"
+                  variant="secondary"
                 >
-                  Book a demo
-                </a>
-              </Button>
-            </div>
-          </article>
-
-          {/* Send Us a Message — secondary, scrolls to the inline form */}
-          <article className="border-border bg-card flex h-full flex-col rounded-2xl border p-7 shadow-sm">
-            <span className="bg-accent ring-border/60 inline-flex size-[84px] items-center justify-center rounded-2xl ring-1 ring-inset">
-              <ChatBubble aria-hidden="true" className="size-[60px]" />
-            </span>
-            <h2 className="h3 mt-4">Send us a message</h2>
-            <p className="body text-muted mt-2 grow">
-              Any doubt? Drop us a message and we&apos;ll get back to you.
-            </p>
-            <div className="mt-4">
-              <Button
-                asChild
-                className="border-border bg-white text-[#022658] transition-all hover:-translate-y-0.5 hover:border-brand/50 hover:text-brand hover:shadow-[0_0_0_1px_color-mix(in_oklch,var(--brand)_20%,transparent),0_10px_28px_-8px_color-mix(in_oklch,var(--brand)_40%,transparent)]"
-                variant="secondary"
-              >
-                <Link href="#contact-form">Send us a message</Link>
-              </Button>
-            </div>
-          </article>
-        </Stagger>
+                  <Link href="#contact-form">Send us a message</Link>
+                </Button>
+              </div>
+            </article>
+          </Stagger>
+        </div>
       </section>
 
       {/* ── Meet the team ──────────────────────────────────────────── */}
@@ -144,7 +146,7 @@ export default function ContactPage() {
               >
                 <span
                   aria-hidden="true"
-                  className="font-display flex size-16 items-center justify-center rounded-full text-lg font-semibold tracking-tight text-white shadow-sm bg-[image:var(--gradient-brand)]"
+                  className="font-display flex size-16 items-center justify-center rounded-full bg-[image:var(--gradient-brand)] text-lg font-semibold tracking-tight text-white shadow-sm"
                 >
                   {initials(member.name)}
                 </span>

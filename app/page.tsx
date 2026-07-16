@@ -109,9 +109,9 @@ const useCases = [
   },
   {
     icon: Sword,
-    label: "Esports Organizations",
+    label: "Esports Organizers",
     body: "Viewership, audience demographics, chat reactions: Get everything you need to show partners the value of what you've built.",
-    href: "/who-we-serve/esports-teams",
+    href: "/who-we-serve/esports-organizers",
   },
   {
     icon: Users,
@@ -225,7 +225,9 @@ function Pillars() {
                     width={1254}
                   />
                 </div>
-                <h3 className="font-display mt-10 text-2xl font-bold tracking-[-0.01em] text-balance sm:text-3xl lg:min-h-[2lh]">
+                {/* xl bumps the size so every title wraps to two lines once the
+                    grid hits its widest columns; below xl, 3xl already wraps. */}
+                <h3 className="font-display mt-10 text-2xl font-bold tracking-[-0.01em] text-balance sm:text-3xl lg:min-h-[2lh] xl:text-4xl">
                   {pillar.title}
                 </h3>
                 <p className="body text-muted mt-3">{pillar.body}</p>

@@ -1,17 +1,11 @@
-import type { ComponentType, SVGProps } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import {
-  ChartLine,
-  FileText,
-  FlowArrow,
-  MagnifyingGlass,
-} from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { CircuitDivider } from "@/components/sections/CircuitDivider";
+import { CreatorLifecycleOrbital } from "@/components/sections/CreatorLifecycleOrbital";
 import { CTASection } from "@/components/sections/CTASection";
 import { SolutionVisual } from "@/components/solutions/SolutionVisual";
 import { Button } from "@/components/ui/button";
@@ -20,7 +14,6 @@ import {
   type ProductSolution,
   type SolutionFeature,
   type SolutionGroupIntro,
-  type SolutionHeroIcon,
   solutions,
 } from "@/lib/config/solutions";
 import { createMetadata } from "@/lib/seo";
@@ -55,16 +48,6 @@ export async function generateMetadata({
   });
 }
 
-const heroIcons: Record<
-  SolutionHeroIcon,
-  ComponentType<SVGProps<SVGSVGElement>>
-> = {
-  find: MagnifyingGlass,
-  analyze: ChartLine,
-  execute: FlowArrow,
-  report: FileText,
-};
-
 function CtaLink({
   cta,
   variant,
@@ -86,17 +69,15 @@ function CtaLink({
 }
 
 /** Navy-gradient hero following the mockups: stage eyebrow with the route
- *  path, display title, sub, CTA pair, then a stat strip (or the lifecycle
- *  icon when the copy doc calls for one). */
+ *  path, display title, sub, CTA pair, then a stat strip. The right column is
+ *  the lifecycle orbital resting on this page's stage. */
 function SolutionHero({ solution }: { solution: ProductSolution }) {
-  const HeroIcon = heroIcons[solution.heroIcon];
-
   // Bottom padding is the canvas for the gradient's blue→white tail; keep it
   // in sync with --hero-gradient-compact's stops. Kept modest so the first
   // feature section sits close under the hero rather than far down the page.
   return (
-    <section className="relative mx-auto w-full max-w-7xl px-4 pt-6 pb-28 sm:px-6 lg:px-8 lg:pt-8 lg:pb-44">
-      <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto]">
+    <section className="relative w-full px-4 pt-6 pb-28 sm:px-6 lg:px-8 lg:pt-8 lg:pb-44">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
         <div className="max-w-4xl">
           <p className="eyebrow text-white/70">{solution.eyebrow}</p>
           <h1 className="display mt-4" style={{ color: "var(--white)" }}>
@@ -129,13 +110,13 @@ function SolutionHero({ solution }: { solution: ProductSolution }) {
             </dl>
           ) : null}
         </div>
-        <div aria-hidden="true" className="hidden justify-end pr-8 lg:flex">
-          {/* Red under-glow lifts the iso icon off the navy, echoing the
-              lifecycle orbital's treatment. */}
-          <span className="relative z-10 block">
-            <span className="bg-brand/25 absolute inset-4 rounded-full blur-2xl" />
-            <HeroIcon className="relative size-64 drop-shadow-[0_18px_40px_rgba(0,0,0,0.45)]" />
-          </span>
+        {/* Lifecycle orbital, resting on this page's stage. Interactive (the
+            stations link across solutions), so not aria-hidden. */}
+        <div className="hidden lg:block">
+          <CreatorLifecycleOrbital
+            defaultStageHref={solution.href}
+            variant="canvas"
+          />
         </div>
       </div>
     </section>

@@ -19,6 +19,12 @@ const nextConfig: NextConfig = {
         destination: "/solutions/reporting",
         permanent: true,
       },
+      // Vertical renamed Esports Teams → Esports Organizers with the 2026 copy deck.
+      {
+        source: "/who-we-serve/esports-teams",
+        destination: "/who-we-serve/esports-organizers",
+        permanent: true,
+      },
     ];
   },
 };

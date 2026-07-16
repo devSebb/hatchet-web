@@ -63,9 +63,9 @@ export const primaryNav: NavItem[] = [
         description: "Add live-streaming intelligence to market research.",
       },
       {
-        label: "Esports Teams",
-        href: "/who-we-serve/esports-teams",
-        description: "Benchmark live audiences, events, and sponsor value.",
+        label: "Esports Organizers",
+        href: "/who-we-serve/esports-organizers",
+        description: "Show sponsors your event's appeal with verified data.",
       },
       {
         label: "Marketing & Talent Agencies",

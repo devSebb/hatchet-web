@@ -184,23 +184,35 @@
   );
   /* Compact variant for interior heroes with no dashboard image (the
      solutions hero). Navy holds through the headline, CTAs, and stat strip
-     (white copy rides it), then eases continuously through steel and mist to
-     paper by the wrapper's bottom edge. Many evenly-spaced control points keep
-     the blue→white fade smooth with no visible band; stops are tuned to the
-     shorter hero tail (lg:pb-44) so the first content section starts on
-     fully-resolved white without being pushed far down the page. */
+     (white copy rides it), then eases continuously to paper by the wrapper's
+     bottom edge.
+
+     Authored in OKLCH rather than as mixes of the navy/steel/mist tokens: that
+     token path spiked chroma to 0.099 at the midpoint and fell back to 0.068
+     while lightness stayed flat, which read as a saturated blue belt across the
+     CTAs, and it then crammed lightness 0.39 -> 0.92 into 13% of the height.
+     Here hue is pinned to the brand's 257deg, lightness rises monotonically,
+     and chroma follows one gentle bell peaking at 0.082 — so the eye reads a
+     single continuous fade. Keep both curves smooth when retuning: any local
+     chroma maximum or kink in the lightness ramp reappears as a visible band.
+     Stops are tuned to the shorter hero tail (lg:pb-44) so the first content
+     section starts on fully-resolved white. */
   --hero-gradient-compact: linear-gradient(
-    to bottom,
-    var(--bg) 0%,
-    var(--bg) 34%,
-    color-mix(in srgb, var(--bg) 62%, var(--blue-transitional)) 46%,
-    var(--blue-transitional) 56%,
-    color-mix(in srgb, var(--blue-transitional) 60%, var(--hero-steel)) 65%,
-    color-mix(in srgb, var(--blue-transitional) 25%, var(--hero-steel)) 72%,
-    var(--hero-steel) 78%,
-    color-mix(in srgb, var(--hero-steel) 45%, var(--hero-mist)) 85%,
-    var(--hero-mist) 91%,
-    color-mix(in srgb, var(--hero-mist) 40%, var(--paper)) 96%,
+    to bottom in oklch,
+    oklch(23.6% 0.029 257) 0%,
+    oklch(24.4% 0.043 257) 18%,
+    oklch(25.9% 0.06 257) 32%,
+    oklch(28.1% 0.075 257) 45%,
+    oklch(30.5% 0.082 257) 55%,
+    oklch(33.8% 0.08 257) 63%,
+    oklch(38.5% 0.073 257) 70%,
+    oklch(45% 0.064 257) 76.5%,
+    oklch(53.5% 0.053 257) 82%,
+    oklch(63% 0.042 257) 86.5%,
+    oklch(73% 0.03 257) 90.5%,
+    oklch(83% 0.019 257) 94%,
+    oklch(90.5% 0.011 257) 96.5%,
+    oklch(96.5% 0.004 257) 98.5%,
     var(--paper) 100%
   );
 
