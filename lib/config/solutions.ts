@@ -170,6 +170,11 @@ const rawSolutions = [
             headline: "Debut viewerships put in perspective.",
             body: "New releases get their own lens. Track first day, week or months performance and benchmark against historical averages and competitor launches.",
           },
+          {
+            name: "Genre Benchmarks",
+            headline: "A handle on which games viewers love most.",
+            body: "Zoom out from any single title to see how audiences are gravitating towards different types of gameplay. Track how tastes in genre shift over time, from esports-friendly genres like MOBAs and Shooters to collab co-op chaos like Friendslop and Survival Games.",
+          },
         ],
       },
     ],

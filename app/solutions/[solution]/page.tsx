@@ -5,7 +5,10 @@ import { notFound } from "next/navigation";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { CircuitDivider } from "@/components/sections/CircuitDivider";
-import { CreatorLifecycleOrbital } from "@/components/sections/CreatorLifecycleOrbital";
+import {
+  CreatorLifecycleOrbital,
+  LifecycleStationsRow,
+} from "@/components/sections/CreatorLifecycleOrbital";
 import { CTASection } from "@/components/sections/CTASection";
 import { SolutionVisual } from "@/components/solutions/SolutionVisual";
 import { Button } from "@/components/ui/button";
@@ -255,31 +258,19 @@ function GroupHeading({
 }
 
 /** The PDF's "Looking For One Tool That Does It All?" lifecycle cross-sell,
- *  rendered under the closing CTA with a link to the home page's lifecycle
- *  orbital. The phrase is guaranteed to be present in the body by
- *  normalizeCrossSell, so the split always yields a lead and a tail. */
+ *  rendered under the closing CTA. In place of prose, it surfaces the four
+ *  lifecycle stations from the home page's orbital as a row of links so each
+ *  stage points straight at its solution page. */
 function CrossSellNote({
   crossSell,
 }: {
   crossSell: NonNullable<ProductSolution["closingCta"]["crossSell"]>;
 }) {
-  const { phrase, href } = crossSell.link;
-  const [lead, tail] = crossSell.body.split(phrase);
-
   return (
     <section className="bg-background px-4 pb-20 sm:px-6 lg:px-8 lg:pb-28">
-      <Reveal className="mx-auto max-w-3xl text-center">
-        <p className="eyebrow text-signal">{crossSell.title}</p>
-        <p className="body text-muted mt-4">
-          {lead}
-          <Link
-            className="text-foreground hover:text-signal font-medium underline underline-offset-4"
-            href={href}
-          >
-            {phrase}
-          </Link>
-          {tail}
-        </p>
+      <Reveal className="mx-auto max-w-6xl text-center">
+        <p className="h3 text-[1.875rem] text-signal">{crossSell.title}</p>
+        <LifecycleStationsRow className="mt-5 text-left" />
       </Reveal>
     </section>
   );

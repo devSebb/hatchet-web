@@ -132,15 +132,25 @@ function StationFacet({
   stage,
   isActive,
   compact = false,
+  snug = false,
 }: {
   stage: Stage;
   isActive: boolean;
   /** Smaller card for tight canvases (e.g. the solution-page hero). */
   compact?: boolean;
+  /** Full-size card but tighter horizontal padding + icon gap, so it can sit
+   *  in a narrower column without wrapping the label (cross-sell row). */
+  snug?: boolean;
 }) {
   const { Icon } = stage;
   return (
-    <span className="relative block">
+    <span
+      className={cn(
+        "relative block",
+        compact && "transition-transform duration-[250ms] ease-out",
+        compact && isActive && "scale-[1.16]",
+      )}
+    >
       {/* Red under-glow behind the card (active only). */}
       <span
         aria-hidden="true"
@@ -158,7 +168,9 @@ function StationFacet({
           "cta-panel-frame relative flex items-center backdrop-blur-sm transition-[border-color,background-color] duration-[250ms]",
           compact
             ? "gap-2.5 rounded-xl border px-3 py-2"
-            : "gap-4 rounded-2xl border px-4 py-2.5",
+            : snug
+              ? "gap-2.5 rounded-2xl border px-3 py-2.5"
+              : "gap-4 rounded-2xl border px-4 py-2.5",
           isActive ? "border-brand bg-card/85" : "border-border bg-card/60",
         )}
       >
@@ -197,7 +209,9 @@ function StationFacet({
               "leading-none font-semibold transition-colors duration-[250ms]",
               compact
                 ? "text-[0.8rem] whitespace-nowrap"
-                : "text-[1.08rem]",
+                : snug
+                  ? "text-[1.08rem] whitespace-nowrap"
+                  : "text-[1.08rem]",
               isActive ? "text-foreground" : "text-muted",
             )}
           >
@@ -206,6 +220,61 @@ function StationFacet({
         </span>
       </span>
     </span>
+  );
+}
+
+/** The four lifecycle stations laid out as a plain horizontal row of links —
+ *  the orbital's cards without the orbital itself. Used by the solution-page
+ *  cross-sell to point at each stage's solution page. Hovering or focusing a
+ *  card lights it up, mirroring the orbital's active state. */
+export function LifecycleStationsRow({ className }: { className?: string }) {
+  const [active, setActive] = useState<number | null>(null);
+  const reduceMotion = useHydratedReducedMotion();
+  return (
+    <div className={cn("relative", className)}>
+      {/* Flowing connection behind the cards (sm+, where they form one row):
+          a drifting dashed rail plus a glowing packet travelling left→right,
+          mirroring the orbital's live trace. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-1/2 hidden -translate-y-1/2 sm:block"
+      >
+        <div className="lifecycle-rail h-[2px] w-full" />
+        {reduceMotion ? null : (
+          <motion.span
+            animate={{ left: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
+            className="absolute top-1/2 h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+            style={{
+              background: "var(--brand-soft)",
+              filter: "drop-shadow(0 0 5px var(--brand))",
+            }}
+            transition={{
+              duration: 7,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 0.6,
+            }}
+          />
+        )}
+      </div>
+
+      <div className="relative grid grid-cols-2 gap-3 sm:flex sm:justify-between">
+        {STAGES.map((s, i) => (
+          <Link
+            aria-label={`${s.num}: ${s.stage}`}
+            className="group focus-visible:ring-ring/60 w-[15rem] max-w-full rounded-xl no-underline outline-none focus-visible:ring-3"
+            href={s.href}
+            key={s.num}
+            onBlur={() => setActive(null)}
+            onFocus={() => setActive(i)}
+            onMouseEnter={() => setActive(i)}
+            onMouseLeave={() => setActive(null)}
+          >
+            <StationFacet isActive={i === active} snug stage={s} />
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -438,6 +507,7 @@ function OrbitalCanvas({
             className={cn(
               "group focus-visible:ring-ring/60 absolute -translate-x-1/2 -translate-y-1/2 rounded-xl no-underline outline-none focus-visible:ring-3",
               compact ? "w-44" : "w-60",
+              compact && isActive && "z-10",
             )}
             href={s.href}
             key={s.num}

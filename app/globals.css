@@ -478,6 +478,28 @@
     }
   }
 
+  /* Horizontal dashed connection rail between the lifecycle cross-sell cards;
+     the dashes drift left→right like the orbital's idle traces. */
+  .lifecycle-rail {
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--signal-grid) 0 3px,
+      transparent 3px 9px
+    );
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lifecycle-rail {
+      animation: lifecycle-rail-flow 6s linear infinite;
+    }
+  }
+
+  @keyframes lifecycle-rail-flow {
+    to {
+      background-position-x: 9px;
+    }
+  }
+
   /* CircuitDivider signal pulse: travels the run, then the trace idles quiet
      for the rest of the cycle. Stays hidden entirely under reduced motion. */
   @media (prefers-reduced-motion: no-preference) {
