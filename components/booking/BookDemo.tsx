@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  CaretDown,
   CaretLeft,
   CaretRight,
   CheckSquare,
@@ -15,11 +14,6 @@ import {
 
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { Button } from "@/components/ui/button";
-import {
-  REFERRAL_OPTIONS,
-  REFERRAL_OTHER,
-  TOPIC_OPTIONS,
-} from "@/lib/booking/options";
 import { cn } from "@/lib/utils";
 import {
   detectTimezone,
@@ -48,9 +42,8 @@ interface FormState {
   job_title: string;
   company: string;
   company_website: string;
+  linkedin_url: string;
   topic: string;
-  referral_source: string;
-  referral_other: string;
   website: string; // honeypot
 }
 
@@ -60,9 +53,8 @@ const EMPTY_FORM: FormState = {
   job_title: "",
   company: "",
   company_website: "",
+  linkedin_url: "",
   topic: "",
-  referral_source: "",
-  referral_other: "",
   website: "",
 };
 
@@ -90,10 +82,10 @@ const COPY = {
     jobTitle: "Job title",
     company: "Company",
     companyWebsite: "Company website",
+    linkedin: "LinkedIn URL",
     topic: "What would you like to cover?",
-    referral: "How did you hear about us?",
-    referralOther: "Tell us how you heard about us",
-    selectPlaceholder: "Select an option",
+    topicPlaceholder:
+      "Anything you'd like us to focus on, or context about your team (optional)",
     back: "Back",
     submit: "Confirm",
     submitting: "Confirming…",
@@ -101,6 +93,7 @@ const COPY = {
       required: "This field is required.",
       email: "Enter a valid email address.",
       url: "Enter a valid company website.",
+      linkedin: "Enter a valid LinkedIn URL.",
     },
   },
   genericError: "Something went wrong. Please try again.",
@@ -230,13 +223,9 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
     if (!form.company.trim()) e.company = COPY.form.errors.required;
     if (!form.company_website.trim())
       e.company_website = COPY.form.errors.required;
-    if (!form.topic) e.topic = COPY.form.errors.required;
-    if (!form.referral_source) e.referral_source = COPY.form.errors.required;
-    else if (
-      form.referral_source === REFERRAL_OTHER &&
-      !form.referral_other.trim()
-    )
-      e.referral_other = COPY.form.errors.required;
+    if (!form.linkedin_url.trim())
+      e.linkedin_url = COPY.form.errors.required;
+    // topic is optional free-text — no validation.
     setFieldErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -260,12 +249,8 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
           job_title: form.job_title.trim(),
           company: form.company.trim(),
           company_website: form.company_website.trim(),
-          topic: form.topic,
-          referral_source: form.referral_source,
-          referral_other:
-            form.referral_source === REFERRAL_OTHER
-              ? form.referral_other.trim()
-              : "",
+          linkedin_url: form.linkedin_url.trim(),
+          topic: form.topic.trim(),
           website: form.website, // honeypot
         }),
       });
@@ -296,7 +281,9 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
               ? COPY.form.errors.email
               : v === "invalid" && k === "company_website"
                 ? COPY.form.errors.url
-                : COPY.form.errors.required;
+                : v === "invalid" && k === "linkedin_url"
+                  ? COPY.form.errors.linkedin
+                  : COPY.form.errors.required;
         }
         setFieldErrors(mapped);
         return;
@@ -522,33 +509,23 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
                   error={fieldErrors.company_website}
                   autoComplete="url"
                 />
-                <SelectField
+                <Field
+                  id="linkedin_url"
+                  label={COPY.form.linkedin}
+                  placeholder="https://www.linkedin.com/in/you"
+                  value={form.linkedin_url}
+                  onChange={(v) => setField("linkedin_url", v)}
+                  error={fieldErrors.linkedin_url}
+                  autoComplete="url"
+                />
+                <TextareaField
                   id="topic"
                   label={COPY.form.topic}
-                  placeholder={COPY.form.selectPlaceholder}
+                  placeholder={COPY.form.topicPlaceholder}
                   value={form.topic}
                   onChange={(v) => setField("topic", v)}
-                  error={fieldErrors.topic}
-                  options={TOPIC_OPTIONS}
+                  optional
                 />
-                <SelectField
-                  id="referral_source"
-                  label={COPY.form.referral}
-                  placeholder={COPY.form.selectPlaceholder}
-                  value={form.referral_source}
-                  onChange={(v) => setField("referral_source", v)}
-                  error={fieldErrors.referral_source}
-                  options={REFERRAL_OPTIONS}
-                />
-                {form.referral_source === REFERRAL_OTHER && (
-                  <Field
-                    id="referral_other"
-                    label={COPY.form.referralOther}
-                    value={form.referral_other}
-                    onChange={(v) => setField("referral_other", v)}
-                    error={fieldErrors.referral_other}
-                  />
-                )}
 
                 {/* Honeypot — visually hidden, off-screen, not announced. */}
                 <div
@@ -843,13 +820,26 @@ function fieldBorder(error?: string): string {
   return error ? "border-destructive" : "border-border focus:border-brand";
 }
 
-function FieldLabel({ id, label }: { id: string; label: string }) {
+function FieldLabel({
+  id,
+  label,
+  optional,
+}: {
+  id: string;
+  label: string;
+  optional?: boolean;
+}) {
   return (
     <label
       htmlFor={id}
       className="text-foreground mb-1.5 block text-[13px] font-semibold"
     >
-      {label} <span aria-hidden>*</span>
+      {label}{" "}
+      {optional ? (
+        <span className="text-muted font-normal">(optional)</span>
+      ) : (
+        <span aria-hidden>*</span>
+      )}
     </label>
   );
 }
@@ -902,55 +892,36 @@ function Field({
   );
 }
 
-function SelectField({
+function TextareaField({
   id,
   label,
   value,
   onChange,
   error,
-  options,
   placeholder,
+  optional,
 }: {
   id: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
   error?: string;
-  options: readonly string[];
-  placeholder: string;
+  placeholder?: string;
+  optional?: boolean;
 }) {
   return (
     <div>
-      <FieldLabel id={id} label={label} />
-      <div className="relative">
-        <select
-          id={id}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className={cn(
-            FIELD_BASE,
-            fieldBorder(error),
-            "appearance-none pr-9",
-            !value && "text-muted/60",
-          )}
-          aria-invalid={!!error}
-          aria-describedby={error ? `${id}-error` : undefined}
-          required
-        >
-          <option value="" disabled>
-            {placeholder}
-          </option>
-          {options.map((opt) => (
-            <option key={opt} value={opt} className="text-foreground">
-              {opt}
-            </option>
-          ))}
-        </select>
-        <CaretDown
-          aria-hidden
-          className="text-muted pointer-events-none absolute top-1/2 right-3 size-3.5 -translate-y-1/2"
-        />
-      </div>
+      <FieldLabel id={id} label={label} optional={optional} />
+      <textarea
+        id={id}
+        rows={3}
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        className={cn(FIELD_BASE, fieldBorder(error), "resize-y")}
+        aria-invalid={!!error}
+        aria-describedby={error ? `${id}-error` : undefined}
+      />
       <FieldError id={id} error={error} />
     </div>
   );

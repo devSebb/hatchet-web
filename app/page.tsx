@@ -219,17 +219,19 @@ function Pillars() {
     <section className="surface-paper bg-background text-foreground px-4 pt-20 pb-28 sm:px-6 lg:px-8 lg:pt-28 lg:pb-36">
       <div className="mx-auto w-full max-w-7xl">
         <Stagger className="grid gap-5 lg:grid-cols-3">
-          {pillars.map((pillar) => {
+          {pillars.map((pillar, index) => {
             return (
               <article className="relative" key={pillar.title}>
-                <div className="hover:shadow-glow-brand mx-auto w-fit overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1">
-                  <Image
-                    alt=""
-                    className="h-80 w-auto"
-                    height={pillar.height}
-                    src={pillar.image}
-                    width={pillar.width}
-                  />
+                <div className="flex h-80 items-end justify-center">
+                  <div className="hover:shadow-glow-brand w-fit overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-(--dur-base) hover:-translate-y-1">
+                    <Image
+                      alt=""
+                      className={`w-auto ${index === 2 ? "h-[280px]" : "h-80"}`}
+                      height={pillar.height}
+                      src={pillar.image}
+                      width={pillar.width}
+                    />
+                  </div>
                 </div>
                 {/* xl bumps the size so every title wraps to two lines once the
                     grid hits its widest columns; below xl, 3xl already wraps. */}

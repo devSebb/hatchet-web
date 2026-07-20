@@ -22,8 +22,8 @@ function Logo() {
           coarse handle — and h-* maps to --space-*, which only defines
           1-6/8/10/12/16. h-7 has no --space-7 and silently falls back to
           stock Tailwind's 1.75rem (28px), less than half of h-8's 64px.
-          A width in px sidesteps both traps. 248px == 60.4px tall. */}
-      <BrandLogo alt="" className="h-auto w-[248px]" priority variant="primary" />
+          A width in px sidesteps both traps. 208px == 50.7px tall. */}
+      <BrandLogo alt="" className="h-auto w-[208px]" priority variant="primary" />
     </Link>
   );
 }

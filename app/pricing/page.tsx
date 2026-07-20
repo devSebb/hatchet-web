@@ -106,8 +106,8 @@ function PlanCard({ plan }: { plan: Plan }) {
       className={cn(
         "relative flex h-full flex-col rounded-xl border p-6",
         plan.recommended
-          ? "border-brand bg-card shadow-signal"
-          : "border-border bg-card shadow-sm",
+          ? "border-brand bg-[#182642] shadow-signal"
+          : "border-[#2b3d5e] bg-[#182642] shadow-sm",
       )}
     >
       {plan.recommended ? (
@@ -116,8 +116,8 @@ function PlanCard({ plan }: { plan: Plan }) {
         </span>
       ) : null}
 
-      <h2 className="h3">{plan.name}</h2>
-      <p className="text-brand mt-2 text-sm font-medium">{plan.tagline}</p>
+      <h2 className="h3 text-[1.75rem]">{plan.name}</h2>
+      <p className="text-brand mt-2 text-base font-medium">{plan.tagline}</p>
 
       <ul className="mt-6 grid gap-4">
         {plan.features.map((feature) => (
@@ -175,29 +175,29 @@ type ModuleRow = {
 
 const MODULE_ROWS: ModuleRow[] = [
   {
-    title: "Find",
-    description: "Creator & game discovery, AI Smart Search",
+    title: "Find - Creator & Game Discovery",
+    description: "",
     community: false,
     dataLicense: true,
     fullLicense: true,
   },
   {
-    title: "Analyze",
-    description: "Brand & audience intelligence + deep analytics",
+    title: "Analyze - Brand & Audience Intelligence + Deep Analytics",
+    description: "",
     community: false,
     dataLicense: true,
     fullLicense: true,
   },
   {
-    title: "Build",
-    description: "Creator community: roster, messaging, codes",
+    title: "Build - Creator Community (Roster, Messaging, Codes)",
+    description: "",
     community: true,
     dataLicense: false,
     fullLicense: true,
   },
   {
-    title: "Reporting",
-    description: "Auto-tracked dashboards & custom reports",
+    title: "Reporting & Custom Reports",
+    description: "",
     community: false,
     dataLicense: true,
     fullLicense: true,
@@ -312,9 +312,11 @@ function ComparePlans() {
                       <p className="text-sm font-semibold text-white">
                         {row.title}
                       </p>
-                      <p className="mt-0.5 hidden text-xs font-normal text-white/65 sm:block">
-                        {row.description}
-                      </p>
+                      {row.description ? (
+                        <p className="mt-0.5 hidden text-xs font-normal text-white/65 sm:block">
+                          {row.description}
+                        </p>
+                      ) : null}
                     </th>
                     <td className="border-t border-white/15 py-2 text-center align-middle">
                       <Mark included={row.community} />

@@ -3,8 +3,6 @@
  * returns either a normalized payload or a list of field errors so the route can
  * map them to a 422.
  */
-import { REFERRAL_OPTIONS, REFERRAL_OTHER, TOPIC_OPTIONS } from "./options";
-
 export interface RawRequestBody {
   slot_start_utc?: unknown;
   booker_timezone?: unknown;
@@ -13,9 +11,8 @@ export interface RawRequestBody {
   job_title?: unknown;
   company?: unknown;
   company_website?: unknown;
+  linkedin_url?: unknown;
   topic?: unknown;
-  referral_source?: unknown;
-  referral_other?: unknown;
   /** Honeypot — must be empty. */
   website?: unknown;
 }
@@ -29,12 +26,10 @@ export interface NormalizedRequest {
   company: string;
   companyWebsite: string;
   companyHost: string;
-  /** "What would you like to cover?" — one of TOPIC_OPTIONS. */
+  /** Required LinkedIn profile URL, normalized to a canonical http(s) URL. */
+  linkedinUrl: string;
+  /** "What would you like to cover?" — optional free-text notes ("" if blank). */
   topic: string;
-  /** "How did you hear about us?" — one of REFERRAL_OPTIONS. */
-  referralSource: string;
-  /** Free text accompanying the "Other" referral choice. */
-  referralOther: string | null;
 }
 
 export interface ValidationResult {
@@ -72,6 +67,24 @@ export function normalizeCompanyUrl(
   };
 }
 
+/** Normalize a user-entered LinkedIn URL, requiring a linkedin.com host. */
+export function normalizeLinkedinUrl(input: string): string | null {
+  let raw = input.trim();
+  if (!raw) return null;
+  if (!/^https?:\/\//i.test(raw)) raw = `https://${raw}`;
+  let parsed: URL;
+  try {
+    parsed = new URL(raw);
+  } catch {
+    return null;
+  }
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return null;
+  // Accept linkedin.com and its country/lang subdomains (e.g. www., uk.).
+  const host = parsed.hostname.replace(/^www\./, "");
+  if (host !== "linkedin.com" && !host.endsWith(".linkedin.com")) return null;
+  return parsed.toString();
+}
+
 /** True when the honeypot field was filled (i.e. almost certainly a bot). */
 export function honeypotTripped(body: RawRequestBody): boolean {
   return asString(body.website).length > 0;
@@ -98,22 +111,13 @@ export function validateRequest(body: RawRequestBody): ValidationResult {
   if (!companyRaw) errors.company_website = "required";
   else if (!companyUrl) errors.company_website = "invalid";
 
-  const topic = asString(body.topic);
-  if (!topic) errors.topic = "required";
-  else if (!(TOPIC_OPTIONS as readonly string[]).includes(topic))
-    errors.topic = "invalid";
+  const linkedinRaw = asString(body.linkedin_url);
+  const linkedinUrl = linkedinRaw ? normalizeLinkedinUrl(linkedinRaw) : null;
+  if (!linkedinRaw) errors.linkedin_url = "required";
+  else if (!linkedinUrl) errors.linkedin_url = "invalid";
 
-  const referralSource = asString(body.referral_source);
-  if (!referralSource) errors.referral_source = "required";
-  else if (!(REFERRAL_OPTIONS as readonly string[]).includes(referralSource))
-    errors.referral_source = "invalid";
-
-  const referralOtherRaw = asString(body.referral_other);
-  const referralOther = referralOtherRaw
-    ? referralOtherRaw.slice(0, 500)
-    : null;
-  if (referralSource === REFERRAL_OTHER && !referralOther)
-    errors.referral_other = "required";
+  // Optional free-text notes — no membership check; just bound the length.
+  const topic = asString(body.topic).slice(0, 1000);
 
   const bookerTimezone = asString(body.booker_timezone) || "UTC";
 
@@ -141,9 +145,8 @@ export function validateRequest(body: RawRequestBody): ValidationResult {
       company,
       companyWebsite: (companyUrl as { url: string; host: string }).url,
       companyHost: (companyUrl as { url: string; host: string }).host,
+      linkedinUrl: linkedinUrl as string,
       topic,
-      referralSource,
-      referralOther,
     },
   };
 }

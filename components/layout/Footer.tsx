@@ -91,7 +91,7 @@ export function Footer() {
             </ul>
             {index === footerColumns.length - 1 ? (
               <Link
-                className="border-border bg-elevated/50 text-foreground hover:border-brand/50 hover:bg-elevated focus-visible:ring-ring/50 mt-3 inline-flex items-center gap-[6px] rounded-full border py-1.5 pr-3 pl-2 text-sm font-semibold transition-colors outline-none focus-visible:ring-3"
+                className="border-border bg-white text-[#151f2c] hover:border-brand/50 hover:bg-white/90 focus-visible:ring-ring/50 mt-3 inline-flex items-center gap-[6px] rounded-full border py-1.5 pr-3 pl-2 text-sm font-semibold transition-colors outline-none focus-visible:ring-3"
                 href="/about/contact#contact-form"
               >
                 <Image
