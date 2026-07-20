@@ -22,6 +22,10 @@ type CTAContentProps = {
   variant?: "default" | "featured";
   eyebrow?: string;
   title?: string;
+  /** Heading scale class for the title ("h1", "h2", …). Defaults to "h2". */
+  titleClassName?: string;
+  /** Optional subheading rendered between the title and the body. */
+  subtitle?: string;
   body?: string;
   cta?: { label: string; href: string };
   proof?: CTAProof;
@@ -76,6 +80,8 @@ function ProofBlock({ proof }: { proof: CTAProof }) {
 function CTACopy({
   eyebrow,
   title,
+  titleClassName,
+  subtitle,
   body,
   cta,
   proof,
@@ -83,6 +89,8 @@ function CTACopy({
 }: {
   eyebrow?: string;
   title: string;
+  titleClassName?: string;
+  subtitle?: string;
   body: string;
   cta: { label: string; href: string };
   proof?: CTAProof;
@@ -91,7 +99,8 @@ function CTACopy({
   return (
     <div className={cn("max-w-xl", align === "center" && "mx-auto text-center")}>
       {eyebrow ? <p className="eyebrow text-white/70">{eyebrow}</p> : null}
-      <h2 className="h2 mt-3 text-white">{title}</h2>
+      <h2 className={cn(titleClassName ?? "h2", "mt-3 text-white")}>{title}</h2>
+      {subtitle ? <p className="h3 mt-4 text-white">{subtitle}</p> : null}
       <p className="body-lg mt-5 text-white/85">{body}</p>
       <div
         className={cn(
@@ -149,6 +158,8 @@ export function CTAPanel({
   variant = "default",
   eyebrow,
   title = DEFAULT_TITLE,
+  titleClassName,
+  subtitle,
   body = DEFAULT_BODY,
   cta = { label: "Book a demo", href: siteConfig.bookDemoUrl },
   proof,
@@ -192,7 +203,9 @@ export function CTAPanel({
               cta={cta}
               eyebrow={eyebrow}
               proof={proof}
+              subtitle={subtitle}
               title={title}
+              titleClassName={titleClassName}
             />
           </Reveal>
         </div>
@@ -204,7 +217,9 @@ export function CTAPanel({
             cta={cta}
             eyebrow={eyebrow}
             proof={proof}
+            subtitle={subtitle}
             title={title}
+            titleClassName={titleClassName}
           />
         </Reveal>
       )}

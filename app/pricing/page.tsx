@@ -4,7 +4,6 @@ import { Check, X } from "@phosphor-icons/react/ssr";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
-import { CreatorLifecycleOrbital } from "@/components/sections/CreatorLifecycleOrbital";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { Button } from "@/components/ui/button";
@@ -243,7 +242,7 @@ function ComparePlans() {
         <Reveal>
           <div className="max-w-3xl">
             <p className="eyebrow text-muted">Compare plans</p>
-            <h2 className="h1 mt-4">Every module, side by side.</h2>
+            <h2 className="h1 mt-4">Select The Plan That Suits Your Needs.</h2>
             <p className="body-lg text-muted mt-3">
               Community runs your roster. Data License runs your intelligence.
               Full License runs the whole program.
@@ -342,29 +341,6 @@ function ComparePlans() {
   );
 }
 
-function ClosingCTA() {
-  return (
-    <section className="bg-background text-foreground relative overflow-hidden px-4 pt-16 sm:px-6 lg:px-8 lg:pt-24">
-      <div
-        aria-hidden="true"
-        className="cta-grid pointer-events-none absolute inset-0"
-      />
-      <div
-        aria-hidden="true"
-        className="cta-grain pointer-events-none absolute inset-0"
-      />
-
-      <div className="relative mx-auto w-full max-w-7xl">
-        <Reveal>
-          <h2 className="h1 text-center">Not sure which fits?</h2>
-        </Reveal>
-
-        <CreatorLifecycleOrbital className="mt-10" />
-      </div>
-    </section>
-  );
-}
-
 export default function PricingPage() {
   return (
     <main className="bg-background text-foreground">
@@ -379,12 +355,12 @@ export default function PricingPage() {
 
       <ComparePlans />
 
-      <ClosingCTA />
-
       <CTASection
         body="Book a 30-minute call and we'll match your team to the right plan."
         cta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
-        title="Let's talk it through."
+        subtitle="Let's talk it through."
+        title="Not sure where you fit?"
+        titleClassName="h1"
       />
     </main>
   );
