@@ -12,6 +12,7 @@ export interface RawRequestBody {
   company?: unknown;
   company_website?: unknown;
   linkedin_url?: unknown;
+  referral_source?: unknown;
   topic?: unknown;
   /** Honeypot — must be empty. */
   website?: unknown;
@@ -28,6 +29,8 @@ export interface NormalizedRequest {
   companyHost: string;
   /** Required LinkedIn profile URL, normalized to a canonical http(s) URL. */
   linkedinUrl: string;
+  /** "How did you hear about us?" — optional dropdown pick ("" if blank). */
+  referralSource: string;
   /** "What would you like to cover?" — optional free-text notes ("" if blank). */
   topic: string;
 }
@@ -118,6 +121,7 @@ export function validateRequest(body: RawRequestBody): ValidationResult {
 
   // Optional free-text notes — no membership check; just bound the length.
   const topic = asString(body.topic).slice(0, 1000);
+  const referralSource = asString(body.referral_source).slice(0, 100);
 
   const bookerTimezone = asString(body.booker_timezone) || "UTC";
 
@@ -146,6 +150,7 @@ export function validateRequest(body: RawRequestBody): ValidationResult {
       companyWebsite: (companyUrl as { url: string; host: string }).url,
       companyHost: (companyUrl as { url: string; host: string }).host,
       linkedinUrl: linkedinUrl as string,
+      referralSource,
       topic,
     },
   };

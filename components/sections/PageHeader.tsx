@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -7,6 +8,8 @@ type PageHeaderProps = {
   eyebrow?: string;
   title: string;
   subtitle?: string;
+  /** Optional right-column visual (lg and up), e.g. a vertical's iso-icon. */
+  aside?: ReactNode;
   primaryCta?: {
     label: string;
     href: string;
@@ -29,6 +32,7 @@ export function PageHeader({
   eyebrow,
   title,
   subtitle,
+  aside,
   primaryCta,
   secondaryCta,
   surface = "default",
@@ -49,7 +53,13 @@ export function PageHeader({
         className,
       )}
     >
-      <div className="mx-auto w-full max-w-7xl">
+      <div
+        className={cn(
+          "mx-auto w-full max-w-7xl",
+          aside &&
+            "grid items-center gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]",
+        )}
+      >
         <div className="max-w-4xl">
           {eyebrow ? (
             <p
@@ -102,6 +112,11 @@ export function PageHeader({
             </div>
           ) : null}
         </div>
+        {aside ? (
+          <div className="hidden lg:flex lg:items-center lg:justify-center">
+            {aside}
+          </div>
+        ) : null}
       </div>
     </section>
   );

@@ -104,10 +104,12 @@ function PlanCard({ plan }: { plan: Plan }) {
   return (
     <article
       className={cn(
-        "relative flex h-full flex-col rounded-xl border p-6",
+        // White-paper card on the dark page: surface-paper flips the tokens so
+        // border/text utilities resolve to their light-theme values inside.
+        "surface-paper bg-paper relative flex h-full flex-col rounded-xl border p-6",
         plan.recommended
-          ? "border-brand bg-[#182642] shadow-signal"
-          : "border-[#2b3d5e] bg-[#182642] shadow-sm",
+          ? "border-brand shadow-signal"
+          : "border-paper-border shadow-sm",
       )}
     >
       {plan.recommended ? (
@@ -116,13 +118,13 @@ function PlanCard({ plan }: { plan: Plan }) {
         </span>
       ) : null}
 
-      <h2 className="h3 text-[1.75rem]">{plan.name}</h2>
+      <h2 className="h3 text-blue-transitional text-[1.75rem]">{plan.name}</h2>
       <p className="text-brand mt-2 text-base font-medium">{plan.tagline}</p>
 
       <ul className="mt-6 grid gap-4">
         {plan.features.map((feature) => (
           <li key={feature.title}>
-            <p className="text-foreground text-sm font-semibold">
+            <p className="text-blue-transitional text-sm font-semibold">
               {feature.title}
             </p>
             <p className="text-muted mt-1 text-sm">{feature.body}</p>
@@ -131,11 +133,7 @@ function PlanCard({ plan }: { plan: Plan }) {
       </ul>
 
       <div className="mt-auto pt-6">
-        <Button
-          asChild
-          className="w-full"
-          variant={plan.recommended ? "default" : "outline"}
-        >
+        <Button asChild className="w-full">
           <Link href={siteConfig.bookDemoUrl}>Book a Demo</Link>
         </Button>
       </div>
@@ -212,8 +210,14 @@ const PILLAR_POS = "-right-[4px] w-[76px] sm:-right-[6px] sm:w-[116px]";
 
 function IncludedMark() {
   return (
-    <span className="inline-flex size-4 items-center justify-center rounded-full bg-green-500 text-white shadow-[0_0_14px_color-mix(in_srgb,#22c55e_45%,transparent)]">
-      <Check aria-hidden="true" className="size-[14px]" weight="bold" />
+    <span className="inline-flex size-5 items-center justify-center text-white">
+      <Check
+        aria-hidden="true"
+        className="size-[18px]"
+        stroke="currentColor"
+        strokeWidth={20}
+        weight="bold"
+      />
       <span className="sr-only">Included</span>
     </span>
   );

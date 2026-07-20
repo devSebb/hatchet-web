@@ -78,7 +78,7 @@ export type ProductSolution = {
   primaryCta: SolutionCta;
   secondaryCta?: SolutionCta;
   heroIcon: SolutionHeroIcon;
-  /** Optional stat strip under the hero CTAs (Discovery only, per copy doc). */
+  /** Stat strip under the hero CTAs — shared across all solutions pages. */
   heroStats?: SolutionHeroStat[];
   features: SolutionFeature[];
   closingCta: {
@@ -116,6 +116,14 @@ const lifecycleCrossSellLink = {
   href: "/#how-it-works",
 };
 
+/** Shared hero stat strip — the same three platform-wide numbers on every
+ *  solutions page. */
+const sharedHeroStats = [
+  { value: "50M+", label: "Creators" },
+  { value: "30+", label: "Platforms" },
+  { value: "10+ yrs", label: "Verified data" },
+];
+
 // Copy source: "Hatchet Website (8)" doc from the content team (July 2026).
 // Text is verbatim by request — do not paraphrase without a new copy doc.
 const rawSolutions = [
@@ -129,11 +137,7 @@ const rawSolutions = [
     primaryCta: bookDemoCta,
     secondaryCta: seeItInActionCta,
     heroIcon: "find",
-    heroStats: [
-      { value: "50M+", label: "Creators" },
-      { value: "30+", label: "Platforms" },
-      { value: "10+ yrs", label: "Verified data" },
-    ],
+    heroStats: sharedHeroStats,
     features: [
       {
         name: "Creator Discovery",
@@ -202,6 +206,7 @@ const rawSolutions = [
     primaryCta: bookDemoCta,
     secondaryCta: seeItInActionCta,
     heroIcon: "analyze",
+    heroStats: sharedHeroStats,
     features: [
       {
         group: "Brand & Audience Intelligence",
@@ -272,6 +277,7 @@ const rawSolutions = [
     primaryCta: bookDemoCta,
     secondaryCta: seeItInActionCta,
     heroIcon: "execute",
+    heroStats: sharedHeroStats,
     features: [
       {
         name: "My Creators",
@@ -322,6 +328,7 @@ const rawSolutions = [
     primaryCta: bookDemoCta,
     secondaryCta: seeItInActionCta,
     heroIcon: "report",
+    heroStats: sharedHeroStats,
     features: [
       {
         name: "Campaigns",

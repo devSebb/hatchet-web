@@ -43,6 +43,7 @@ interface FormState {
   company: string;
   company_website: string;
   linkedin_url: string;
+  referral_source: string;
   topic: string;
   website: string; // honeypot
 }
@@ -54,9 +55,20 @@ const EMPTY_FORM: FormState = {
   company: "",
   company_website: "",
   linkedin_url: "",
+  referral_source: "",
   topic: "",
   website: "",
 };
+
+const REFERRAL_OPTIONS = [
+  "Google / search",
+  "LinkedIn",
+  "Social media",
+  "Word of mouth / referral",
+  "Industry event or conference",
+  "Newsletter or podcast",
+  "Other",
+] as const;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LOCALE = "en-US";
@@ -83,6 +95,8 @@ const COPY = {
     company: "Company",
     companyWebsite: "Company website",
     linkedin: "LinkedIn URL",
+    referralSource: "How did you hear about us?",
+    referralPlaceholder: "Select an option",
     topic: "What would you like to cover?",
     topicPlaceholder:
       "Anything you'd like us to focus on, or context about your team (optional)",
@@ -250,6 +264,7 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
           company: form.company.trim(),
           company_website: form.company_website.trim(),
           linkedin_url: form.linkedin_url.trim(),
+          referral_source: form.referral_source,
           topic: form.topic.trim(),
           website: form.website, // honeypot
         }),
@@ -517,6 +532,15 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
                   onChange={(v) => setField("linkedin_url", v)}
                   error={fieldErrors.linkedin_url}
                   autoComplete="url"
+                />
+                <SelectField
+                  id="referral_source"
+                  label={COPY.form.referralSource}
+                  placeholder={COPY.form.referralPlaceholder}
+                  options={REFERRAL_OPTIONS}
+                  value={form.referral_source}
+                  onChange={(v) => setField("referral_source", v)}
+                  optional
                 />
                 <TextareaField
                   id="topic"
@@ -887,6 +911,54 @@ function Field({
         aria-describedby={error ? `${id}-error` : undefined}
         required
       />
+      <FieldError id={id} error={error} />
+    </div>
+  );
+}
+
+function SelectField({
+  id,
+  label,
+  value,
+  onChange,
+  error,
+  placeholder,
+  options,
+  optional,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  error?: string;
+  placeholder?: string;
+  options: readonly string[];
+  optional?: boolean;
+}) {
+  return (
+    <div>
+      <FieldLabel id={id} label={label} optional={optional} />
+      <select
+        id={id}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={cn(
+          FIELD_BASE,
+          fieldBorder(error),
+          "appearance-none",
+          value ? "text-foreground" : "text-muted/60",
+          "[&>option]:text-black",
+        )}
+        aria-invalid={!!error}
+        aria-describedby={error ? `${id}-error` : undefined}
+      >
+        <option value="">{placeholder}</option>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
       <FieldError id={id} error={error} />
     </div>
   );

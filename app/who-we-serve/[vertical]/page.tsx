@@ -3,6 +3,14 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { CompanyLogo } from "@/components/brand/CompanyLogo";
+import {
+  Broadcast,
+  ChartBar,
+  type IsoIcon,
+  RocketLaunch,
+  Sword,
+  Users,
+} from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { CircuitDivider } from "@/components/sections/CircuitDivider";
@@ -14,6 +22,16 @@ import { siteConfig } from "@/lib/config/site";
 import { createMetadata } from "@/lib/seo";
 
 type Vertical = NonNullable<ReturnType<typeof getVertical>>;
+
+// Same slug → iso-icon pairing as the home page's "Apply Our Data" use-case
+// tiles, surfaced large in each vertical's hero.
+const verticalIcons: Record<string, IsoIcon> = {
+  brands: Broadcast,
+  "games-publishers": RocketLaunch,
+  "market-research-agencies": ChartBar,
+  "esports-organizers": Sword,
+  "marketing-and-talent-agencies": Users,
+};
 
 type VerticalPageProps = {
   params: Promise<{
@@ -190,6 +208,15 @@ export default async function VerticalPage({ params }: VerticalPageProps) {
         style={{ backgroundImage: "var(--hero-gradient-compact)" }}
       >
         <PageHeader
+          aside={(() => {
+            const Icon = verticalIcons[vertical.slug];
+            return Icon ? (
+              <Icon
+                aria-hidden="true"
+                className="size-[280px] drop-shadow-[0_24px_48px_rgba(2,6,23,0.45)]"
+              />
+            ) : null;
+          })()}
           eyebrow={vertical.label}
           primaryCta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
           secondaryCta={{

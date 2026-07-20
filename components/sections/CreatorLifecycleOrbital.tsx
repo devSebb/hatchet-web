@@ -133,6 +133,7 @@ function StationFacet({
   isActive,
   compact = false,
   snug = false,
+  inverted = false,
 }: {
   stage: Stage;
   isActive: boolean;
@@ -141,6 +142,8 @@ function StationFacet({
   /** Full-size card but tighter horizontal padding + icon gap, so it can sit
    *  in a narrower column without wrapping the label (cross-sell row). */
   snug?: boolean;
+  /** Flipped theme for the locked page stage: brand-red card, blue text. */
+  inverted?: boolean;
 }) {
   const { Icon } = stage;
   return (
@@ -171,7 +174,11 @@ function StationFacet({
             : snug
               ? "gap-2.5 rounded-2xl border px-3 py-2.5"
               : "gap-4 rounded-2xl border px-4 py-2.5",
-          isActive ? "border-brand bg-card/85" : "border-border bg-card/60",
+          isActive
+            ? inverted
+              ? "border-brand-lowlight bg-brand"
+              : "border-brand bg-card/85"
+            : "border-border bg-card/60",
         )}
       >
         <span
@@ -179,7 +186,9 @@ function StationFacet({
             "flex shrink-0 items-center justify-center border transition-colors duration-[250ms]",
             compact ? "size-6 rounded-md" : "size-8 rounded-lg",
             isActive
-              ? "border-brand/40 bg-brand/10"
+              ? inverted
+                ? "border-blue-transitional/45 bg-white/85"
+                : "border-brand/40 bg-brand/10"
               : "border-border bg-elevated/60",
           )}
         >
@@ -199,7 +208,11 @@ function StationFacet({
             className={cn(
               "font-mono font-semibold tracking-[0.18em] tabular-nums transition-colors duration-[250ms]",
               compact ? "text-[0.58rem]" : "text-[0.72rem]",
-              isActive ? "text-brand" : "text-muted/80",
+              isActive
+                ? inverted
+                  ? "text-blue-transitional"
+                  : "text-brand"
+                : "text-muted/80",
             )}
           >
             {stage.num}
@@ -212,7 +225,11 @@ function StationFacet({
                 : snug
                   ? "text-[1.08rem] whitespace-nowrap"
                   : "text-[1.08rem]",
-              isActive ? "text-foreground" : "text-muted",
+              isActive
+                ? inverted
+                  ? "text-blue-transitional"
+                  : "text-foreground"
+                : "text-muted",
             )}
           >
             {stage.stage}
@@ -335,6 +352,7 @@ function OrbitalCanvas({
   reduceMotion,
   gradientId,
   compact = false,
+  locked = false,
 }: {
   active: number;
   activate: (index: number) => void;
@@ -343,6 +361,9 @@ function OrbitalCanvas({
   reduceMotion: boolean | null;
   gradientId: string;
   compact?: boolean;
+  /** Pins the active stage: hover/focus never moves the highlight, and the
+   *  active card takes the inverted (brand-red) theme. Stations stay links. */
+  locked?: boolean;
 }) {
   const activeStage = STAGES[active];
 
@@ -511,14 +532,19 @@ function OrbitalCanvas({
             )}
             href={s.href}
             key={s.num}
-            onFocus={() => activate(i)}
-            onMouseEnter={() => activate(i)}
+            onFocus={locked ? undefined : () => activate(i)}
+            onMouseEnter={locked ? undefined : () => activate(i)}
             style={{
               left: `${(p.x / VBW) * 100}%`,
               top: `${(p.y / VBH) * 100}%`,
             }}
           >
-            <StationFacet compact={compact} isActive={isActive} stage={s} />
+            <StationFacet
+              compact={compact}
+              inverted={locked && isActive}
+              isActive={isActive}
+              stage={s}
+            />
           </Link>
         );
       })}
@@ -536,9 +562,9 @@ type CreatorLifecycleOrbitalProps = {
    */
   variant?: "full" | "canvas";
   /**
-   * Stage href (e.g. "/solutions/discovery") selected at rest. The canvas
-   * variant returns here on mouse-leave and never auto-advances, so the
-   * current page's stage stays lit.
+   * Stage href (e.g. "/solutions/discovery") the canvas variant locks onto:
+   * it never auto-advances and hover/focus never moves the highlight, so the
+   * current page's stage stays lit in the inverted (brand-red) theme.
    */
   defaultStageHref?: string;
 };
@@ -594,11 +620,11 @@ export function CreatorLifecycleOrbital({
       <div className={cn("relative", className)} ref={rootRef}>
         <OrbitalCanvas
           activate={activate}
-          active={active}
+          active={defaultIndex}
           animateRouting={animateRouting}
           compact
           gradientId={gradientId}
-          onLeave={() => setActive(defaultIndex)}
+          locked
           reduceMotion={reduceMotion}
         />
       </div>

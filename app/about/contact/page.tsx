@@ -108,11 +108,7 @@ export default function ContactPage() {
                 Any doubt? Drop us a message and we&apos;ll get back to you.
               </p>
               <div className="mt-4">
-                <Button
-                  asChild
-                  className="border-border hover:border-brand/50 hover:text-brand bg-white text-[#022658] transition-all hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_color-mix(in_oklch,var(--brand)_20%,transparent),0_10px_28px_-8px_color-mix(in_oklch,var(--brand)_40%,transparent)]"
-                  variant="secondary"
-                >
+                <Button asChild>
                   <Link href="#contact-form">Send us a message</Link>
                 </Button>
               </div>
