@@ -6,13 +6,13 @@ import { ArrowRight } from "@phosphor-icons/react/ssr";
 import {
   Broadcast,
   ChartBar,
+  GameController,
   RocketLaunch,
   SealCheck,
   ShareNetwork,
   SquaresFour,
   Sword,
   TrendUp,
-  Trophy,
   Users,
 } from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
@@ -79,7 +79,7 @@ const whyHatchetReasons = [
     body: "The deepest verified dataset in gaming, covering streaming and social with no estimates, no inflated audiences, and no shortcuts.",
   },
   {
-    icon: Trophy,
+    icon: GameController,
     title: "Experience with Global Gaming Brands",
     tagline: "The teams running gaming trust Hatchet.",
     body: "Riot, EA, Ubisoft, Capcom, and hundreds more use Hatchet to make every campaign decision with confidence.",

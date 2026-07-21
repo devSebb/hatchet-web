@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LinkedinLogo } from "@phosphor-icons/react/ssr";
 
-import { Calendar, ChatBubble } from "@/components/icons/iso-icons";
+import { BookingCalendar, ChatBubble } from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { ContactForm } from "@/components/sections/ContactForm";
@@ -78,7 +78,7 @@ export default function ContactPage() {
             {/* Book a Demo — primary */}
             <article className="border-brand/30 bg-card ring-brand/10 flex h-full flex-col rounded-2xl border p-7 shadow-sm ring-1">
               <span className="bg-accent ring-border/60 inline-flex size-[84px] items-center justify-center rounded-2xl ring-1 ring-inset">
-                <Calendar aria-hidden="true" className="size-[60px]" />
+                <BookingCalendar aria-hidden="true" className="size-[60px]" />
               </span>
               <h2 className="h3 mt-4">Book a demo</h2>
               <p className="body text-muted mt-2 grow">
