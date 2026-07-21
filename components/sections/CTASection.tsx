@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { MonitorMockup } from "@/components/sections/MonitorMockup";
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
@@ -16,6 +17,8 @@ type CTAMedia = {
   alt: string;
   width: number;
   height: number;
+  /** "monitor" renders the screenshot inside the 3D studio-display mockup. */
+  frame?: "monitor";
 };
 
 type CTAContentProps = {
@@ -118,8 +121,18 @@ function CTACopy({
 }
 
 function CTAMediaPanel({ media }: { media?: CTAMedia }) {
+  // The upward nudge compensated for the old flat-image asset's baked-in
+  // bottom shadow; the monitor frame is symmetric, so it stays grid-centered
+  // to align with the copy column.
+  const isMonitor = media?.frame === "monitor";
+
   return (
-    <div className="relative md:-translate-y-3 lg:-translate-y-4">
+    <div
+      className={cn(
+        "relative",
+        !isMonitor && "md:-translate-y-3 lg:-translate-y-4",
+      )}
+    >
       {media ? (
         <div className="relative md:-translate-x-4 md:scale-[1.07] lg:-translate-x-6 lg:scale-[1.12]">
           {/* Red under-glow so the image sits in the gradient, not on it. */}
@@ -127,14 +140,18 @@ function CTAMediaPanel({ media }: { media?: CTAMedia }) {
             aria-hidden="true"
             className="bg-brand/25 absolute inset-x-8 top-1/3 -bottom-6 -z-10 rounded-[40%] blur-3xl"
           />
-          <Image
-            alt={media.alt}
-            className="cta-media-elevation h-auto w-full"
-            height={media.height}
-            sizes="(min-width: 768px) 40rem, 100vw"
-            src={media.src}
-            width={media.width}
-          />
+          {media.frame === "monitor" ? (
+            <MonitorMockup image={media} />
+          ) : (
+            <Image
+              alt={media.alt}
+              className="cta-media-elevation h-auto w-full"
+              height={media.height}
+              sizes="(min-width: 768px) 40rem, 100vw"
+              src={media.src}
+              width={media.width}
+            />
+          )}
         </div>
       ) : (
         <div className="flex aspect-[16/10] items-center justify-center rounded-2xl border border-dashed border-white/25 bg-white/5">

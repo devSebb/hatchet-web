@@ -234,7 +234,6 @@ export default async function VerticalPage({ params }: VerticalPageProps) {
 
       <CircuitDivider />
       <VerticalProof vertical={vertical} />
-      <CircuitDivider pulseDelaySeconds={-4.5} />
 
       <CTASection
         body={vertical.closingCta.body}

@@ -9,6 +9,7 @@ import { CTASection } from "@/components/sections/CTASection";
 import { FeatureBlock } from "@/components/sections/FeatureBlock";
 import { Hero } from "@/components/sections/Hero";
 import { LogoWall } from "@/components/sections/LogoWall";
+import { MonitorMockup } from "@/components/sections/MonitorMockup";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { StatCounters } from "@/components/sections/StatCounters";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
@@ -352,6 +353,17 @@ export default function StyleguidePage() {
           />
 
           <LogoWall />
+
+          <div className="py-[80px]">
+            <MonitorMockup
+              image={{
+                src: "/images/hero-dashboard.png",
+                alt: "Hatchet Creator Discovery dashboard on a studio display",
+                width: 3488,
+                height: 2243,
+              }}
+            />
+          </div>
 
           <FeatureBlock
             body="Bring creator pickup, platform spread, chat movement, and press context into the same readout so launch teams can separate durable demand from short spikes."

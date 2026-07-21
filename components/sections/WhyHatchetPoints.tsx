@@ -378,8 +378,8 @@ const TRUST_LOGOS: {
   {
     name: "BLAST",
     src: "/images/logos/BLAST.png",
-    width: 1880,
-    height: 257,
+    width: 966,
+    height: 201,
     size: "h-[25px]",
   },
   {
@@ -416,15 +416,23 @@ function TrustLogosTrack({ ariaHidden = false }: { ariaHidden?: boolean }) {
 
 function TrustLogosVisual() {
   return (
-    <div>
+    <VisualCard className="overflow-hidden">
       <p className="eyebrow text-brand text-[0.65rem]">Trusted by</p>
-      <div className="logo-marquee-mask-soft group mt-6 overflow-hidden">
-        <div className="animate-logo-marquee flex w-max group-hover:[animation-play-state:paused]">
-          <TrustLogosTrack />
-          <TrustLogosTrack ariaHidden />
+      {/* These are full-colour brand marks built for light surfaces, so they
+          need a pale panel to read. Containing that panel INSIDE the dark card
+          — rather than letting it wash the whole block white — keeps the frame
+          on-theme while the logos stay legible. The soft off-white (not pure
+          #fff) + the marquee's edge mask dissolving the logos left/right keeps
+          it from feeling like a harsh white slab. */}
+      <div className="border-paper-border/70 mt-4 overflow-hidden rounded-xl border bg-[#eef0f3]">
+        <div className="logo-marquee-mask-soft group overflow-hidden py-6">
+          <div className="animate-logo-marquee flex w-max group-hover:[animation-play-state:paused]">
+            <TrustLogosTrack />
+            <TrustLogosTrack ariaHidden />
+          </div>
         </div>
       </div>
-    </div>
+    </VisualCard>
   );
 }
 

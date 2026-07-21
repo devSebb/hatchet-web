@@ -506,10 +506,11 @@ export default function Home() {
         cta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
         eyebrow="Book a demo"
         media={{
-          src: "/images/Laptop-Asset1.png",
-          alt: "Hatchet dashboard on a laptop showing live-streaming analytics across platforms",
+          src: "/images/hero-dashboard.png",
+          alt: "Hatchet dashboard on a studio display showing live-streaming analytics across platforms",
           width: 3488,
           height: 2243,
+          frame: "monitor",
         }}
         title="Full picture. Verified data. Gaming expertise."
         variant="featured"

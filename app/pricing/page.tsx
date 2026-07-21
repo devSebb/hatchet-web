@@ -69,7 +69,7 @@ const PLANS: Plan[] = [
         body: "Chat and stream-title mention tracking, Groups for instant roster comparisons, YouTube VOD analytics, and esports benchmarking.",
       },
       {
-        title: "Reporting",
+        title: "Report — Reporting & Custom Reports",
         body: "Auto-tracked campaign dashboards, per-creator breakdowns, and custom reports built by our analyst team.",
       },
     ],
@@ -80,11 +80,11 @@ const PLANS: Plan[] = [
     recommended: true,
     features: [
       {
-        title: "Find",
+        title: "Find — Creator & Game Discovery",
         body: "Creator & Game Discovery, AI Smart Search, fake audience scoring.",
       },
       {
-        title: "Analyze",
+        title: "Analyze — Brand & Audience Intelligence",
         body: "Brand & Audience Intelligence, Groups, YouTube VOD analytics, esports benchmarking.",
       },
       {
@@ -193,7 +193,7 @@ const MODULE_ROWS: ModuleRow[] = [
     fullLicense: true,
   },
   {
-    title: "Reporting & Custom Reports",
+    title: "Report - Reporting & Custom Reports",
     description: "",
     community: false,
     dataLicense: true,
