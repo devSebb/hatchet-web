@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { LinkedinLogo } from "@phosphor-icons/react/ssr";
 
 import { BookingCalendar, ChatBubble } from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
@@ -19,30 +19,70 @@ export function generateMetadata(): Metadata {
   });
 }
 
-// Placeholder sales team — swap names/titles/photos when finalized. Avatars fall
-// back to brand-gradient tiles with initials until real headshots are added.
-const salesTeam = [
+// Meet-the-team roster. The LinkedIn URL is the source of truth for each person;
+// `photo` is a headshot localized under public/ (only the public LinkedIn
+// profiles exposed one — the rest fall back to a brand-gradient initials tile
+// until real headshots are added). `title`/`email` are optional and left open
+// until finalized; each renders only when present.
+type TeamMember = {
+  name: string;
+  linkedin: string;
+  photo?: string;
+  title?: string;
+  email?: string;
+};
+
+const salesTeam: TeamMember[] = [
   {
     name: "Eduard Montserrat",
-    title: "Co-founder & CEO",
-    linkedin: "https://www.linkedin.com/company/stream-hatchet",
+    title: "Co-Founder & CEO",
+    linkedin: "https://www.linkedin.com/in/eduardmontserrat/",
+    photo: "/images/company/team/eduard-montserrat.jpg",
   },
   {
     name: "Albert Alemany",
-    title: "Co-founder & CPO",
-    linkedin: "https://www.linkedin.com/company/stream-hatchet",
+    title: "Co-Founder & CTO",
+    linkedin: "https://www.linkedin.com/in/albertalemanyfont/",
+    photo: "/images/company/team/albert-alemany.jpg",
   },
   {
-    name: "Sofia Navarro",
-    title: "Head of Sales",
-    linkedin: "https://www.linkedin.com/company/stream-hatchet",
+    name: "Àlex Porcel",
+    title: "Data Analytics Director",
+    linkedin: "https://www.linkedin.com/in/alex-porcel-julia/",
+    photo: "/images/company/team/alex-porcel.jpg",
   },
   {
-    name: "Marc Vidal",
-    title: "Senior Account Executive",
-    linkedin: "https://www.linkedin.com/company/stream-hatchet",
+    name: "Alessandra Pinto",
+    title: "Director of Product",
+    linkedin: "https://www.linkedin.com/in/alessandra-pinto-productmanager/",
+    photo: "/images/company/team/alessandra-pinto.jpg",
   },
-] as const;
+  {
+    name: "Kyle Hartsook",
+    title: "Director of Strategy",
+    linkedin: "https://www.linkedin.com/in/kyle-hartsook/",
+    photo: "/images/company/team/kyle-hartsook.jpg",
+  },
+  {
+    name: "Jonathan Chris Karam",
+    title: "B2B Partnerships Manager",
+    linkedin:
+      "https://www.linkedin.com/in/jonathan-chris-karam-%F0%9F%94%9C-gamescom-66398287/",
+    photo: "/images/company/team/jonathan-chris-karam.jpg",
+  },
+  {
+    name: "Yoshiki Horiguchi",
+    title: "Business Development",
+    linkedin: "https://www.linkedin.com/in/yoshiki-horiguchi/",
+    photo: "/images/company/team/yoshiki-horiguchi.jpg",
+  },
+  {
+    name: "Andi Ding",
+    title: "Strategic Business Development",
+    linkedin: "https://www.linkedin.com/in/andi-ding/",
+    photo: "/images/company/team/andi-ding.jpg",
+  },
+];
 
 const initials = (name: string) =>
   name
@@ -50,6 +90,11 @@ const initials = (name: string) =>
     .map((part) => part[0])
     .slice(0, 2)
     .join("");
+
+// The same simple-icons LinkedIn glyph the footer uses (see FooterSocials), so
+// the mark reads identically across the site. Draws with currentColor.
+const LINKEDIN_GLYPH =
+  "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z";
 
 export default function ContactPage() {
   return (
@@ -142,16 +187,36 @@ export default function ContactPage() {
                 className="border-border bg-card flex h-full flex-col items-start rounded-xl border p-6 shadow-sm"
                 key={member.name}
               >
-                <span
-                  aria-hidden="true"
-                  className="font-display flex size-16 items-center justify-center rounded-full bg-[image:var(--gradient-brand)] text-lg font-semibold tracking-tight text-white shadow-sm"
-                >
-                  {initials(member.name)}
-                </span>
+                {member.photo ? (
+                  <Image
+                    alt={member.name}
+                    className="size-16 rounded-full object-cover shadow-sm"
+                    height={200}
+                    src={member.photo}
+                    width={200}
+                  />
+                ) : (
+                  <span
+                    aria-hidden="true"
+                    className="font-display flex size-16 items-center justify-center rounded-full bg-[image:var(--gradient-brand)] text-lg font-semibold tracking-tight text-white shadow-sm"
+                  >
+                    {initials(member.name)}
+                  </span>
+                )}
                 <h3 className="font-display text-foreground mt-5 text-lg font-semibold tracking-tight">
                   {member.name}
                 </h3>
-                <p className="small text-muted mt-1">{member.title}</p>
+                {member.title ? (
+                  <p className="small text-muted mt-1">{member.title}</p>
+                ) : null}
+                {member.email ? (
+                  <a
+                    className="text-muted hover:text-brand mt-2 text-sm font-medium break-all transition-colors"
+                    href={`mailto:${member.email}`}
+                  >
+                    {member.email}
+                  </a>
+                ) : null}
                 <a
                   aria-label={`${member.name} on LinkedIn`}
                   className="text-muted hover:text-brand mt-4 inline-flex items-center gap-2 text-sm font-medium transition-colors"
@@ -159,11 +224,15 @@ export default function ContactPage() {
                   rel="noreferrer"
                   target="_blank"
                 >
-                  <LinkedinLogo
+                  <svg
                     aria-hidden="true"
-                    className="size-5"
-                    weight="fill"
-                  />
+                    className="size-4"
+                    fill="currentColor"
+                    role="img"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d={LINKEDIN_GLYPH} />
+                  </svg>
                   LinkedIn
                 </a>
               </article>
