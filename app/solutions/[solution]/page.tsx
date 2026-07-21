@@ -151,7 +151,15 @@ function FeatureHeader({
   );
 }
 
-function SubFeatureGrid({ feature }: { feature: SolutionFeature }) {
+function SubFeatureGrid({
+  feature,
+  withDivider = true,
+}: {
+  feature: SolutionFeature;
+  /** Off for the final feature — the closing CTA already caps the page, so a
+   *  trailing divider would leave a stray separator before the blue section. */
+  withDivider?: boolean;
+}) {
   if (!feature.subFeatures?.length) {
     return null;
   }
@@ -167,7 +175,9 @@ function SubFeatureGrid({ feature }: { feature: SolutionFeature }) {
           </article>
         ))}
       </Stagger>
-      <CircuitDivider className="mt-16" pulseDelaySeconds={-2.5} />
+      {withDivider ? (
+        <CircuitDivider className="mt-16" pulseDelaySeconds={-2.5} />
+      ) : null}
     </>
   );
 }
@@ -179,10 +189,14 @@ function FeatureSection({
   feature,
   index,
   splitIndex,
+  isLast,
 }: {
   feature: SolutionFeature;
   index: number;
   splitIndex: number;
+  /** The last feature drops its trailing divider so the page ends clean into
+   *  the closing CTA. */
+  isLast: boolean;
 }) {
   const isStacked = feature.layout === "stacked";
 
@@ -192,7 +206,7 @@ function FeatureSection({
         <Reveal>
           <FeatureHeader feature={feature} index={index} />
         </Reveal>
-        <SubFeatureGrid feature={feature} />
+        <SubFeatureGrid feature={feature} withDivider={!isLast} />
       </div>
     );
   }
@@ -207,7 +221,7 @@ function FeatureSection({
           <Reveal className="mt-10" delay={0.08}>
             <SolutionVisual visual={feature.visual} />
           </Reveal>
-          <SubFeatureGrid feature={feature} />
+          <SubFeatureGrid feature={feature} withDivider={!isLast} />
         </>
       ) : (
         <>
@@ -224,7 +238,7 @@ function FeatureSection({
               <SolutionVisual visual={feature.visual} />
             </Reveal>
           </div>
-          <SubFeatureGrid feature={feature} />
+          <SubFeatureGrid feature={feature} withDivider={!isLast} />
         </>
       )}
     </div>
@@ -328,6 +342,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
             <FeatureSection
               feature={feature}
               index={index + 1}
+              isLast={index === solution.features.length - 1}
               splitIndex={splitIndex}
             />
           </section>
