@@ -2,6 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Check, X } from "@phosphor-icons/react/ssr";
 
+import {
+  ChartBar,
+  ChartLine,
+  FileText,
+  FlowArrow,
+  type IsoIcon,
+  MagnifyingGlass,
+  SquaresFour,
+} from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
@@ -28,6 +37,10 @@ type PlanFeature = {
 type Plan = {
   name: string;
   tagline: string;
+  // One iso-icon per plan, shown above the card title. Community is the Build
+  // module; Data License is the data/intelligence bundle; Full License is the
+  // whole platform.
+  icon: IsoIcon;
   features: PlanFeature[];
   recommended?: boolean;
 };
@@ -41,6 +54,7 @@ const PLANS: Plan[] = [
   {
     name: "Hatchet Community",
     tagline: "Build and manage your creator roster, start to finish.",
+    icon: FlowArrow,
     features: [
       {
         title: "My Creators",
@@ -59,6 +73,7 @@ const PLANS: Plan[] = [
   {
     name: "Hatchet Data License",
     tagline: "Every creator. Every game. Every number, verified.",
+    icon: ChartBar,
     features: [
       {
         title: "Find — Creator & Game Discovery",
@@ -77,6 +92,7 @@ const PLANS: Plan[] = [
   {
     name: "Hatchet Full License",
     tagline: "Everything Hatchet does. Every step of the lifecycle. One platform.",
+    icon: SquaresFour,
     recommended: true,
     features: [
       {
@@ -88,11 +104,11 @@ const PLANS: Plan[] = [
         body: "Brand & Audience Intelligence, Groups, YouTube VOD analytics, esports benchmarking.",
       },
       {
-        title: "Build",
+        title: "Build — Creator Community (Roster, Messaging, Codes)",
         body: "Full roster management, messaging, code tracking.",
       },
       {
-        title: "Report",
+        title: "Report — Reporting & Custom Reports",
         body: "Auto-tracked dashboards, per-creator breakdowns, custom reports.",
       },
     ],
@@ -100,6 +116,8 @@ const PLANS: Plan[] = [
 ];
 
 function PlanCard({ plan }: { plan: Plan }) {
+  const Icon = plan.icon;
+
   return (
     <article
       className={cn(
@@ -107,7 +125,9 @@ function PlanCard({ plan }: { plan: Plan }) {
         // border/text utilities resolve to their light-theme values inside.
         "surface-paper bg-paper relative flex h-full flex-col rounded-xl border p-6",
         plan.recommended
-          ? "border-brand shadow-signal"
+          ? // Elevated, brand-framed pillar: doubled brand border, a soft brand
+            // halo ring, the signal shadow, and a slight lift over its siblings.
+            "border-2 border-brand shadow-signal ring-4 ring-brand/10 lg:-translate-y-2"
           : "border-paper-border shadow-sm",
       )}
     >
@@ -117,7 +137,10 @@ function PlanCard({ plan }: { plan: Plan }) {
         </span>
       ) : null}
 
-      <h2 className="h3 text-blue-transitional text-[1.75rem]">{plan.name}</h2>
+      <Icon aria-hidden="true" className="size-12" />
+      <h2 className="h3 text-blue-transitional mt-4 text-[1.75rem]">
+        {plan.name}
+      </h2>
       <p className="text-brand mt-2 text-base font-medium">{plan.tagline}</p>
 
       <ul className="mt-6 grid gap-4">
@@ -165,6 +188,8 @@ function PlanGrid() {
 type ModuleRow = {
   title: string;
   description: string;
+  // Same iso-icon language as the solution/lifecycle pages, one per module.
+  icon: IsoIcon;
   community: boolean;
   dataLicense: boolean;
   fullLicense: boolean;
@@ -174,6 +199,7 @@ const MODULE_ROWS: ModuleRow[] = [
   {
     title: "Find - Creator & Game Discovery",
     description: "",
+    icon: MagnifyingGlass,
     community: false,
     dataLicense: true,
     fullLicense: true,
@@ -181,6 +207,7 @@ const MODULE_ROWS: ModuleRow[] = [
   {
     title: "Analyze - Brand & Audience Intelligence + Deep Analytics",
     description: "",
+    icon: ChartLine,
     community: false,
     dataLicense: true,
     fullLicense: true,
@@ -188,6 +215,7 @@ const MODULE_ROWS: ModuleRow[] = [
   {
     title: "Build - Creator Community (Roster, Messaging, Codes)",
     description: "",
+    icon: FlowArrow,
     community: true,
     dataLicense: false,
     fullLicense: true,
@@ -195,6 +223,7 @@ const MODULE_ROWS: ModuleRow[] = [
   {
     title: "Report - Reporting & Custom Reports",
     description: "",
+    icon: FileText,
     community: false,
     dataLicense: true,
     fullLicense: true,
@@ -303,35 +332,49 @@ function ComparePlans() {
                 </tr>
               </thead>
               <tbody>
-                {MODULE_ROWS.map((row) => (
-                  <tr
-                    className="transition-colors hover:bg-white/5"
-                    key={row.title}
-                  >
-                    <th
-                      className="border-t border-white/15 py-2 pr-[8px] pl-[16px] text-left align-middle sm:pr-4 sm:pl-6"
-                      scope="row"
+                {MODULE_ROWS.map((row) => {
+                  const RowIcon = row.icon;
+
+                  return (
+                    <tr
+                      className="transition-colors hover:bg-white/5"
+                      key={row.title}
                     >
-                      <p className="text-sm font-semibold text-white">
-                        {row.title}
-                      </p>
-                      {row.description ? (
-                        <p className="mt-0.5 hidden text-xs font-normal text-white/65 sm:block">
-                          {row.description}
-                        </p>
-                      ) : null}
-                    </th>
-                    <td className="border-t border-white/15 py-2 text-center align-middle">
-                      <Mark included={row.community} />
-                    </td>
-                    <td className="border-t border-white/15 py-2 text-center align-middle">
-                      <Mark included={row.dataLicense} />
-                    </td>
-                    <td className="border-t border-white/20 py-2 text-center align-middle">
-                      <Mark included={row.fullLicense} />
-                    </td>
-                  </tr>
-                ))}
+                      <th
+                        className="border-t border-white/15 py-2 pr-[8px] pl-[16px] text-left align-middle sm:pr-4 sm:pl-6"
+                        scope="row"
+                      >
+                        <div className="flex items-center gap-2.5 sm:gap-3">
+                          {/* Iso-icons are drawn for light surfaces, so seat
+                              each in a small paper chip to stay crisp on the
+                              dark table. */}
+                          <span className="bg-paper ring-paper-border/60 flex size-7 shrink-0 items-center justify-center rounded-md ring-1">
+                            <RowIcon aria-hidden="true" className="size-5" />
+                          </span>
+                          <div>
+                            <p className="text-sm font-semibold text-white">
+                              {row.title}
+                            </p>
+                            {row.description ? (
+                              <p className="mt-0.5 hidden text-xs font-normal text-white/65 sm:block">
+                                {row.description}
+                              </p>
+                            ) : null}
+                          </div>
+                        </div>
+                      </th>
+                      <td className="border-t border-white/15 py-2 text-center align-middle">
+                        <Mark included={row.community} />
+                      </td>
+                      <td className="border-t border-white/15 py-2 text-center align-middle">
+                        <Mark included={row.dataLicense} />
+                      </td>
+                      <td className="border-t border-white/20 py-2 text-center align-middle">
+                        <Mark included={row.fullLicense} />
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

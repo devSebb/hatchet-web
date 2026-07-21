@@ -75,8 +75,9 @@ export default function ContactPage() {
             childClassName="h-full"
             className="mt-10 grid gap-4 md:grid-cols-2"
           >
-            {/* Book a Demo — primary */}
-            <article className="border-brand/30 bg-card ring-brand/10 flex h-full flex-col rounded-2xl border p-7 shadow-sm ring-1">
+            {/* Book a Demo — primary. surface-paper scopes the card to the
+                light theme: white card, dark ink, red button untouched. */}
+            <article className="surface-paper border-brand/30 bg-card ring-brand/10 flex h-full flex-col rounded-2xl border p-7 shadow-sm ring-1">
               <span className="bg-accent ring-border/60 inline-flex size-[84px] items-center justify-center rounded-2xl ring-1 ring-inset">
                 <BookingCalendar aria-hidden="true" className="size-[60px]" />
               </span>
@@ -98,8 +99,9 @@ export default function ContactPage() {
               </div>
             </article>
 
-            {/* Send Us a Message — secondary, scrolls to the inline form */}
-            <article className="border-border bg-card flex h-full flex-col rounded-2xl border p-7 shadow-sm">
+            {/* Send Us a Message — secondary, scrolls to the inline form.
+                Same light-scoped treatment as the demo card. */}
+            <article className="surface-paper border-border bg-card flex h-full flex-col rounded-2xl border p-7 shadow-sm">
               <span className="bg-accent ring-border/60 inline-flex size-[84px] items-center justify-center rounded-2xl ring-1 ring-inset">
                 <ChatBubble aria-hidden="true" className="size-[60px]" />
               </span>

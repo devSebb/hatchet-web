@@ -6,9 +6,19 @@ import { CompanyLogo } from "@/components/brand/CompanyLogo";
 import {
   Broadcast,
   ChartBar,
+  ChartLine,
+  FileText,
+  FlowArrow,
+  GameController,
+  Globe,
   type IsoIcon,
+  MagnifyingGlass,
   RocketLaunch,
+  SealCheck,
+  SquaresFour,
   Sword,
+  TrendUp,
+  Trophy,
   Users,
 } from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
@@ -31,6 +41,21 @@ const verticalIcons: Record<string, IsoIcon> = {
   "market-research-agencies": ChartBar,
   "esports-organizers": Sword,
   "marketing-and-talent-agencies": Users,
+};
+
+// One iso-icon per value-point card, matched to each pillar's copy (and kept
+// distinct from the page's own hero icon above).
+const verticalPointIcons: Record<string, readonly IsoIcon[]> = {
+  // Gen Z gaming reach / fake-audience vetting / leadership-ready reporting.
+  brands: [GameController, SealCheck, FileText],
+  // Creator discovery / live mid-flight tracking / ROI attribution.
+  "games-publishers": [MagnifyingGlass, ChartLine, TrendUp],
+  // Verified data / onboard clients faster / every platform, one source.
+  "market-research-agencies": [SealCheck, RocketLaunch, Globe],
+  // Edition benchmarks / sponsorship value / audience demographics.
+  "esports-organizers": [ChartBar, Trophy, Users],
+  // One hub at scale / export-ready reporting / end-to-end workflow.
+  "marketing-and-talent-agencies": [SquaresFour, FileText, FlowArrow],
 };
 
 type VerticalPageProps = {
@@ -84,11 +109,13 @@ function VerticalMedia({
   );
 }
 
-// Numbered value points as a card row — the core "why this vertical" read,
+// Iso-icon value points as a card row — the core "why this vertical" read,
 // straight from the approved copy deck. Same recipe as the home page's "Apply
 // Our Data" use-case grid, and on paper like it: the hero gradient above
 // resolves to paper at its bottom edge, so this section catches it.
 function VerticalPoints({ vertical }: { vertical: Vertical }) {
+  const pointIcons = verticalPointIcons[vertical.slug];
+
   return (
     <section className="surface-paper bg-background px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
       <div className="mx-auto w-full max-w-7xl">
@@ -96,27 +123,37 @@ function VerticalPoints({ vertical }: { vertical: Vertical }) {
           childClassName="h-full"
           className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {vertical.points.map((point, index) => (
-            <div
-              className="border-border bg-card flex h-full flex-col rounded-2xl border p-7 shadow-sm"
-              key={point.title}
-            >
-              <span
-                className="shadow-glow-brand flex size-12 items-center justify-center rounded-xl font-mono text-2xl font-semibold text-white tabular-nums"
-                style={{
-                  // All-red gradient, matching the home page use-case tiles.
-                  backgroundImage:
-                    "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, #e23c42 100%)",
-                }}
+          {vertical.points.map((point, index) => {
+            const Icon = pointIcons?.[index];
+
+            return (
+              <div
+                className="border-border bg-card flex h-full flex-col rounded-2xl border p-7 shadow-sm"
+                key={point.title}
               >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3 className="font-display mt-6 text-xl font-semibold tracking-[-0.01em]">
-                {point.title}
-              </h3>
-              <p className="body text-muted mt-3 flex-1">{point.body}</p>
-            </div>
-          ))}
+                <span
+                  className="shadow-glow-brand flex size-12 items-center justify-center rounded-xl text-white"
+                  style={{
+                    // All-red gradient, matching the home page use-case tiles.
+                    backgroundImage:
+                      "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, #e23c42 100%)",
+                  }}
+                >
+                  {Icon ? (
+                    <Icon aria-hidden="true" className="size-8" />
+                  ) : (
+                    <span className="font-mono text-2xl font-semibold tabular-nums">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  )}
+                </span>
+                <h3 className="font-display mt-6 text-xl font-semibold tracking-[-0.01em]">
+                  {point.title}
+                </h3>
+                <p className="body text-muted mt-3 flex-1">{point.body}</p>
+              </div>
+            );
+          })}
         </Stagger>
 
         <Reveal delay={0.08}>

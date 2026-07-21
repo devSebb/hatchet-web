@@ -237,9 +237,9 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
     if (!form.company.trim()) e.company = COPY.form.errors.required;
     if (!form.company_website.trim())
       e.company_website = COPY.form.errors.required;
-    if (!form.linkedin_url.trim())
-      e.linkedin_url = COPY.form.errors.required;
-    // topic is optional free-text — no validation.
+    if (!form.referral_source)
+      e.referral_source = COPY.form.errors.required;
+    // linkedin_url and topic are optional — no client validation.
     setFieldErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -532,6 +532,7 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
                   onChange={(v) => setField("linkedin_url", v)}
                   error={fieldErrors.linkedin_url}
                   autoComplete="url"
+                  optional
                 />
                 <SelectField
                   id="referral_source"
@@ -540,7 +541,7 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
                   options={REFERRAL_OPTIONS}
                   value={form.referral_source}
                   onChange={(v) => setField("referral_source", v)}
-                  optional
+                  error={fieldErrors.referral_source}
                 />
                 <TextareaField
                   id="topic"
@@ -886,6 +887,7 @@ function Field({
   type = "text",
   placeholder,
   autoComplete,
+  optional,
 }: {
   id: string;
   label: string;
@@ -895,10 +897,11 @@ function Field({
   type?: string;
   placeholder?: string;
   autoComplete?: string;
+  optional?: boolean;
 }) {
   return (
     <div>
-      <FieldLabel id={id} label={label} />
+      <FieldLabel id={id} label={label} optional={optional} />
       <input
         id={id}
         type={type}
@@ -909,7 +912,7 @@ function Field({
         className={cn(FIELD_BASE, fieldBorder(error))}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-error` : undefined}
-        required
+        required={!optional}
       />
       <FieldError id={id} error={error} />
     </div>

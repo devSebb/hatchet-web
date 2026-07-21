@@ -27,9 +27,9 @@ export interface NormalizedRequest {
   company: string;
   companyWebsite: string;
   companyHost: string;
-  /** Required LinkedIn profile URL, normalized to a canonical http(s) URL. */
+  /** Optional LinkedIn profile URL, normalized to a canonical http(s) URL ("" if blank). */
   linkedinUrl: string;
-  /** "How did you hear about us?" — optional dropdown pick ("" if blank). */
+  /** "How did you hear about us?" — required dropdown pick. */
   referralSource: string;
   /** "What would you like to cover?" — optional free-text notes ("" if blank). */
   topic: string;
@@ -114,14 +114,16 @@ export function validateRequest(body: RawRequestBody): ValidationResult {
   if (!companyRaw) errors.company_website = "required";
   else if (!companyUrl) errors.company_website = "invalid";
 
+  // Optional — but when provided it must be a real LinkedIn URL.
   const linkedinRaw = asString(body.linkedin_url);
   const linkedinUrl = linkedinRaw ? normalizeLinkedinUrl(linkedinRaw) : null;
-  if (!linkedinRaw) errors.linkedin_url = "required";
-  else if (!linkedinUrl) errors.linkedin_url = "invalid";
+  if (linkedinRaw && !linkedinUrl) errors.linkedin_url = "invalid";
+
+  const referralSource = asString(body.referral_source).slice(0, 100);
+  if (!referralSource) errors.referral_source = "required";
 
   // Optional free-text notes — no membership check; just bound the length.
   const topic = asString(body.topic).slice(0, 1000);
-  const referralSource = asString(body.referral_source).slice(0, 100);
 
   const bookerTimezone = asString(body.booker_timezone) || "UTC";
 
@@ -149,7 +151,7 @@ export function validateRequest(body: RawRequestBody): ValidationResult {
       company,
       companyWebsite: (companyUrl as { url: string; host: string }).url,
       companyHost: (companyUrl as { url: string; host: string }).host,
-      linkedinUrl: linkedinUrl as string,
+      linkedinUrl: linkedinUrl ?? "",
       referralSource,
       topic,
     },

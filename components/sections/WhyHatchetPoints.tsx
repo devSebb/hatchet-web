@@ -352,42 +352,42 @@ const TRUST_LOGOS: {
     src: "/images/logos/riot-games.png",
     width: 300,
     height: 95,
-    size: "h-[38px]",
+    size: "h-[46px]",
   },
   {
     name: "EA",
     src: "/images/logos/ea.png",
     width: 444,
     height: 66,
-    size: "h-[26px]",
+    size: "h-[32px]",
   },
   {
     name: "Blizzard",
     src: "/images/logos/blizzard.png",
     width: 1500,
     height: 1500,
-    size: "h-[48px]",
+    size: "h-[58px]",
   },
   {
     name: "PlayStation",
     src: "/images/logos/sony.png",
     width: 555,
     height: 165,
-    size: "h-[36px]",
+    size: "h-[44px]",
   },
   {
     name: "BLAST",
     src: "/images/logos/BLAST.png",
     width: 966,
     height: 201,
-    size: "h-[25px]",
+    size: "h-[30px]",
   },
   {
     name: "Kings League",
     src: "/images/logos/Kingsleague_logo.png",
     width: 277,
     height: 361,
-    size: "h-[48px]",
+    size: "h-[58px]",
   },
 ];
 
@@ -416,20 +416,17 @@ function TrustLogosTrack({ ariaHidden = false }: { ariaHidden?: boolean }) {
 
 function TrustLogosVisual() {
   return (
-    <VisualCard className="overflow-hidden">
+    // One unified light panel: the whole card is white (surface-paper flips the
+    // tokens so the border resolves light) rather than a pale inset floating in
+    // a dark frame. These full-colour brand marks are built for light surfaces,
+    // so they sit directly on it; the marquee's edge mask dissolves them
+    // left/right so it doesn't read as a hard-edged slab.
+    <VisualCard className="surface-paper bg-paper border-paper-border overflow-hidden">
       <p className="eyebrow text-brand text-[0.65rem]">Trusted by</p>
-      {/* These are full-colour brand marks built for light surfaces, so they
-          need a pale panel to read. Containing that panel INSIDE the dark card
-          — rather than letting it wash the whole block white — keeps the frame
-          on-theme while the logos stay legible. The soft off-white (not pure
-          #fff) + the marquee's edge mask dissolving the logos left/right keeps
-          it from feeling like a harsh white slab. */}
-      <div className="border-paper-border/70 mt-4 overflow-hidden rounded-xl border bg-[#eef0f3]">
-        <div className="logo-marquee-mask-soft group overflow-hidden py-6">
-          <div className="animate-logo-marquee flex w-max group-hover:[animation-play-state:paused]">
-            <TrustLogosTrack />
-            <TrustLogosTrack ariaHidden />
-          </div>
+      <div className="logo-marquee-mask-soft group mt-3 overflow-hidden">
+        <div className="animate-logo-marquee flex w-max group-hover:[animation-play-state:paused]">
+          <TrustLogosTrack />
+          <TrustLogosTrack ariaHidden />
         </div>
       </div>
     </VisualCard>

@@ -74,7 +74,7 @@ function salesHtml(
       ${row("Email", `<a href="mailto:${h(r.email)}" style="color:#0a0a0a">${h(r.email)}</a>`)}
       ${row("Job title", h(r.jobTitle))}
       ${row("Company", `${h(r.company)} — <a href="${h(r.companyWebsite)}" style="color:#0a0a0a">${h(r.companyWebsite)}</a>`)}
-      ${row("LinkedIn", `<a href="${h(r.linkedinUrl)}" style="color:#0a0a0a">${h(r.linkedinUrl)}</a>`)}
+      ${row("LinkedIn", r.linkedinUrl ? `<a href="${h(r.linkedinUrl)}" style="color:#0a0a0a">${h(r.linkedinUrl)}</a>` : "—")}
       ${row("Wants to cover", r.topic ? h(r.topic) : "—")}
       ${row("Heard about us via", r.referralSource ? h(r.referralSource) : "—")}
       ${row("Request ID", `<code style="font-size:12px;color:#6b7280">${h(ctx.requestId)}</code>`)}

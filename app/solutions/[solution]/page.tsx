@@ -234,13 +234,16 @@ function FeatureSection({
 function GroupHeading({
   group,
   intro,
+  withDivider = true,
 }: {
   group: string;
   intro?: SolutionGroupIntro;
+  /** Off for the first section — the hero gradient already separates it. */
+  withDivider?: boolean;
 }) {
   return (
     <Reveal className="mx-auto w-full max-w-7xl">
-      <CircuitDivider className="mb-8" />
+      {withDivider ? <CircuitDivider className="mb-8" /> : null}
       <div>
         <div className="flex items-center gap-4">
           <span aria-hidden="true" className="bg-signal h-[14px] w-[4px]" />
@@ -318,6 +321,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                 <GroupHeading
                   group={feature.group as string}
                   intro={feature.groupIntro}
+                  withDivider={index !== 0}
                 />
               </div>
             ) : null}

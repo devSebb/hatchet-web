@@ -283,34 +283,6 @@ export function Users(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function Calendar(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg fill="none" viewBox="0 0 64 64" {...props}>
-      <polygon points="32.00,49.47 5.00,33.88 5.00,39.83 32.00,55.42" fill="var(--icon-steel, #627897)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polygon points="54.09,36.71 32.00,49.47 32.00,55.42 54.09,42.66" fill="var(--icon-navy, #022658)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polygon points="27.09,21.12 54.09,36.71 32.00,49.47 5.00,33.88" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polygon points="54.09,30.76 27.09,15.17 27.09,18.86 54.09,34.44" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polygon points="59.00,27.93 54.09,30.76 54.09,34.44 59.00,31.61" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polygon points="32.00,12.34 59.00,27.93 54.09,30.76 27.09,15.17" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polygon points="36.54,12.12 33.10,10.14 33.10,13.82 36.54,15.81" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polygon points="39.24,10.57 36.54,12.12 36.54,15.81 39.24,14.25" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polygon points="35.80,8.58 39.24,10.57 36.54,12.12 33.10,10.14" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polygon points="50.04,19.92 46.60,17.93 46.60,21.62 50.04,23.60" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polygon points="52.74,18.36 50.04,19.92 50.04,23.60 52.74,22.04" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polygon points="49.30,16.38 52.74,18.36 50.04,19.92 46.60,17.93" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-      <polyline points="23.41,26.79 44.27,38.84" stroke="var(--icon-navy, #022658)" strokeWidth="4.1" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      <polyline points="23.41,26.79 44.27,38.84" stroke="var(--icon-steel, #627897)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      <polyline points="17.89,29.98 38.75,42.03" stroke="var(--icon-navy, #022658)" strokeWidth="4.1" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      <polyline points="17.89,29.98 38.75,42.03" stroke="var(--icon-steel, #627897)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      <polyline points="32.98,28.07 17.03,37.28" stroke="var(--icon-navy, #022658)" strokeWidth="4.1" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      <polyline points="32.98,28.07 17.03,37.28" stroke="var(--icon-steel, #627897)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      <polyline points="41.94,33.24 25.99,42.45" stroke="var(--icon-navy, #022658)" strokeWidth="4.1" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      <polyline points="41.94,33.24 25.99,42.45" stroke="var(--icon-steel, #627897)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      <polygon points="34.21,39.97 38.14,42.24 34.21,44.51 30.28,42.24" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.0" strokeLinejoin="round"/>
-    </svg>
-  );
-}
-
 export function BookingCalendar(props: SVGProps<SVGSVGElement>) {
   return (
     <svg fill="none" viewBox="0 0 64 64" {...props}>
