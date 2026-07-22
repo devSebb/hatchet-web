@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BookingCalendar, ChatBubble } from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
+import { CircuitDivider } from "@/components/sections/CircuitDivider";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/config/site";
@@ -240,6 +241,8 @@ export default function ContactPage() {
           </Stagger>
         </div>
       </section>
+
+      <CircuitDivider pulseDelaySeconds={-3} />
 
       {/* ── Inline "send us a message" form ────────────────────────── */}
       <ContactForm />

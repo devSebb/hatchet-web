@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { CircuitField } from "@/components/sections/CircuitField";
+import { HeroVideo } from "@/components/sections/HeroVideo";
 import {
   HeroStatVisual,
   type HeroStatVisualVariant,
@@ -16,6 +17,16 @@ import { cn } from "@/lib/utils";
 type HeroImage = {
   src: string;
   alt: string;
+  width: number;
+  height: number;
+};
+
+type HeroVideoConfig = {
+  /** Public Mux playback ID. Empty falls back to the static `image`. */
+  playbackId: string;
+  /** Poster/fallback still; defaults to `image.src` when omitted. */
+  poster?: string;
+  /** Media-box dimensions — reserve space and set the frame's aspect ratio. */
   width: number;
   height: number;
 };
@@ -42,6 +53,12 @@ type HeroProps = {
   };
   image?: HeroImage;
   /**
+   * When set (with a non-empty playbackId), an autoplay/muted/looping Mux clip
+   * replaces `image` in the framed media slot. `image` stays as the fallback
+   * when no playbackId is configured (e.g. env var not set).
+   */
+  video?: HeroVideoConfig;
+  /**
    * "dark" renders on a solid navy section background (interior pages).
    * "gradient" stays transparent so the shared navy→white background that
    * bleeds from the hero into the trusted-by band shows through — white text
@@ -60,6 +77,7 @@ export function Hero({
   primaryCta = { label: "Book a demo", href: siteConfig.bookDemoUrl },
   secondaryCta = { label: "Sign up", href: siteConfig.signUpUrl },
   image,
+  video,
   surface = "dark",
   className,
 }: HeroProps) {
@@ -173,18 +191,35 @@ export function Hero({
     </Reveal>
   );
 
-  const imageBlock = image ? (
+  // A configured Mux clip wins the media slot; otherwise the static image
+  // renders (also the fallback when the playback ID env var isn't set).
+  const useVideo = Boolean(video?.playbackId);
+
+  const mediaInner =
+    useVideo && video ? (
+      <HeroVideo
+        className="block h-auto w-full rounded-xl object-cover"
+        playbackId={video.playbackId}
+        poster={video.poster ?? image?.src ?? ""}
+        style={{ aspectRatio: `${video.width} / ${video.height}` }}
+        title={image?.alt}
+      />
+    ) : image ? (
+      <Image
+        alt={image.alt}
+        className="h-auto w-full rounded-xl"
+        height={image.height}
+        priority
+        sizes="(min-width: 1024px) 64rem, 100vw"
+        src={image.src}
+        width={image.width}
+      />
+    ) : null;
+
+  const mediaBlock = mediaInner ? (
     <Reveal delay={0.08}>
       <div className="border-border bg-surface/60 w-full max-w-5xl overflow-hidden rounded-2xl border p-2 shadow-xl">
-        <Image
-          alt={image.alt}
-          className="h-auto w-full rounded-xl"
-          height={image.height}
-          priority
-          sizes="(min-width: 1024px) 64rem, 100vw"
-          src={image.src}
-          width={image.width}
-        />
+        {mediaInner}
       </div>
     </Reveal>
   ) : null;
@@ -208,7 +243,7 @@ export function Hero({
 
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center text-center">
         {textBlock}
-        {imageBlock ? <div className="mt-8 lg:mt-10">{imageBlock}</div> : null}
+        {mediaBlock ? <div className="mt-8 lg:mt-10">{mediaBlock}</div> : null}
       </div>
     </section>
   );

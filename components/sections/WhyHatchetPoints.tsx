@@ -134,8 +134,9 @@ const PLATFORMS: { name: string; categories: PlatformCategory[] }[] = [
 // two symmetric interlocking ring outlines, which read as the same "chain-link"
 // silhouette at grid size. All are renormalized to single 24x24 currentColor
 // paths. YT Gaming / YT Non-Gaming share YouTube-family marks and FB Live
-// reuses the Facebook mark. Chzzk and Bigo Live still have no verified glyph and
-// use the monogram fallback intentionally.
+// reuses the Facebook mark. Chzzk and Bigo Live were traced from their official
+// raster marks -- Chzzk's lightning-"Z" wordmark and the Bigo Live mascot -- each
+// contour flattened to a single 24x24 currentColor silhouette to match the grid.
 const PLATFORM_ICONS: Record<string, string> = {
   Twitch:
     "M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z",
@@ -201,6 +202,10 @@ const PLATFORM_ICONS: Record<string, string> = {
     "M12 0A12 12 0 1 1 8.116.646L12 4.789ZM12 4.789A7.212 7.212 0 0 0 12 19.212A7.212 7.212 0 0 0 12 4.789ZM9.231 8.517L15.328 11.996L9.231 15.475Z",
   Rooter:
     "M0 11.954A8.631 8.631 0 1 1 17.262 11.954A8.631 8.631 0 1 1 0 11.954ZM2.631 11.954A6 6 0 1 0 14.631 11.954A6 6 0 1 0 2.631 11.954ZM6.738 11.954A8.631 8.631 0 1 1 24 11.954A8.631 8.631 0 1 1 6.738 11.954ZM9.369 11.954A6 6 0 1 0 21.369 11.954A6 6 0 1 0 9.369 11.954Z",
+  Chzzk:
+    "M9.399 0L17.622 0L15.273 3.524L23.497 3.524L13.259 17.455L22.49 17.79L22.49 24L0.503 24L10.741 9.734L2.517 9.399L9.231 0.168Z",
+  "Bigo Live":
+    "M9.722 0L11.544 0L13.063 1.215L15.797 2.127L18.228 4.557L19.747 9.418L18.835 11.544L17.013 13.063L18.835 14.582L21.266 14.582L21.57 17.013L20.354 19.443L18.835 20.658L17.013 20.354L14.582 21.57L12.456 24L10.937 24L10.025 23.089L6.684 22.177L2.43 18.532L2.43 16.101L4.253 16.101L4.861 14.582L3.646 13.063L3.949 11.241L2.734 9.418L2.734 8.203L4.253 6.38L3.949 3.949L5.468 2.127L7.595 2.127L9.418 0.304Z",
 };
 
 function PlatformIcon({ name }: { name: string }) {
@@ -212,7 +217,7 @@ function PlatformIcon({ name }: { name: string }) {
     return (
       <span
         aria-hidden="true"
-        className="bg-elevated text-muted/80 flex size-4.5 shrink-0 items-center justify-center rounded-[3px] text-[0.65rem] leading-none font-semibold"
+        className="bg-elevated text-muted/80 flex size-[22px] shrink-0 items-center justify-center rounded-[3px] text-[0.72rem] leading-none font-semibold"
       >
         {name.charAt(0)}
       </span>
@@ -221,7 +226,7 @@ function PlatformIcon({ name }: { name: string }) {
   return (
     <svg
       aria-hidden="true"
-      className="size-4.5 shrink-0"
+      className="size-[22px] shrink-0"
       fill="currentColor"
       role="img"
       viewBox="0 0 24 24"
@@ -300,7 +305,7 @@ function PlatformExplorer() {
       <ul className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {visible.map((platform) => (
           <li className="flex" key={platform.name}>
-            <span className="border-border bg-card/60 text-foreground hover:text-brand flex min-h-[3.25rem] w-full items-center gap-2.5 rounded-lg border py-2 pr-2.5 pl-3.5 text-left text-[13px] leading-tight font-medium transition-all hover:border-[color-mix(in_oklch,var(--brand)_40%,var(--border))] hover:bg-[color-mix(in_oklch,var(--paper),var(--brand)_4%)] hover:shadow-[0_0_0_1px_color-mix(in_oklch,var(--brand)_20%,transparent),0_8px_26px_-8px_color-mix(in_oklch,var(--brand)_38%,transparent)]">
+            <span className="border-border bg-card/60 text-foreground hover:text-brand flex min-h-[3.5rem] w-full items-center gap-2.5 rounded-lg border py-2 pr-2.5 pl-3.5 text-left text-[14px] leading-tight font-medium transition-all hover:border-[color-mix(in_oklch,var(--brand)_40%,var(--border))] hover:bg-[color-mix(in_oklch,var(--paper),var(--brand)_4%)] hover:shadow-[0_0_0_1px_color-mix(in_oklch,var(--brand)_20%,transparent),0_8px_26px_-8px_color-mix(in_oklch,var(--brand)_38%,transparent)]">
               <PlatformIcon name={platform.name} />
               <span className="min-w-0">{platform.name}</span>
             </span>

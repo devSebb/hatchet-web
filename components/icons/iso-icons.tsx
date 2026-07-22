@@ -389,3 +389,76 @@ export function ChatBubble(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+// ---- Pricing pillars ----
+// Cube-stack glyphs for the three pricing plans, drawn in the same iso
+// language but on a 120x120 viewBox with a translate origin. The stack
+// grows with the tier: Community (1) -> Data License (3) -> Full License (6).
+// A lighter steel (#dfe4eb) than the roster icons keeps the shaded faces
+// readable at small sizes on the paper cards. All three glyphs are centered on
+// (60,60) and share the cropped "22 22 76 76" viewBox, so the cube unit stays
+// one size across tiers (the cluster grows) while the surrounding whitespace
+// stays tight.
+export function PricingCommunity(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg fill="none" viewBox="22 22 76 76" {...props}>
+      <g transform="translate(60.00,62.25)">
+        <polygon points="-12.99,7.50 0.00,15.00 0.00,-1.50 -12.99,-9.00" fill="#dfe4eb" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="12.99,7.50 0.00,15.00 0.00,-1.50 12.99,-9.00" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="0.00,-19.50 -12.99,-9.00 0.00,-1.50" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="0.00,-19.50 0.00,-1.50 12.99,-9.00" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+      </g>
+    </svg>
+  );
+}
+
+export function PricingDataLicense(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg fill="none" viewBox="22 22 76 76" {...props}>
+      <g transform="translate(61.62,61.88)">
+        <polygon points="-12.99,7.50 0.00,15.00 0.00,-7.50 -12.99,-15.00" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="12.99,7.50 0.00,15.00 0.00,-7.50 12.99,-15.00" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="0.00,-27.75 -12.99,-15.00 0.00,-7.50" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="0.00,-27.75 0.00,-7.50 12.99,-15.00" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-24.03,16.87 -14.29,22.50 -14.29,12.00 -24.03,6.37" fill="#dfe4eb" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-4.55,16.87 -14.29,22.50 -14.29,12.00 -4.55,6.37" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-14.29,-1.13 -24.03,6.37 -14.29,12.00" fill="#dfe4eb" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-14.29,-1.13 -14.29,12.00 -4.55,6.37" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="2.60,18.75 11.69,24.00 11.69,15.75 2.60,10.50" fill="#dfe4eb" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="20.78,18.75 11.69,24.00 11.69,15.75 20.78,10.50" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="11.69,3.75 2.60,10.50 11.69,15.75" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="11.69,3.75 11.69,15.75 20.78,10.50" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+      </g>
+    </svg>
+  );
+}
+
+export function PricingFullLicense(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg fill="none" viewBox="22 22 76 76" {...props}>
+      <g transform="translate(60.65,57.19)">
+        <polygon points="-18.84,13.12 -7.79,19.50 -7.79,-0.00 -18.84,-6.38" fill="#dfe4eb" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="3.25,13.12 -7.79,19.50 -7.79,-0.00 3.25,-6.38" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-7.79,-16.88 -18.84,-6.38 -7.79,-0.00" fill="#dfe4eb" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-7.79,-16.88 -7.79,-0.00 3.25,-6.38" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-1.30,16.50 11.69,24.00 11.69,-4.50 -1.30,-12.00" fill="var(--icon-brand-low, #911b20)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="24.68,16.50 11.69,24.00 11.69,-4.50 24.68,-12.00" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="11.69,-26.25 -1.30,-12.00 11.69,-4.50" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="11.69,-26.25 11.69,-4.50 24.68,-12.00" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-32.48,20.25 -23.38,25.50 -23.38,16.50 -32.48,11.25" fill="#dfe4eb" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-14.29,20.25 -23.38,25.50 -23.38,16.50 -14.29,11.25" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-23.38,4.50 -32.48,11.25 -23.38,16.50" fill="#dfe4eb" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-23.38,4.50 -23.38,16.50 -14.29,11.25" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-16.24,25.87 -5.85,31.87 -5.85,16.87 -16.24,10.87" fill="#dfe4eb" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="4.55,25.87 -5.85,31.87 -5.85,16.87 4.55,10.87" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-5.85,1.87 -16.24,10.87 -5.85,16.87" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="-5.85,1.87 -5.85,16.87 4.55,10.87" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="14.29,25.50 22.73,30.37 22.73,19.12 14.29,14.25" fill="#dfe4eb" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="31.18,25.50 22.73,30.37 22.73,19.12 31.18,14.25" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="22.73,6.75 14.29,14.25 22.73,19.12" fill="var(--icon-brand, #c4262d)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+        <polygon points="22.73,6.75 22.73,19.12 31.18,14.25" fill="var(--icon-lit, #ffffff)" stroke="var(--icon-navy, #022658)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"/>
+      </g>
+    </svg>
+  );
+}
+

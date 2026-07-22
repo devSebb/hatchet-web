@@ -452,6 +452,14 @@ export default function Home() {
             width: 2000,
             height: 1143,
           }}
+          // Autoplay/muted/looping Mux clip replaces the mockup once the public
+          // playback ID is set; until then the image above renders unchanged.
+          video={{
+            playbackId: process.env.NEXT_PUBLIC_MUX_PLAYBACK_ID ?? "",
+            poster: "/images/hero-dashboard.png",
+            width: 2000,
+            height: 1143,
+          }}
           primaryCta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
           secondaryCta={{
             label: "See It In Action",
