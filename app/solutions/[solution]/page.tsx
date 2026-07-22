@@ -172,6 +172,11 @@ function SubFeatureGrid({
             <p className="eyebrow text-muted">{sub.name}</p>
             <h3 className="h3 mt-3">{sub.headline}</h3>
             <p className="body text-muted mt-3">{sub.body}</p>
+            {sub.visual ? (
+              <div className="mt-[24px]">
+                <SolutionVisual visual={sub.visual} />
+              </div>
+            ) : null}
           </article>
         ))}
       </Stagger>

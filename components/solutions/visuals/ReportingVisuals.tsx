@@ -135,8 +135,13 @@ export function CampaignBreakdown() {
         </tbody>
       </table>
       <div className="border-border flex items-center justify-between gap-[16px] border-t px-[20px] py-[10px]">
-        <span className="text-muted font-mono text-[10px] tracking-[0.08em] uppercase">
-          Showing 5 of 47 creators
+        <span className="flex flex-wrap items-center gap-x-[16px] gap-y-[4px]">
+          <span className="text-muted font-mono text-[10px] tracking-[0.08em] uppercase">
+            Showing 5 of 47 creators
+          </span>
+          <span className="text-signal font-mono text-[10px] font-bold tracking-[0.08em] uppercase">
+            Earned media $2.1M
+          </span>
         </span>
         <span className="border-border text-foreground flex items-center gap-[6px] rounded-md border px-[10px] py-[4px] font-mono text-[10px] font-medium tracking-[0.06em] uppercase">
           Export to Excel
@@ -312,6 +317,26 @@ export function CustomReportGallery() {
             wide={cover.wide}
           />
         ))}
+      </div>
+      <div className="border-border mt-[14px] flex flex-wrap items-center gap-[6px] border-t pt-[12px]">
+        <span className="text-muted mr-[4px] font-mono text-[10px] tracking-[0.08em] uppercase">
+          Industry trends, every quarter
+        </span>
+        {["2026", "2025", "2024", "2023", "2022", "2021", "2020"].map(
+          (year, index) => (
+            <span
+              className={cn(
+                "rounded-sm border px-[7px] py-[1px] font-mono text-[10px] tabular-nums",
+                index === 0
+                  ? "border-signal/30 bg-signal/10 text-signal"
+                  : "border-border text-muted",
+              )}
+              key={year}
+            >
+              {year}
+            </span>
+          ),
+        )}
       </div>
     </VisualShell>
   );

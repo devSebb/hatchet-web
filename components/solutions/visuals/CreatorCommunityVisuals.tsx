@@ -38,53 +38,87 @@ function Chip({ children, active }: { children: string; active?: boolean }) {
 /* ------------------------------- Roster -------------------------------- */
 
 const ROSTER = [
-  { name: "Novastrike", platform: "Twitch", followers: "412K", ccv: "8.4K", eng: "6.2%" },
-  { name: "Pixelhollow", platform: "YouTube", followers: "1.2M", ccv: "31K", eng: "4.8%" },
-  { name: "Duskrunner", platform: "TikTok", followers: "864K", ccv: "12K", eng: "9.1%" },
-  { name: "Miravex", platform: "Kick", followers: "196K", ccv: "3.1K", eng: "7.4%" },
-  { name: "Glasscannon", platform: "Twitch", followers: "287K", ccv: "5.6K", eng: "5.5%" },
+  {
+    name: "Novastrike",
+    platform: "Twitch",
+    labels: ["Tier 1", "EMEA"],
+    followers: "412K",
+    eng: "6.2%",
+  },
+  {
+    name: "Pixelhollow",
+    platform: "YouTube",
+    labels: ["Tier 1", "Spring Launch"],
+    followers: "1.2M",
+    eng: "4.8%",
+  },
+  {
+    name: "Duskrunner",
+    platform: "TikTok",
+    labels: ["FPS"],
+    followers: "864K",
+    eng: "9.1%",
+  },
+  {
+    name: "Miravex",
+    platform: "Kick",
+    labels: ["EMEA", "FPS"],
+    followers: "196K",
+    eng: "7.4%",
+  },
 ];
 
 export function RosterTable() {
   return (
-    <VisualShell label="My Creators" meta="128 creators">
+    <VisualShell label="My Creators" meta="Showing 4 of 128">
       <div className="flex flex-wrap items-center gap-[8px]">
         <Chip active>Tier 1</Chip>
         <Chip active>EMEA</Chip>
         <Chip>FPS</Chip>
         <Chip>Spring Launch</Chip>
-        <Chip>+ Add label</Chip>
+        <Chip>+ New label</Chip>
       </div>
-      <div className="mt-[16px] grid grid-cols-[1fr_repeat(3,minmax(0,64px))] items-center gap-x-[12px] gap-y-[10px] sm:grid-cols-[1.4fr_0.8fr_repeat(3,minmax(0,72px))]">
+      <div className="mt-[16px] grid grid-cols-[1fr_repeat(2,minmax(0,58px))_auto] items-center gap-x-[12px] gap-y-[12px]">
         <ColHead>Creator</ColHead>
-        <span className="hidden sm:block">
-          <ColHead>Platform</ColHead>
-        </span>
         <ColHead right>Followers</ColHead>
-        <ColHead right>Avg CCV</ColHead>
         <ColHead right>Eng.</ColHead>
+        <span aria-hidden="true" />
         {ROSTER.map((row) => (
           <div className="contents" key={row.name}>
-            <span className="text-foreground flex items-center gap-[10px] text-[13px] font-medium">
+            <span className="flex min-w-0 items-center gap-[10px]">
               <span
                 aria-hidden="true"
                 className="bg-signal/10 text-signal grid size-[22px] shrink-0 place-items-center rounded-full font-mono text-[10px]"
               >
                 {row.name[0]}
               </span>
-              {row.name}
-            </span>
-            <span className="text-muted hidden text-[12px] sm:block">
-              {row.platform}
+              <span className="min-w-0">
+                <span className="text-foreground block truncate text-[13px] font-medium">
+                  {row.name}
+                  <span className="text-muted ml-[6px] text-[11px] font-normal">
+                    {row.platform}
+                  </span>
+                </span>
+                <span className="mt-[3px] flex flex-wrap gap-[4px]">
+                  {row.labels.map((label) => (
+                    <span
+                      className="bg-signal/10 text-signal rounded-sm px-[5px] py-[1px] font-mono text-[9px] tracking-[0.04em] uppercase"
+                      key={label}
+                    >
+                      {label}
+                    </span>
+                  ))}
+                </span>
+              </span>
             </span>
             <span className="text-foreground text-right font-mono text-[13px] tabular-nums">
               {row.followers}
             </span>
             <span className="text-foreground text-right font-mono text-[13px] tabular-nums">
-              {row.ccv}
-            </span>
-            <span className="text-foreground text-right font-mono text-[13px] tabular-nums">
               {row.eng}
+            </span>
+            <span className="border-border text-muted rounded-full border px-[9px] py-[2px] font-mono text-[10px] tracking-[0.04em] uppercase max-sm:hidden">
+              Message
             </span>
           </div>
         ))}
@@ -107,17 +141,43 @@ const THREADS: Array<{
   status: keyof typeof STATUS;
   time: string;
 }> = [
-  { to: "Novastrike", subject: "Re: Spring Launch brief + key", status: "replied", time: "2m" },
   { to: "Tier 1 · EMEA (24)", subject: "Broadcast: patch 2.4 embargo lift", status: "sent", time: "18m" },
   { to: "Pixelhollow", subject: "Re: sponsored VOD deliverables", status: "replied", time: "1h" },
   { to: "duskrunner@…", subject: "Creator kit — asset drop", status: "failed", time: "3h" },
-  { to: "Miravex", subject: "Contract follow-up, June window", status: "sent", time: "5h" },
 ];
 
 export function MessagingInbox() {
   return (
     <VisualShell contentClassName="p-[12px]" label="Messaging" meta="Gmail synced">
-      <div className="grid gap-[6px]">
+      <div className="border-border bg-background/70 rounded-lg border p-[12px]">
+        <div className="flex items-center gap-[8px]">
+          <span
+            aria-hidden="true"
+            className="bg-signal/10 text-signal grid size-[22px] shrink-0 place-items-center rounded-full font-mono text-[10px]"
+          >
+            N
+          </span>
+          <span className="text-foreground text-[13px] font-medium">
+            Novastrike
+          </span>
+          <span className="text-muted ml-auto font-mono text-[10px] tracking-[0.08em] uppercase">
+            <span aria-hidden="true" className="text-emerald-500">
+              ●
+            </span>{" "}
+            Replied 2m
+          </span>
+        </div>
+        <p className="border-border bg-card text-muted mt-[10px] rounded-lg rounded-tl-sm border px-[12px] py-[8px] text-[12px]">
+          New codes to share! You&rsquo;ve been assigned{" "}
+          <span className="text-foreground font-mono font-bold">NOVA15</span>{" "}
+          and <span className="text-foreground font-mono font-bold">NOVA20</span>{" "}
+          — share them with your followers.
+        </p>
+        <p className="bg-signal/10 text-foreground mt-[8px] ml-[24px] rounded-lg rounded-br-sm px-[12px] py-[8px] text-[12px]">
+          Codes are live in tonight&rsquo;s stream 🔥
+        </p>
+      </div>
+      <div className="mt-[8px] grid gap-[6px]">
         {THREADS.map((thread) => {
           const status = STATUS[thread.status];
           return (
@@ -165,9 +225,32 @@ const CODES = [
   { code: "MIRA15", creator: "Miravex", redemptions: "387", share: 0.3, roi: "2.6x" },
 ];
 
+const codeBankTotals = [
+  { label: "Total", value: "538" },
+  { label: "Shared", value: "270", accent: true },
+  { label: "Available", value: "268" },
+];
+
 export function PromoCodeDashboard() {
   return (
-    <VisualShell label="Code Management" meta="Live redemptions">
+    <VisualShell label="Code Management" meta="Bank: Spring Launch">
+      <dl className="border-border mb-[16px] flex gap-[24px] border-b pb-[14px]">
+        {codeBankTotals.map((total) => (
+          <div className="flex items-baseline gap-[6px]" key={total.label}>
+            <dd
+              className={cn(
+                "font-mono text-sm font-bold tabular-nums",
+                total.accent ? "text-signal" : "text-foreground",
+              )}
+            >
+              {total.value}
+            </dd>
+            <dt className="text-muted font-mono text-[10px] tracking-[0.08em] uppercase">
+              {total.label}
+            </dt>
+          </div>
+        ))}
+      </dl>
       <div className="grid grid-cols-[auto_1fr_auto_auto] items-center gap-x-[14px] gap-y-[12px]">
         <ColHead>Code</ColHead>
         <ColHead>Redemptions</ColHead>

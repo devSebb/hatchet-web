@@ -23,6 +23,7 @@ import {
 } from "@/components/icons/iso-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
+import { verticalProductVisuals } from "@/components/verticals/VerticalProductVisuals";
 import { CircuitDivider } from "@/components/sections/CircuitDivider";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
@@ -87,6 +88,9 @@ export async function generateMetadata({
   });
 }
 
+// Bespoke product mock per vertical (components/verticals) — recreated from
+// the product team's screenshots so no raw captures ship. The media image is
+// the fallback for any vertical without a mock yet.
 function VerticalMedia({
   vertical,
   className,
@@ -94,6 +98,16 @@ function VerticalMedia({
   vertical: Vertical;
   className?: string;
 }) {
+  const Visual = verticalProductVisuals[vertical.slug];
+
+  if (Visual) {
+    return (
+      <div className={className}>
+        <Visual />
+      </div>
+    );
+  }
+
   return (
     <div className={className}>
       <Image

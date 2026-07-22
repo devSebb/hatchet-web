@@ -132,17 +132,52 @@ const MENTIONS = [
   },
 ];
 
+const mentionFilters = [
+  { label: 'At least one: "Voltcore"', active: true },
+  { label: "Twitch" },
+  { label: "YouTube Gaming" },
+  { label: "+7 platforms" },
+];
+
+const mentionTotals = [
+  { label: "Titles matched", value: "499", accent: true },
+  { label: "Unique channels", value: "256" },
+  { label: "Hours watched", value: "878K" },
+];
+
 export function MentionTracker() {
   return (
     <VisualShell label="Brand mentions" meta="Live · 32 platforms">
       <div className="grid gap-[16px]">
-        <div className="grid grid-cols-[auto_1fr] items-end gap-[20px]">
-          <Metric accent label={'"Voltcore" · 30 days'} value="2,418" />
-          <TrendChart
-            data={[12, 18, 15, 24, 21, 30, 27, 38, 34, 46, 52, 61]}
-            height={44}
-          />
+        <div className="flex flex-wrap gap-[6px]">
+          {mentionFilters.map((filter) => (
+            <span
+              className={cn(
+                "rounded-full border px-[10px] py-[2px] font-mono text-[10px] tracking-[0.04em] uppercase",
+                filter.active
+                  ? "border-transparent bg-signal text-white"
+                  : "border-border text-muted",
+              )}
+              key={filter.label}
+            >
+              {filter.label}
+            </span>
+          ))}
         </div>
+        <div className="grid grid-cols-3 gap-[12px]">
+          {mentionTotals.map((total) => (
+            <Metric
+              accent={total.accent}
+              key={total.label}
+              label={total.label}
+              value={total.value}
+            />
+          ))}
+        </div>
+        <TrendChart
+          data={[12, 18, 15, 24, 21, 30, 27, 38, 34, 46, 52, 61]}
+          height={44}
+        />
         <div className="grid gap-[6px]">
           <div className="bg-border flex h-[6px] overflow-hidden rounded-full">
             <span className="bg-signal w-[64%]" />
@@ -179,50 +214,81 @@ export function MentionTracker() {
 
 /* ------------------------------- 2. Groups ------------------------------- */
 
-const GROUPS = [
-  ["Core roster", "14", "1.2M", "8.4K", "26.1M"],
-  ["Prospects Q3", "22", "643K", "2.9K", "9.8M"],
-  ["Competitor set", "9", "981K", "6.1K", "18.4M"],
-  ["Ashfall specialists", "11", "774K", "4.7K", "12.2M"],
+const groupTabs = [
+  { label: "Core roster", active: true },
+  { label: "Prospects Q3" },
+  { label: "Competitor set" },
+];
+
+const groupTotals = [
+  { label: "Hours watched", value: "1.2M", accent: true },
+  { label: "Peak CCV", value: "24.8K" },
+  { label: "Unified airtime", value: "44h 58m" },
+];
+
+const groupChannels = [
+  { channel: "Novastrike", platform: "Twitch", hours: "412K", meter: 1 },
+  { channel: "Pixelhollow", platform: "YouTube", hours: "298K", meter: 0.72 },
+  { channel: "Kaijukendra", platform: "Twitch", hours: "213K", meter: 0.52 },
+  { channel: "Duskraider", platform: "Kick", hours: "148K", meter: 0.36 },
 ];
 
 export function GroupsTable() {
-  const cols = "grid grid-cols-[1.5fr_repeat(4,minmax(0,1fr))] gap-[10px]";
   return (
-    <VisualShell label="Groups" meta="4 groups">
-      <div className={cn(cols, "border-border border-b pb-[8px]")}>
-        <span className={tinyLabel}>Group</span>
-        {["Creators", "Hrs watched", "Avg CCV", "Followers"].map((h) => (
-          <span className={cn(tinyLabel, "text-right")} key={h}>
-            {h}
+    <VisualShell label="Groups" meta="14 channels">
+      <div className="flex flex-wrap gap-[6px]">
+        {groupTabs.map((tab) => (
+          <span
+            className={cn(
+              "rounded-full border px-[10px] py-[2px] font-mono text-[10px] tracking-[0.04em] uppercase",
+              tab.active
+                ? "border-transparent bg-signal text-white"
+                : "border-border text-muted",
+            )}
+            key={tab.label}
+          >
+            {tab.label}
           </span>
         ))}
       </div>
-      <ul className="divide-border grid divide-y">
-        {GROUPS.map(([name, ...stats], index) => (
-          <li className={cn(cols, "items-center py-[10px]")} key={name}>
-            <span className="flex items-center gap-[8px]">
-              <span
-                className={cn(
-                  "size-[8px] shrink-0 rounded-[2px]",
-                  index === 0 ? "bg-signal" : "bg-border",
-                )}
-              />
-              <span className="small text-foreground truncate font-semibold">
-                {name}
-              </span>
+      <div className="mt-[14px] grid grid-cols-3 gap-[12px]">
+        {groupTotals.map((total) => (
+          <Metric
+            accent={total.accent}
+            key={total.label}
+            label={total.label}
+            value={total.value}
+          />
+        ))}
+      </div>
+      <ul className="border-border mt-[14px] grid gap-[10px] border-t pt-[14px]">
+        {groupChannels.map((row, index) => (
+          <li
+            className="grid grid-cols-[14px_minmax(0,1.2fr)_auto_minmax(0,1fr)_44px] items-center gap-[10px]"
+            key={row.channel}
+          >
+            <span className="text-signal font-mono text-[11px] tabular-nums">
+              {index + 1}
             </span>
-            {stats.map((stat, statIndex) => (
+            <span className="small text-foreground truncate font-semibold">
+              {row.channel}
+            </span>
+            <Pill>{row.platform}</Pill>
+            <span className="bg-border h-[4px] overflow-hidden rounded-full">
               <span
-                className="text-foreground text-right font-mono text-sm tabular-nums"
-                key={statIndex}
-              >
-                {stat}
-              </span>
-            ))}
+                className="bg-signal block h-full rounded-full"
+                style={{ width: `${row.meter * 100}%` }}
+              />
+            </span>
+            <span className="text-foreground text-right font-mono text-[12px] tabular-nums">
+              {row.hours}
+            </span>
           </li>
         ))}
       </ul>
+      <p className="small text-muted border-border mt-[12px] border-t pt-[12px]">
+        Every stat rolls up to the group — one view for the whole roster.
+      </p>
     </VisualShell>
   );
 }
@@ -231,23 +297,34 @@ export function GroupsTable() {
 
 export function VodTrend() {
   return (
-    <VisualShell label="VOD analytics" meta="Uploaded · 14 days">
+    <VisualShell label="VOD analytics" meta="VODs + Shorts">
       <div className="grid gap-[16px]">
         <div className="flex items-center gap-[8px]">
           <span className="small text-foreground truncate font-semibold">
             Ashfall Royale — Season 6 finale recap
           </span>
           <Pill>YouTube</Pill>
+          <span className={cn(tinyLabel, "ml-auto shrink-0")}>18:24</span>
         </div>
         <TrendChart
           data={[8, 22, 41, 38, 52, 49, 64, 60, 74, 71, 82, 80, 90, 96]}
           height={72}
         />
-        <div className="border-border grid grid-cols-4 gap-[12px] border-t pt-[14px]">
+        <div className="grid grid-cols-4 gap-[12px]">
+          <Metric label="First 24h" value="1.4M" />
+          <Metric label="First 3d" value="2.6M" />
+          <Metric label="First 7d" value="3.5M" />
           <Metric accent label="Views" value="4.2M" />
-          <Metric label="Likes" value="186K" />
-          <Metric label="Comments" value="12.4K" />
-          <Metric label="Avg view" value="6:42" />
+        </div>
+        <div className="border-border flex items-center gap-[8px] border-t pt-[14px]">
+          <span className="small text-foreground truncate font-semibold">
+            Clutch ace at the buzzer #shorts
+          </span>
+          <Pill>Short</Pill>
+          <span className={cn(tinyLabel, "shrink-0")}>0:38</span>
+          <span className="text-foreground ml-auto font-mono text-sm font-bold tabular-nums">
+            2.3M
+          </span>
         </div>
       </div>
     </VisualShell>
@@ -271,13 +348,13 @@ export function EsportsDashboard() {
             Ashfall Royale Masters — Berlin
           </p>
           <p className={cn(tinyLabel, "mt-[3px]")}>
-            Tier 1 · 16 teams · 96h airtime
+            Tier 1 · Berlin · $1.2M prize pool · 16 teams
           </p>
         </div>
         <div className="grid grid-cols-3 gap-[12px]">
           <Metric accent label="Peak CCV" value="1.84M" />
-          <Metric label="Avg CCV" value="812K" />
           <Metric label="Hours watched" value="41.2M" />
+          <Metric label="Co-stream share" value="38%" />
         </div>
         <div className="border-border grid gap-[8px] border-t pt-[14px]">
           <span className={tinyLabel}>Hours watched by edition</span>

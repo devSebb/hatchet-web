@@ -16,7 +16,11 @@ type SolutionCta = {
 /** Keys resolved by components/solutions/visuals — one mock per feature. */
 export type SolutionVisualKey =
   | "discovery-leaderboard"
+  | "discovery-smart-search"
+  | "discovery-fake-audience"
+  | "discovery-games"
   | "discovery-launch-intel"
+  | "discovery-genres"
   | "intelligence-mentions"
   | "intelligence-groups"
   | "intelligence-vod"
@@ -39,6 +43,8 @@ export type SolutionSubFeature = {
   name: string;
   headline: string;
   body: string;
+  /** Optional compact mock rendered under the copy in the sub-feature grid. */
+  visual?: SolutionVisualKey;
 };
 
 export type SolutionGroupIntro = {
@@ -153,11 +159,13 @@ const rawSolutions = [
             name: "AI Smart Search",
             headline: "Describe the creator you need. Get a match.",
             body: "Tell Hatchet what you're looking for in plain language, and it sets the search up for you with all relevant filters.",
+            visual: "discovery-smart-search",
           },
           {
             name: "Fake Audience Scoring",
             headline: "Spot a fake before it costs you.",
             body: "Inflated followers and bot-built audiences get flagged and filtered out automatically, so nothing with a fake footprint makes it onto your shortlist.",
+            visual: "discovery-fake-audience",
           },
         ],
       },
@@ -167,17 +175,19 @@ const rawSolutions = [
         body: [
           "The same depth, applied to games instead of channels. Rank games by streaming category, genre, or publisher across every platform, and see hours watched, concurrent viewers, and unique channels at a glance. From there, go deeper: Find out about audience overlap, top creators, and VOD performance for any title you're evaluating.",
         ],
-        visual: "discovery-launch-intel",
+        visual: "discovery-games",
         subFeatures: [
           {
             name: "Launch Comparison",
             headline: "Debut viewerships put in perspective.",
             body: "New releases get their own lens. Track first day, week or months performance and benchmark against historical averages and competitor launches.",
+            visual: "discovery-launch-intel",
           },
           {
             name: "Genre Benchmarks",
             headline: "A handle on which games viewers love most.",
             body: "Zoom out from any single title to see how audiences are gravitating towards different types of gameplay. Track how tastes in genre shift over time, from esports-friendly genres like MOBAs and Shooters to collab co-op chaos like Friendslop and Survival Games.",
+            visual: "discovery-genres",
           },
         ],
       },
@@ -383,6 +393,7 @@ function normalizeSubFeature(sub: SolutionSubFeature): SolutionSubFeature {
     name: normalizeBrand(sub.name),
     headline: normalizeBrand(sub.headline),
     body: normalizeBrand(sub.body),
+    visual: sub.visual,
   };
 }
 

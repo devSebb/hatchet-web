@@ -9,7 +9,11 @@ import {
 } from "./visuals/CreatorCommunityVisuals";
 import {
   ChannelLeaderboard,
+  FakeAudienceScore,
+  GameLeaderboard,
+  GenreBenchmarks,
   LaunchIntelligence,
+  SmartSearch,
 } from "./visuals/DiscoveryVisuals";
 import {
   DashboardBuilder,
@@ -25,7 +29,11 @@ import {
 
 const registry: Record<SolutionVisualKey, ComponentType> = {
   "discovery-leaderboard": ChannelLeaderboard,
+  "discovery-smart-search": SmartSearch,
+  "discovery-fake-audience": FakeAudienceScore,
+  "discovery-games": GameLeaderboard,
   "discovery-launch-intel": LaunchIntelligence,
+  "discovery-genres": GenreBenchmarks,
   "intelligence-mentions": MentionTracker,
   "intelligence-groups": GroupsTable,
   "intelligence-vod": VodTrend,
