@@ -36,13 +36,20 @@ export function CompanyLogo({
   );
   const renderedHeight = height * scale;
 
+  // Quantize to a stable px string. `scale` derives from Math.pow, which can
+  // differ by a few ULPs between the server (Node) and the browser engine —
+  // enough to make React's raw-float style serialization mismatch on hydration.
+  // Rounding to 2 decimals absorbs that divergence so both sides emit the same
+  // value while staying sub-pixel precise.
+  const px = (n: number) => `${Math.round(n * 100) / 100}px`;
+
   return (
     <svg
       aria-label={`${logo.name} logo`}
       className={className}
       fill="currentColor"
       role="img"
-      style={{ height: renderedHeight, width: renderedHeight * aspect }}
+      style={{ height: px(renderedHeight), width: px(renderedHeight * aspect) }}
       viewBox={logo.viewBox}
       xmlns="http://www.w3.org/2000/svg"
     >

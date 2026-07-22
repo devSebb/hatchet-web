@@ -313,7 +313,7 @@ function WhyHatchet() {
 
         <Reveal>
           <div className="mt-12 flex justify-center">
-            <Button asChild className="h-14 px-8 text-base" size="lg">
+            <Button asChild>
               <Link href={siteConfig.bookDemoUrl}>Book a Demo</Link>
             </Button>
           </div>
@@ -455,10 +455,12 @@ export default function Home() {
           // Autoplay/muted/looping Mux clip replaces the mockup once the public
           // playback ID is set; until then the image above renders unchanged.
           video={{
-            playbackId: process.env.NEXT_PUBLIC_MUX_PLAYBACK_ID ?? "",
+            playbackId:
+              process.env.NEXT_PUBLIC_MUX_PLAYBACK_ID ??
+              "Wyys025HRtud28Ad800ety0134SBwe2VwjasdGiHjNkUUM",
             poster: "/images/hero-dashboard.png",
-            width: 2000,
-            height: 1143,
+            width: 1920,
+            height: 1080,
           }}
           primaryCta={{ label: "Book a Demo", href: siteConfig.bookDemoUrl }}
           secondaryCta={{

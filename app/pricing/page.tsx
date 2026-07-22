@@ -120,11 +120,15 @@ function PlanCard({ plan }: { plan: Plan }) {
       className={cn(
         // White-paper card on the dark page: surface-paper flips the tokens so
         // border/text utilities resolve to their light-theme values inside.
-        "surface-paper bg-paper relative flex h-full flex-col rounded-xl border p-6",
+        // Horizontal padding stays at 24px; vertical is tightened to 20px so the
+        // pillars read shorter without shrinking any type or the icon.
+        "surface-paper bg-paper relative flex h-full flex-col rounded-xl border px-6 py-5",
         plan.recommended
-          ? // Elevated, brand-framed pillar: doubled brand border, a soft brand
-            // halo ring, the signal shadow, and a slight lift over its siblings.
-            "border-2 border-brand shadow-signal ring-4 ring-brand/10 lg:-translate-y-2"
+          ? // Emphasized, brand-framed pillar: doubled brand border, a soft brand
+            // halo ring, and a layered elevation shadow (deep ambient drop + brand
+            // glow) so it reads as a 3D pop-out. Same paper background as its
+            // siblings, kept level so all three tops align.
+            "border-2 border-brand ring-4 ring-brand/10 shadow-[0_24px_50px_-12px_rgba(0,0,0,0.55),0_0_24px_color-mix(in_srgb,var(--brand)_28%,transparent)]"
           : "border-paper-border shadow-sm",
       )}
     >
@@ -140,7 +144,7 @@ function PlanCard({ plan }: { plan: Plan }) {
       </h2>
       <p className="text-brand mt-2 text-base font-medium">{plan.tagline}</p>
 
-      <ul className="mt-6 grid gap-4">
+      <ul className="mt-5 grid gap-3">
         {plan.features.map((feature) => (
           <li key={feature.title}>
             <p className="text-blue-transitional text-sm font-semibold">
@@ -151,7 +155,7 @@ function PlanCard({ plan }: { plan: Plan }) {
         ))}
       </ul>
 
-      <div className="mt-auto pt-6">
+      <div className="mt-auto pt-5">
         <Button asChild className="w-full">
           <Link href={siteConfig.bookDemoUrl}>Book a Demo</Link>
         </Button>
