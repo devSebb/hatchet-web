@@ -178,7 +178,7 @@ export function CTAPanel({
   titleClassName,
   subtitle,
   body = DEFAULT_BODY,
-  cta = { label: "Book a demo", href: siteConfig.bookDemoUrl },
+  cta = { label: "Book a Demo", href: siteConfig.bookDemoUrl },
   proof,
   media,
   className,

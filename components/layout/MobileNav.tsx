@@ -98,7 +98,7 @@ export function MobileNav({ className }: MobileNavProps) {
         <div className="border-border mt-auto grid gap-3 border-t p-5">
           <SheetClose asChild>
             <Button asChild>
-              <Link href={siteConfig.bookDemoUrl}>Book a demo</Link>
+              <Link href={siteConfig.bookDemoUrl}>Book a Demo</Link>
             </Button>
           </SheetClose>
           <SheetClose asChild>

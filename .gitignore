@@ -59,3 +59,6 @@ ds-bundle/
 dist/
 .ds-sync/.cache/
 .ds-sync/node_modules/
+
+# scratch background prototype (not part of the app)
+hatchet-background.html

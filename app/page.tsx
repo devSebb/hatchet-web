@@ -395,7 +395,7 @@ function BuiltForYourTeam() {
                 aria-hidden="true"
                 className="h-px w-0 bg-white transition-all duration-(--dur-base) group-hover:w-3"
               />
-              Book a demo
+              Book a Demo
             </span>
           </Link>
         </Stagger>

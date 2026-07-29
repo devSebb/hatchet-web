@@ -127,7 +127,7 @@ export default function ContactPage() {
               <span className="bg-accent ring-border/60 inline-flex size-[84px] items-center justify-center rounded-2xl ring-1 ring-inset">
                 <BookingCalendar aria-hidden="true" className="size-[60px]" />
               </span>
-              <h2 className="h3 mt-4">Book a demo</h2>
+              <h2 className="h3 mt-4">Book a Demo</h2>
               <p className="body text-muted mt-2 grow">
                 30 minutes. We&apos;ll show you exactly what Hatchet can do for
                 your campaign.
@@ -139,7 +139,7 @@ export default function ContactPage() {
                     rel="noreferrer"
                     target="_blank"
                   >
-                    Book a demo
+                    Book a Demo
                   </a>
                 </Button>
               </div>

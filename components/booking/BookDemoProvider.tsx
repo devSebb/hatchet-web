@@ -106,7 +106,7 @@ export function BookDemoProvider({ children }: { children: React.ReactNode }) {
         >
           {/* Visible copy lives inside <BookDemo>; these satisfy Radix's a11y
               requirement for a labelled dialog without duplicating the UI. */}
-          <DialogTitle className="sr-only">Book a demo</DialogTitle>
+          <DialogTitle className="sr-only">Book a Demo</DialogTitle>
           <DialogDescription className="sr-only">
             Book a 30-minute demo. Pick a time that works and we&apos;ll walk
             through Hatchet live.

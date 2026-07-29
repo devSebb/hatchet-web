@@ -74,7 +74,7 @@ export function Hero({
   emphasizedTitle,
   subtitle,
   stats,
-  primaryCta = { label: "Book a demo", href: siteConfig.bookDemoUrl },
+  primaryCta = { label: "Book a Demo", href: siteConfig.bookDemoUrl },
   secondaryCta = { label: "Sign up", href: siteConfig.signUpUrl },
   image,
   video,

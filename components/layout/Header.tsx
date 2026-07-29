@@ -62,7 +62,7 @@ export function Header() {
 
         <div className="hidden shrink-0 items-center gap-3 min-[1400px]:flex">
           <Button asChild className="px-3">
-            <Link href={siteConfig.bookDemoUrl}>Book a demo</Link>
+            <Link href={siteConfig.bookDemoUrl}>Book a Demo</Link>
           </Button>
           <Button asChild className="px-3" variant="inverse">
             <Link href={siteConfig.appLoginUrl}>Log in</Link>

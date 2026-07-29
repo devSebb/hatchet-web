@@ -213,7 +213,7 @@ export default function StyleguidePage() {
           </div>
           <SwatchGrid swatches={paperSwatches} />
           <div className="mt-6 flex flex-wrap gap-3">
-            <Button>Book a demo</Button>
+            <Button>Book a Demo</Button>
             <Button variant="secondary">Sign up</Button>
             <Button variant="outline">Compare plans</Button>
           </div>
@@ -227,7 +227,7 @@ export default function StyleguidePage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-3">
-            <Button>Book a demo</Button>
+            <Button>Book a Demo</Button>
             <Button variant="secondary">Sign up</Button>
             <Button variant="outline">Talk to sales</Button>
             <Button variant="ghost">View resources</Button>

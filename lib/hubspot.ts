@@ -25,7 +25,7 @@ const formCopy = {
     title: "See Hatchet with your market questions.",
     description:
       "This shell will mount the HubSpot demo form once portal and form IDs are configured.",
-    submitLabel: "Book a demo",
+    submitLabel: "Book a Demo",
   },
   signUp: {
     eyebrow: "Sign up",
