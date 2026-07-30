@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 /* Full-width product mocks for the who-we-serve pages, one per vertical,
  * recreated at high fidelity from the product team's July 2026 screenshots
  * (campaign engagement dashboard; game page with #ad stream titles; social
- * creator discovery; esports event overview; campaign posts grid). All data
- * fictional and consistent with the solutions-page mocks (Voidforge campaign,
+ * creator discovery; campaign posts grid). All data fictional and
+ * consistent with the solutions-page mocks (Voidforge campaign,
  * Emberfall launch, Ashfall Royale Masters). Meter bars mirror the product's
  * per-metric colors as signal-opacity steps. */
 
@@ -842,222 +842,6 @@ function ResearchSocialDiscovery() {
   );
 }
 
-/* --------------------------- Esports organizers -------------------------- */
-
-type GaugeSegment = { label: string; share: number; opacity: number };
-
-const GAUGE_R = 40;
-const GAUGE_C = Math.PI * GAUGE_R;
-
-function GaugeDonut({
-  title,
-  center,
-  segments,
-}: {
-  title: string;
-  center: string;
-  segments: GaugeSegment[];
-}) {
-  // Precompute each arc's start offset along the semicircle.
-  const arcs = segments.map((segment, index) => ({
-    ...segment,
-    length: segment.share * GAUGE_C,
-    offset: segments
-      .slice(0, index)
-      .reduce((sum, prev) => sum + prev.share * GAUGE_C, 0),
-  }));
-  return (
-    <div>
-      <p className={cn(tinyLabel, "text-center")}>{title}</p>
-      <svg
-        aria-hidden="true"
-        className="mx-auto mt-[10px] block w-full max-w-[190px]"
-        viewBox="0 0 100 54"
-      >
-        {arcs.map((arc) => (
-          <path
-            d={`M 10 50 A ${GAUGE_R} ${GAUGE_R} 0 0 1 90 50`}
-            fill="none"
-            key={arc.label}
-            stroke="var(--signal)"
-            strokeDasharray={`${arc.length} ${GAUGE_C}`}
-            strokeDashoffset={-arc.offset}
-            strokeOpacity={arc.opacity}
-            strokeWidth="11"
-          />
-        ))}
-        <text
-          fontFamily="var(--font-mono, monospace)"
-          fontSize="11"
-          fontWeight="700"
-          style={{ fill: "var(--foreground)" }}
-          textAnchor="middle"
-          x="50"
-          y="48"
-        >
-          {center}
-        </text>
-      </svg>
-      <ul className="mt-[10px] flex flex-wrap justify-center gap-x-[12px] gap-y-[4px]">
-        {segments.map((segment) => (
-          <li
-            className="text-muted flex items-center gap-[5px] text-[10px]"
-            key={segment.label}
-          >
-            <span
-              aria-hidden="true"
-              className="bg-signal size-[7px] rounded-[1px]"
-              style={{ opacity: segment.opacity }}
-            />
-            {segment.label} {Math.round(segment.share * 100)}%
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-const eventTotals = [
-  { label: "Hours watched", value: "41.2M", accent: true },
-  { label: "Peak CCV", value: "1.84M" },
-  { label: "Average CCV", value: "812K" },
-  { label: "Airtime", value: "34h 58m" },
-  { label: "Unique channels", value: "698" },
-];
-
-const eventGauges: Array<{
-  title: string;
-  center: string;
-  segments: GaugeSegment[];
-}> = [
-  {
-    title: "Platforms by hours watched",
-    center: "41.2M",
-    segments: [
-      { label: "Twitch", share: 0.46, opacity: 1 },
-      { label: "YouTube", share: 0.31, opacity: 0.65 },
-      { label: "Kick", share: 0.12, opacity: 0.4 },
-      { label: "Other", share: 0.11, opacity: 0.18 },
-    ],
-  },
-  {
-    title: "Official vs. co-stream",
-    center: "38%",
-    segments: [
-      { label: "Official", share: 0.62, opacity: 1 },
-      { label: "Co-streamers", share: 0.38, opacity: 0.4 },
-    ],
-  },
-  {
-    title: "Top languages",
-    center: "24",
-    segments: [
-      { label: "EN", share: 0.41, opacity: 1 },
-      { label: "KR", share: 0.22, opacity: 0.65 },
-      { label: "ES", share: 0.15, opacity: 0.4 },
-      { label: "Other", share: 0.22, opacity: 0.18 },
-    ],
-  },
-];
-
-function EsportsEventOverview() {
-  return (
-    <VisualShell
-      contentClassName="p-0"
-      label="Esports · Event"
-      meta="Verified · CET"
-    >
-      <div className="border-border flex flex-wrap gap-[8px] border-b px-[20px] py-[10px]">
-        <FilterChip>Jun 12 – Jun 28 · CET</FilterChip>
-        <FilterChip active>Twitch</FilterChip>
-        <FilterChip>YouTube Gaming</FilterChip>
-        <FilterChip>SOOP Korea</FilterChip>
-        <FilterChip>+4 platforms</FilterChip>
-      </div>
-      <div className="border-border flex flex-wrap items-start gap-[16px] border-b px-[20px] py-[14px]">
-        <span
-          aria-hidden="true"
-          className="grid size-[56px] shrink-0 place-items-center rounded-md font-mono text-[13px] font-bold text-white"
-          style={{
-            backgroundImage:
-              "linear-gradient(150deg, var(--brand-lowlight) 0%, var(--brand) 70%, #e23c42 100%)",
-          }}
-        >
-          ARM
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-foreground text-sm font-semibold">
-            Ashfall Royale Masters — Berlin
-          </p>
-          <p className={cn(tinyLabel, "mt-[3px]")}>
-            Voltcore Esports · Ashfall Royale · Tier 1
-          </p>
-          <div className="mt-[8px] flex max-w-[300px] items-center gap-[8px]">
-            <span className={tinyLabel}>Jun 12</span>
-            <span className="bg-border h-[4px] flex-1 overflow-hidden rounded-full">
-              <span className="bg-signal block h-full w-[72%] rounded-full" />
-            </span>
-            <span className={tinyLabel}>Jun 28</span>
-          </div>
-          <p className={cn(tinyLabel, "mt-[6px]")}>
-            Global · Berlin · $1.2M prize pool · 16 teams
-          </p>
-        </div>
-        <div className="flex flex-col items-end gap-[8px] max-sm:hidden">
-          <span className="flex gap-[8px]">
-            <FilterChip>☆ Add to favorites</FilterChip>
-            <FilterChip>Share event</FilterChip>
-          </span>
-          <span className={tinyLabel}>Last updated: Jun 28, 10:56 AM</span>
-        </div>
-      </div>
-      <TabStrip
-        tabs={[
-          "Overview",
-          "Channels Breakdown",
-          "Platforms Breakdown",
-          "Languages",
-          "Phases & Streams",
-          "Past Events",
-        ]}
-      />
-      <div className="px-[20px] pt-[14px]">
-        <p className={tinyLabel}>Totals — entire event data</p>
-        <div className="mt-[8px] grid grid-cols-2 gap-[10px] sm:grid-cols-3 lg:grid-cols-5">
-          {eventTotals.map((total) => (
-            <StatCard
-              accent={total.accent}
-              key={total.label}
-              label={total.label}
-              value={total.value}
-            />
-          ))}
-        </div>
-      </div>
-      <div className="grid gap-[20px] px-[20px] py-[18px] sm:grid-cols-3">
-        {eventGauges.map((gauge) => (
-          <GaugeDonut
-            center={gauge.center}
-            key={gauge.title}
-            segments={gauge.segments}
-            title={gauge.title}
-          />
-        ))}
-      </div>
-      <div className="border-border flex flex-wrap items-center gap-[8px] border-t px-[20px] py-[12px]">
-        <span className={cn(tinyLabel, "mr-[4px]")}>Viewers</span>
-        <FilterChip active>Aggregated</FilterChip>
-        <FilterChip>Channels</FilterChip>
-        <FilterChip>Platforms</FilterChip>
-        <FilterChip>Co-streaming</FilterChip>
-        <span className={cn(tinyLabel, "ml-auto max-sm:hidden")}>
-          + Save segment
-        </span>
-      </div>
-    </VisualShell>
-  );
-}
-
 /* ----------------------- Marketing & talent agencies --------------------- */
 
 const taggedPosts = [
@@ -1190,10 +974,13 @@ function AgencyPostsGrid() {
 
 /* -------------------------------- Registry ------------------------------- */
 
-export const verticalProductVisuals: Record<VerticalSlug, ComponentType> = {
+// Verticals absent from this map fall back to their configured media image
+// (esports-organizers ships the real product capture instead of a mock).
+export const verticalProductVisuals: Partial<
+  Record<VerticalSlug, ComponentType>
+> = {
   brands: BrandEngagement,
   "games-publishers": PublisherGamePage,
   "market-research-agencies": ResearchSocialDiscovery,
-  "esports-organizers": EsportsEventOverview,
   "marketing-and-talent-agencies": AgencyPostsGrid,
 };

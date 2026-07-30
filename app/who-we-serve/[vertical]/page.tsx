@@ -89,8 +89,9 @@ export async function generateMetadata({
 }
 
 // Bespoke product mock per vertical (components/verticals) — recreated from
-// the product team's screenshots so no raw captures ship. The media image is
-// the fallback for any vertical without a mock yet.
+// the product team's screenshots. Verticals without a mock render their
+// configured media image instead (esports-organizers ships a real capture),
+// capped narrower than the mocks so a full-page screenshot stays in proportion.
 function VerticalMedia({
   vertical,
   className,
@@ -112,10 +113,10 @@ function VerticalMedia({
     <div className={className}>
       <Image
         alt={vertical.media.alt}
-        className="ring-border/40 h-auto w-full rounded-xl shadow-[0_40px_80px_-24px_rgba(2,6,23,0.55)] ring-1"
+        className="ring-border/40 mx-auto h-auto w-full max-w-5xl rounded-xl shadow-[0_40px_80px_-24px_rgba(2,6,23,0.55)] ring-1"
         height={vertical.media.height}
         priority
-        sizes="(min-width: 1280px) 80rem, 100vw"
+        sizes="(min-width: 1024px) 64rem, 100vw"
         src={vertical.media.src}
         width={vertical.media.width}
       />

@@ -152,10 +152,10 @@ export const verticals = [
       },
     ],
     media: {
-      src: "/images/product-mockup.png",
-      alt: "Hatchet audience view showing demographics and engagement behind live event viewership",
-      width: 2048,
-      height: 1170,
+      src: "/images/esports-events.png",
+      alt: "Hatchet esports events dashboard showing tournament hours watched, peak CCV, and airtime totals",
+      width: 1697,
+      height: 1206,
     },
     proof: {
       eyebrow: "Verified benchmarking across major tournaments and leagues",
