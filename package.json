@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "sync:wp": "node scripts/sync-wordpress.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

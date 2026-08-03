@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { EmptyState } from "@/components/resources/EmptyState";
+import { Pagination, resolvePage } from "@/components/resources/Pagination";
 import { GuideCard } from "@/components/resources/ResourceCards";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
@@ -11,20 +12,38 @@ import { createMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
   return createMetadata({
-    title: "Guides & E-books",
+    title: "Reports & Ebooks",
     description:
       "Download Hatchet guides and practical frameworks for gaming, creator, and live-streaming market intelligence.",
     path: "/resources/guides",
   });
 }
 
-export default async function GuidesPage() {
+type GuidesPageProps = {
+  searchParams?: Promise<{
+    page?: string;
+  }>;
+};
+
+/** Four rows of three on desktop — a full screen without an endless scroll. */
+const GUIDES_PER_PAGE = 12;
+
+export default async function GuidesPage({ searchParams }: GuidesPageProps) {
+  const params = await searchParams;
   const guides = await content.getGuides();
+
+  const totalPages = Math.ceil(guides.length / GUIDES_PER_PAGE);
+  const currentPage = resolvePage(params?.page, totalPages);
+  const firstIndex = (currentPage - 1) * GUIDES_PER_PAGE;
+  const visibleGuides = guides.slice(firstIndex, firstIndex + GUIDES_PER_PAGE);
+
+  const hrefForPage = (page: number) =>
+    page > 1 ? `/resources/guides?page=${page}` : "/resources/guides";
 
   return (
     <main className="bg-background text-foreground">
       <PageHeader
-        eyebrow="Guides and e-books"
+        eyebrow="Reports and ebooks"
         subtitle="Templates, scorecards, and frameworks for teams turning gaming market movement into repeatable decisions."
         title="Practical ways to structure the signal."
       />
@@ -41,11 +60,31 @@ export default async function GuidesPage() {
           </Reveal>
 
           {guides.length ? (
-            <Stagger className="mt-10 grid gap-4 lg:grid-cols-3">
-              {guides.map((guide) => (
-                <GuideCard guide={guide} key={guide.slug} />
-              ))}
-            </Stagger>
+            <>
+              <p className="small text-muted mt-8">
+                Showing {firstIndex + 1}&ndash;
+                {firstIndex + visibleGuides.length} of {guides.length} reports
+              </p>
+
+              <Stagger
+                // Keyed by page so the reveal replays on navigation instead of
+                // the new page inheriting the previous one's finished state.
+                className="mt-4 grid gap-4 lg:grid-cols-3"
+                key={currentPage}
+              >
+                {visibleGuides.map((guide) => (
+                  <GuideCard guide={guide} key={guide.slug} />
+                ))}
+              </Stagger>
+
+              <Pagination
+                className="mt-12"
+                currentPage={currentPage}
+                hrefForPage={hrefForPage}
+                label="Reports"
+                totalPages={totalPages}
+              />
+            </>
           ) : (
             <div className="mt-10">
               <EmptyState

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { EmptyState } from "@/components/resources/EmptyState";
+import { Pagination, resolvePage } from "@/components/resources/Pagination";
 import { PostCard } from "@/components/resources/ResourceCards";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
@@ -14,8 +15,12 @@ import { createMetadata } from "@/lib/seo";
 type BlogPageProps = {
   searchParams?: Promise<{
     category?: string;
+    page?: string;
   }>;
 };
+
+/** Four rows of three on desktop — a full screen without an endless scroll. */
+const POSTS_PER_PAGE = 12;
 
 export function generateMetadata(): Metadata {
   return createMetadata({
@@ -37,6 +42,23 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const filteredPosts = activeCategory
     ? posts.filter((post) => post.category === activeCategory)
     : posts;
+
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  const currentPage = resolvePage(params?.page, totalPages);
+  const firstIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const visiblePosts = filteredPosts.slice(
+    firstIndex,
+    firstIndex + POSTS_PER_PAGE,
+  );
+
+  // Paging keeps the active category; switching category resets to page 1.
+  const hrefForPage = (page: number) => {
+    const query = new URLSearchParams();
+    if (activeCategory) query.set("category", activeCategory);
+    if (page > 1) query.set("page", String(page));
+    const suffix = query.toString();
+    return suffix ? `/blog?${suffix}` : "/blog";
+  };
 
   return (
     <main className="bg-background text-foreground">
@@ -81,11 +103,32 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           </Reveal>
 
           {filteredPosts.length ? (
-            <Stagger className="mt-10 grid gap-4 lg:grid-cols-3">
-              {filteredPosts.map((post) => (
-                <PostCard key={post.slug} post={post} />
-              ))}
-            </Stagger>
+            <>
+              <p className="small text-muted mt-8">
+                Showing {firstIndex + 1}&ndash;
+                {firstIndex + visiblePosts.length} of {filteredPosts.length}
+                {activeCategory ? ` in ${activeCategory}` : " articles"}
+              </p>
+
+              <Stagger
+                // Keyed by page so the reveal replays on navigation instead of
+                // the new page inheriting the previous one's finished state.
+                className="mt-4 grid gap-4 lg:grid-cols-3"
+                key={`${activeCategory ?? "all"}-${currentPage}`}
+              >
+                {visiblePosts.map((post) => (
+                  <PostCard key={post.slug} post={post} />
+                ))}
+              </Stagger>
+
+              <Pagination
+                className="mt-12"
+                currentPage={currentPage}
+                hrefForPage={hrefForPage}
+                label="Articles"
+                totalPages={totalPages}
+              />
+            </>
           ) : (
             <div className="mt-10">
               <EmptyState

@@ -13,6 +13,12 @@ type HubSpotFormProps = {
   description?: string;
   compact?: boolean;
   className?: string;
+  /**
+   * Overrides the form id for this instance. Reports mirrored from WordPress
+   * each carry their own HubSpot form, so they submit to that one rather than
+   * the shared NEXT_PUBLIC_HUBSPOT_GUIDE_FORM_ID.
+   */
+  formId?: string;
 };
 
 export function HubSpotForm({
@@ -22,10 +28,11 @@ export function HubSpotForm({
   description,
   compact = false,
   className,
+  formId,
 }: HubSpotFormProps) {
   const config = getHubSpotFormConfig(type);
   const hasPortal = Boolean(config.portalId);
-  const hasFormId = Boolean(config.formId);
+  const hasFormId = Boolean(formId ?? config.formId);
   const generatedId = useId().replace(/:/g, "");
   const fieldPrefix = `${type}-${generatedId}`;
 
@@ -103,7 +110,6 @@ export function HubSpotForm({
           />
         </div>
       ) : null}
-
     </form>
   );
 }

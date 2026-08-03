@@ -1,4 +1,4 @@
-import { normalizeBrand } from "@/lib/content/providers/wordpress";
+import { normalizeBrand } from "@/lib/content/brand";
 import { cn } from "@/lib/utils";
 
 type ArticleProseProps = {

@@ -83,6 +83,24 @@ const salesTeam: TeamMember[] = [
     linkedin: "https://www.linkedin.com/in/andi-ding/",
     photo: "/images/company/team/andi-ding.jpg",
   },
+  {
+    name: "Cody Taduran",
+    title: "Head of Customer Success",
+    linkedin: "https://www.linkedin.com/in/codytaduran/",
+    photo: "/images/company/team/cody-taduran.jpg",
+  },
+  {
+    name: "Alexander Schneider",
+    title: "Senior Account Manager",
+    linkedin: "https://www.linkedin.com/in/alexander-schneider-91a29aaa/",
+    photo: "/images/company/team/alexander-schneider.jpg",
+  },
+  {
+    name: "Michael Gorka",
+    title: "Technical Account Manager",
+    linkedin: "https://www.linkedin.com/in/mpgorka/",
+    photo: "/images/company/team/michael-gorka.jpg",
+  },
 ];
 
 const initials = (name: string) =>

@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ArticleProse } from "@/components/resources/ArticleProse";
+import { StoryLogo } from "@/components/resources/StoryLogo";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { content } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
@@ -61,16 +64,13 @@ export default async function CustomerStoryPage({
       <article className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[0.75fr_1fr] lg:items-start">
           <aside className="border-border bg-card rounded-xl border p-6 shadow-sm lg:sticky lg:top-28">
-            <div className="relative h-12 w-44">
-              <Image
-                alt={`${story.company} logo`}
-                className="object-contain object-left"
-                fill
-                priority
-                sizes="176px"
-                src={story.logo}
-              />
-            </div>
+            <StoryLogo
+              className="h-12 w-44"
+              height={32}
+              priority
+              sizes="176px"
+              story={story}
+            />
             {story.industry ? (
               <Badge className="mt-8" variant="outline">
                 {story.industry}
@@ -81,15 +81,41 @@ export default async function CustomerStoryPage({
                 {story.metric}
               </p>
             ) : null}
-            <blockquote className="body-lg text-muted mt-8">
-              &ldquo;{story.quote}&rdquo;
-            </blockquote>
+            {story.quote ? (
+              <blockquote className="body-lg text-muted mt-8">
+                &ldquo;{story.quote}&rdquo;
+              </blockquote>
+            ) : null}
           </aside>
 
           <div className="border-border bg-card rounded-xl border p-6 shadow-sm lg:p-10">
             <p className="eyebrow text-muted">Readout</p>
             <h2 className="h1 mt-4">The business problem and live signal.</h2>
-            <ArticleProse className="mt-8" html={story.contentHtml} />
+
+            {story.contentHtml ? (
+              <ArticleProse className="mt-8" html={story.contentHtml} />
+            ) : (
+              // Stories mirrored from WordPress live in a gated PDF rather than
+              // on the page, so there is no body to render — show the cover and
+              // send the reader to the download instead of an empty column.
+              <div className="mt-8">
+                <p className="body-lg text-muted">{story.summary}</p>
+                {story.coverImage ? (
+                  <div className="border-border relative mt-8 aspect-[16/9] overflow-hidden rounded-xl border shadow-sm">
+                    <Image
+                      alt=""
+                      className="object-cover"
+                      fill
+                      sizes="(min-width: 1024px) 56vw, 100vw"
+                      src={story.coverImage}
+                    />
+                  </div>
+                ) : null}
+                <Button asChild className="mt-8">
+                  <Link href="/about/contact">Request the full case study</Link>
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </article>

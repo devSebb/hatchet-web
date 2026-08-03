@@ -35,7 +35,10 @@ export function Reveal({
         duration: MOTION_DURATION.base,
         ease: EASE_OUT,
       }}
-      viewport={{ once: true, amount: 0.24 }}
+      // Pixel offset rather than a fraction of the block, for the same reason
+      // as Stagger: a tall block can never satisfy a percentage threshold and
+      // would stay invisible forever.
+      viewport={{ once: true, amount: "some", margin: "0px 0px -48px 0px" }}
       whileInView={{ opacity: 1, y: 0 }}
     >
       {children}

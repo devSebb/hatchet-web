@@ -89,7 +89,7 @@ export const verticals = [
     slug: "market-research-agencies",
     label: "Market Research Agencies",
     href: "/who-we-serve/market-research-agencies",
-    title: "Defensible Data for Every Client Deck.",
+    title: "Dependable Data for Every Client Deck.",
     subtitle:
       "Verified streaming and social data from one source avoids stitching five tools together before a deadline. Build competitor comparisons that hold up to client scrutiny.",
     points: [
@@ -132,7 +132,7 @@ export const verticals = [
   },
   {
     slug: "esports-organizers",
-    label: "Esports Organizers",
+    label: "Esports Teams & Organizers",
     href: "/who-we-serve/esports-organizers",
     title: "Show Sponsors Your Event's Appeal.",
     subtitle:

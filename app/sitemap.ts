@@ -48,8 +48,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       route(`/resources/customer-stories/${story.slug}`),
     ),
     ...guides.map((guide) => route(`/resources/guides/${guide.slug}`)),
-    ...pressItems.map((item) =>
-      route(`/resources/press/${item.slug}`, new Date(item.date)),
-    ),
+    // Externally published coverage has no page of its own — see the
+    // generateStaticParams filter in app/resources/press/[slug]/page.tsx.
+    ...pressItems
+      .filter((item) => !item.url)
+      .map((item) =>
+        route(`/resources/press/${item.slug}`, new Date(item.date)),
+      ),
   ];
 }

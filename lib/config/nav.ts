@@ -63,7 +63,7 @@ export const primaryNav: NavItem[] = [
         description: "Add live-streaming intelligence to market research.",
       },
       {
-        label: "Esports Organizers",
+        label: "Esports Teams & Organizers",
         href: "/who-we-serve/esports-organizers",
         description: "Show sponsors your event's appeal with verified data.",
       },
@@ -88,7 +88,7 @@ export const primaryNav: NavItem[] = [
         description: "Read live-streaming and gaming market analysis.",
       },
       {
-        label: "Guides & E-books",
+        label: "Reports & Ebooks",
         href: "/resources/guides",
         description: "Use practical guides for creator and game analytics.",
       },

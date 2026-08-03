@@ -40,6 +40,13 @@ export async function generateMetadata({
   });
 }
 
+/** Used for hand-written guides, which carry no section list of their own. */
+const REPORT_FALLBACK_HIGHLIGHTS = [
+  "Frame the live-streaming market read around decisions.",
+  "Translate creator, game, and audience movement into proof.",
+  "Give stakeholders a repeatable structure for future readouts.",
+];
+
 export default async function GuidePage({ params }: GuidePageProps) {
   const { slug } = await params;
   const guide = await content.getGuide(slug);
@@ -47,6 +54,11 @@ export default async function GuidePage({ params }: GuidePageProps) {
   if (!guide) {
     notFound();
   }
+
+  // Mirrored reports list their own sections; fall back to the generic pitch.
+  const highlights = guide.highlights?.length
+    ? guide.highlights
+    : REPORT_FALLBACK_HIGHLIGHTS;
 
   return (
     <main className="bg-background text-foreground">
@@ -76,14 +88,14 @@ export default async function GuidePage({ params }: GuidePageProps) {
               <Badge variant={guide.gated ? "default" : "outline"}>
                 {guide.gated ? "Form-gated" : "Open access"}
               </Badge>
-              <h2 className="h1 mt-5">What this guide helps teams do.</h2>
+              <h2 className="h1 mt-5">
+                {highlights === REPORT_FALLBACK_HIGHLIGHTS
+                  ? "What this guide helps teams do."
+                  : "What's inside."}
+              </h2>
               <p className="body-lg text-muted mt-5">{guide.summary}</p>
               <ul className="mt-8 grid gap-3">
-                {[
-                  "Frame the live-streaming market read around decisions.",
-                  "Translate creator, game, and audience movement into proof.",
-                  "Give stakeholders a repeatable structure for future readouts.",
-                ].map((item) => (
+                {highlights.map((item) => (
                   <li className="flex gap-3 text-sm" key={item}>
                     <span
                       aria-hidden="true"
@@ -97,7 +109,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </div>
 
           {guide.gated ? (
-            <GuideGate title={guide.title} />
+            <GuideGate formId={guide.hubspotFormId} title={guide.title} />
           ) : (
             <aside className="border-border bg-card rounded-xl border p-6 shadow-sm lg:sticky lg:top-28">
               <p className="eyebrow text-muted">Open guide</p>

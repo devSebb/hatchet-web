@@ -119,7 +119,7 @@ const useCases = [
   },
   {
     icon: Sword,
-    label: "Esports Organizers",
+    label: "Esports Teams & Organizers",
     body: "Viewership, audience demographics, chat reactions: Get everything you need to show partners the value of what you've built.",
     href: "/who-we-serve/esports-organizers",
   },

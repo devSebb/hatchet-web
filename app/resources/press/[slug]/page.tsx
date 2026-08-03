@@ -16,12 +16,21 @@ type PressItemPageProps = {
   }>;
 };
 
+/**
+ * Only items Hatchet publishes itself get a page here. Coverage that lives on
+ * another site links straight out from the index, so generating a detail page
+ * for it would produce a thin stub that just restates the headline.
+ */
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const pressItems = await content.getPressItems();
 
-  return pressItems.map((item) => ({
-    slug: item.slug,
-  }));
+  return pressItems
+    .filter((item) => !item.url)
+    .map((item) => ({
+      slug: item.slug,
+    }));
 }
 
 export async function generateMetadata({
@@ -36,7 +45,9 @@ export async function generateMetadata({
 
   return createMetadata({
     title: item.title,
-    description: item.excerpt,
+    description:
+      item.excerpt ??
+      `${item.title}${item.outlet ? ` — coverage in ${item.outlet}` : ""}.`,
     path: `/resources/press/${item.slug}`,
   });
 }
@@ -64,15 +75,14 @@ export default async function PressItemPage({ params }: PressItemPageProps) {
             </span>
           </div>
           <h2 className="h1 mt-8">Press summary</h2>
-          <p className="body-lg text-muted mt-5">{item.excerpt}</p>
-          <p className="body text-muted mt-6">
-            This press detail route is rendered from the content adapter. It can
-            later expand into full newsroom copy, partner coverage, or a
-            canonical external publication link.
-          </p>
+          {item.excerpt ? (
+            <p className="body-lg text-muted mt-5">{item.excerpt}</p>
+          ) : null}
           {item.url ? (
             <Button asChild className="mt-8">
-              <Link href={item.url}>Open source article</Link>
+              <Link href={item.url} rel="noopener noreferrer" target="_blank">
+                Read on {item.outlet ?? "the publisher"}
+              </Link>
             </Button>
           ) : null}
         </div>

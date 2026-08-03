@@ -715,6 +715,24 @@ function IntelligenceVisual() {
   );
 }
 
+// Sits under point 04's body copy: outlined but unfilled, so it reads as a
+// framed CTA rather than a second card competing with IntelligenceVisual's
+// filled panel opposite. Left-aligned to the copy above it. Default button size
+// on purpose: the `sm` size is h-10, and --spacing-10 is 5rem on this scale,
+// which would render an 80px-tall button.
+function LatestReportCta() {
+  return (
+    <div className="border-border mx-auto mt-5 flex w-fit max-w-full flex-col items-center gap-3 rounded-xl border bg-transparent p-4 text-center">
+      <p className="font-display text-foreground text-xl font-semibold tracking-tight">
+        Download our latest report
+      </p>
+      <Button asChild>
+        <Link href="/resources/guides">Download Here</Link>
+      </Button>
+    </div>
+  );
+}
+
 // ── Visual router ──────────────────────────────────────────────────────────
 //    Point 05 ("lifecycle") is rendered separately as the full orbital widget;
 //    it has no card here.
@@ -820,6 +838,9 @@ export function WhyHatchetPoints({ className }: { className?: string }) {
                           <p className="body text-foreground/90">
                             {point.body}
                           </p>
+                          {point.visual.kind === "intelligence" ? (
+                            <LatestReportCta />
+                          ) : null}
                         </div>
                         <PointVisualBlock visual={point.visual} />
                       </div>
