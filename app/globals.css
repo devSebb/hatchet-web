@@ -653,6 +653,37 @@
     );
   }
 
+  /* Softens the cut where a continuously drifting card track meets its
+     container edge, so the half-visible card at each end dissolves instead of
+     being guillotined. Pixel-based, unlike the percentage fades above, because
+     the fade has to stay narrower than a card no matter how many are in view —
+     and it collapses to nothing below lg, where a single card is barely wider
+     than the viewport and any fade would dim the card you are actually reading. */
+  .carousel-edge-fade {
+    --carousel-fade: 0px;
+
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black var(--carousel-fade),
+      black calc(100% - var(--carousel-fade)),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black var(--carousel-fade),
+      black calc(100% - var(--carousel-fade)),
+      transparent
+    );
+  }
+
+  @media (min-width: 64rem) {
+    .carousel-edge-fade {
+      --carousel-fade: 56px;
+    }
+  }
+
   .animate-logo-marquee {
     animation: logo-marquee 42s linear infinite;
   }

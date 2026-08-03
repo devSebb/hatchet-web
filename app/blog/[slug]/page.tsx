@@ -3,11 +3,11 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { ArticleProse } from "@/components/resources/ArticleProse";
-import { formatContentDate } from "@/components/resources/ResourceCards";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { Badge } from "@/components/ui/badge";
 import { content } from "@/lib/content";
+import { formatContentDate } from "@/lib/content/format";
 import { createMetadata } from "@/lib/seo";
 
 type BlogPostPageProps = {

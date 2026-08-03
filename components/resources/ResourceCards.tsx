@@ -10,14 +10,7 @@ import type {
 import { StoryLogo } from "@/components/resources/StoryLogo";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
-export function formatContentDate(value: string) {
-  return new Intl.DateTimeFormat("en", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(value));
-}
+import { formatContentDate } from "@/lib/content/format";
 
 export function PostCard({ post }: { post: Post }) {
   return (
@@ -48,8 +41,11 @@ export function PostCard({ post }: { post: Post }) {
             row taller than the rest. The badge gives way with an ellipsis so
             the date — always short — stays intact. */}
         <div className="flex min-h-11 items-center gap-2">
-          <Badge className="min-w-0 shrink text-ellipsis" variant="outline">
-            {post.category}
+          {/* The ellipsis lives on an inner span, not the badge: the badge
+              centres its content, so an over-long label clipped by the badge
+              itself loses characters off both ends rather than trailing off. */}
+          <Badge className="min-w-0 shrink" variant="outline">
+            <span className="truncate">{post.category}</span>
           </Badge>
           <span className="small text-muted shrink-0">
             {formatContentDate(post.publishedAt)}
@@ -170,8 +166,9 @@ export function PressCard({ item }: { item: PressItem }) {
           card taller than its neighbours. */}
       <div className="flex min-h-11 items-center gap-2">
         {item.outlet ? (
-          <Badge className="min-w-0 shrink text-ellipsis" variant="outline">
-            {item.outlet}
+          // See PostCard: the ellipsis has to sit on an inner span.
+          <Badge className="min-w-0 shrink" variant="outline">
+            <span className="truncate">{item.outlet}</span>
           </Badge>
         ) : null}
         <span className="small text-muted shrink-0">

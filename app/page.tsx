@@ -18,6 +18,7 @@ import {
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { Button } from "@/components/ui/button";
+import { BlogCarousel } from "@/components/sections/BlogCarousel";
 import { CircuitDivider } from "@/components/sections/CircuitDivider";
 import { CircuitField } from "@/components/sections/CircuitField";
 import { CreatorLifecycle } from "@/components/sections/CreatorLifecycle";
@@ -26,7 +27,11 @@ import { Hero } from "@/components/sections/Hero";
 import { LogoWall } from "@/components/sections/LogoWall";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
 import { siteConfig } from "@/lib/config/site";
+import { content } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
+
+/** Enough to loop cleanly at four-up without shipping the whole archive. */
+const CAROUSEL_POSTS = 12;
 
 export function generateMetadata(): Metadata {
   return buildMetadata({
@@ -433,7 +438,14 @@ function Plans() {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const latestPosts = [...(await content.getPosts())]
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+    )
+    .slice(0, CAROUSEL_POSTS);
+
   return (
     <main className="bg-background text-foreground">
       {/* Shared navy→white background bleeds from the hero across the divider
@@ -491,6 +503,17 @@ export default function Home() {
       <CircuitDivider />
 
       <Pillars />
+
+      {/* Stays on the paper band with the pillars above it — the cards carry
+          cover art, which reads better on light than against the dark sections
+          below. `pt-0` only lands below lg: it cannot override the component's
+          own `lg:py-20`, since tailwind-merge resolves each variant separately.
+          That is deliberate — on phones the pillars' bottom padding is already
+          the whole gap, while desktop wants the extra air. */}
+      <BlogCarousel
+        className="surface-paper bg-background text-foreground pt-0 pb-28 lg:pb-36"
+        posts={latestPosts}
+      />
 
       <CreatorLifecycle />
 

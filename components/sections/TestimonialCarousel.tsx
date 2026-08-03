@@ -191,7 +191,10 @@ export function TestimonialCarousel({
           </div>
         </div>
 
-        <div className="mt-5 flex gap-2">
+        {/* Wraps because each dot is a 44px minimum tap target: ten of them on
+            one line is ~600px, which pushed the whole page into horizontal
+            scroll on any phone. */}
+        <div className="mt-5 flex flex-wrap gap-2">
           {testimonials.map((testimonial, index) => (
             <button
               aria-label={`Show testimonial ${index + 1} from ${testimonial.company}`}
