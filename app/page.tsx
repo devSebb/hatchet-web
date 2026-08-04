@@ -504,17 +504,6 @@ export default async function Home() {
 
       <Pillars />
 
-      {/* Stays on the paper band with the pillars above it — the cards carry
-          cover art, which reads better on light than against the dark sections
-          below. `pt-0` only lands below lg: it cannot override the component's
-          own `lg:py-20`, since tailwind-merge resolves each variant separately.
-          That is deliberate — on phones the pillars' bottom padding is already
-          the whole gap, while desktop wants the extra air. */}
-      <BlogCarousel
-        className="surface-paper bg-background text-foreground pt-0 pb-28 lg:pb-36"
-        posts={latestPosts}
-      />
-
       <CreatorLifecycle />
 
       <WhyHatchet />
@@ -547,6 +536,13 @@ export default async function Home() {
         }}
         title="Full picture. Verified data. Gaming expertise."
         variant="featured"
+      />
+
+      {/* Its own paper band at the foot of the page — the cards carry cover art,
+          which reads better on light than against the dark CTA above it. */}
+      <BlogCarousel
+        className="surface-paper bg-background text-foreground"
+        posts={latestPosts}
       />
     </main>
   );
