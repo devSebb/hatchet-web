@@ -1,68 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import type {
-  CustomerStory,
-  Guide,
-  Post,
-  PressItem,
-} from "@/lib/content/types";
+import type { CustomerStory, Guide, PressItem } from "@/lib/content/types";
 import { StoryLogo } from "@/components/resources/StoryLogo";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatContentDate } from "@/lib/content/format";
 
-export function PostCard({ post }: { post: Post }) {
-  return (
-    <Link
-      // `flex h-full flex-col` is load-bearing twice over. An <a> is inline by
-      // default, and an inline box with a border fragments into one piece per
-      // line box — as a direct grid child it would be blockified, but <Stagger>
-      // wraps each card in a motion div, so the card is no longer the grid item.
-      // That same wrapper is what stretches to the row, so `h-full` is what
-      // makes every card fill its row rather than shrink to its own content.
-      className="group border-border bg-card hover:border-signal/60 focus-visible:ring-ring/50 flex h-full flex-col overflow-hidden rounded-xl border shadow-sm transition-[border-color,transform] duration-(--dur-base) outline-none hover:-translate-y-1 focus-visible:ring-3"
-      href={`/blog/${post.slug}`}
-    >
-      {post.coverImage ? (
-        <div className="border-border relative aspect-[16/9] shrink-0 border-b">
-          <Image
-            alt=""
-            className="object-cover"
-            fill
-            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-            src={post.coverImage}
-          />
-        </div>
-      ) : null}
-      <div className="flex flex-1 flex-col p-5">
-        {/* One fixed line, never wrapped: at narrow widths a long category name
-            plus the date exceeds the card, and wrapping it made those cards a
-            row taller than the rest. The badge gives way with an ellipsis so
-            the date — always short — stays intact. */}
-        <div className="flex min-h-11 items-center gap-2">
-          {/* The ellipsis lives on an inner span, not the badge: the badge
-              centres its content, so an over-long label clipped by the badge
-              itself loses characters off both ends rather than trailing off. */}
-          <Badge className="min-w-0 shrink" variant="outline">
-            <span className="truncate">{post.category}</span>
-          </Badge>
-          <span className="small text-muted shrink-0">
-            {formatContentDate(post.publishedAt)}
-          </span>
-        </div>
-        {/* Clamped so a long title or excerpt cannot push one row taller than
-            the rest — the grid sizes every row to its tallest card. */}
-        <h2 className="h3 mt-4 line-clamp-2 min-h-[2lh] group-hover:underline group-hover:underline-offset-4">
-          {post.title}
-        </h2>
-        <p className="body text-muted mt-4 line-clamp-3 min-h-[3lh]">
-          {post.excerpt}
-        </p>
-      </div>
-    </Link>
-  );
-}
+/** PostCard lives in ./PostCard — see the note at the top of that file. */
 
 export function CustomerStoryCard({ story }: { story: CustomerStory }) {
   const [metricFigure, ...metricLabelParts] = story.metric

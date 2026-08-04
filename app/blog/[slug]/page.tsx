@@ -49,6 +49,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
+  // WordPress stamps `modified` on any edit, down to a typo fix minutes after
+  // publishing, so showing it verbatim would put "updated" on almost every
+  // article. Only a revision on a later day is worth telling a reader about.
+  const revisedAt =
+    post.updatedAt &&
+    post.updatedAt.slice(0, 10) > post.publishedAt.slice(0, 10)
+      ? post.updatedAt
+      : null;
+
   return (
     <main className="bg-background text-foreground">
       <PageHeader
@@ -59,20 +68,40 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <article className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto w-full max-w-4xl">
-          <div className="flex flex-wrap items-center gap-3">
+          {/* The byline carries what the source article carries: who wrote it,
+              when it ran, how long it takes, and — only when it is genuinely a
+              later revision — when it was last revised. */}
+          <div className="border-border flex flex-wrap items-center gap-x-3 gap-y-2 border-b pb-6">
             <Badge variant="outline">{post.category}</Badge>
-            <span className="small text-muted">
-              {formatContentDate(post.publishedAt)}
-            </span>
             {post.author ? (
-              <span className="small text-muted">By {post.author.name}</span>
+              <span className="small text-foreground font-semibold">
+                {post.author.name}
+              </span>
+            ) : null}
+            <time className="small text-muted" dateTime={post.publishedAt}>
+              {formatContentDate(post.publishedAt)}
+            </time>
+            {post.readingMinutes ? (
+              <>
+                <span aria-hidden="true" className="text-muted/50 text-xs">
+                  &bull;
+                </span>
+                <span className="small text-muted">
+                  {post.readingMinutes} min read
+                </span>
+              </>
+            ) : null}
+            {revisedAt ? (
+              <time className="small text-muted/80" dateTime={revisedAt}>
+                (updated {formatContentDate(revisedAt)})
+              </time>
             ) : null}
           </div>
 
           {post.coverImage ? (
             <div className="border-border relative mt-8 aspect-[16/9] overflow-hidden rounded-xl border shadow-sm">
               <Image
-                alt=""
+                alt={post.coverImageAlt ?? ""}
                 className="object-cover"
                 fill
                 priority
@@ -85,12 +114,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <ArticleProse className="mt-10" html={post.contentHtml} />
 
           {post.tags.length ? (
-            <div className="mt-10 flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
-              ))}
+            <div className="border-border mt-10 border-t pt-6">
+              <p className="eyebrow text-muted">Topics</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <Badge key={tag} variant="secondary">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
             </div>
           ) : null}
         </div>

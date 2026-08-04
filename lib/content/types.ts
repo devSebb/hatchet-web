@@ -18,7 +18,13 @@ export interface Post extends Mirrored {
   category: string;
   tags: string[];
   coverImage?: string;
+  /** mirrored — alt text from the WordPress media library. */
+  coverImageAlt?: string;
   publishedAt: string;
+  /** mirrored — last edit on WordPress, ISO 8601. Absent when never edited. */
+  updatedAt?: string;
+  /** mirrored — Yoast's reading estimate, in whole minutes. */
+  readingMinutes?: number;
   author?: {
     name: string;
   };
@@ -64,7 +70,23 @@ export interface Guide extends Mirrored {
   highlights?: string[];
   /** mirrored — publication date, ISO 8601. */
   publishedAt?: string;
+  /**
+   * mirrored — which shelf the report belongs to on the index. WordPress has no
+   * taxonomy for this (reports are ordinary Pages), so the sync script reads it
+   * off the title; see SERIES_OVERRIDES there for the exceptions. Absent on the
+   * hand-written fixtures, which the index treats as "focused".
+   */
+  series?: GuideSeries;
+  /**
+   * mirrored — the year the report *covers*, which is not always the year it
+   * shipped: the 2025 yearly report went up in January 2026.
+   */
+  year?: number;
+  /** mirrored — 1-4 on the quarterly series, absent on every other. */
+  quarter?: number;
 }
+
+export type GuideSeries = "quarterly" | "yearly" | "focused";
 
 export interface PressItem {
   slug: string;

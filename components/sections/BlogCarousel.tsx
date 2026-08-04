@@ -201,7 +201,7 @@ export function BlogCarousel({
             <h2 className="h1 mt-4">{title}</h2>
           </div>
           <div className="flex items-center gap-2">
-            <Button asChild className="mr-2" variant="outline">
+            <Button asChild className="mr-2">
               <Link href={viewAllHref}>All articles</Link>
             </Button>
             <Button

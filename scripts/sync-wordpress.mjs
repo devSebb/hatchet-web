@@ -72,6 +72,44 @@ function isLocalisedDuplicate(slug) {
   return slug.includes("japan-version") || /%[0-9a-f]{2}/i.test(slug);
 }
 
+// ---------------------------------------------------------------------------
+// Report series
+//
+// The index shelves reports by series, and WordPress has no taxonomy to read
+// that from — they are ordinary Pages. It is legible in the titles instead:
+// the quarterlies all carry a "Q1".."Q4", the yearlies all say "Yearly", and
+// what is left is a one-off on a single subject. Classified here rather than at
+// render time so the result lands in guides.json, where a bad call shows up in
+// the sync diff instead of on the page.
+// ---------------------------------------------------------------------------
+
+/** Reports the title rule gets wrong. Empty today; every one of the 35 lands. */
+const SERIES_OVERRIDES = new Map([]);
+
+function seriesFor(slug, title) {
+  const override = SERIES_OVERRIDES.get(slug);
+  if (override) return override;
+  if (/\bQ[1-4]\b/i.test(title)) return "quarterly";
+  if (/\byearly\b/i.test(title)) return "yearly";
+  return "focused";
+}
+
+function quarterFor(title) {
+  const match = title.match(/\bQ([1-4])\b/i);
+  return match ? Number(match[1]) : undefined;
+}
+
+/**
+ * The year in the title wins over the publication date: the 2025 yearly report
+ * shipped in January 2026, and shelving it under 2026 would file it beside the
+ * quarter it summarises rather than the year it is about.
+ */
+function yearFor(title, publishedAt) {
+  const inTitle = title.match(/\b(20\d{2})\b/);
+  if (inTitle) return Number(inTitle[1]);
+  return publishedAt ? Number(publishedAt.slice(0, 4)) : undefined;
+}
+
 /** Elementor section headings that appear on every report template. */
 const BOILERPLATE_HEADINGS = [
   /^what you'?ll discover$/i,
@@ -672,6 +710,53 @@ function yoastDescription(item) {
   return description ? normalizeBrand(decodeEntities(description)) : "";
 }
 
+/** Alt text from the media library, for the cover we resolved. */
+function coverAltFor(item) {
+  const alt = embeddedMedia(item)?.alt_text ?? "";
+  return alt.trim() ? normalizeBrand(decodeEntities(alt)).trim() : undefined;
+}
+
+let warnedAboutAuthors = false;
+
+/**
+ * Bylines. The embedded user is the authoritative record, but this WordPress
+ * denies anonymous reads of /users, so _embedded.author carries a 401 body
+ * instead — the same shape embeddedMedia() guards against. Yoast publishes the
+ * same name in the head, unauthenticated, so fall through to it.
+ */
+function authorFor(post) {
+  const entry = post._embedded?.author?.[0] ?? null;
+  const embedded = entry && !entry.code ? entry.name : null;
+
+  if (!embedded && !warnedAboutAuthors) {
+    console.warn(
+      "  ! embedded authors unavailable (WP denies anonymous user reads) — using Yoast bylines",
+    );
+    warnedAboutAuthors = true;
+  }
+
+  const yoast = post.yoast_head_json ?? {};
+  const name =
+    embedded || yoast.author || yoast.twitter_misc?.["Written by"] || "";
+
+  const clean = name ? normalizeBrand(decodeEntities(name)).trim() : "";
+  return { name: clean || "Hatchet" };
+}
+
+/** Yoast's estimate, as whole minutes. Absent when it publishes none. */
+function readingMinutesFor(post) {
+  const raw = post.yoast_head_json?.twitter_misc?.["Est. reading time"] ?? "";
+  const minutes = Number.parseInt(raw.match(/\d+/)?.[0] ?? "", 10);
+  return Number.isFinite(minutes) ? minutes : undefined;
+}
+
+/** Yoast's TZ-suffixed timestamp first, then the raw GMT column. */
+function updatedAtFor(post) {
+  const modified = post.yoast_head_json?.article_modified_time;
+  if (modified) return modified;
+  return post.modified_gmt ? `${post.modified_gmt}Z` : undefined;
+}
+
 /** Falls back to the auto-excerpt, stripped of the Elementor breadcrumb noise. */
 function summaryFor(item) {
   const yoast = yoastDescription(item);
@@ -731,6 +816,8 @@ async function syncReports(pages) {
     const coverImage = await coverFor(page);
 
     const title = cleanTitle(page.title?.rendered ?? "");
+    const publishedAt = page.date_gmt ? `${page.date_gmt}Z` : undefined;
+    const series = seriesFor(page.slug, title);
 
     guides.push({
       slug: page.slug,
@@ -740,12 +827,15 @@ async function syncReports(pages) {
       gated: Boolean(formId),
       hubspotFormId: formId ?? undefined,
       highlights: headingsFrom(html).slice(0, 6),
-      publishedAt: page.date_gmt ? `${page.date_gmt}Z` : undefined,
+      publishedAt,
+      series,
+      year: yearFor(title, publishedAt),
+      quarter: series === "quarterly" ? quarterFor(title) : undefined,
       sourceUrl: page.link?.replace(/^http:/, "https:"),
     });
 
     console.log(
-      `  ${formId ? "gated " : "open  "} ${coverImage ? "img" : "—  "}  ${title}`,
+      `  ${formId ? "gated " : "open  "} ${coverImage ? "img" : "—  "}  ${series.padEnd(9)} ${title}`,
     );
   }
 
@@ -922,16 +1012,17 @@ async function syncPosts(limit) {
         ),
       contentHtml,
       category: categories[0] ? decodeEntities(categories[0].name) : "Insights",
-      tags: tags.slice(0, 6),
+      // WordPress embeds terms in name order, so this is an alphabetical head
+      // rather than a relevance ranking — posts carry 15–40 tags upstream.
+      tags: tags.slice(0, 12),
       coverImage: coverImage ?? undefined,
+      coverImageAlt: coverImage ? coverAltFor(post) : undefined,
       publishedAt: post.date_gmt
         ? `${post.date_gmt}Z`
         : new Date(0).toISOString(),
-      author: post._embedded?.author?.[0]?.name
-        ? {
-            name: normalizeBrand(decodeEntities(post._embedded.author[0].name)),
-          }
-        : { name: "Hatchet" },
+      updatedAt: updatedAtFor(post),
+      readingMinutes: readingMinutesFor(post),
+      author: authorFor(post),
       sourceUrl: post.link?.replace(/^http:/, "https:"),
     });
 

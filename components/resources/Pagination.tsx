@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { MouseEvent } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -10,6 +11,13 @@ type PaginationProps = {
    * callers keep whatever filters they already have in the query string.
    */
   hrefForPage: (page: number) => string;
+  /**
+   * Set by callers that page in the browser rather than by navigating. The
+   * hrefs stay real either way, so the control still reads as a set of links
+   * to a crawler and still works from a pasted URL — this only intercepts the
+   * click so an in-page filter does not lose its state to a round trip.
+   */
+  onPageChange?: (page: number) => void;
   /** Describes what is being paged, e.g. "Reports". Used for the label. */
   label: string;
   className?: string;
@@ -48,6 +56,7 @@ export function Pagination({
   currentPage,
   totalPages,
   hrefForPage,
+  onPageChange,
   label,
   className,
 }: PaginationProps) {
@@ -56,6 +65,13 @@ export function Pagination({
   const items = pageItems(currentPage, totalPages);
   const hasPrevious = currentPage > 1;
   const hasNext = currentPage < totalPages;
+
+  const handle = onPageChange
+    ? (page: number) => (event: MouseEvent) => {
+        event.preventDefault();
+        onPageChange(page);
+      }
+    : () => undefined;
 
   const stepClass =
     "border-border text-foreground hover:border-signal/60 hover:bg-muted-surface focus-visible:ring-ring/50 inline-flex h-10 items-center rounded-lg border px-4 text-sm font-medium no-underline transition-colors outline-none focus-visible:ring-3";
@@ -75,6 +91,7 @@ export function Pagination({
           aria-label="Go to previous page"
           className={stepClass}
           href={hrefForPage(currentPage - 1)}
+          onClick={handle(currentPage - 1)}
           rel="prev"
         >
           Previous
@@ -107,6 +124,7 @@ export function Pagination({
                     : "border-border text-foreground hover:border-signal/60 hover:bg-muted-surface",
                 )}
                 href={hrefForPage(item)}
+                onClick={handle(item)}
               >
                 {item}
               </Link>
@@ -120,6 +138,7 @@ export function Pagination({
           aria-label="Go to next page"
           className={stepClass}
           href={hrefForPage(currentPage + 1)}
+          onClick={handle(currentPage + 1)}
           rel="next"
         >
           Next

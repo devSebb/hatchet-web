@@ -1,97 +1,146 @@
 import type { Metadata } from "next";
 
-import { Reveal } from "@/components/motion/Reveal";
-import { Stagger } from "@/components/motion/Stagger";
 import { EmptyState } from "@/components/resources/EmptyState";
-import { Pagination, resolvePage } from "@/components/resources/Pagination";
-import { GuideCard } from "@/components/resources/ResourceCards";
+import type { ReportCardGuide } from "@/components/resources/ReportCard";
+import {
+  ReportShelves,
+  type ReportShelf,
+} from "@/components/resources/ReportShelves";
 import { CTASection } from "@/components/sections/CTASection";
-import { PageHeader } from "@/components/sections/PageHeader";
 import { content } from "@/lib/content";
+import type { Guide, GuideSeries } from "@/lib/content/types";
 import { createMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
   return createMetadata({
     title: "Reports & Ebooks",
     description:
-      "Download Hatchet guides and practical frameworks for gaming, creator, and live-streaming market intelligence.",
+      "Download Hatchet quarterly, yearly, and focused reports on gaming, creator, and live-streaming market intelligence.",
     path: "/resources/guides",
   });
 }
 
-type GuidesPageProps = {
-  searchParams?: Promise<{
-    page?: string;
-  }>;
-};
+/** The cross-section shelf: enough to fill a row and a half, no more. */
+const LATEST_COUNT = 6;
 
-/** Four rows of three on desktop — a full screen without an endless scroll. */
-const GUIDES_PER_PAGE = 12;
+const SHELF_COPY: Record<GuideSeries, { title: string; description: string }> =
+  {
+    quarterly: {
+      title: "Industry Quarterly Report",
+      description:
+        "Every quarter's read on viewership, platforms, games, and the creators moving them — plus the regional editions.",
+    },
+    yearly: {
+      title: "Industry Yearly Report",
+      description:
+        "The full-year picture: what shifted across live streaming, and what it set up for the year that followed.",
+    },
+    focused: {
+      title: "Focused Report",
+      description:
+        "One subject at a time — a genre, a platform, a category, or a moment worth its own analysis.",
+    },
+  };
 
-export default async function GuidesPage({ searchParams }: GuidesPageProps) {
-  const params = await searchParams;
-  const guides = await content.getGuides();
+/** Shelf order, which is not the order the series happen to appear in. */
+const SERIES_ORDER: GuideSeries[] = ["quarterly", "yearly", "focused"];
 
-  const totalPages = Math.ceil(guides.length / GUIDES_PER_PAGE);
-  const currentPage = resolvePage(params?.page, totalPages);
-  const firstIndex = (currentPage - 1) * GUIDES_PER_PAGE;
-  const visibleGuides = guides.slice(firstIndex, firstIndex + GUIDES_PER_PAGE);
+/**
+ * Drops the fields a cover card never paints — summary, highlights, the form
+ * id — before the list crosses into the browser.
+ */
+function toCard(guide: Guide) {
+  const card: ReportCardGuide = {
+    slug: guide.slug,
+    title: guide.title,
+    coverImage: guide.coverImage,
+    gated: guide.gated,
+    year: guide.year,
+    quarter: guide.quarter,
+    series: guide.series,
+  };
 
-  const hrefForPage = (page: number) =>
-    page > 1 ? `/resources/guides?page=${page}` : "/resources/guides";
+  return card;
+}
+
+/**
+ * Newest first, by what the report covers rather than when it went up. Sorting
+ * by publication date alone interleaves a quarterly with the yearly that
+ * summarises it, and files a January retrospective ahead of the Q4 it is about.
+ */
+function byRecency(a: Guide, b: Guide) {
+  const year = (b.year ?? 0) - (a.year ?? 0);
+  if (year !== 0) return year;
+
+  const quarter = (b.quarter ?? 0) - (a.quarter ?? 0);
+  if (quarter !== 0) return quarter;
+
+  return (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "");
+}
+
+export default async function GuidesPage() {
+  const guides = [...(await content.getGuides())].sort(byRecency);
+
+  const shelves: ReportShelf[] = [];
+
+  if (guides.length) {
+    shelves.push({
+      id: "latest",
+      title: "Latest Reports",
+      description:
+        "The most recent research to land, across every series. Start here if you are not looking for anything in particular.",
+      reports: guides.slice(0, LATEST_COUNT).map(toCard),
+    });
+  }
+
+  for (const series of SERIES_ORDER) {
+    // Fixtures and any pre-classification sync carry no series; they shelve as
+    // focused rather than vanishing from a page that is meant to be the archive.
+    const reports = guides.filter(
+      (guide) => (guide.series ?? "focused") === series,
+    );
+
+    if (!reports.length) {
+      continue;
+    }
+
+    shelves.push({
+      id: series,
+      ...SHELF_COPY[series],
+      reports: reports.map(toCard),
+      filterByYear: true,
+    });
+  }
 
   return (
     <main className="bg-background text-foreground">
-      <PageHeader
-        eyebrow="Reports and ebooks"
-        subtitle="Templates, scorecards, and frameworks for teams turning gaming market movement into repeatable decisions."
-        title="Practical ways to structure the signal."
-      />
+      {/* Deliberately shorter than the shared PageHeader the other routes use,
+          and matching /blog: an archive is a place to start scanning, so the
+          header says what the page is and gets out of the way. It stays on the
+          dark scope so the sticky site header keeps the backdrop its contrast
+          was set against. */}
+      <section className="w-full px-4 pt-6 pb-6 sm:px-6 lg:px-8 lg:pt-8 lg:pb-8">
+        <div className="mx-auto grid w-full max-w-7xl gap-x-10 gap-y-3 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-end">
+          <div>
+            <p className="eyebrow text-muted">Reports and ebooks</p>
+            <h1 className="h2 mt-3">Industry Reports</h1>
+          </div>
+          <p className="body-lg text-muted lg:pb-1">
+            Quarterly and yearly reads on live streaming, plus focused research
+            on the genres, platforms, and categories worth their own analysis.
+          </p>
+        </div>
+      </section>
 
-      <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <section className="surface-paper bg-background text-foreground px-4 pt-[40px] pb-16 sm:px-6 lg:px-8 lg:pt-[48px] lg:pb-24">
         <div className="mx-auto w-full max-w-7xl">
-          <Reveal>
-            <div className="max-w-3xl">
-              <p className="eyebrow text-muted">Guide library</p>
-              <h2 className="h1 mt-4">
-                Frameworks for launches, creators, sponsors, and categories.
-              </h2>
-            </div>
-          </Reveal>
-
-          {guides.length ? (
-            <>
-              <p className="small text-muted mt-8">
-                Showing {firstIndex + 1}&ndash;
-                {firstIndex + visibleGuides.length} of {guides.length} reports
-              </p>
-
-              <Stagger
-                // Keyed by page so the reveal replays on navigation instead of
-                // the new page inheriting the previous one's finished state.
-                className="mt-4 grid gap-4 lg:grid-cols-3"
-                key={currentPage}
-              >
-                {visibleGuides.map((guide) => (
-                  <GuideCard guide={guide} key={guide.slug} />
-                ))}
-              </Stagger>
-
-              <Pagination
-                className="mt-12"
-                currentPage={currentPage}
-                hrefForPage={hrefForPage}
-                label="Reports"
-                totalPages={totalPages}
-              />
-            </>
+          {shelves.length ? (
+            <ReportShelves shelves={shelves} />
           ) : (
-            <div className="mt-10">
-              <EmptyState
-                body="This shelf is ready for the first guide or e-book."
-                title="The guide shelf is ready"
-              />
-            </div>
+            <EmptyState
+              body="This shelf is ready for the first report."
+              title="The report shelf is ready"
+            />
           )}
         </div>
       </section>

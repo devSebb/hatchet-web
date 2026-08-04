@@ -1,5 +1,25 @@
 [
   {
+    "slug": "q2-2026-live-streaming-trends-report",
+    "title": "Q2 2026 Live Streaming Trends Report",
+    "summary": "Discover trends shaping live streaming in Q2 2026, including insights into viewbotting, TikTok Live, and the quarter’s top streamers and games.",
+    "coverImage": "https://streamhatchet.com/wp-content/uploads/2026/07/Screenshot-2026-07-31-at-11.21.17-1536x859.png",
+    "gated": true,
+    "hubspotFormId": "5e74d3c6-56a0-4256-a665-229d4fd5d8d7",
+    "highlights": [
+      "Viewership Analytics",
+      "Counter-Strike Dominates",
+      "2026 World Cup in Streaming",
+      "Meccha Chameleon Hype",
+      "Summer Game Showcase"
+    ],
+    "publishedAt": "2026-07-31T16:40:13Z",
+    "series": "quarterly",
+    "year": 2026,
+    "quarter": 2,
+    "sourceUrl": "https://streamhatchet.com/reports/q2-2026-live-streaming-trends-report/"
+  },
+  {
     "slug": "esports-live-streaming-trends",
     "title": "Esports Live Streaming Trends Report",
     "summary": "Discover the trends shaping esports right now, including the most popular games, the impact of co-streaming, and tools for tracking tournament reach and engagement.",
@@ -13,6 +33,8 @@
       "Key Metrics"
     ],
     "publishedAt": "2026-07-07T19:29:52Z",
+    "series": "focused",
+    "year": 2026,
     "sourceUrl": "https://streamhatchet.com/reports/esports-live-streaming-trends/"
   },
   {
@@ -29,6 +51,9 @@
       "Top Games in Live Streaming"
     ],
     "publishedAt": "2026-04-22T17:37:42Z",
+    "series": "quarterly",
+    "year": 2026,
+    "quarter": 1,
     "sourceUrl": "https://streamhatchet.com/reports/q1-2026-live-streaming-trends-report/"
   },
   {
@@ -46,6 +71,8 @@
       "The Return of Sponsored Content"
     ],
     "publishedAt": "2026-02-19T14:43:18Z",
+    "series": "focused",
+    "year": 2025,
     "sourceUrl": "https://streamhatchet.com/reports/2025-youtube-gaming-live-streaming-trends/"
   },
   {
@@ -64,6 +91,8 @@
       "Need a hand?"
     ],
     "publishedAt": "2026-01-28T11:33:09Z",
+    "series": "yearly",
+    "year": 2025,
     "sourceUrl": "https://streamhatchet.com/reports/2025-yearly-report-in-live-streaming-trends/"
   },
   {
@@ -78,6 +107,8 @@
       "Need a hand?"
     ],
     "publishedAt": "2025-11-18T11:36:31Z",
+    "series": "focused",
+    "year": 2025,
     "sourceUrl": "https://streamhatchet.com/reports/shooter-games-on-live-streaming-mini-report/"
   },
   {
@@ -93,6 +124,9 @@
       "Need a hand?"
     ],
     "publishedAt": "2025-10-22T14:21:03Z",
+    "series": "quarterly",
+    "year": 2025,
+    "quarter": 3,
     "sourceUrl": "https://streamhatchet.com/reports/q3-2025-live-streaming-trends-report/"
   },
   {
@@ -108,6 +142,8 @@
       "Need a hand?"
     ],
     "publishedAt": "2025-10-01T09:45:53Z",
+    "series": "focused",
+    "year": 2025,
     "sourceUrl": "https://streamhatchet.com/reports/influencer-marketing-for-brands-report-2025/"
   },
   {
@@ -119,6 +155,9 @@
     "hubspotFormId": "70adc62e-151e-4f42-937b-e7582c780380",
     "highlights": [],
     "publishedAt": "2025-09-19T07:46:36Z",
+    "series": "quarterly",
+    "year": 2025,
+    "quarter": 2,
     "sourceUrl": "https://streamhatchet.com/reports/japanese-q2-2025-trends-report/"
   },
   {
@@ -130,6 +169,8 @@
     "hubspotFormId": "214ba3c8-77a0-42d6-b36f-9b01fe2e9073",
     "highlights": [],
     "publishedAt": "2025-08-19T13:41:44Z",
+    "series": "focused",
+    "year": 2025,
     "sourceUrl": "https://streamhatchet.com/reports/crypto-on-live-streaming-mini-report/"
   },
   {
@@ -145,6 +186,8 @@
       "Grow With Us"
     ],
     "publishedAt": "2025-07-30T12:21:01Z",
+    "series": "focused",
+    "year": 2025,
     "sourceUrl": "https://streamhatchet.com/reports/free-fighting-game-live-streaming-report-download-stream-hatchet/"
   },
   {
@@ -161,6 +204,9 @@
       "Grow With Us"
     ],
     "publishedAt": "2025-07-22T16:09:11Z",
+    "series": "quarterly",
+    "year": 2025,
+    "quarter": 2,
     "sourceUrl": "https://streamhatchet.com/reports/q2-2025-live-streaming-trends-report/"
   },
   {
@@ -175,6 +221,8 @@
       "If you’re curious, check out our other reports…"
     ],
     "publishedAt": "2025-05-21T10:39:51Z",
+    "series": "focused",
+    "year": 2025,
     "sourceUrl": "https://streamhatchet.com/reports/expert-influencer-marketing-tips-free-download/"
   },
   {
@@ -189,6 +237,8 @@
       "More reports for you."
     ],
     "publishedAt": "2025-04-24T07:56:56Z",
+    "series": "focused",
+    "year": 2025,
     "sourceUrl": "https://streamhatchet.com/reports/brand-performance-report/"
   },
   {
@@ -203,6 +253,8 @@
       "More reports for you."
     ],
     "publishedAt": "2025-04-23T12:33:34Z",
+    "series": "focused",
+    "year": 2025,
     "sourceUrl": "https://streamhatchet.com/reports/industry-performance-report/"
   },
   {
@@ -216,6 +268,9 @@
       "What's inside?"
     ],
     "publishedAt": "2025-04-23T10:56:25Z",
+    "series": "quarterly",
+    "year": 2025,
+    "quarter": 1,
     "sourceUrl": "https://streamhatchet.com/reports/q1-2025-live-streaming-trends-report/"
   },
   {
@@ -230,6 +285,8 @@
       "More reports for you."
     ],
     "publishedAt": "2025-04-22T15:34:47Z",
+    "series": "focused",
+    "year": 2025,
     "sourceUrl": "https://streamhatchet.com/reports/creator-performance-report/"
   },
   {
@@ -247,6 +304,8 @@
       "Some key Takeaways​"
     ],
     "publishedAt": "2025-01-23T14:37:11Z",
+    "series": "yearly",
+    "year": 2024,
     "sourceUrl": "https://streamhatchet.com/reports/2024-yearly-report-in-live-streaming-trends/"
   },
   {
@@ -264,6 +323,9 @@
       "Access Data That Drives Decisions"
     ],
     "publishedAt": "2024-11-19T14:44:47Z",
+    "series": "quarterly",
+    "year": 2024,
+    "quarter": 3,
     "sourceUrl": "https://streamhatchet.com/reports/q3-2024-live-streaming-trend-report/"
   },
   {
@@ -277,6 +339,8 @@
       "What to expect from our report"
     ],
     "publishedAt": "2024-10-23T09:12:01Z",
+    "series": "focused",
+    "year": 2024,
     "sourceUrl": "https://streamhatchet.com/reports/political-streaming-report-2024/"
   },
   {
@@ -290,6 +354,8 @@
       "What's inside?"
     ],
     "publishedAt": "2024-08-13T15:16:57Z",
+    "series": "focused",
+    "year": 2024,
     "sourceUrl": "https://streamhatchet.com/viewership-correlation-report/"
   },
   {
@@ -303,6 +369,9 @@
       "Learn more about the trends in the European Live-Streaming Market"
     ],
     "publishedAt": "2024-08-13T15:10:41Z",
+    "series": "quarterly",
+    "year": 2023,
+    "quarter": 1,
     "sourceUrl": "https://streamhatchet.com/q1-2023-european-live-streaming-trends-report/"
   },
   {
@@ -316,6 +385,8 @@
       "What's inside?"
     ],
     "publishedAt": "2024-08-12T16:15:36Z",
+    "series": "yearly",
+    "year": 2022,
     "sourceUrl": "https://streamhatchet.com/2022-yearly-live-streaming-trends-report/"
   },
   {
@@ -330,6 +401,8 @@
       "Check out our other insights"
     ],
     "publishedAt": "2024-08-08T15:03:35Z",
+    "series": "focused",
+    "year": 2024,
     "sourceUrl": "https://streamhatchet.com/reports/2024-gsq-sh-live-streaming-social-trends-report/"
   },
   {
@@ -343,6 +416,8 @@
       "A little teaser:"
     ],
     "publishedAt": "2024-08-08T14:36:26Z",
+    "series": "yearly",
+    "year": 2023,
     "sourceUrl": "https://streamhatchet.com/reports/2023-yearly-live-streaming-trends-report/"
   },
   {
@@ -356,6 +431,9 @@
       "Don't miss"
     ],
     "publishedAt": "2024-08-08T14:21:38Z",
+    "series": "quarterly",
+    "year": 2023,
+    "quarter": 1,
     "sourceUrl": "https://streamhatchet.com/reports/q1-2023-live-streaming-trends-report/"
   },
   {
@@ -369,6 +447,9 @@
       "Learn more about the trends in the European Live-Streaming Market:"
     ],
     "publishedAt": "2024-08-08T13:59:10Z",
+    "series": "quarterly",
+    "year": 2023,
+    "quarter": 2,
     "sourceUrl": "https://streamhatchet.com/reports/q2-2023-live-streaming-trends-report/"
   },
   {
@@ -382,6 +463,9 @@
       "Learn more about the trends in the European Live-Streaming Market:"
     ],
     "publishedAt": "2024-08-08T13:44:14Z",
+    "series": "quarterly",
+    "year": 2023,
+    "quarter": 2,
     "sourceUrl": "https://streamhatchet.com/q2-2023-european-live-streaming-trends-report/"
   },
   {
@@ -395,6 +479,9 @@
       "You don't want to miss"
     ],
     "publishedAt": "2024-08-07T13:23:39Z",
+    "series": "quarterly",
+    "year": 2023,
+    "quarter": 3,
     "sourceUrl": "https://streamhatchet.com/reports/q3-2023-live-streaming-trends-report/"
   },
   {
@@ -408,6 +495,9 @@
       "Learn more about the trends in the Asian Live-Streaming Market:"
     ],
     "publishedAt": "2024-08-07T13:00:59Z",
+    "series": "quarterly",
+    "year": 2023,
+    "quarter": 4,
     "sourceUrl": "https://streamhatchet.com/q4-2023-asian-live-streaming-trends-report/"
   },
   {
@@ -421,6 +511,9 @@
       "日本のライブストリーミング市場の動向について詳しくはこちら:"
     ],
     "publishedAt": "2024-08-07T12:27:36Z",
+    "series": "quarterly",
+    "year": 2023,
+    "quarter": 4,
     "sourceUrl": "https://streamhatchet.com/q4-2023-japanese-live-streaming-trends-report-2/"
   },
   {
@@ -434,6 +527,9 @@
       "You don't want to miss"
     ],
     "publishedAt": "2024-08-07T07:41:43Z",
+    "series": "quarterly",
+    "year": 2024,
+    "quarter": 1,
     "sourceUrl": "https://streamhatchet.com/reports/q1-2024-live-streaming-trends-report/"
   },
   {
@@ -447,6 +543,8 @@
       "Highlights from the MOBILE report"
     ],
     "publishedAt": "2024-07-25T17:38:41Z",
+    "series": "focused",
+    "year": 2024,
     "sourceUrl": "https://streamhatchet.com/mobile-trends-report/"
   },
   {
@@ -459,6 +557,9 @@
       "You don't want to miss"
     ],
     "publishedAt": "2024-07-24T08:35:43Z",
+    "series": "quarterly",
+    "year": 2024,
+    "quarter": 2,
     "sourceUrl": "https://streamhatchet.com/reports/q2-2024-live-streaming-trends-report/"
   },
   {
@@ -472,6 +573,9 @@
       "Highlights from the japanese report"
     ],
     "publishedAt": "2024-06-04T14:04:08Z",
+    "series": "quarterly",
+    "year": 2024,
+    "quarter": 1,
     "sourceUrl": "https://streamhatchet.com/reports/japanese-q1-2024-trends-report/"
   }
 ]

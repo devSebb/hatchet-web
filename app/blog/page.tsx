@@ -1,26 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
-import { Reveal } from "@/components/motion/Reveal";
-import { Stagger } from "@/components/motion/Stagger";
-import { EmptyState } from "@/components/resources/EmptyState";
-import { Pagination, resolvePage } from "@/components/resources/Pagination";
-import { PostCard } from "@/components/resources/ResourceCards";
+import { BlogExplorer } from "@/components/resources/BlogExplorer";
+import type { PostCardPost } from "@/components/resources/PostCard";
 import { CTASection } from "@/components/sections/CTASection";
-import { PageHeader } from "@/components/sections/PageHeader";
-import { Badge } from "@/components/ui/badge";
 import { content } from "@/lib/content";
+import type { Post } from "@/lib/content/types";
 import { createMetadata } from "@/lib/seo";
-
-type BlogPageProps = {
-  searchParams?: Promise<{
-    category?: string;
-    page?: string;
-  }>;
-};
-
-/** Four rows of three on desktop — a full screen without an endless scroll. */
-const POSTS_PER_PAGE = 12;
 
 export function generateMetadata(): Metadata {
   return createMetadata({
@@ -31,112 +16,70 @@ export function generateMetadata(): Metadata {
   });
 }
 
-export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const params = await searchParams;
+/**
+ * Drops `contentHtml` before the list crosses into the browser. The full posts
+ * are ~840KB of article markup; what a card paints is ~32KB.
+ */
+function toCard(post: Post) {
+  const card: PostCardPost = {
+    slug: post.slug,
+    title: post.title,
+    excerpt: post.excerpt,
+    category: post.category,
+    tags: post.tags,
+    coverImage: post.coverImage,
+    coverImageAlt: post.coverImageAlt,
+    publishedAt: post.publishedAt,
+    readingMinutes: post.readingMinutes,
+    author: post.author,
+  };
+
+  return card;
+}
+
+export default async function BlogPage() {
   const posts = [...(await content.getPosts())].sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
-  const categories = Array.from(new Set(posts.map((post) => post.category)));
-  const activeCategory = params?.category;
-  const filteredPosts = activeCategory
-    ? posts.filter((post) => post.category === activeCategory)
-    : posts;
-
-  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
-  const currentPage = resolvePage(params?.page, totalPages);
-  const firstIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const visiblePosts = filteredPosts.slice(
-    firstIndex,
-    firstIndex + POSTS_PER_PAGE,
-  );
-
-  // Paging keeps the active category; switching category resets to page 1.
-  const hrefForPage = (page: number) => {
-    const query = new URLSearchParams();
-    if (activeCategory) query.set("category", activeCategory);
-    if (page > 1) query.set("page", String(page));
-    const suffix = query.toString();
-    return suffix ? `/blog?${suffix}` : "/blog";
-  };
+  // Alphabetical, not first-appearance: derived from a date-sorted list, the
+  // chip order otherwise reshuffles itself on every content sync and gives a
+  // reader no way to predict where a topic sits.
+  const categories = Array.from(
+    new Set(posts.map((post) => post.category)),
+  ).sort((a, b) => a.localeCompare(b));
 
   return (
     <main className="bg-background text-foreground">
-      <PageHeader
-        eyebrow="Blog and trends"
-        subtitle="Market reads on creator velocity, game launches, esports audiences, brand planning, and the platform shifts shaping live streaming."
-        title="Analysis for the teams reading gaming in motion."
-      />
+      {/* Deliberately shorter than the shared PageHeader the other routes use.
+          An index is a place to start scanning, so the header states what the
+          page is and gets out of the way — the first cards are on screen
+          without a scroll. It stays on the dark scope so the sticky site header
+          keeps the backdrop its contrast was set against. */}
+      <section className="w-full px-4 pt-6 pb-6 sm:px-6 lg:px-8 lg:pt-8 lg:pb-8">
+        {/* Two columns from lg, so the subtitle fills the space a single
+            left-aligned column leaves empty instead of adding two more lines of
+            height to the band above the grid. */}
+        <div className="mx-auto grid w-full max-w-7xl gap-x-10 gap-y-3 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-end">
+          <div>
+            <p className="eyebrow text-muted">Blog and trends</p>
+            {/* Set at h2 scale: this is an index, and the display size the other
+                routes use costs a third of the fold before a reader sees a
+                single article. */}
+            <h1 className="h2 mt-3">
+              Analysis for the teams reading gaming in motion.
+            </h1>
+          </div>
+          <p className="body-lg text-muted lg:pb-1">
+            Market reads on creator velocity, game launches, esports audiences,
+            brand planning, and the platform shifts shaping live streaming.
+          </p>
+        </div>
+      </section>
 
-      <section className="surface-paper bg-background text-foreground px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <section className="surface-paper bg-background text-foreground px-4 pt-[40px] pb-16 sm:px-6 lg:px-8 lg:pt-[48px] lg:pb-24">
         <div className="mx-auto w-full max-w-7xl">
-          <Reveal>
-            <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="eyebrow text-muted">Filter by category</p>
-                <h2 className="h1 mt-4">Find the signal by topic.</h2>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Badge
-                  asChild
-                  variant={!activeCategory ? "default" : "outline"}
-                >
-                  <Link href="/blog">All</Link>
-                </Badge>
-                {categories.map((category) => (
-                  <Badge
-                    asChild
-                    key={category}
-                    variant={
-                      activeCategory === category ? "default" : "outline"
-                    }
-                  >
-                    <Link
-                      href={`/blog?category=${encodeURIComponent(category)}`}
-                    >
-                      {category}
-                    </Link>
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-
-          {filteredPosts.length ? (
-            <>
-              <p className="small text-muted mt-8">
-                Showing {firstIndex + 1}&ndash;
-                {firstIndex + visiblePosts.length} of {filteredPosts.length}
-                {activeCategory ? ` in ${activeCategory}` : " articles"}
-              </p>
-
-              <Stagger
-                // Keyed by page so the reveal replays on navigation instead of
-                // the new page inheriting the previous one's finished state.
-                className="mt-4 grid gap-4 lg:grid-cols-3"
-                key={`${activeCategory ?? "all"}-${currentPage}`}
-              >
-                {visiblePosts.map((post) => (
-                  <PostCard key={post.slug} post={post} />
-                ))}
-              </Stagger>
-
-              <Pagination
-                className="mt-12"
-                currentPage={currentPage}
-                hrefForPage={hrefForPage}
-                label="Articles"
-                totalPages={totalPages}
-              />
-            </>
-          ) : (
-            <div className="mt-10">
-              <EmptyState
-                body="This topic is ready for the first Hatchet market read."
-                title="This topic is ready for a market read"
-              />
-            </div>
-          )}
+          <BlogExplorer categories={categories} posts={posts.map(toCard)} />
         </div>
       </section>
 

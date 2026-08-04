@@ -684,6 +684,31 @@
     }
   }
 
+  /* The report shelves' version. Right edge only: those tracks start parked at
+     zero rather than drifting, so a left fade would dim the first card — the
+     one the reader is meant to start on — for the whole time the rail sits
+     unscrolled. Off below lg, where the track is nearly one card wide. */
+  .rail-edge-fade {
+    --rail-fade: 0px;
+
+    -webkit-mask-image: linear-gradient(
+      to right,
+      black calc(100% - var(--rail-fade)),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      black calc(100% - var(--rail-fade)),
+      transparent
+    );
+  }
+
+  @media (min-width: 64rem) {
+    .rail-edge-fade {
+      --rail-fade: 48px;
+    }
+  }
+
   .animate-logo-marquee {
     animation: logo-marquee 42s linear infinite;
   }
