@@ -37,8 +37,10 @@ pnpm build
 Copy `.env.example` to `.env.local` and fill values as needed:
 
 ```bash
-CONTENT_SOURCE=mock
-WORDPRESS_GRAPHQL_URL=
+# Optional. Unset (the default) serves the real WordPress snapshot; "mock"
+# serves the hand-written fixtures in lib/content/fixtures/.
+CONTENT_SOURCE=
+WORDPRESS_BASIC_AUTH=
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_HUBSPOT_PORTAL_ID=
 NEXT_PUBLIC_HUBSPOT_BOOK_DEMO_FORM_ID=
@@ -56,12 +58,14 @@ All content-driven routes read through `lib/content/index.ts`:
 
 ```ts
 export const content =
-  process.env.CONTENT_SOURCE === "wordpress" ? wordpressProvider : mockProvider;
+  process.env.CONTENT_SOURCE === "mock" ? mockProvider : wordpressProvider;
 ```
 
-The mock provider returns local fixtures for posts, customer stories, guides, and press. Routes should never import fixtures directly.
+The WordPress provider is the default and serves the snapshot committed under `lib/content/generated/`, refreshed with `pnpm sync:wp`. It needs no network access or env vars at build time, so no deploy can lose the real articles by omitting configuration.
 
-The WordPress provider is intentionally stubbed. In a later phase it will call WPGraphQL, normalize the legacy brand language on the way out, and return the same `ContentProvider` interfaces. The current `normalizeBrand()` helper replaces `Stream Hatchet` with `Hatchet` for rendered HTML while skipping lowercase URL strings such as `streamhatchet.com`.
+The mock provider returns local fixtures for posts, customer stories, guides, and press, and is opt-in with `CONTENT_SOURCE=mock`. Routes should never import fixtures directly.
+
+`normalizeBrand()` replaces `Stream Hatchet` with `Hatchet` for rendered HTML while skipping lowercase URL strings such as `streamhatchet.com`.
 
 ## SEO And Forms
 
