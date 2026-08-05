@@ -141,14 +141,33 @@ const THREADS: Array<{
   status: keyof typeof STATUS;
   time: string;
 }> = [
-  { to: "Tier 1 · EMEA (24)", subject: "Broadcast: patch 2.4 embargo lift", status: "sent", time: "18m" },
-  { to: "Pixelhollow", subject: "Re: sponsored VOD deliverables", status: "replied", time: "1h" },
-  { to: "duskrunner@…", subject: "Creator kit — asset drop", status: "failed", time: "3h" },
+  {
+    to: "Tier 1 · EMEA (24)",
+    subject: "Broadcast: patch 2.4 embargo lift",
+    status: "sent",
+    time: "18m",
+  },
+  {
+    to: "Pixelhollow",
+    subject: "Re: sponsored VOD deliverables",
+    status: "replied",
+    time: "1h",
+  },
+  {
+    to: "duskrunner@…",
+    subject: "Creator kit — asset drop",
+    status: "failed",
+    time: "3h",
+  },
 ];
 
 export function MessagingInbox() {
   return (
-    <VisualShell contentClassName="p-[12px]" label="Messaging" meta="Gmail synced">
+    <VisualShell
+      contentClassName="p-[12px]"
+      label="Messaging"
+      meta="Gmail synced"
+    >
       <div className="border-border bg-background/70 rounded-lg border p-[12px]">
         <div className="flex items-center gap-[8px]">
           <span
@@ -170,8 +189,9 @@ export function MessagingInbox() {
         <p className="border-border bg-card text-muted mt-[10px] rounded-lg rounded-tl-sm border px-[12px] py-[8px] text-[12px]">
           New codes to share! You&rsquo;ve been assigned{" "}
           <span className="text-foreground font-mono font-bold">NOVA15</span>{" "}
-          and <span className="text-foreground font-mono font-bold">NOVA20</span>{" "}
-          — share them with your followers.
+          and{" "}
+          <span className="text-foreground font-mono font-bold">NOVA20</span> —
+          share them with your followers.
         </p>
         <p className="bg-signal/10 text-foreground mt-[8px] ml-[24px] rounded-lg rounded-br-sm px-[12px] py-[8px] text-[12px]">
           Codes are live in tonight&rsquo;s stream 🔥
@@ -219,10 +239,34 @@ export function MessagingInbox() {
 /* ------------------------------ Promo codes ---------------------------- */
 
 const CODES = [
-  { code: "NOVA15", creator: "Novastrike", redemptions: "1,284", share: 1, roi: "5.1x" },
-  { code: "PIXEL10", creator: "Pixelhollow", redemptions: "946", share: 0.74, roi: "4.2x" },
-  { code: "DUSK20", creator: "Duskrunner", redemptions: "612", share: 0.48, roi: "3.4x" },
-  { code: "MIRA15", creator: "Miravex", redemptions: "387", share: 0.3, roi: "2.6x" },
+  {
+    code: "NOVA15",
+    creator: "Novastrike",
+    redemptions: "1,284",
+    share: 1,
+    roi: "5.1x",
+  },
+  {
+    code: "PIXEL10",
+    creator: "Pixelhollow",
+    redemptions: "946",
+    share: 0.74,
+    roi: "4.2x",
+  },
+  {
+    code: "DUSK20",
+    creator: "Duskrunner",
+    redemptions: "612",
+    share: 0.48,
+    roi: "3.4x",
+  },
+  {
+    code: "MIRA15",
+    creator: "Miravex",
+    redemptions: "387",
+    share: 0.3,
+    roi: "2.6x",
+  },
 ];
 
 const codeBankTotals = [

@@ -18,9 +18,7 @@ function isAuthorized(request: NextRequest): boolean {
     const username = decodedCredentials.slice(0, separatorIndex);
     const password = decodedCredentials.slice(separatorIndex + 1);
 
-    return (
-      username === BASIC_AUTH_USERNAME && password === BASIC_AUTH_PASSWORD
-    );
+    return username === BASIC_AUTH_USERNAME && password === BASIC_AUTH_PASSWORD;
   } catch {
     return false;
   }

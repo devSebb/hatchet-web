@@ -43,15 +43,12 @@ export function HeroVideo({
   // Force the muted *property* on mount: the JSX `muted` attribute alone is
   // unreliable in React, and browsers only allow programmatic play() (which the
   // observer triggers without a click) on a muted video.
-  const setVideoRef = useCallback(
-    (el: HTMLVideoElement | null | undefined) => {
-      videoRef.current = el ?? null;
-      if (el) {
-        el.muted = true;
-      }
-    },
-    [],
-  );
+  const setVideoRef = useCallback((el: HTMLVideoElement | null | undefined) => {
+    videoRef.current = el ?? null;
+    if (el) {
+      el.muted = true;
+    }
+  }, []);
 
   // Keep the button icon in sync with the real play state.
   useEffect(() => {

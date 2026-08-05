@@ -9,10 +9,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": [
-    "components/**/*.ts",
-    "components/**/*.tsx",
-    "lib/**/*.ts"
-  ],
+  "include": ["components/**/*.ts", "components/**/*.tsx", "lib/**/*.ts"],
   "exclude": ["node_modules", ".next"]
 }

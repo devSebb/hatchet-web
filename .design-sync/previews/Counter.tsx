@@ -4,7 +4,7 @@ import { Counter } from "hatchet-web";
 
 export function Millions() {
   return (
-    <div className="bg-card rounded-xl p-6 inline-block">
+    <div className="bg-card inline-block rounded-xl p-6">
       <Counter to={1200000} suffix="+" />
     </div>
   );
@@ -12,7 +12,7 @@ export function Millions() {
 
 export function WithPrefix() {
   return (
-    <div className="bg-card rounded-xl p-6 inline-block">
+    <div className="bg-card inline-block rounded-xl p-6">
       <Counter to={99} prefix="$" suffix="M" />
     </div>
   );
@@ -20,7 +20,7 @@ export function WithPrefix() {
 
 export function Percentage() {
   return (
-    <div className="bg-card rounded-xl p-6 inline-block">
+    <div className="bg-card inline-block rounded-xl p-6">
       <Counter to={94} suffix="%" />
     </div>
   );
@@ -28,7 +28,7 @@ export function Percentage() {
 
 export function Decimal() {
   return (
-    <div className="bg-card rounded-xl p-6 inline-block">
+    <div className="bg-card inline-block rounded-xl p-6">
       <Counter to={3.7} suffix="B hrs" decimals={1} />
     </div>
   );

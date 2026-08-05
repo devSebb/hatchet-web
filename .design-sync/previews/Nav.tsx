@@ -24,7 +24,7 @@ const navItems = [
 
 export function Default() {
   return (
-    <div className="bg-card px-6 py-3 rounded-xl flex items-center">
+    <div className="bg-card flex items-center rounded-xl px-6 py-3">
       <Nav items={navItems} className="flex" />
     </div>
   );

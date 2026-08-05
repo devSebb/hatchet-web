@@ -7,6 +7,7 @@ These must be stubbed in `.ds-sync/lib/bundle.mjs` `sharedBuildOptions()` or the
 `ReferenceError: process is not defined` at initialization and no components load.
 
 Added to `sharedBuildOptions()` define block:
+
 ```
 'process.env.NODE_ENV': '"development"',
 'process.env.NEXT_PUBLIC_SITE_URL': 'undefined',
@@ -32,6 +33,7 @@ The root theme is dark — `--foreground` is white. Components that rely on CSS 
 text/icon color render invisibly on the capture page's white background.
 
 Workaround for authored previews: wrap in a dark container:
+
 - `<div className="bg-card ...">` — for components on dark cards
 - `<div className="bg-bg">` — for full-width sections (LogoWall)
 - `<div className="surface-paper ...">` — for components that use the light paper theme
@@ -57,6 +59,7 @@ bars at `staggerChildren: 0.045` × 13 bars + `MOTION_DURATION.base`).
 
 Counter's authored stories each render one large number. In the default grid layout the cells
 are wider than they are tall, which triggers `[GRID_OVERFLOW]`. Added to config:
+
 ```json
 "overrides": { "Counter": { "cardMode": "column" } }
 ```

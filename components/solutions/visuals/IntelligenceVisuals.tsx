@@ -155,7 +155,7 @@ export function MentionTracker() {
               className={cn(
                 "rounded-full border px-[10px] py-[2px] font-mono text-[10px] tracking-[0.04em] uppercase",
                 filter.active
-                  ? "border-transparent bg-signal text-white"
+                  ? "bg-signal border-transparent text-white"
                   : "border-border text-muted",
               )}
               key={filter.label}
@@ -242,7 +242,7 @@ export function GroupsTable() {
             className={cn(
               "rounded-full border px-[10px] py-[2px] font-mono text-[10px] tracking-[0.04em] uppercase",
               tab.active
-                ? "border-transparent bg-signal text-white"
+                ? "bg-signal border-transparent text-white"
                 : "border-border text-muted",
             )}
             key={tab.label}

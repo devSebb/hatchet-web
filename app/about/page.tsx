@@ -96,7 +96,7 @@ export default function AboutPage() {
                 brands, and agencies.
               </p>
               <a
-                className="border-border bg-background mt-8 inline-flex w-fit items-center gap-3 whitespace-nowrap rounded-xl border px-5 py-3 transition-opacity hover:opacity-80"
+                className="border-border bg-background mt-8 inline-flex w-fit items-center gap-3 rounded-xl border px-5 py-3 whitespace-nowrap transition-opacity hover:opacity-80"
                 href="https://www.gamesquare.com/"
                 rel="noreferrer"
                 target="_blank"

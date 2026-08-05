@@ -291,7 +291,7 @@ function CrossSellNote({
   return (
     <section className="bg-background px-4 pb-20 sm:px-6 lg:px-8 lg:pb-28">
       <Reveal className="mx-auto max-w-6xl text-center">
-        <p className="h3 text-[1.875rem] text-signal">{crossSell.title}</p>
+        <p className="h3 text-signal text-[1.875rem]">{crossSell.title}</p>
         <LifecycleStationsRow className="mt-5 text-left" />
       </Reveal>
     </section>

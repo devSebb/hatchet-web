@@ -23,7 +23,12 @@ function Logo() {
           1-6/8/10/12/16. h-7 has no --space-7 and silently falls back to
           stock Tailwind's 1.75rem (28px), less than half of h-8's 64px.
           A width in px sidesteps both traps. 208px == 50.7px tall. */}
-      <BrandLogo alt="" className="h-auto w-[208px]" priority variant="primary" />
+      <BrandLogo
+        alt=""
+        className="h-auto w-[208px]"
+        priority
+        variant="primary"
+      />
     </Link>
   );
 }
@@ -45,8 +50,8 @@ export function Header() {
       className={cn(
         "sticky top-0 z-40 border-b pt-2 pb-2 transition-[background-color,box-shadow,border-color] duration-(--dur-fast)",
         isElevated
-          ? "border-white/10 bg-background/92 shadow-[0_8px_28px_-8px_rgba(0,0,0,0.45)] backdrop-blur-xl"
-          : "border-transparent bg-background/70 backdrop-blur-md",
+          ? "bg-background/92 border-white/10 shadow-[0_8px_28px_-8px_rgba(0,0,0,0.45)] backdrop-blur-xl"
+          : "bg-background/70 border-transparent backdrop-blur-md",
       )}
     >
       {/* Logo, Nav and the button pair are three separate flex children so

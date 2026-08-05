@@ -68,11 +68,7 @@ export function CircuitDivider({
           fill="none"
           viewBox="0 0 560 64"
         >
-          <path
-            d={MAIN_RUN}
-            stroke="var(--cd-trace-strong)"
-            strokeWidth={2}
-          />
+          <path d={MAIN_RUN} stroke="var(--cd-trace-strong)" strokeWidth={2} />
           {STUBS.map(({ d, width }) => (
             <path d={d} key={d} stroke="var(--cd-trace)" strokeWidth={width} />
           ))}

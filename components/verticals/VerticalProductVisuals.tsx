@@ -27,7 +27,7 @@ function FilterChip({
       className={cn(
         "rounded-full border px-[10px] py-[3px] font-mono text-[11px] tracking-[0.04em] whitespace-nowrap uppercase",
         active
-          ? "border-transparent bg-signal text-white"
+          ? "bg-signal border-transparent text-white"
           : "border-border text-muted",
       )}
     >
@@ -37,13 +37,7 @@ function FilterChip({
 }
 
 /** Product-style tab strip; active tab carries the signal underline. */
-function TabStrip({
-  tabs,
-  className,
-}: {
-  tabs: string[];
-  className?: string;
-}) {
+function TabStrip({ tabs, className }: { tabs: string[]; className?: string }) {
   return (
     <div
       className={cn(

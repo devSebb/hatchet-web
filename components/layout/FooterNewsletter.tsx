@@ -52,7 +52,7 @@ export function FooterNewsletter() {
               value={email}
             />
             <button
-              className="bg-brand text-primary-foreground focus-visible:ring-ring/50 inline-flex h-full shrink-0 items-center rounded-md px-4 text-sm font-medium transition-colors outline-none hover:bg-brand-strong focus-visible:ring-3"
+              className="bg-brand text-primary-foreground focus-visible:ring-ring/50 hover:bg-brand-strong inline-flex h-full shrink-0 items-center rounded-md px-4 text-sm font-medium transition-colors outline-none focus-visible:ring-3"
               type="submit"
             >
               {config.submitLabel}

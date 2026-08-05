@@ -237,8 +237,7 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
     if (!form.company.trim()) e.company = COPY.form.errors.required;
     if (!form.company_website.trim())
       e.company_website = COPY.form.errors.required;
-    if (!form.referral_source)
-      e.referral_source = COPY.form.errors.required;
+    if (!form.referral_source) e.referral_source = COPY.form.errors.required;
     // linkedin_url and topic are optional — no client validation.
     setFieldErrors(e);
     return Object.keys(e).length === 0;
@@ -330,7 +329,11 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
       {/* ---- Info sidebar (persistent across steps) ---- */}
       <aside className="bg-bg flex shrink-0 flex-col p-6 text-white md:w-[280px] md:p-7 lg:w-[300px]">
         <div className="flex items-center">
-          <BrandLogo alt="Hatchet" className="h-auto w-[140px]" variant="primary" />
+          <BrandLogo
+            alt="Hatchet"
+            className="h-auto w-[140px]"
+            variant="primary"
+          />
         </div>
 
         <h2 className="mt-6 text-[1.4rem] font-semibold tracking-tight text-white">
@@ -362,10 +365,7 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
             {COPY.meta.confirmation}
           </li>
           <li className="flex items-center gap-2.5">
-            <Clock
-              className="text-brand size-[18px] shrink-0"
-              aria-hidden
-            />
+            <Clock className="text-brand size-[18px] shrink-0" aria-hidden />
             {COPY.meta.minutes(durationMin)}
           </li>
           <li className="flex items-center gap-2.5">

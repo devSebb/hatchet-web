@@ -8,7 +8,12 @@ import { VisualShell } from "./VisualShell";
  * comparison; genre benchmarks). All data fictional. */
 
 const leaderboardTotals = [
-  { label: "Unique Creators", value: "50.2M", note: "of 52.4M", progress: 0.96 },
+  {
+    label: "Unique Creators",
+    value: "50.2M",
+    note: "of 52.4M",
+    progress: 0.96,
+  },
   { label: "Hours Watched", value: "6.7B", note: "last 90 days" },
   { label: "Peak CCV", value: "2.8M", note: "cross-platform" },
 ];
@@ -111,7 +116,7 @@ export function ChannelLeaderboard() {
             className={cn(
               "rounded-full border px-[10px] py-[3px] font-mono text-[11px] tracking-[0.04em] uppercase",
               filter.active
-                ? "border-transparent bg-signal text-white"
+                ? "bg-signal border-transparent text-white"
                 : "border-border text-muted",
             )}
             key={filter.label}
@@ -258,7 +263,10 @@ export function FakeAudienceScore() {
       <ul className="mt-[16px] space-y-[12px]">
         {audienceScores.map((row) => (
           <li
-            className={cn("flex items-center gap-[12px]", row.flagged && "opacity-60")}
+            className={cn(
+              "flex items-center gap-[12px]",
+              row.flagged && "opacity-60",
+            )}
             key={row.channel}
           >
             <span className="text-foreground w-[96px] shrink-0 text-sm font-semibold">
@@ -355,7 +363,10 @@ export function GameLeaderboard() {
         </thead>
         <tbody>
           {gameRows.map((row) => (
-            <tr className="border-border border-b last:border-b-0" key={row.game}>
+            <tr
+              className="border-border border-b last:border-b-0"
+              key={row.game}
+            >
               <td className="px-[20px] py-[12px]">
                 <span className="flex items-center gap-[10px]">
                   <span
@@ -461,11 +472,17 @@ export function LaunchIntelligence() {
       </div>
       <p className="text-muted mt-[12px] flex flex-wrap items-center gap-x-[16px] gap-y-[4px] font-mono text-[10px] tracking-[0.08em] uppercase">
         <span className="flex items-center gap-[6px]">
-          <span aria-hidden="true" className="bg-signal h-[8px] w-[8px] rounded-[2px]" />
+          <span
+            aria-hidden="true"
+            className="bg-signal h-[8px] w-[8px] rounded-[2px]"
+          />
           Emberfall launch week
         </span>
         <span className="flex items-center gap-[6px]">
-          <span aria-hidden="true" className="bg-border h-[8px] w-[8px] rounded-[2px]" />
+          <span
+            aria-hidden="true"
+            className="bg-border h-[8px] w-[8px] rounded-[2px]"
+          />
           Genre median
         </span>
       </p>
@@ -494,7 +511,13 @@ export function LaunchIntelligence() {
 // Hours watched by genre with period-over-period shift, echoing the Genres
 // ranking. "Friendslop" and "Survival" tie back to the section copy.
 const genreRows = [
-  { genre: "Action-Adventure", hours: "11.3M", share: 1, delta: "↑ 3%", up: true },
+  {
+    genre: "Action-Adventure",
+    hours: "11.3M",
+    share: 1,
+    delta: "↑ 3%",
+    up: true,
+  },
   { genre: "Shooter", hours: "11.2M", share: 0.99, delta: "↑ 6%", up: true },
   { genre: "FPS", hours: "8.8M", share: 0.78, delta: "↑ 12%", up: true },
   { genre: "MOBA", hours: "5.4M", share: 0.48, delta: "↑ 2%", up: true },

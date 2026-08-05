@@ -160,7 +160,11 @@ export function CampaignBreakdown() {
 function MiniBars() {
   const heights = [12, 22, 16, 30, 20, 26];
   return (
-    <svg aria-hidden="true" className="block h-[36px] w-full" viewBox="0 0 76 36">
+    <svg
+      aria-hidden="true"
+      className="block h-[36px] w-full"
+      viewBox="0 0 76 36"
+    >
       {heights.map((height, index) => (
         <rect
           fill="var(--brand)"
@@ -179,7 +183,11 @@ function MiniBars() {
 
 function MiniLine({ dual = false }: { dual?: boolean }) {
   return (
-    <svg aria-hidden="true" className="block h-[36px] w-full" viewBox="0 0 76 36">
+    <svg
+      aria-hidden="true"
+      className="block h-[36px] w-full"
+      viewBox="0 0 76 36"
+    >
       <polyline
         fill="none"
         points="2,30 15,24 28,26 41,15 54,18 74,4"
@@ -207,7 +215,11 @@ function MiniLine({ dual = false }: { dual?: boolean }) {
 function MiniRows() {
   const widths = [64, 46, 34, 22];
   return (
-    <svg aria-hidden="true" className="block h-[36px] w-full" viewBox="0 0 76 36">
+    <svg
+      aria-hidden="true"
+      className="block h-[36px] w-full"
+      viewBox="0 0 76 36"
+    >
       {widths.map((width, index) => (
         <rect
           fill="var(--brand)"
@@ -231,7 +243,11 @@ function MiniPairs() {
     [12, 32],
   ];
   return (
-    <svg aria-hidden="true" className="block h-[36px] w-full" viewBox="0 0 76 36">
+    <svg
+      aria-hidden="true"
+      className="block h-[36px] w-full"
+      viewBox="0 0 76 36"
+    >
       {pairs.map(([before, after], index) => (
         <g key={index}>
           <rect
@@ -290,7 +306,10 @@ function ReportCover({
     >
       <div className="flex items-start justify-between gap-[8px]">
         <span className="flex min-w-0 items-center gap-[8px]">
-          <span aria-hidden="true" className="bg-signal h-[10px] w-[3px] shrink-0" />
+          <span
+            aria-hidden="true"
+            className="bg-signal h-[10px] w-[3px] shrink-0"
+          />
           <span className="text-foreground truncate font-mono text-[10px] font-semibold tracking-[0.06em] uppercase">
             {title}
           </span>

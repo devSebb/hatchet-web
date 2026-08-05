@@ -10,6 +10,22 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
   passHref?: boolean;
   shallow?: boolean;
 }
-export default function Link({ href, children, as: _as, replace: _r, scroll: _s, prefetch: _p, locale: _l, legacyBehavior: _lb, passHref: _ph, shallow: _sh, ...rest }: LinkProps) {
-  return <a href={href} {...rest}>{children}</a>;
+export default function Link({
+  href,
+  children,
+  as: _as,
+  replace: _r,
+  scroll: _s,
+  prefetch: _p,
+  locale: _l,
+  legacyBehavior: _lb,
+  passHref: _ph,
+  shallow: _sh,
+  ...rest
+}: LinkProps) {
+  return (
+    <a href={href} {...rest}>
+      {children}
+    </a>
+  );
 }

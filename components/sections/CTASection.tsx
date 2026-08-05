@@ -100,7 +100,9 @@ function CTACopy({
   align: "center" | "start";
 }) {
   return (
-    <div className={cn("max-w-xl", align === "center" && "mx-auto text-center")}>
+    <div
+      className={cn("max-w-xl", align === "center" && "mx-auto text-center")}
+    >
       {eyebrow ? <p className="eyebrow text-white/70">{eyebrow}</p> : null}
       <h2 className={cn(titleClassName ?? "h2", "mt-3 text-white")}>{title}</h2>
       {subtitle ? <p className="h3 mt-4 text-white">{subtitle}</p> : null}

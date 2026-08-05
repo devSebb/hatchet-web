@@ -93,8 +93,8 @@ export function ComparisonTable({ className }: { className?: string }) {
             <h2 className="h1 mt-4">The only platform that does it all.</h2>
             <p className="body-lg text-muted mt-3">
               Hatchet is multi-purpose: no need to choose when you can have
-              everything. Data AND execution. Socials AND streaming. Gaming
-              AND lifestyle.
+              everything. Data AND execution. Socials AND streaming. Gaming AND
+              lifestyle.
             </p>
           </div>
         </Reveal>

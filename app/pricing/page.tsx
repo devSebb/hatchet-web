@@ -88,7 +88,8 @@ const PLANS: Plan[] = [
   },
   {
     name: "Hatchet Full License",
-    tagline: "Everything Hatchet does. Every step of the lifecycle. One platform.",
+    tagline:
+      "Everything Hatchet does. Every step of the lifecycle. One platform.",
     icon: PricingFullLicense,
     recommended: true,
     features: [
@@ -128,7 +129,7 @@ function PlanCard({ plan }: { plan: Plan }) {
             // halo ring, and a layered elevation shadow (deep ambient drop + brand
             // glow) so it reads as a 3D pop-out. Same paper background as its
             // siblings, kept level so all three tops align.
-            "border-2 border-brand ring-4 ring-brand/10 shadow-[0_24px_50px_-12px_rgba(0,0,0,0.55),0_0_24px_color-mix(in_srgb,var(--brand)_28%,transparent)]"
+            "border-brand ring-brand/10 border-2 shadow-[0_24px_50px_-12px_rgba(0,0,0,0.55),0_0_24px_color-mix(in_srgb,var(--brand)_28%,transparent)] ring-4"
           : "border-paper-border shadow-sm",
       )}
     >
@@ -305,7 +306,10 @@ function ComparePlans() {
                     scope="col"
                   >
                     <span className="flex flex-col items-center gap-1.5">
-                      <PricingCommunity aria-hidden="true" className="size-[40px] sm:size-[52px]" />
+                      <PricingCommunity
+                        aria-hidden="true"
+                        className="size-[40px] sm:size-[52px]"
+                      />
                       Community
                     </span>
                   </th>

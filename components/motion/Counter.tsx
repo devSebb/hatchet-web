@@ -1,6 +1,12 @@
 "use client";
 
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useInView } from "framer-motion";
 
 import { MOTION_DURATION_MS } from "@/lib/motion";
