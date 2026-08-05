@@ -10,7 +10,7 @@ The scaffold currently includes:
 
 - Next 16 App Router, React 19, TypeScript strict, Tailwind v4, shadcn/ui, Framer Motion, Embla, and lucide-react.
 - Hatchet design tokens, global layout, motion primitives, Signal motif components, section shells, homepage, marketing routes, resources/blog routes, SEO scaffolding, and HubSpot form shells.
-- A typed content adapter with the mock provider live and the WordPress provider stubbed for a later WPGraphQL phase.
+- A typed content adapter with the WordPress provider live, serving a committed content snapshot, and the mock provider available via `CONTENT_SOURCE=mock`.
 
 ## Run Locally
 
@@ -25,7 +25,7 @@ Useful checks:
 
 ```bash
 pnpm lint
-pnpm exec tsc --noEmit
+pnpm typecheck
 pnpm format:check
 pnpm build
 ```
@@ -75,4 +75,4 @@ Metadata is centralized through `lib/seo.ts` and `lib/config/site.ts`. Every rou
 
 ## Deployment
 
-The app is Vercel-ready. `next.config.ts` includes an empty `redirects()` array for the future migration table.
+The app is Vercel-ready. `next.config.ts` includes a `redirects()` table carrying four permanent redirects for retired solution and vertical slugs; the wider migration table will be added there.
