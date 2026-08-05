@@ -14,7 +14,6 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { Badge } from "@/components/ui/badge";
 import { siteConfig } from "@/lib/config/site";
 import { createMetadata } from "@/lib/seo";
 
