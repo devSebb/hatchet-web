@@ -11,10 +11,16 @@
 !.yarn/versions
 
 # Markdown files
+# Phase-0 scaffold artifacts. Never committed, and they contradict the
+# finished site on typeface, palette, decoration, numbering, and copy case —
+# they must not reach the editors as if they were current rules.
 BUILD_PLAN.md
 DESIGN.md
-CLAUDE.md
-AGENTS.md
+# Handover reports: contain Vercel project/org identifiers that have
+# deliberately never been committed, plus a map of where the system is soft.
+handoff-audit.md
+handoff-investigation.md
+static-export-spike.md
 
 # testing
 /coverage
