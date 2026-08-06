@@ -1,19 +1,32 @@
 import variants from "@/lib/image-variants.json";
+import remoteSizes from "@/lib/remote-image-sizes.json";
 
 /**
  * Custom next/image loader.
  *
  * Next's built-in optimizer is a server route (/_next/image) that does not
- * exist in a static export. This loader points at the WebP variants generated
- * by `node scripts/optimize-images.mjs` instead, which keeps `srcSet` intact —
- * the thing `images.unoptimized: true` throws away.
+ * exist in a static export. This loader points at pre-generated renditions
+ * instead, which keeps `srcSet` intact — the thing `images.unoptimized: true`
+ * throws away. Two sources:
  *
- * Anything without a generated variant falls through to the original URL
- * untouched, so SVGs, remote WordPress media and any newly-added file all keep
- * working; a missing variant degrades to the original rather than 404ing.
+ *   local  — WebP variants built by `node scripts/optimize-images.mjs`
+ *   remote — the renditions WordPress already published, recorded by
+ *            `pnpm sync:wp` (nothing is downloaded; these stay on the media
+ *            library)
+ *
+ * Anything with no recorded rendition falls through to the original URL
+ * untouched, so SVGs and any newly-added file keep working; a missing rendition
+ * degrades to the original rather than 404ing.
  */
 
 const availableWidths = variants as Record<string, number[]>;
+
+const remotePrefix = remoteSizes.prefix;
+
+/** `[width, pathRelativeToPrefix]` pairs, narrowest first. Typed loosely because
+ *  TypeScript infers `(string | number)[][]` from the JSON rather than a tuple. */
+type RemoteLadder = readonly (readonly (number | string)[])[];
+const remoteLadders: Record<string, RemoteLadder> = remoteSizes.images;
 
 /** Must stay in lockstep with variantRelPath() in scripts/optimize-images.mjs. */
 function variantPath(src: string, width: number): string {
@@ -29,11 +42,24 @@ export default function imageLoader({
   width: number;
   quality?: number;
 }): string {
-  // Remote images (the WordPress media library) and anything not rooted in
-  // public/ have no local variants. Pass through — next/image still renders
-  // them, they just aren't resized by us.
+  // Remote images live on the WordPress media library. WordPress already
+  // generates a ladder of renditions per upload; `pnpm sync:wp` records the
+  // same-aspect-ratio ones so a phone can fetch a 300px cover instead of the
+  // 1536px file. Anything not in that map passes through untouched.
   if (!src.startsWith("/") || src.startsWith("//")) {
-    return src;
+    if (!src.startsWith(remotePrefix)) {
+      return src;
+    }
+
+    const ladder = remoteLadders[src.slice(remotePrefix.length)];
+    if (!ladder?.length) {
+      return src;
+    }
+
+    const match =
+      ladder.find((entry) => Number(entry[0]) >= width) ??
+      ladder[ladder.length - 1];
+    return remotePrefix + String(match[1]);
   }
 
   // SVGs are resolution-independent; resizing them would be pointless and, for

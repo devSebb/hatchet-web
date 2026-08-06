@@ -10,6 +10,20 @@ interface Mirrored {
   sourceUrl?: string;
 }
 
+/**
+ * mirrored — the other renditions WordPress published for this cover, narrowest
+ * first. Only same-aspect-ratio renditions are recorded; WordPress also
+ * registers square and banner *crops*, which would make a browser swap in a
+ * different framing of the picture at some viewport widths.
+ *
+ * Consumed by lib/image-loader.ts to build a srcSet. Absent when the upload has
+ * only one size, or when the cover came from the og:image fallback.
+ */
+export type RemoteImageSize = {
+  width: number;
+  url: string;
+};
+
 export interface Post extends Mirrored {
   slug: string;
   title: string;
@@ -18,6 +32,7 @@ export interface Post extends Mirrored {
   category: string;
   tags: string[];
   coverImage?: string;
+  coverImageSizes?: RemoteImageSize[];
   /** mirrored — alt text from the WordPress media library. */
   coverImageAlt?: string;
   publishedAt: string;
@@ -48,6 +63,7 @@ export interface CustomerStory extends Mirrored {
   contentHtml: string;
   /** mirrored — hero image for the story. */
   coverImage?: string;
+  coverImageSizes?: RemoteImageSize[];
   /** mirrored — HubSpot form gating the full case study. */
   hubspotFormId?: string;
   /** mirrored — publication date, ISO 8601. */
@@ -59,6 +75,7 @@ export interface Guide extends Mirrored {
   title: string;
   summary: string;
   coverImage?: string;
+  coverImageSizes?: RemoteImageSize[];
   gated: boolean;
   /**
    * mirrored — the HubSpot form gating this specific report. Reports each carry

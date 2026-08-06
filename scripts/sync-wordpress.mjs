@@ -23,7 +23,7 @@
  * WORDPRESS_BASIC_AUTH="user:apppassword" — never a real account password.
  */
 
-import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import path from "node:path";
 import process from "node:process";
@@ -527,8 +527,9 @@ function resolveImage(url, options = {}) {
 
 /** Prefers the widest WordPress-generated variant at or under MAX_IMAGE_WIDTH. */
 function pickVariant(media) {
-  // Remote covers cost no repo space and next/image downsizes them per
-  // breakpoint, so take a retina-grade source; local mode stays lean.
+  // Remote covers cost no repo space and the custom next/image loader picks a
+  // rendition per breakpoint from the ladder below, so take a retina-grade
+  // source for the `src` fallback; local mode stays lean.
   const cap = imageMode === "remote" ? 1536 : MAX_IMAGE_WIDTH;
   const sizes = Object.values(media?.media_details?.sizes ?? {});
   const candidates = sizes
@@ -536,6 +537,49 @@ function pickVariant(media) {
     .sort((a, b) => b.width - a.width);
 
   return candidates[0]?.source_url ?? media?.source_url ?? null;
+}
+
+/**
+ * The other renditions WordPress already published for a cover, so the site can
+ * emit a real srcSet instead of shipping one large file to every device.
+ *
+ * WordPress registers a dozen sizes per upload, but most are *crops* to unrelated
+ * aspect ratios (150x150 square, 350x450 portrait, 350x100 banner). Putting those
+ * in a srcSet would let a browser swap in a different crop of the picture at some
+ * viewport widths, which reads as the image randomly changing. Only renditions
+ * that match the original's aspect ratio are kept.
+ *
+ * Widths come straight from `media_details.sizes`, which lists what WordPress
+ * actually generated on disk — it does not advertise files it did not write.
+ */
+const ASPECT_TOLERANCE = 0.02;
+
+function variantLadder(media) {
+  const full = media?.media_details;
+  if (!full?.width || !full?.height) return null;
+
+  const ratio = full.width / full.height;
+  const ladder = Object.values(full.sizes ?? {})
+    .filter(
+      (size) =>
+        size.source_url &&
+        size.width &&
+        size.height &&
+        Math.abs(size.width / size.height - ratio) < ASPECT_TOLERANCE,
+    )
+    .map((size) => ({
+      width: size.width,
+      url: size.source_url.replace(/^http:\/\//, "https://"),
+    }))
+    .sort((a, b) => a.width - b.width);
+
+  // De-duplicate: WordPress can register several names for one file.
+  const seen = new Set();
+  const unique = ladder.filter((entry) =>
+    seen.has(entry.width) ? false : seen.add(entry.width),
+  );
+
+  return unique.length > 1 ? unique : null;
 }
 
 /**
@@ -704,6 +748,23 @@ async function coverFor(item) {
   return resolveImage(socialImage(item));
 }
 
+/**
+ * The srcSet ladder for whatever `coverFor` resolved. Only meaningful in remote
+ * mode: `--images=local` downloads a single rendition, so there is nothing to
+ * choose between. Returns undefined when the cover came from the og:image
+ * fallback (no media record) or the upload has only one size.
+ */
+function coverSizesFor(item, coverUrl) {
+  if (imageMode !== "remote" || !coverUrl) return undefined;
+
+  const ladder = variantLadder(embeddedMedia(item));
+  if (!ladder) return undefined;
+
+  // The resolved cover must be on the ladder, or the browser could pick a
+  // rendition the sync never verified.
+  return ladder.some((entry) => entry.url === coverUrl) ? ladder : undefined;
+}
+
 function yoastDescription(item) {
   const yoast = item.yoast_head_json ?? {};
   const description = yoast.description || yoast.og_description || "";
@@ -824,6 +885,7 @@ async function syncReports(pages) {
       title,
       summary: summaryFor(page),
       coverImage: coverImage ?? undefined,
+      coverImageSizes: coverSizesFor(page, coverImage),
       gated: Boolean(formId),
       hubspotFormId: formId ?? undefined,
       highlights: headingsFrom(html).slice(0, 6),
@@ -890,6 +952,7 @@ async function syncCaseStudies(pages) {
       summary: summaryFor(page),
       contentHtml,
       coverImage: cover ?? undefined,
+      coverImageSizes: coverSizesFor(page, cover),
       hubspotFormId: hubspotFormId(html) ?? undefined,
       publishedAt: page.date_gmt ? `${page.date_gmt}Z` : undefined,
       sourceUrl: page.link?.replace(/^http:/, "https:"),
@@ -1016,6 +1079,7 @@ async function syncPosts(limit) {
       // rather than a relevance ranking — posts carry 15–40 tags upstream.
       tags: tags.slice(0, 12),
       coverImage: coverImage ?? undefined,
+      coverImageSizes: coverSizesFor(post, coverImage),
       coverImageAlt: coverImage ? coverAltFor(post) : undefined,
       publishedAt: post.date_gmt
         ? `${post.date_gmt}Z`
@@ -1066,6 +1130,61 @@ async function writeJson(name, payload) {
   );
 }
 
+/**
+ * Flattens every stream's `coverImageSizes` into one lookup for
+ * lib/image-loader.ts, so next/image can build a srcSet for remote covers.
+ *
+ * Rebuilt from the files on disk rather than from this run's payloads: with
+ * `--only=posts` the other streams are not regenerated, and reading only what
+ * ran would drop their covers out of the map.
+ *
+ * Paths are stored with the media-library prefix stripped — the map is imported
+ * into the client bundle, and the prefix is ~44 bytes on every one of ~650
+ * entries. URLs are stored verbatim rather than reconstructed from a width, so
+ * a naming convention change on WordPress can never turn into a 404 here.
+ */
+const UPLOADS_PREFIX = "https://streamhatchet.com/wp-content/uploads/";
+
+async function writeRemoteImageMap() {
+  const streams = ["posts", "guides", "customer-stories", "press"];
+  const images = {};
+
+  for (const name of streams) {
+    const file = path.join(DATA_DIR, `${name}.json`);
+    let entries;
+    try {
+      entries = JSON.parse(await readFile(file, "utf8"));
+    } catch {
+      continue; // stream never synced
+    }
+
+    for (const entry of entries) {
+      if (!entry.coverImage?.startsWith(UPLOADS_PREFIX)) continue;
+      if (!entry.coverImageSizes?.length) continue;
+      if (!entry.coverImageSizes.every((s) => s.url.startsWith(UPLOADS_PREFIX)))
+        continue;
+
+      images[entry.coverImage.slice(UPLOADS_PREFIX.length)] =
+        entry.coverImageSizes.map((size) => [
+          size.width,
+          size.url.slice(UPLOADS_PREFIX.length),
+        ]);
+    }
+  }
+
+  const file = path.join(ROOT, "lib/remote-image-sizes.json");
+  await writeFile(
+    file,
+    `${JSON.stringify({ prefix: UPLOADS_PREFIX, images }, null, 2)}\n`,
+  );
+
+  const count = Object.keys(images).length;
+  const variants = Object.values(images).reduce((a, v) => a + v.length, 0);
+  console.log(
+    `  wrote ${path.relative(ROOT, file)} (${count} covers, ${variants} renditions)`,
+  );
+}
+
 async function main() {
   const options = parseArguments(process.argv.slice(2));
   const wants = (stream) => !options.only || options.only.includes(stream);
@@ -1095,6 +1214,8 @@ async function main() {
   }
   if (wants("press")) await writeJson("press", syncPress(pages));
   if (wants("posts")) await writeJson("posts", await syncPosts(options.posts));
+
+  await writeRemoteImageMap();
 
   // Drop images no longer referenced by any stream we just rebuilt.
   if (!options.only && imageMode === "local") {

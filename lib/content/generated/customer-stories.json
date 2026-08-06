@@ -17,6 +17,24 @@
     "summary": "How we helped leverage NYXL’s brand needs in social media, live streaming & esports, read the case study for free now.",
     "contentHtml": "",
     "coverImage": "https://streamhatchet.com/wp-content/uploads/2024/08/NYXL-new-york-subliners.webp",
+    "coverImageSizes": [
+      {
+        "width": 300,
+        "url": "https://streamhatchet.com/wp-content/uploads/2024/08/NYXL-new-york-subliners-300x181.webp"
+      },
+      {
+        "width": 400,
+        "url": "https://streamhatchet.com/wp-content/uploads/2024/08/NYXL-new-york-subliners-400x241.webp"
+      },
+      {
+        "width": 768,
+        "url": "https://streamhatchet.com/wp-content/uploads/2024/08/NYXL-new-york-subliners-768x463.webp"
+      },
+      {
+        "width": 942,
+        "url": "https://streamhatchet.com/wp-content/uploads/2024/08/NYXL-new-york-subliners.webp"
+      }
+    ],
     "publishedAt": "2024-08-13T14:36:53Z",
     "sourceUrl": "https://streamhatchet.com/nyxl-with-stream-hatchet-and-sideqik/"
   }
