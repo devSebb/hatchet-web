@@ -15,7 +15,7 @@
 import { NextResponse } from "next/server";
 
 import { getAvailabilityConfig } from "@/lib/booking/config";
-import { sendDemoRequestEmails } from "@/lib/booking/email";
+import { sendDemoRequestEmails } from "./email";
 import { generateSlots, slotEnd } from "@/lib/booking/slots";
 import {
   honeypotTripped,

@@ -16,7 +16,7 @@
  */
 import nodemailer from "nodemailer";
 import { buildIcs } from "./ics";
-import type { NormalizedRequest } from "./validation";
+import type { NormalizedRequest } from "../validation";
 
 interface SendContext {
   request: NormalizedRequest;

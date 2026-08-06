@@ -14,6 +14,7 @@ import {
 
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { Button } from "@/components/ui/button";
+import { getAvailability, submitRequest } from "@/lib/booking/transport";
 import { cn } from "@/lib/utils";
 import {
   detectTimezone,
@@ -166,10 +167,10 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
     setTz(detectTimezone());
   }, []);
 
-  // Bare fetch — state updates happen only after the await.
+  // State updates happen only after the await.
   const fetchAvailability = useCallback(async () => {
     try {
-      const res = await fetch("/api/demo/availability");
+      const res = await getAvailability();
       if (!res.ok) throw new Error(String(res.status));
       const data = (await res.json()) as Availability;
       setAvailability(data);
@@ -251,22 +252,18 @@ export function BookDemo({ onClose }: { onClose?: () => void }) {
     setSubmitting(true);
     setSubmitError(null);
     try {
-      const res = await fetch("/api/demo/requests", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          slot_start_utc: selectedSlot.start_utc,
-          booker_timezone: tz,
-          name: form.name.trim(),
-          email: form.email.trim(),
-          job_title: form.job_title.trim(),
-          company: form.company.trim(),
-          company_website: form.company_website.trim(),
-          linkedin_url: form.linkedin_url.trim(),
-          referral_source: form.referral_source,
-          topic: form.topic.trim(),
-          website: form.website, // honeypot
-        }),
+      const res = await submitRequest({
+        slot_start_utc: selectedSlot.start_utc,
+        booker_timezone: tz,
+        name: form.name.trim(),
+        email: form.email.trim(),
+        job_title: form.job_title.trim(),
+        company: form.company.trim(),
+        company_website: form.company_website.trim(),
+        linkedin_url: form.linkedin_url.trim(),
+        referral_source: form.referral_source,
+        topic: form.topic.trim(),
+        website: form.website, // honeypot
       });
 
       if (res.status === 201) {
