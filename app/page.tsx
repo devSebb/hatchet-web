@@ -470,7 +470,10 @@ export default async function Home() {
             playbackId:
               process.env.NEXT_PUBLIC_MUX_PLAYBACK_ID ??
               "Wyys025HRtud28Ad800ety0134SBwe2VwjasdGiHjNkUUM",
-            poster: "/images/hero-dashboard.png",
+            // The pre-generated WebP variant, not the 597 KB PNG original:
+            // a poster is fetched on every homepage load, before playback.
+            // Same image, same dimensions — 184 KB instead of 597 KB.
+            poster: "/_img/images/hero-dashboard-2000.webp",
             width: 1920,
             height: 1080,
           }}
