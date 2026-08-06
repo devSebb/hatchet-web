@@ -1,0 +1,106 @@
+name: Deploy to production
+
+# Runs on every push to `main` — which, with branch protection on, only ever
+# happens by merging a reviewed pull request.
+#
+# It does NOT deploy on merge. The `production` environment below requires a
+# named reviewer to click approve first, so the job sits waiting until a human
+# says go. Merging and publishing are deliberately two decisions.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# NOT cancel-in-progress, unlike staging.
+#
+# A production deploy is two S3 syncs and an invalidation. Cancelling between
+# the asset sync and the page sync leaves the bucket half-updated: new chunks
+# uploaded, old HTML still served, and the next visitor gets whichever mix
+# CloudFront happens to hold. Later runs queue and wait instead.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  checks:
+    name: Checks
+    uses: ./.github/workflows/checks.yml
+
+  deploy:
+    name: Build and deploy
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    # The approval gate. Configured in Settings → Environments → production
+    # with a required reviewer; GitHub pauses the job here until they approve.
+    # The URL shows on the deployment record and in the repo sidebar.
+    environment:
+      name: production
+      url: https://hatchet.gg/
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          # Scoped to ref:refs/heads/main specifically — not a wildcard — so
+          # this role cannot be assumed from a branch or a fork.
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          role-session-name: hatchet-web-deploy-production
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy
+        # ⚠️ Builds from scratch, here, for production.
+        #
+        # The staging workflow's artifact CANNOT be reused. NEXT_PUBLIC_SITE_URL
+        # is inlined at build time, so a staging build has
+        # d316fu3le8ds9x.cloudfront.net baked into every canonical, og:url and
+        # sitemap entry. Promoting it would publish a production site that
+        # tells Google its real address is the staging CDN.
+        #
+        # This is also the only build where DEPLOY_ENV=production, which is the
+        # only value that lets robots.txt allow indexing.
+        run: ./scripts/deploy.sh production
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### Production deploy"
+            echo ""
+            if [ "${{ job.status }}" = "success" ]; then
+              echo "✅ Published to production."
+              echo ""
+              echo "**<https://hatchet.gg/>**"
+              echo ""
+              echo "The CloudFront cache has been purged and the site is live."
+            else
+              echo "❌ The production deploy failed."
+              echo ""
+              echo "**The live site is unchanged.** Nothing was published, so"
+              echo "visitors are still seeing the previous version."
+              echo ""
+              echo "If the upload partly completed, see the rollback steps in"
+              echo "\`docs/deploy.md\`."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

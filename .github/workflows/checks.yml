@@ -1,0 +1,109 @@
+name: Checks
+
+# The gate everything else builds on. It runs on every pull request, and both
+# deploy workflows call it as their first job — so a red check here means
+# nothing reaches a bucket.
+#
+# The editors' /publish command mirrors these four steps locally, so keep the
+# failure output readable: a non-technical person will be the one reading it.
+
+on:
+  pull_request:
+  workflow_call:
+
+# NOTE ON TRIGGERS: there is deliberately no `push: branches: [staging]` here.
+# Pushes to `staging` DO run these checks — deploy-staging.yml calls this
+# workflow as its first job, and will not deploy unless it passes. Adding the
+# push trigger as well would run every check twice on every staging push, in
+# two separate workflow runs, and an editor would see two sets of results for
+# one action.
+
+# One run per branch, per calling workflow. `github.workflow` resolves to the
+# CALLER's name when this is reused, so a deploy's checks and a pull request's
+# checks never share a group and never cancel each other.
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  # Only pull requests supersede. A push that is on its way to a bucket is
+  # never cancelled halfway by the next one — see the concurrency note in
+  # deploy-production.yml.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  checks:
+    name: Type-check, lint, build, format
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      # `next build` runs with NODE_ENV=production, and lib/config/site.ts
+      # throws there if this is unset — deliberately, because the value is
+      # inlined into every canonical and sitemap entry (see .env.example).
+      #
+      # This is a CHECK build, not a deployable artifact. It uses the staging
+      # URL so nothing here can ever be mistaken for something publishable;
+      # a real deploy always rebuilds from scratch via scripts/deploy.sh.
+      NEXT_PUBLIC_SITE_URL: https://d316fu3le8ds9x.cloudfront.net
+      # DEPLOY_ENV is deliberately unset: app/robots.ts allows indexing only
+      # for the literal "production", so this build emits a blanket disallow.
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        # No version pinned here on purpose — it reads `packageManager` from
+        # package.json, so the lockfile and CI can never drift apart.
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        # --frozen-lockfile fails rather than silently resolving a new tree if
+        # package.json and pnpm-lock.yaml disagree.
+        run: pnpm install --frozen-lockfile
+
+      - name: Type-check
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build
+        # This also runs scripts/assert-export.mjs, which is where the
+        # /_next/image assertion lives — the failure that otherwise builds
+        # green and 404s every image in production.
+        run: pnpm build
+
+      - name: Check formatting
+        # Not a bare `pnpm format:check`: two files have never been
+        # Prettier-clean, so that always exits 1. The script compares against
+        # that baseline. See scripts/check-format.sh.
+        run: ./scripts/check-format.sh
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### Checks"
+            echo ""
+            if [ "${{ job.status }}" = "success" ]; then
+              echo "✅ All four checks passed — type-check, lint, build, formatting."
+              echo ""
+              echo "This change is safe to deploy."
+            else
+              echo "❌ Something failed. Open the step above with a red ✗ to see why."
+              echo ""
+              echo "The four checks, and what a failure usually means:"
+              echo ""
+              echo "| Step | If it fails |"
+              echo "| --- | --- |"
+              echo "| Type-check | Code refers to something that does not exist, or a wrong type. |"
+              echo "| Lint | A code-quality rule was broken. |"
+              echo "| Build | The site could not be built. Content or a page is broken. |"
+              echo "| Formatting | Spacing or quotes are off. Run \`pnpm format\` and commit. |"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,12 @@
+# Every change to this repository needs review from the technical reviewer.
+#
+# Combined with "Require review from Code Owners" in the branch protection
+# rules on `main`, this is what stops an editor merging their own work to
+# production. They push to `staging` freely — that is the point of `staging` —
+# but the step from `staging` to `main` is a second pair of eyes.
+#
+# A later line wins over an earlier one, so this catch-all stays at the top
+# only because there is nothing more specific below it yet. If you add a
+# narrower rule, put it underneath.
+
+*   @devSebb

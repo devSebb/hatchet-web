@@ -1,0 +1,105 @@
+name: Deploy to staging
+
+# Every push to `staging` publishes to the staging bucket. `staging` is
+# long-lived and unprotected: the editors commit to it directly and often, and
+# this is what turns a commit into something they can look at.
+#
+# Staging is gated two ways and both matter:
+#   - basic auth, at the CloudFront viewer-request function
+#   - robots.txt emits a blanket `Disallow: /`
+# Neither is decorative. An open, indexable staging site competes with the real
+# one in search results.
+
+on:
+  push:
+    branches: [staging]
+  # Manual re-run, for when a deploy needs repeating without a new commit
+  # (a cache purge that did not take, say).
+  workflow_dispatch:
+
+# Supersede rather than queue. Two publishes a minute apart should not race
+# each other into the same bucket — the later commit is the one that should
+# win, and cancelling the earlier run guarantees that.
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  # Required for OIDC: this is what lets the job request a short-lived token
+  # from AWS instead of holding a long-lived access key.
+  id-token: write
+
+jobs:
+  checks:
+    name: Checks
+    uses: ./.github/workflows/checks.yml
+
+  deploy:
+    name: Build and deploy
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          # OIDC: no stored access key. The role's trust policy is scoped to
+          # this repository and this branch, so a token minted here cannot be
+          # used from anywhere else. See docs/phase4-pipeline.md.
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          role-session-name: hatchet-web-deploy-staging
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy
+        # ⚠️ The build happens INSIDE this script, not in a previous step, and
+        # not reused from the checks job.
+        #
+        # NEXT_PUBLIC_SITE_URL is inlined into every canonical, og:url and
+        # sitemap entry at build time. Staging and production therefore produce
+        # genuinely different bytes, and A STAGING ARTIFACT CAN NEVER BE
+        # PROMOTED TO PRODUCTION. Each environment builds from its own value.
+        #
+        # deploy.sh sets DEPLOY_ENV and NEXT_PUBLIC_SITE_URL from its target
+        # argument and fails if the environment contradicts it.
+        run: ./scripts/deploy.sh staging
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### Staging deploy"
+            echo ""
+            if [ "${{ job.status }}" = "success" ]; then
+              echo "✅ Published to staging."
+              echo ""
+              echo "**<https://d316fu3le8ds9x.cloudfront.net/>**"
+              echo ""
+              echo "The CloudFront cache has already been purged, so the link"
+              echo "is showing this build now."
+              echo ""
+              echo "It will ask for a username and password — that is expected."
+              echo "Staging is private and is not indexed by search engines."
+            else
+              echo "❌ The staging deploy failed. Nothing was published."
+              echo ""
+              echo "The site currently on staging is unchanged and still working."
+              echo "Open the failed step above to see what went wrong."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
