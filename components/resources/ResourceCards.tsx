@@ -1,13 +1,12 @@
-import Image from "next/image";
 import Link from "next/link";
 
-import type { CustomerStory, Guide, PressItem } from "@/lib/content/types";
+import type { CustomerStory, PressItem } from "@/lib/content/types";
 import { StoryLogo } from "@/components/resources/StoryLogo";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { formatContentDate } from "@/lib/content/format";
 
 /** PostCard lives in ./PostCard — see the note at the top of that file. */
+/** Reports are shelved by ./ReportCard, which leads with the cover art. */
 
 export function CustomerStoryCard({ story }: { story: CustomerStory }) {
   const [metricFigure, ...metricLabelParts] = story.metric
@@ -46,51 +45,6 @@ export function CustomerStoryCard({ story }: { story: CustomerStory }) {
         Read {story.company} story
       </span>
     </Link>
-  );
-}
-
-export function GuideCard({ guide }: { guide: Guide }) {
-  const ctaHref = guide.gated
-    ? `/resources/guides/${guide.slug}#hubspot-form`
-    : `/resources/guides/${guide.slug}`;
-
-  return (
-    <article className="border-border bg-card flex h-full flex-col overflow-hidden rounded-xl border shadow-sm">
-      {guide.coverImage ? (
-        <div className="border-border relative aspect-[16/9] shrink-0 border-b">
-          <Image
-            alt=""
-            className="object-cover"
-            fill
-            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-            src={guide.coverImage}
-          />
-        </div>
-      ) : null}
-      <div className="flex flex-1 flex-col p-5">
-        <Badge
-          className="self-start"
-          variant={guide.gated ? "default" : "outline"}
-        >
-          {guide.gated ? "Gated guide" : "Open guide"}
-        </Badge>
-        {/* Clamped so every card in the grid resolves to the same height. */}
-        <h2 className="h3 mt-4 line-clamp-2 min-h-[2lh]">{guide.title}</h2>
-        <p className="body text-muted mt-4 line-clamp-3 min-h-[3lh]">
-          {guide.summary}
-        </p>
-        {/* `mt-auto` absorbs the leftover space so the CTA sits on the bottom
-            edge and lines up across the row; `pt-6` keeps a gap when the
-            summary runs to its full three lines and there is none left. */}
-        <div className="mt-auto pt-6">
-          <Button asChild variant={guide.gated ? "default" : "outline"}>
-            <Link href={ctaHref}>
-              {guide.gated ? "Request the guide" : "Read the guide"}
-            </Link>
-          </Button>
-        </div>
-      </div>
-    </article>
   );
 }
 

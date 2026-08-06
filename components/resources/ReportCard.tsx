@@ -4,10 +4,10 @@ import Link from "next/link";
 import type { Guide } from "@/lib/content/types";
 
 /**
- * Cover-first, unlike GuideCard. Every report cover on WordPress is a designed
- * plate that already carries its own title, quarter, and year as artwork, so on
- * a shelf the cover *is* the card — a chrome-heavy card around it competes with
- * the thing it is presenting.
+ * Cover-first, unlike the other resource cards. Every report cover on WordPress
+ * is a designed plate that already carries its own title, quarter, and year as
+ * artwork, so on a shelf the cover *is* the card — a chrome-heavy card around it
+ * competes with the thing it is presenting.
  *
  * The title still ships as text underneath. The covers are images: without it a
  * reader on a screen reader gets nothing, and neither does a crawler.
@@ -20,8 +20,8 @@ export type ReportCardGuide = Pick<
 >;
 
 export function ReportCard({ report }: { report: ReportCardGuide }) {
-  // Matches GuideCard: a gated report jumps straight to its form rather than
-  // landing the reader at the top of a page whose only purpose is that form.
+  // A gated report jumps straight to its form rather than landing the reader at
+  // the top of a page whose only purpose is that form.
   const href = report.gated
     ? `/resources/guides/${report.slug}#hubspot-form`
     : `/resources/guides/${report.slug}`;
