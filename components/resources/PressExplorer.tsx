@@ -81,9 +81,15 @@ export function PressExplorer({ items }: { items: PressItem[] }) {
 
   return (
     <>
+      {/* prettier-ignore — the `{" "}` keeps React's text-node boundaries
+          identical to the server-rendered markup this replaced. Collapsing it
+          onto one line changes nothing visible, but it does change the comment
+          markers React emits, and this page is diffed against that baseline. */}
+      {/* prettier-ignore */}
       <p className="small text-muted mt-8">
         Showing {firstIndex + 1}&ndash;
-        {firstIndex + visibleItems.length} of {items.length} mentions
+        {firstIndex + visibleItems.length} of {items.length}{" "}
+        mentions
       </p>
 
       <Stagger className="mt-4 grid gap-4 lg:grid-cols-3" key={currentPage}>
