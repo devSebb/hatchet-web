@@ -20,12 +20,12 @@ availability re-check — it simply has no server to run on today.
 
 ## What is here
 
-| File | Was | Does |
-|---|---|---|
-| `availability-route.ts` | `app/api/demo/availability/route.ts` | `GET` → bookable slots from `lib/booking/config` + `lib/booking/slots` |
-| `requests-route.ts` | `app/api/demo/requests/route.ts` | `POST` → honeypot, validate, re-check slot (409), send email |
-| `email.ts` | `lib/booking/email.ts` | Nodemailer over Gmail SMTP; attaches the `.ics`. Never throws; skips silently when `GMAIL_USER` / `GMAIL_APP_PASSWORD` are unset |
-| `ics.ts` | `lib/booking/ics.ts` | Pure iCalendar builder, `METHOD:REQUEST` |
+| File                    | Was                                  | Does                                                                                                                             |
+| ----------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `availability-route.ts` | `app/api/demo/availability/route.ts` | `GET` → bookable slots from `lib/booking/config` + `lib/booking/slots`                                                           |
+| `requests-route.ts`     | `app/api/demo/requests/route.ts`     | `POST` → honeypot, validate, re-check slot (409), send email                                                                     |
+| `email.ts`              | `lib/booking/email.ts`               | Nodemailer over Gmail SMTP; attaches the `.ics`. Never throws; skips silently when `GMAIL_USER` / `GMAIL_APP_PASSWORD` are unset |
+| `ics.ts`                | `lib/booking/ics.ts`                 | Pure iCalendar builder, `METHOD:REQUEST`                                                                                         |
 
 Their dependencies — `lib/booking/config.ts`, `slots.ts`, `validation.ts` — are
 **still live** in the parent directory. The browser uses them now
@@ -80,6 +80,6 @@ server-only and are **not** `NEXT_PUBLIC_*` — do not rename them to make them
 reachable from the browser. Sending mail from the client would expose the
 credential.
 
-The availability variables (`DEMO_HOST_TZ` and friends) *were* renamed, to
+The availability variables (`DEMO_HOST_TZ` and friends) _were_ renamed, to
 `NEXT_PUBLIC_DEMO_*`, because the browser now computes slots. Same values, same
 defaults — see `lib/booking/config.ts`.

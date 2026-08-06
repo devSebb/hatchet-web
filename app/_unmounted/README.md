@@ -14,7 +14,9 @@ build too, not just under static export. Its `generateStaticParams()` filters
 to press items that have no external `url`:
 
 ```ts
-return pressItems.filter((item) => !item.url).map((item) => ({ slug: item.slug }));
+return pressItems
+  .filter((item) => !item.url)
+  .map((item) => ({ slug: item.slug }));
 ```
 
 and the content snapshot holds **24 press items, all 24 with a `url`**. Every
@@ -36,9 +38,9 @@ choices were to delete it or to unmount it.
 
 ### Why it was not deleted
 
-The question it answers is a content decision, not a migration one: *what
+The question it answers is a content decision, not a migration one: _what
 happens the first time Hatchet publishes its own press release rather than
-linking to someone else's article?* Today, structurally, it cannot — there is
+linking to someone else's article?_ Today, structurally, it cannot — there is
 nowhere for it to live. That belongs to whoever owns the newsroom.
 
 Deleting the route would quietly close that door. Keeping it here loses

@@ -20,6 +20,12 @@ const eslintConfig = defineConfig([
     ".design-sync/**",
     "ds-bundle/**",
     "dist/**",
+    // CloudFront edge functions. A different runtime with different rules:
+    // ECMAScript 5.1, and `handler` is the entry point the runtime calls
+    // rather than an export, which the app's config reads as dead code. Its
+    // own gate is `node infra/cloudfront-viewer-request.test.mjs`, which
+    // parses it in strict ES5 — a check these rules cannot make.
+    "infra/*.js",
   ]),
 ]);
 

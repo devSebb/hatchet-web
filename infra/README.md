@@ -5,10 +5,10 @@ to be done by a Node server — basic auth, redirects, resolving `/pricing/` to 
 file — now happens in one viewer-request function, or in distribution settings
 that only exist in the AWS console.
 
-| | S3 bucket | CloudFront ID | CloudFront domain |
-|---|---|---|---|
-| Production | `hatchet-website-prod` | `E2AT8DAYA74FI4` | `d1yuwj4wngr61o.cloudfront.net` |
-| Staging | `hatchet-website-staging` | `E3UWU7EREIKJM8` | `d316fu3le8ds9x.cloudfront.net` |
+|            | S3 bucket                 | CloudFront ID    | CloudFront domain               |
+| ---------- | ------------------------- | ---------------- | ------------------------------- |
+| Production | `hatchet-website-prod`    | `E2AT8DAYA74FI4` | `d1yuwj4wngr61o.cloudfront.net` |
+| Staging    | `hatchet-website-staging` | `E3UWU7EREIKJM8` | `d316fu3le8ds9x.cloudfront.net` |
 
 Target domain: **`hatchet.gg`**.
 
@@ -90,9 +90,9 @@ None of this can live in the function. All of it is required.
 ### Custom error responses — the one that gets missed
 
 | HTTP error code | Response page path | HTTP response code | TTL |
-|---|---|---|---|
-| **403** | `/404.html` | **404** | 0 |
-| **404** | `/404.html` | **404** | 0 |
+| --------------- | ------------------ | ------------------ | --- |
+| **403**         | `/404.html`        | **404**            | 0   |
+| **404**         | `/404.html`        | **404**            | 0   |
 
 **403 must be mapped.** S3 behind Origin Access Control returns **403, not
 404**, for a key that does not exist — a private bucket does not admit which
@@ -125,7 +125,7 @@ Google indexes soft-404s as real pages.
 - Default: `GET, HEAD`. Compress objects automatically: **on**.
 - Cache policy `CachingOptimized`; the origin's `Cache-Control` headers are set
   by `scripts/deploy.sh` (immutable for hashed assets, `max-age=0,
-  must-revalidate` for HTML).
+must-revalidate` for HTML).
 - **Viewer-request function association on the default behaviour.** Without it
   every clean URL 403s.
 
