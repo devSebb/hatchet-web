@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 
 import { Reveal } from "@/components/motion/Reveal";
-import { Stagger } from "@/components/motion/Stagger";
 import { EmptyState } from "@/components/resources/EmptyState";
-import { Pagination, resolvePage } from "@/components/resources/Pagination";
-import { PressCard } from "@/components/resources/ResourceCards";
+import { PressExplorer } from "@/components/resources/PressExplorer";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { content } from "@/lib/content";
@@ -19,31 +17,10 @@ export function generateMetadata(): Metadata {
   });
 }
 
-type PressPageProps = {
-  searchParams?: Promise<{
-    page?: string;
-  }>;
-};
-
-/** Four rows of three on desktop — a full screen without an endless scroll. */
-const PRESS_PER_PAGE = 12;
-
-export default async function PressPage({ searchParams }: PressPageProps) {
-  const params = await searchParams;
+export default async function PressPage() {
   const pressItems = [...(await content.getPressItems())].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
-
-  const totalPages = Math.ceil(pressItems.length / PRESS_PER_PAGE);
-  const currentPage = resolvePage(params?.page, totalPages);
-  const firstIndex = (currentPage - 1) * PRESS_PER_PAGE;
-  const visibleItems = pressItems.slice(
-    firstIndex,
-    firstIndex + PRESS_PER_PAGE,
-  );
-
-  const hrefForPage = (page: number) =>
-    page > 1 ? `/resources/press?page=${page}` : "/resources/press";
 
   return (
     <main className="bg-background text-foreground">
@@ -65,30 +42,7 @@ export default async function PressPage({ searchParams }: PressPageProps) {
           </Reveal>
 
           {pressItems.length ? (
-            <>
-              <p className="small text-muted mt-8">
-                Showing {firstIndex + 1}&ndash;
-                {firstIndex + visibleItems.length} of {pressItems.length}{" "}
-                mentions
-              </p>
-
-              <Stagger
-                className="mt-4 grid gap-4 lg:grid-cols-3"
-                key={currentPage}
-              >
-                {visibleItems.map((item) => (
-                  <PressCard item={item} key={item.slug} />
-                ))}
-              </Stagger>
-
-              <Pagination
-                className="mt-12"
-                currentPage={currentPage}
-                hrefForPage={hrefForPage}
-                label="Press mentions"
-                totalPages={totalPages}
-              />
-            </>
+            <PressExplorer items={pressItems} />
           ) : (
             <div className="mt-10">
               <EmptyState
