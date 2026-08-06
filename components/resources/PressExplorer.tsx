@@ -77,7 +77,7 @@ export function PressExplorer({ items }: { items: PressItem[] }) {
   }, [chosen, currentPage]);
 
   const hrefForPage = (target: number) =>
-    target > 1 ? `/resources/press?page=${target}` : "/resources/press";
+    target > 1 ? `/resources/press/?page=${target}` : "/resources/press/";
 
   return (
     <>

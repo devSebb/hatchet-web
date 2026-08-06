@@ -15,12 +15,25 @@ import { absoluteUrl } from "@/lib/seo";
  */
 export const dynamic = "force-static";
 
+/**
+ * Next applies `trailingSlash` to canonicals and to `<Link>` hrefs, but **not**
+ * to sitemap entries — it hands them through verbatim. Without this the
+ * sitemap would advertise `https://hatchet.gg/pricing` while the site serves
+ * `https://hatchet.gg/pricing/` and the canonical on that page declares the
+ * slashed form. A sitemap that disagrees with the canonical it points at is
+ * worse than no sitemap: it tells a crawler the two are different URLs and
+ * invites it to pick the wrong one.
+ */
+function withTrailingSlash(path: string): string {
+  return path.endsWith("/") ? path : `${path}/`;
+}
+
 function route(
   path: string,
   lastModified = new Date(),
 ): MetadataRoute.Sitemap[number] {
   return {
-    url: absoluteUrl(path),
+    url: absoluteUrl(withTrailingSlash(path)),
     lastModified,
   };
 }
