@@ -21,6 +21,9 @@ DESIGN.md
 handoff-audit.md
 handoff-investigation.md
 static-export-spike.md
+media-forms-composability.md
+image-optimization.md
+seo-namespace.md
 
 # testing
 /coverage
@@ -68,3 +71,6 @@ dist/
 
 # scratch background prototype (not part of the app)
 hatchet-background.html
+
+# Visual QA output for scripts/optimize-images.mjs (regenerated, never committed)
+qa/
