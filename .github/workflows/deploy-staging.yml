@@ -57,6 +57,26 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Check deploy configuration
+        # Fails with a precise message instead of letting the AWS action emit
+        # "Credentials could not be loaded", which sends people looking in the
+        # wrong place. Names only — a secret is never echoed.
+        run: |
+          missing=""
+          [ -z "${{ secrets.AWS_DEPLOY_ROLE_ARN }}" ] && missing="$missing\n  - secret  AWS_DEPLOY_ROLE_ARN"
+          [ -z "${{ vars.AWS_REGION }}" ] && missing="$missing\n  - variable AWS_REGION"
+          if [ -n "$missing" ]; then
+            echo "ERROR: this repository is not configured for deploys yet." >&2
+            echo "" >&2
+            echo "Missing:" >&2
+            printf '%b\n' "$missing" >&2
+            echo "" >&2
+            echo "Set them in Settings -> Secrets and variables -> Actions." >&2
+            echo "See docs/phase4-pipeline.md for what each one is." >&2
+            exit 78
+          fi
+          echo "Deploy configuration present."
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
