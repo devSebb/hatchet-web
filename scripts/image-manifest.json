@@ -1,0 +1,625 @@
+{
+  "//": "Generated once, then hand-maintained. Regenerate variants with `node scripts/optimize-images.mjs`.",
+  "//format": "WebP only. AVIF deliberately excluded: it smears fine UI detail and desktop fidelity is the priority.",
+  "//widths": "Variant widths = the widths next/image actually requests for this image (captured from rendered HTML), clamped to `cap`. cap = min(next grid width >= 2x maxRenderWidth, source width). Never upscales.",
+  "//quality": "ui=95 (fine text, hard edges, transparency); photo=82. Raise per-image here if visual QA rejects one; never lower globally.",
+  "outputDir": "public/_img",
+  "images": {
+    "/images/hero-dashboard.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 1024,
+      "renderWidthDerivation": "Hero sizes=(min-width:1024px) 64rem; VerticalMedia max-w-5xl=64rem",
+      "source": {
+        "width": 2000,
+        "height": 1143,
+        "hasAlpha": true,
+        "bytes": 611813
+      },
+      "retinaTarget": 2048,
+      "cap": 2000,
+      "requestedByNext": [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+      "widths": [640, 750, 828, 1080, 1200, 1920, 2000],
+      "sourceSmallerThanRetinaTarget": true
+    },
+    "/images/product-mockup.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 1024,
+      "renderWidthDerivation": "VerticalMedia max-w-5xl=64rem (HistoryVisual sizes=34rem is smaller)",
+      "source": {
+        "width": 2048,
+        "height": 1170,
+        "hasAlpha": false,
+        "bytes": 347871
+      },
+      "retinaTarget": 2048,
+      "cap": 2048,
+      "requestedByNext": null,
+      "widths": [
+        16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048
+      ],
+      "sourceSmallerThanRetinaTarget": false
+    },
+    "/images/esports-events.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 1024,
+      "renderWidthDerivation": "VerticalMedia max-w-5xl=64rem",
+      "source": {
+        "width": 1697,
+        "height": 1206,
+        "hasAlpha": true,
+        "bytes": 284747
+      },
+      "retinaTarget": 2048,
+      "cap": 1697,
+      "requestedByNext": [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+      "widths": [640, 750, 828, 1080, 1200, 1697],
+      "sourceSmallerThanRetinaTarget": true
+    },
+    "/images/content/pillar_1.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 274,
+      "renderWidthDerivation": "h-80=20rem=320px tall, w-auto, ratio 973/1136",
+      "source": {
+        "width": 973,
+        "height": 1136,
+        "hasAlpha": true,
+        "bytes": 1100320
+      },
+      "retinaTarget": 548,
+      "cap": 640,
+      "requestedByNext": [1080, 2048],
+      "widths": [640],
+      "sourceSmallerThanRetinaTarget": false
+    },
+    "/images/content/pillar_2.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 249,
+      "renderWidthDerivation": "h-80=20rem=320px tall, w-auto, ratio 1106/1422",
+      "source": {
+        "width": 1106,
+        "height": 1422,
+        "hasAlpha": true,
+        "bytes": 1224731
+      },
+      "retinaTarget": 498,
+      "cap": 640,
+      "requestedByNext": [1200, 3840],
+      "widths": [640],
+      "sourceSmallerThanRetinaTarget": false
+    },
+    "/images/content/pillar_3.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 318,
+      "renderWidthDerivation": "h-[280px] tall, w-auto, ratio 1337/1176",
+      "source": {
+        "width": 1337,
+        "height": 1176,
+        "hasAlpha": true,
+        "bytes": 1349231
+      },
+      "retinaTarget": 636,
+      "cap": 640,
+      "requestedByNext": [1920, 3840],
+      "widths": [640],
+      "sourceSmallerThanRetinaTarget": false
+    },
+    "/images/company/team-rooftop.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 1280,
+      "renderWidthDerivation": "fill, sizes=(min-width:1280px) 80rem",
+      "source": {
+        "width": 2560,
+        "height": 1316,
+        "hasAlpha": false,
+        "bytes": 628157
+      },
+      "retinaTarget": 2560,
+      "cap": 2560,
+      "requestedByNext": [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+      "widths": [640, 750, 828, 1080, 1200, 1920, 2048, 2560],
+      "sourceSmallerThanRetinaTarget": false
+    },
+    "/images/company/team-beach.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 1280,
+      "renderWidthDerivation": "fill, sizes=(min-width:1280px) 80rem",
+      "source": {
+        "width": 2048,
+        "height": 1536,
+        "hasAlpha": false,
+        "bytes": 287803
+      },
+      "retinaTarget": 2560,
+      "cap": 2048,
+      "requestedByNext": [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+      "widths": [640, 750, 828, 1080, 1200, 1920, 2048],
+      "sourceSmallerThanRetinaTarget": true
+    },
+    "/images/logos/riot-games.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 224,
+      "renderWidthDerivation": "LogoWall lg:w-56=14rem=224px box, object-contain",
+      "source": {
+        "width": 300,
+        "height": 95,
+        "hasAlpha": true,
+        "bytes": 14848
+      },
+      "retinaTarget": 448,
+      "cap": 300,
+      "requestedByNext": [
+        32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048,
+        3840
+      ],
+      "widths": [32, 48, 64, 96, 128, 256, 300],
+      "sourceSmallerThanRetinaTarget": true,
+      "lossless": true
+    },
+    "/images/logos/microsoft.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 224,
+      "renderWidthDerivation": "LogoWall lg:w-56=14rem=224px box",
+      "source": {
+        "width": 300,
+        "height": 64,
+        "hasAlpha": true,
+        "bytes": 7304
+      },
+      "retinaTarget": 448,
+      "cap": 300,
+      "requestedByNext": [
+        32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048,
+        3840
+      ],
+      "widths": [32, 48, 64, 96, 128, 256, 300],
+      "sourceSmallerThanRetinaTarget": true,
+      "lossless": true
+    },
+    "/images/logos/google.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 224,
+      "renderWidthDerivation": "LogoWall lg:w-56=14rem=224px box",
+      "source": {
+        "width": 300,
+        "height": 95,
+        "hasAlpha": true,
+        "bytes": 14327
+      },
+      "retinaTarget": 448,
+      "cap": 300,
+      "requestedByNext": [
+        32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048,
+        3840
+      ],
+      "widths": [32, 48, 64, 96, 128, 256, 300],
+      "sourceSmallerThanRetinaTarget": true,
+      "lossless": true
+    },
+    "/images/logos/nascar.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 224,
+      "renderWidthDerivation": "LogoWall lg:w-56=14rem=224px box",
+      "source": {
+        "width": 300,
+        "height": 57,
+        "hasAlpha": true,
+        "bytes": 10977
+      },
+      "retinaTarget": 448,
+      "cap": 300,
+      "requestedByNext": [
+        32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048,
+        3840
+      ],
+      "widths": [32, 48, 64, 96, 128, 256, 300],
+      "sourceSmallerThanRetinaTarget": true,
+      "lossless": true
+    },
+    "/images/logos/youtube.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 224,
+      "renderWidthDerivation": "LogoWall lg:w-56=14rem=224px box",
+      "source": {
+        "width": 195,
+        "height": 82,
+        "hasAlpha": true,
+        "bytes": 14087
+      },
+      "retinaTarget": 448,
+      "cap": 195,
+      "requestedByNext": [
+        32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048,
+        3840
+      ],
+      "widths": [32, 48, 64, 96, 128, 195],
+      "sourceSmallerThanRetinaTarget": true,
+      "lossless": true
+    },
+    "/images/logos/ea.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 224,
+      "renderWidthDerivation": "LogoWall lg:w-56=224px (TrustLogos h-[32px] -> 215px)",
+      "source": {
+        "width": 444,
+        "height": 66,
+        "hasAlpha": true,
+        "bytes": 16213
+      },
+      "retinaTarget": 448,
+      "cap": 444,
+      "requestedByNext": [
+        32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048,
+        3840
+      ],
+      "widths": [32, 48, 64, 96, 128, 256, 384, 444],
+      "sourceSmallerThanRetinaTarget": true,
+      "lossless": true
+    },
+    "/images/logos/blizzard.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "LogoWall box lg:h-16=var(--space-16)=8rem=128px; square so height-constrained",
+      "source": {
+        "width": 1500,
+        "height": 1500,
+        "hasAlpha": true,
+        "bytes": 77477
+      },
+      "retinaTarget": 256,
+      "cap": 256,
+      "requestedByNext": [
+        32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048,
+        3840
+      ],
+      "widths": [32, 48, 64, 96, 128, 256],
+      "sourceSmallerThanRetinaTarget": false,
+      "lossless": true
+    },
+    "/images/logos/sony.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 148,
+      "renderWidthDerivation": "TrustLogos h-[44px], ratio 555/165",
+      "source": {
+        "width": 555,
+        "height": 165,
+        "hasAlpha": true,
+        "bytes": 15517
+      },
+      "retinaTarget": 296,
+      "cap": 384,
+      "requestedByNext": null,
+      "widths": [16, 32, 48, 64, 96, 128, 256, 384],
+      "sourceSmallerThanRetinaTarget": false,
+      "lossless": true
+    },
+    "/images/logos/BLAST.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 144,
+      "renderWidthDerivation": "TrustLogos h-[30px], ratio 966/201",
+      "source": {
+        "width": 966,
+        "height": 201,
+        "hasAlpha": true,
+        "bytes": 35431
+      },
+      "retinaTarget": 288,
+      "cap": 384,
+      "requestedByNext": null,
+      "widths": [16, 32, 48, 64, 96, 128, 256, 384],
+      "sourceSmallerThanRetinaTarget": false,
+      "lossless": true
+    },
+    "/images/logos/Kingsleague_logo.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 58,
+      "renderWidthDerivation": "TrustLogos h-[58px], ratio 277/361",
+      "source": {
+        "width": 277,
+        "height": 361,
+        "hasAlpha": true,
+        "bytes": 57165
+      },
+      "retinaTarget": 116,
+      "cap": 128,
+      "requestedByNext": null,
+      "widths": [16, 32, 48, 64, 96, 128],
+      "sourceSmallerThanRetinaTarget": false,
+      "lossless": true
+    },
+    "/images/logos/gamesquare_logo.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 329,
+      "renderWidthDerivation": "sm:h-6=var(--space-6)=3rem=48px tall, w-auto, ratio 2526/369",
+      "source": {
+        "width": 2526,
+        "height": 369,
+        "hasAlpha": true,
+        "bytes": 151148
+      },
+      "retinaTarget": 658,
+      "cap": 750,
+      "requestedByNext": [1080, 2048],
+      "widths": [750],
+      "sourceSmallerThanRetinaTarget": false,
+      "lossless": true
+    },
+    "/brand/hatchet_all_white.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 512,
+      "renderWidthDerivation": "Footer h-16=var(--space-16)=8rem=128px tall, ratio 2275/569",
+      "source": {
+        "width": 2275,
+        "height": 569,
+        "hasAlpha": true,
+        "bytes": 98219
+      },
+      "retinaTarget": 1024,
+      "cap": 1080,
+      "requestedByNext": [3840],
+      "widths": [1080],
+      "sourceSmallerThanRetinaTarget": false,
+      "lossless": true
+    },
+    "/brand/hatchet_all_navy.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 512,
+      "renderWidthDerivation": "BrandLogo map entry; no call site selects variant=navy",
+      "source": {
+        "width": 2102,
+        "height": 755,
+        "hasAlpha": true,
+        "bytes": 41992
+      },
+      "retinaTarget": 1024,
+      "cap": 1080,
+      "requestedByNext": null,
+      "widths": [16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080],
+      "sourceSmallerThanRetinaTarget": false,
+      "lossless": true
+    },
+    "/brand/hatchet_all_red.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": 512,
+      "renderWidthDerivation": "BrandLogo map entry; no call site selects variant=red",
+      "source": {
+        "width": 2102,
+        "height": 754,
+        "hasAlpha": true,
+        "bytes": 42012
+      },
+      "retinaTarget": 1024,
+      "cap": 1080,
+      "requestedByNext": null,
+      "widths": [16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080],
+      "sourceSmallerThanRetinaTarget": false,
+      "lossless": true
+    },
+    "/brand/hatchet_shield_redFin.png": {
+      "class": "ui",
+      "quality": 95,
+      "maxRenderWidth": null,
+      "renderWidthDerivation": "INDETERMINATE: orbital core is w-[16%] of a fluid canvas. Falls back to declared width.",
+      "source": {
+        "width": 763,
+        "height": 721,
+        "hasAlpha": true,
+        "bytes": 15886
+      },
+      "retinaTarget": 1526,
+      "cap": 763,
+      "requestedByNext": [828, 1920],
+      "widths": [763],
+      "sourceSmallerThanRetinaTarget": true,
+      "lossless": true
+    },
+    "/images/company/team/albert-alemany.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "size-16 = var(--space-16) = 8rem = 128px",
+      "source": {
+        "width": 200,
+        "height": 200,
+        "hasAlpha": false,
+        "bytes": 10352
+      },
+      "retinaTarget": 256,
+      "cap": 200,
+      "requestedByNext": [256, 640],
+      "widths": [200],
+      "sourceSmallerThanRetinaTarget": true
+    },
+    "/images/company/team/alessandra-pinto.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "size-16 = var(--space-16) = 8rem = 128px",
+      "source": {
+        "width": 400,
+        "height": 400,
+        "hasAlpha": false,
+        "bytes": 48860
+      },
+      "retinaTarget": 256,
+      "cap": 256,
+      "requestedByNext": [256, 640],
+      "widths": [256],
+      "sourceSmallerThanRetinaTarget": false
+    },
+    "/images/company/team/alex-porcel.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "size-16 = var(--space-16) = 8rem = 128px",
+      "source": {
+        "width": 200,
+        "height": 200,
+        "hasAlpha": false,
+        "bytes": 11405
+      },
+      "retinaTarget": 256,
+      "cap": 200,
+      "requestedByNext": [256, 640],
+      "widths": [200],
+      "sourceSmallerThanRetinaTarget": true
+    },
+    "/images/company/team/alexander-schneider.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "size-16 = var(--space-16) = 8rem = 128px",
+      "source": {
+        "width": 200,
+        "height": 200,
+        "hasAlpha": false,
+        "bytes": 7847
+      },
+      "retinaTarget": 256,
+      "cap": 200,
+      "requestedByNext": [256, 640],
+      "widths": [200],
+      "sourceSmallerThanRetinaTarget": true
+    },
+    "/images/company/team/andi-ding.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "size-16 = var(--space-16) = 8rem = 128px",
+      "source": {
+        "width": 200,
+        "height": 200,
+        "hasAlpha": false,
+        "bytes": 8655
+      },
+      "retinaTarget": 256,
+      "cap": 200,
+      "requestedByNext": [256, 640],
+      "widths": [200],
+      "sourceSmallerThanRetinaTarget": true
+    },
+    "/images/company/team/cody-taduran.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "size-16 = var(--space-16) = 8rem = 128px",
+      "source": {
+        "width": 400,
+        "height": 400,
+        "hasAlpha": false,
+        "bytes": 18056
+      },
+      "retinaTarget": 256,
+      "cap": 256,
+      "requestedByNext": [256, 640],
+      "widths": [256],
+      "sourceSmallerThanRetinaTarget": false
+    },
+    "/images/company/team/eduard-montserrat.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "size-16 = var(--space-16) = 8rem = 128px",
+      "source": {
+        "width": 200,
+        "height": 200,
+        "hasAlpha": false,
+        "bytes": 7662
+      },
+      "retinaTarget": 256,
+      "cap": 200,
+      "requestedByNext": [256, 640],
+      "widths": [200],
+      "sourceSmallerThanRetinaTarget": true
+    },
+    "/images/company/team/jonathan-chris-karam.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "size-16 = var(--space-16) = 8rem = 128px",
+      "source": {
+        "width": 400,
+        "height": 400,
+        "hasAlpha": false,
+        "bytes": 40526
+      },
+      "retinaTarget": 256,
+      "cap": 256,
+      "requestedByNext": [256, 640],
+      "widths": [256],
+      "sourceSmallerThanRetinaTarget": false
+    },
+    "/images/company/team/kyle-hartsook.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "size-16 = var(--space-16) = 8rem = 128px",
+      "source": {
+        "width": 400,
+        "height": 400,
+        "hasAlpha": false,
+        "bytes": 35099
+      },
+      "retinaTarget": 256,
+      "cap": 256,
+      "requestedByNext": [256, 640],
+      "widths": [256],
+      "sourceSmallerThanRetinaTarget": false
+    },
+    "/images/company/team/michael-gorka.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "size-16 = var(--space-16) = 8rem = 128px",
+      "source": {
+        "width": 400,
+        "height": 400,
+        "hasAlpha": false,
+        "bytes": 19649
+      },
+      "retinaTarget": 256,
+      "cap": 256,
+      "requestedByNext": [256, 640],
+      "widths": [256],
+      "sourceSmallerThanRetinaTarget": false
+    },
+    "/images/company/team/yoshiki-horiguchi.jpg": {
+      "class": "photo",
+      "quality": 82,
+      "maxRenderWidth": 128,
+      "renderWidthDerivation": "size-16 = var(--space-16) = 8rem = 128px",
+      "source": {
+        "width": 400,
+        "height": 400,
+        "hasAlpha": false,
+        "bytes": 52823
+      },
+      "retinaTarget": 256,
+      "cap": 256,
+      "requestedByNext": [256, 640],
+      "widths": [256],
+      "sourceSmallerThanRetinaTarget": false
+    }
+  }
+}
