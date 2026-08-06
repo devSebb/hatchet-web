@@ -3,6 +3,16 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     /**
+     * Serve the pre-generated WebP variants in public/_img (built by
+     * `node scripts/optimize-images.mjs`) instead of the /_next/image route,
+     * which does not exist in a static export. Keeps srcSet intact — the thing
+     * `images.unoptimized: true` would discard. Anything without a variant
+     * (SVGs, remote WordPress media) falls through to its original URL.
+     */
+    loader: "custom",
+    loaderFile: "./lib/image-loader.ts",
+
+    /**
      * Report covers and post artwork are served from the Stream Hatchet
      * WordPress media library rather than copied into this repo — see the
      * header of scripts/sync-wordpress.mjs. Narrow to the uploads path so only

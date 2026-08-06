@@ -1,0 +1,224 @@
+{
+  "/images/hero-dashboard.png": [
+    640,
+    750,
+    828,
+    1080,
+    1200,
+    1920,
+    2000
+  ],
+  "/images/product-mockup.png": [
+    16,
+    32,
+    48,
+    64,
+    96,
+    128,
+    256,
+    384,
+    640,
+    750,
+    828,
+    1080,
+    1200,
+    1920,
+    2048
+  ],
+  "/images/esports-events.png": [
+    640,
+    750,
+    828,
+    1080,
+    1200,
+    1697
+  ],
+  "/images/content/pillar_1.png": [
+    640
+  ],
+  "/images/content/pillar_2.png": [
+    640
+  ],
+  "/images/content/pillar_3.png": [
+    640
+  ],
+  "/images/company/team-rooftop.jpg": [
+    640,
+    750,
+    828,
+    1080,
+    1200,
+    1920,
+    2048,
+    2560
+  ],
+  "/images/company/team-beach.jpg": [
+    640,
+    750,
+    828,
+    1080,
+    1200,
+    1920,
+    2048
+  ],
+  "/images/logos/riot-games.png": [
+    32,
+    48,
+    64,
+    96,
+    128,
+    256,
+    300
+  ],
+  "/images/logos/microsoft.png": [
+    32,
+    48,
+    64,
+    96,
+    128,
+    256,
+    300
+  ],
+  "/images/logos/google.png": [
+    32,
+    48,
+    64,
+    96,
+    128,
+    256,
+    300
+  ],
+  "/images/logos/nascar.png": [
+    32,
+    48,
+    64,
+    96,
+    128,
+    256,
+    300
+  ],
+  "/images/logos/youtube.png": [
+    32,
+    48,
+    64,
+    96,
+    128,
+    195
+  ],
+  "/images/logos/ea.png": [
+    32,
+    48,
+    64,
+    96,
+    128,
+    256,
+    384,
+    444
+  ],
+  "/images/logos/blizzard.png": [
+    32,
+    48,
+    64,
+    96,
+    128,
+    256
+  ],
+  "/images/logos/sony.png": [
+    16,
+    32,
+    48,
+    64,
+    96,
+    128,
+    256,
+    384
+  ],
+  "/images/logos/BLAST.png": [
+    16,
+    32,
+    48,
+    64,
+    96,
+    128,
+    256,
+    384
+  ],
+  "/images/logos/Kingsleague_logo.png": [
+    16,
+    32,
+    48,
+    64,
+    96,
+    128
+  ],
+  "/images/logos/gamesquare_logo.png": [
+    750
+  ],
+  "/brand/hatchet_all_white.png": [
+    1080
+  ],
+  "/brand/hatchet_all_navy.png": [
+    16,
+    32,
+    48,
+    64,
+    96,
+    128,
+    256,
+    384,
+    640,
+    750,
+    828,
+    1080
+  ],
+  "/brand/hatchet_all_red.png": [
+    16,
+    32,
+    48,
+    64,
+    96,
+    128,
+    256,
+    384,
+    640,
+    750,
+    828,
+    1080
+  ],
+  "/brand/hatchet_shield_redFin.png": [
+    763
+  ],
+  "/images/company/team/albert-alemany.jpg": [
+    200
+  ],
+  "/images/company/team/alessandra-pinto.jpg": [
+    256
+  ],
+  "/images/company/team/alex-porcel.jpg": [
+    200
+  ],
+  "/images/company/team/alexander-schneider.jpg": [
+    200
+  ],
+  "/images/company/team/andi-ding.jpg": [
+    200
+  ],
+  "/images/company/team/cody-taduran.jpg": [
+    256
+  ],
+  "/images/company/team/eduard-montserrat.jpg": [
+    200
+  ],
+  "/images/company/team/jonathan-chris-karam.jpg": [
+    256
+  ],
+  "/images/company/team/kyle-hartsook.jpg": [
+    256
+  ],
+  "/images/company/team/michael-gorka.jpg": [
+    256
+  ],
+  "/images/company/team/yoshiki-horiguchi.jpg": [
+    256
+  ]
+}
