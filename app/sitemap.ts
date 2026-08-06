@@ -6,6 +6,15 @@ import { solutions } from "@/lib/config/solutions";
 import { content } from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo";
 
+/**
+ * Frozen at build time. `output: "export"` has no request-time hook, so Next
+ * requires this to be explicit rather than inferring it. The URL list already
+ * came from committed content and static config, so nothing is lost — but it
+ * does mean a WordPress post published after the last `pnpm sync:wp` is absent
+ * until the next build.
+ */
+export const dynamic = "force-static";
+
 function route(
   path: string,
   lastModified = new Date(),
