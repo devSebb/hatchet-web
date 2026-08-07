@@ -146,6 +146,7 @@ export default async function GuidesPage() {
       </section>
 
       <CTASection
+        body="Creator, audience, and campaign intelligence for gaming teams, in one place."
         className="py-18 lg:py-24"
         eyebrow="Need a custom readout"
         title="Build a reporting framework around the signal your team needs."

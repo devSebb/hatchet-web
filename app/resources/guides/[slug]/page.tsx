@@ -125,6 +125,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
       </article>
 
       <CTASection
+        body="Creator, audience, and campaign intelligence for gaming teams, in one place."
         className="py-18 lg:py-24"
         eyebrow="Keep building the framework"
         title="Use Hatchet data to make the next readout easier to defend."

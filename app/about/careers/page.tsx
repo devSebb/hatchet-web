@@ -56,6 +56,7 @@ export default function CareersPage() {
       </section>
 
       <CTASection
+        body="Creator, audience, and campaign intelligence for gaming teams, in one place."
         className="py-18 lg:py-24"
         eyebrow="Stay close"
         title="Join the team measuring the signal behind gaming."

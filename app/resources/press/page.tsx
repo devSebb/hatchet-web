@@ -55,6 +55,7 @@ export default async function PressPage() {
       </section>
 
       <CTASection
+        body="Creator, audience, and campaign intelligence for gaming teams, in one place."
         className="py-18 lg:py-24"
         eyebrow="Press contact"
         title="Use Hatchet context in your next gaming market story."

@@ -35,6 +35,7 @@ export default function NotFound() {
       </section>
 
       <CTASection
+        body="Creator, audience, and campaign intelligence for gaming teams, in one place."
         className="py-18 lg:py-24"
         eyebrow="Still looking"
         title="Tell us what you needed to find."

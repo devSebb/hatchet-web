@@ -121,6 +121,7 @@ export default async function CustomerStoryPage({
       </article>
 
       <CTASection
+        body="Creator, audience, and campaign intelligence for gaming teams, in one place."
         className="py-18 lg:py-24"
         eyebrow="Build the next story"
         title="Turn your live-streaming data into a story stakeholders can use."

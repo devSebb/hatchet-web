@@ -84,6 +84,7 @@ export default async function BlogPage() {
       </section>
 
       <CTASection
+        body="Creator, audience, and campaign intelligence for gaming teams, in one place."
         className="py-18 lg:py-24"
         eyebrow="Keep reading the market"
         title="Use Hatchet analysis as the start of a sharper live-streaming read."

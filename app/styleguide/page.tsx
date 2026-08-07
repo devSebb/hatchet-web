@@ -381,9 +381,13 @@ export default function StyleguidePage() {
 
           <TestimonialCarousel />
 
-          <CTASection eyebrow="Book a demo" />
+          <CTASection
+            body="Creator, audience, and campaign intelligence for gaming teams, in one place."
+            eyebrow="Book a demo"
+          />
 
           <CTASection
+            body="Creator, audience, and campaign intelligence for gaming teams, in one place."
             eyebrow="Book a demo"
             media={{
               src: "/images/hero-dashboard.png",
