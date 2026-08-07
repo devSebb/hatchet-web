@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Edit(./app/globals.css)",
+      "Write(./app/globals.css)",
+      "Edit(./components/icons/iso-icons.tsx)",
+      "Write(./components/icons/iso-icons.tsx)",
+      "Edit(./components/ui/**)",
+      "Write(./components/ui/**)",
+
+      "Edit(./next.config.ts)",
+      "Write(./next.config.ts)",
+      "Edit(./tsconfig.json)",
+      "Write(./tsconfig.json)",
+      "Edit(./package.json)",
+      "Write(./package.json)",
+      "Edit(./pnpm-lock.yaml)",
+      "Write(./pnpm-lock.yaml)",
+      "Edit(./eslint.config.mjs)",
+      "Write(./eslint.config.mjs)",
+      "Edit(./.prettierignore)",
+      "Write(./.prettierignore)",
+      "Edit(./.env*)",
+      "Write(./.env*)",
+      "Read(./.env.local)",
+
+      "Edit(./app/layout.tsx)",
+      "Write(./app/layout.tsx)",
+      "Edit(./lib/config/site.ts)",
+      "Write(./lib/config/site.ts)",
+      "Edit(./lib/config/nav.ts)",
+      "Write(./lib/config/nav.ts)",
+      "Edit(./lib/config/legal.ts)",
+      "Write(./lib/config/legal.ts)",
+      "Edit(./lib/seo.ts)",
+      "Write(./lib/seo.ts)",
+      "Edit(./app/sitemap.ts)",
+      "Write(./app/sitemap.ts)",
+      "Edit(./app/robots.ts)",
+      "Write(./app/robots.ts)",
+
+      "Edit(./lib/content/**)",
+      "Write(./lib/content/**)",
+      "Edit(./scripts/**)",
+      "Write(./scripts/**)",
+
+      "Edit(./lib/booking/**)",
+      "Write(./lib/booking/**)",
+      "Edit(./components/booking/**)",
+      "Write(./components/booking/**)",
+
+      "Edit(./components/forms/HubSpotForm.tsx)",
+      "Write(./components/forms/HubSpotForm.tsx)",
+      "Edit(./components/sections/ContactForm.tsx)",
+      "Write(./components/sections/ContactForm.tsx)",
+      "Edit(./components/layout/FooterNewsletter.tsx)",
+      "Write(./components/layout/FooterNewsletter.tsx)",
+      "Edit(./components/resources/GuideGate.tsx)",
+      "Write(./components/resources/GuideGate.tsx)",
+      "Edit(./lib/hubspot.ts)",
+      "Write(./lib/hubspot.ts)",
+
+      "Edit(./app/_unmounted/**)",
+      "Write(./app/_unmounted/**)",
+
+      "Edit(./infra/**)",
+      "Write(./infra/**)",
+      "Edit(./.github/**)",
+      "Write(./.github/**)",
+      "Edit(./.claude/**)",
+      "Write(./.claude/**)",
+      "Edit(./.ds-sync/**)",
+      "Write(./.ds-sync/**)",
+      "Edit(./.design-sync/**)",
+      "Write(./.design-sync/**)",
+      "Edit(./ds-bundle/**)",
+      "Write(./ds-bundle/**)",
+
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git push origin main:*)",
+      "Bash(git push:* main)",
+      "Bash(git checkout main:*)",
+      "Bash(git checkout -b:*)",
+      "Bash(git switch main:*)",
+      "Bash(git switch -c:*)",
+      "Bash(git branch:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git rebase -i:*)",
+      "Bash(git merge main:*)",
+      "Bash(git cherry-pick:*)",
+      "Bash(git tag:*)",
+      "Bash(git remote:*)",
+      "Bash(aws:*)",
+      "Bash(gh secret:*)",
+      "Bash(gh api:*)",
+      "Bash(./scripts/deploy.sh production:*)",
+      "Bash(pnpm sync:wp:*)"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(./scripts/deploy.sh:*)",
+      "Bash(rm:*)"
+    ],
+    "allow": [
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm format:*)",
+      "Bash(pnpm install:*)",
+      "Bash(node scripts/design-lint.mjs:*)",
+      "Bash(./scripts/check-format.sh:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(git revert:*)",
+      "Bash(git restore:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/after-edit.mjs",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}

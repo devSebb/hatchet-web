@@ -77,3 +77,10 @@ hatchet-background.html
 
 # Visual QA output for scripts/optimize-images.mjs (regenerated, never committed)
 qa/
+
+# Claude Code local overrides. The technical reviewer keeps one of these to lift
+# the editor guardrails in .claude/settings.json on their own machine — see
+# .claude/settings.local.json.example. It must never be committed: if it were,
+# every editor would silently inherit full write access to the design system,
+# the build config and the booking subsystem, and nothing would warn anyone.
+.claude/settings.local.json
