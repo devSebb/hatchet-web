@@ -50,6 +50,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     content.getPressItems(),
   ]);
 
+  /**
+   * Campaign landing pages under /lp/ that should be findable in search.
+   *
+   * Opt-in, and empty on purpose. A campaign page is usually built with
+   * `noIndex: true` and deliberately kept out of the sitemap — it exists for
+   * people arriving from an ad or an email, not for organic search.
+   *
+   * This array is the ONLY place to make one discoverable. The alternative
+   * would be adding it to lib/config/nav.ts, and that file drives the header,
+   * the footer AND this sitemap at once — so a campaign page added there ends
+   * up in the site's main navigation, which is a decision for the technical
+   * reviewer rather than a side effect of wanting it indexed.
+   *
+   * Add the path with its trailing slash, e.g. "/lp/summer-campaign".
+   */
+  const lpPaths: string[] = [];
+
   const staticPaths = [
     "/",
     ...navPaths,
@@ -59,6 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/resources/press",
     ...solutions.map((solution) => solution.href),
     ...verticals.map((vertical) => vertical.href),
+    ...lpPaths,
   ];
 
   return [
