@@ -98,11 +98,7 @@
       "Bash(./scripts/deploy.sh production:*)",
       "Bash(pnpm sync:wp:*)"
     ],
-    "ask": [
-      "Bash(git push:*)",
-      "Bash(./scripts/deploy.sh:*)",
-      "Bash(rm:*)"
-    ],
+    "ask": ["Bash(git push:*)", "Bash(./scripts/deploy.sh:*)", "Bash(rm:*)"],
     "allow": [
       "Bash(pnpm dev:*)",
       "Bash(pnpm build:*)",
