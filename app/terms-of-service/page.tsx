@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { LegalPage } from "@/components/sections/LegalPage";
-import { legalPages } from "@/lib/config/marketing";
+import { legalPages } from "@/lib/config/legal";
 import { createMetadata } from "@/lib/seo";
 
 const page = legalPages.terms;
