@@ -186,7 +186,11 @@ const COPY_CORRIDOR_MASK =
 
 // Pulses stay strictly in the red family (never the orange highlight):
 // core brand red, a brighter red for punch, and the soft red for variety.
-const PULSE_COLORS = ["var(--brand)", "#e23c42", "var(--brand-soft)"];
+const PULSE_COLORS = [
+  "var(--brand)",
+  "var(--brand-bright)",
+  "var(--brand-soft)",
+];
 
 // Board fade for navy→white gradient sections: fully present on the dark
 // top, fully gone before the background turns light.

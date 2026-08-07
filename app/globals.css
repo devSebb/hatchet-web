@@ -10,6 +10,7 @@
   --color-brand-soft: var(--brand-soft);
   --color-brand-highlight: var(--brand-highlight);
   --color-brand-lowlight: var(--brand-lowlight);
+  --color-brand-bright: var(--brand-bright);
   --color-blue-transitional: var(--blue-transitional);
   --color-blue-transitional-soft: var(--blue-transitional-soft);
   --color-ink: var(--ink);
@@ -100,6 +101,11 @@
   --brand: #c4262d;
   --brand-highlight: #ff6007;
   --brand-lowlight: #911b20;
+  /* The light end of the red gradient family. Not a fourth brand colour:
+     it is the top stop of --gradient-cta and the bright terminus of the
+     all-red data graphics, and it was duplicated as a #hex literal in
+     seven component and page files before it was named. */
+  --brand-bright: #e23c42;
   --brand-strong: var(--brand-lowlight);
   --brand-soft: color-mix(in srgb, var(--brand) 76%, var(--white));
 
@@ -154,7 +160,7 @@
     var(--ink) 0%,
     var(--brand-lowlight) 36%,
     var(--brand) 74%,
-    #e23c42 100%
+    var(--brand-bright) 100%
   );
   --gradient-cta-glow: radial-gradient(
     120% 120% at 100% 0%,
@@ -229,7 +235,7 @@
   --cta-grain-opacity: 0.05;
   --cta-bloom: radial-gradient(
     92% 78% at 86% 6%,
-    color-mix(in srgb, #e23c42 38%, transparent) 0%,
+    color-mix(in srgb, var(--brand-bright) 38%, transparent) 0%,
     transparent 60%
   );
 

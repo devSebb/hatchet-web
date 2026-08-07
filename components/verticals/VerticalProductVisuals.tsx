@@ -442,7 +442,7 @@ function PublisherGamePage() {
             className="flex h-[104px] items-end rounded-md p-[10px]"
             style={{
               backgroundImage:
-                "linear-gradient(150deg, var(--brand-lowlight) 0%, var(--brand) 70%, #e23c42 100%)",
+                "linear-gradient(150deg, var(--brand-lowlight) 0%, var(--brand) 70%, var(--brand-bright) 100%)",
             }}
           >
             <span className="font-mono text-[12px] font-bold tracking-[0.14em] text-white uppercase">
@@ -929,7 +929,7 @@ function AgencyPostsGrid() {
               className="mt-[10px] grid aspect-video place-items-center rounded-md"
               style={{
                 backgroundImage:
-                  "linear-gradient(150deg, var(--brand-lowlight) 0%, var(--brand) 78%, #e23c42 100%)",
+                  "linear-gradient(150deg, var(--brand-lowlight) 0%, var(--brand) 78%, var(--brand-bright) 100%)",
               }}
             >
               <span className="grid size-[28px] place-items-center rounded-full bg-white/20 text-[11px] text-white">

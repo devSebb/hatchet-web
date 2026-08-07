@@ -151,7 +151,7 @@ function VerticalPoints({ vertical }: { vertical: Vertical }) {
                   style={{
                     // All-red gradient, matching the home page use-case tiles.
                     backgroundImage:
-                      "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, #e23c42 100%)",
+                      "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, var(--brand-bright) 100%)",
                   }}
                 >
                   {Icon ? (

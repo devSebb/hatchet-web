@@ -294,9 +294,9 @@ function WhyHatchet() {
                     className="shadow-glow-brand flex items-center justify-center rounded-xl p-2 text-white transition-transform duration-(--dur-base) group-hover:-translate-y-0.5"
                     style={{
                       // All-red gradient (no brand orange), matching the data-card
-                      // assets. Bright red #e23c42 stands in for the light end.
+                      // assets. --brand-bright stands in for the light end.
                       backgroundImage:
-                        "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, #e23c42 100%)",
+                        "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, var(--brand-bright) 100%)",
                     }}
                   >
                     <Icon aria-hidden="true" className="size-8" />
@@ -361,7 +361,7 @@ function BuiltForYourTeam() {
                     // All-red gradient (no brand orange), matching the
                     // "Why Hatchet" reason icons above.
                     backgroundImage:
-                      "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, #e23c42 100%)",
+                      "linear-gradient(120deg, var(--brand-lowlight) 0%, var(--brand) 42%, var(--brand) 68%, var(--brand-bright) 100%)",
                   }}
                 >
                   <Icon aria-hidden="true" className="size-8" />

@@ -15,7 +15,7 @@ const DIM = "color-mix(in srgb, var(--bg) 14%, transparent)";
 
 // The data-card graphics stay strictly in the red family — no brand orange
 // (--brand-highlight). A bright red stands in for the light end of the gradient.
-const RED_BRIGHT = "#e23c42";
+const RED_BRIGHT = "var(--brand-bright)";
 
 const VIEWPORT = { once: true, amount: 0.5 } as const;
 
