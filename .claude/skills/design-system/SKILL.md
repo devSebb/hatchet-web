@@ -162,7 +162,9 @@ pricing feature row, vertical point, or job listing.
 **🟡 With the rule stated:** spacing, never ±1 · new pages, `/lp/<name>` only.
 
 **🔴 Needs Seb:** anything in `globals.css` · fonts · any new colour · type
-sizing · placing a Signal graphic somewhere new · a 5th solution or 6th vertical
-(the build throws) · **a 4th pricing tier — permanently impossible, the icon
+sizing · placing a Signal graphic somewhere new · a 5th solution (the slug type
+is closed, so it fails the type check) · a 6th vertical (**nothing fails** — it
+silently renders numbers instead of icons) · **a 4th pricing tier — permanently
+impossible, the icon
 generator is lost and no fourth icon can be made** · nav structure · the four
 forms · booking · infrastructure.

@@ -34,8 +34,9 @@ If nothing changed, say so. Do not publish for the sake of it.
 
 Run the full `/publish` check sequence. Two things matter especially:
 
-- **The build must still report 126 pages.** A different number means posts were
-  added or removed — say which, and confirm that is expected.
+- **The build must still print `124 HTML pages`** — that is 126 routes minus
+  `robots.txt` and `sitemap.xml`, which are not HTML. A different number means
+  posts were added or removed — say which, and confirm that is expected.
 - **A missing image will fail the build.** If a picture was deleted in
   WordPress, the sync notices. Say which post, so Mark can fix it there.
 

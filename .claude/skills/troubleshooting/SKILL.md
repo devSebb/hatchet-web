@@ -19,8 +19,31 @@ paste a raw error.
 | **Type check**   | Something refers to a name that no longer exists — usually a renamed or deleted bit of code. | Fix it. It is nearly always the last edit.                                                        |
 | **Lint**         | A code-quality rule.                                                                         | Fix it.                                                                                           |
 | **Design check** | A change would alter how the site looks.                                                     | Read what it says — it names the file and the fix. Usually a spacing ±1 or a hand-written colour. |
-| **Formatting**   | Spacing or quotes in the code.                                                               | Run `pnpm format`. Never a real problem.                                                          |
+| **Formatting**   | Spacing or quotes in the code.                                                               | **Never run `pnpm format` bare** — see below.                                                     |
 | **Build**        | The site could not be assembled.                                                             | See below.                                                                                        |
+
+### ⚠️ Formatting — never run `pnpm format` on its own
+
+It formats **everything**, including the two files `scripts/check-format.sh`
+deliberately holds exempt: `AGENTS.md` and `components/icons/iso-icons.tsx`.
+Reformatting the icons file produces a **+2056/-288** diff against a file whose
+generator is lost and which cannot be regenerated.
+
+**The safe sequence, every time:**
+
+```
+pnpm format
+git restore AGENTS.md components/icons/iso-icons.tsx
+./scripts/check-format.sh          # must print "baseline of 2", exit 0
+```
+
+If the check says **"these files used to be exempt and are now clean"**, that is
+the failure signal, not good news — `pnpm format` just rewrote a baseline file.
+Restore the two files. **Never** fix it by removing them from `BASELINE` in
+`scripts/check-format.sh`; that silences the guard instead of the cause.
+
+Same applies after copying anything into `.claude/` by hand: it arrives
+unformatted, and nothing catches it until the gate runs.
 
 ### The build error worth recognising
 

@@ -14,7 +14,10 @@ design…"):
 2. `pnpm lint`
 3. `node scripts/design-lint.mjs`
 4. `./scripts/check-format.sh` — expects exactly **2** known files
-5. `pnpm build` — must report **126 pages** and **zero** `/_next/image`
+5. `pnpm build` — the last line must read
+   `✓ export assertions passed — 124 HTML pages, … 0 /_next/image references`.
+   **Look for 124, not 126.** The site has 126 routes, but two of them
+   (`robots.txt` and `sitemap.xml`) are not HTML files, so the build counts 124.
 
 **If any fails: stop. Publish nothing.** Say which check failed and what it
 means — the `troubleshooting` skill has the translations. Fix it if it is

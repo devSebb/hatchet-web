@@ -32,8 +32,13 @@ before using it.
 
 Compose **only** from the freely-composable sections listed in
 `components/sections/CLAUDE.md`: `PageHeader`, `CTASection`, `FeatureBlock`,
-`LogoWall`, `CircuitDivider`, `MonitorMockup`, `TestimonialCarousel`,
-`HeroStatVisual`.
+`LogoWall`, `MonitorMockup`, `TestimonialCarousel`, `HeroStatVisual`.
+
+**Not `CircuitDivider`, and no other Signal graphic.** They are allowed only
+where they already appear, and a new page is by definition somewhere new. The
+design check enforces this with a file allowlist that does not include `/lp/`,
+so adding one **fails the publish**. If the page needs a break between
+sections, use spacing.
 
 **No new components. No hand-written markup beyond arranging these.** If the
 page needs something the set cannot express, that is a design question for Seb.
@@ -42,8 +47,9 @@ Rules that will otherwise bite:
 
 - **`generateMetadata` is required** — title and description, plus
   `noIndex: true` unless they explicitly asked to be indexed.
-- **`<Hero>`'s default second button points at a page that does not exist.**
-  Set `secondaryCta` yourself, or leave it off.
+- **Do not use `Hero`** — it is not in the set above. `PageHeader` is the
+  header for a landing page. Give it a `secondaryCta` only if you have a real
+  destination for it; there is no default, so leaving it off is safe.
 - **`<CTASection>` always gets an explicit `title` and `body`.**
 - **`PageHeader` never gets `surface="gradient"`** — white text on white.
 - **`FeatureBlock` without an image renders a fake-metric placeholder.** Supply

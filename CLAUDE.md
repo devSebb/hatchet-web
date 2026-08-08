@@ -118,3 +118,47 @@ Read the skill before acting, not after:
 
 `components/sections/CLAUDE.md` loads automatically when you touch a section
 component and carries the per-component constraints.
+
+---
+
+## 🔧 Maintenance notes — not for editors
+
+None of this comes up while editing copy. It applies when you are changing the
+repo's own tooling, and it is here because this is the only file that travels
+with the repo, always loads, and is not itself write-protected.
+
+### ⚠️ Never run `pnpm format` on its own
+
+It formats **everything**, including the two files `scripts/check-format.sh`
+deliberately holds exempt in its `BASELINE`:
+
+- `AGENTS.md`
+- `components/icons/iso-icons.tsx` — **+2056/−288 when reformatted.** The
+  generator for this file is lost. It cannot be regenerated. This is the same
+  file that makes a fourth pricing tier permanently impossible.
+
+**The safe sequence, every time:**
+
+```
+pnpm format
+git restore AGENTS.md components/icons/iso-icons.tsx
+./scripts/check-format.sh          # must print "baseline of 2", exit 0
+```
+
+When `check-format.sh` says **"these files used to be exempt and are now
+clean"**, that is the failure signal — it means `pnpm format` just rewrote a
+baseline file. It reads like good news. It is not.
+
+**Never resolve it by removing files from `BASELINE` in
+`scripts/check-format.sh`.** That silences the guard rather than fixing the
+cause, and leaves nothing to catch the next bare `pnpm format`.
+
+### Installing skills or commands by hand
+
+`.claude/**` is write-protected, so new skills and commands are authored
+elsewhere and copied in. **They arrive unformatted and no check fires until
+someone runs the gate**, which then reports a formatting regression that has
+nothing to do with whatever they were working on.
+
+So: after copying anything into `.claude/`, run the safe sequence above before
+committing. Prettier covers `.claude/**` even though the edit tools cannot.

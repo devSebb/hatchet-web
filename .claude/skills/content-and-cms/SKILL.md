@@ -21,8 +21,10 @@ WordPress, and offer to pull the latest version once they have saved it there.
 
 ### Getting new content onto staging
 
-Use **`/refresh-blog`**. It runs the sync, checks the site still builds, and
-publishes to staging. It takes about five minutes, mostly spent verifying that
+Use **`/refresh-blog`**. It attempts the sync, checks the site still builds,
+and publishes to staging. **The sync script lives in a locked folder, so it may
+not be able to run it** — if so it says that plainly and offers to ask Seb to
+run the sync. It takes about five minutes, mostly spent verifying that
 every image still exists on the WordPress server.
 
 New posts do **not** appear on their own. Nothing is fetched when a visitor

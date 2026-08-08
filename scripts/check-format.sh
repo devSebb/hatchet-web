@@ -16,6 +16,25 @@
 #
 #   ./scripts/check-format.sh
 #
+#
+# ---------------------------------------------------------------------------
+# WARNING: "used to be exempt and are now clean" IS A FAILURE, NOT GOOD NEWS.
+#
+# It means something reformatted a BASELINE file — almost always a bare
+# `pnpm format`, which formats everything and does not honour this baseline.
+# Reformatting iso-icons.tsx is a +2056/-288 diff against a file whose
+# generator is lost and which cannot be regenerated.
+#
+# The safe sequence when you need to format:
+#
+#   pnpm format
+#   git restore AGENTS.md components/icons/iso-icons.tsx
+#   ./scripts/check-format.sh        # must print "baseline of 2", exit 0
+#
+# DO NOT resolve that message by deleting entries from BASELINE below. That
+# silences the guard rather than fixing the cause, and leaves nothing to catch
+# the next bare `pnpm format`.
+# ---------------------------------------------------------------------------
 set -uo pipefail
 
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

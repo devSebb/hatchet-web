@@ -29,13 +29,13 @@ The words for a page are often **not** in that page's file. Check here first.
 Say so out loud before editing these. This is the mistake that is hardest to
 notice afterwards.
 
-| File                                         | Feeds                          | What happens                             |
-| -------------------------------------------- | ------------------------------ | ---------------------------------------- |
-| `lib/config/solutions.ts`                    | **4 solution pages**           | You are editing one of four. Name which. |
-| `lib/config/marketing.ts`                    | **5 vertical pages** + careers | Same — one of five.                      |
-| `components/sections/*`                      | many pages                     | See `components/sections/CLAUDE.md`      |
-| `components/layout/Header.tsx`, `Footer.tsx` | **every page**                 | Nav and footer are locked anyway         |
-| `lib/config/nav.ts`                          | header **+ footer + sitemap**  | Locked. Nav changes need Seb             |
+| File                                         | Feeds                          | What happens                                                      |
+| -------------------------------------------- | ------------------------------ | ----------------------------------------------------------------- |
+| `lib/config/solutions.ts`                    | **4 solution pages**           | You are editing one of four. Name which.                          |
+| `lib/config/marketing.ts`                    | **5 vertical pages** + careers | Same — one of five.                                               |
+| `components/sections/*`                      | many pages                     | See `components/sections/CLAUDE.md`                               |
+| `components/layout/Header.tsx`, `Footer.tsx` | **every page**                 | **Editable — but nav structure is 🔴.** Escalate rather than edit |
+| `lib/config/nav.ts`                          | header **+ footer + sitemap**  | Locked. Nav changes need Seb                                      |
 
 ## The one edit that breaks the build
 
