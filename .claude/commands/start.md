@@ -15,7 +15,7 @@ Steps:
    moment" rather than naming the tool.
 4. Start the dev server and give them the link (usually `http://localhost:3000`).
 5. Tell them what teammates have published recently — the last few changes on
-   `staging` that are not theirs, described as *what changed*, not as commits.
+   `staging` that are not theirs, described as _what changed_, not as commits.
 
 If step 2 hits a conflict, **stop**. Do not resolve it. Say which teammate's
 work it collides with and offer to draft them a message.

@@ -57,7 +57,7 @@ a campaign page usually should not be in one. If they do want it found, add the
 path to the explicit `lpPaths` list in `app/sitemap.ts`.
 
 **Never add it to `lib/config/nav.ts`** to get it listed — that file drives the
-header, the footer *and* the sitemap at once. Putting a campaign page in the
+header, the footer _and_ the sitemap at once. Putting a campaign page in the
 main navigation is a decision for Seb.
 
 ## 5. Finish

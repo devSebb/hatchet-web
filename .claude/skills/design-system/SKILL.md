@@ -8,7 +8,7 @@ description: The colours, fonts, spacing, and graphics of the Hatchet site, and 
 The design is **finished and frozen**. Copy changes freely; the look does not.
 Everything below was derived from the code — `app/globals.css`, `app/layout.tsx`
 and the compiled stylesheet. Two files on disk, `docs/DESIGN.md` and
-`docs/BUILD_PLAN.md`, describe a *different* site that was never built. **Ignore
+`docs/BUILD_PLAN.md`, describe a _different_ site that was never built. **Ignore
 them completely.** If something you read contradicts this skill, this skill wins.
 
 ---
@@ -22,15 +22,15 @@ The scale is roughly double normal Tailwind, **and it has holes**. Numbers with
 a design token behind them use it; numbers without fall straight through to a
 much smaller default. Measured from the built stylesheet:
 
-| Class | Real size | |
-|---|---|---|
-| `h-6` | **48px** | token |
-| `h-7` | **28px** | ← no token, plain default |
-| `h-8` | **64px** | token |
-| `h-9` | **36px** | ← no token |
-| `h-10` | **80px** | token |
-| `h-11` | **44px** | ← no token |
-| `h-12` | **96px** | token |
+| Class  | Real size |                           |
+| ------ | --------- | ------------------------- |
+| `h-6`  | **48px**  | token                     |
+| `h-7`  | **28px**  | ← no token, plain default |
+| `h-8`  | **64px**  | token                     |
+| `h-9`  | **36px**  | ← no token                |
+| `h-10` | **80px**  | token                     |
+| `h-11` | **44px**  | ← no token                |
+| `h-12` | **96px**  | token                     |
 
 So `h-7` → `h-8` is not a nudge, it is **2.3× bigger**. And `h-12` → `h-11`,
 asked for as "slightly smaller", is **less than half**. `py-16` is 128px;
@@ -56,14 +56,14 @@ Seb.
 
 ### Brand
 
-| Token | Value | |
-|---|---|---|
-| `--brand` | `#c4262d` | the Hatchet red — the primary everywhere |
-| `--brand-lowlight` | `#911b20` | dark end of the red gradient |
-| `--brand-bright` | `#e23c42` | light end of the red gradient |
-| `--brand-soft` | 76% brand + white | |
-| `--brand-strong` | = `--brand-lowlight` | hover states |
-| `--brand-highlight` | `#ff6007` | **orange — see below** |
+| Token               | Value                |                                          |
+| ------------------- | -------------------- | ---------------------------------------- |
+| `--brand`           | `#c4262d`            | the Hatchet red — the primary everywhere |
+| `--brand-lowlight`  | `#911b20`            | dark end of the red gradient             |
+| `--brand-bright`    | `#e23c42`            | light end of the red gradient            |
+| `--brand-soft`      | 76% brand + white    |                                          |
+| `--brand-strong`    | = `--brand-lowlight` | hover states                             |
+| `--brand-highlight` | `#ff6007`            | **orange — see below**                   |
 
 ### The orange is deliberate, and nearly invisible
 
@@ -123,8 +123,8 @@ needs Seb.
 ### Copy case — Title Case
 
 Headlines are **Title Case**, consistently, across the whole site and two client
-copy passes: *"Cut Through The Noise with Hatchet"*, *"Get Your Hands on
-Hatchet"*, *"Name a Platform, Any Platform..."*. Body copy is sentence case.
+copy passes: _"Cut Through The Noise with Hatchet"_, _"Get Your Hands on
+Hatchet"_, _"Name a Platform, Any Platform..."_. Body copy is sentence case.
 
 Match the page you are editing. **Do not convert anything to sentence case** —
 it is not a mistake, it is the house style.
@@ -135,11 +135,11 @@ it is not a mistake, it is the house style.
 
 Three sanctioned primitives, named in the styleguide:
 
-| Component | Where it actually is |
-|---|---|
-| `Sparkline` | `/styleguide` and inside `StatCounters` — **and `StatCounters` only renders on `/styleguide`**, so it is on **no live marketing page** |
-| `LiveDot` | `/styleguide` only |
-| `CircuitDivider` | the live one: homepage (×2), `/about/contact`, and conditionally on solution and vertical pages |
+| Component        | Where it actually is                                                                                                                   |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `Sparkline`      | `/styleguide` and inside `StatCounters` — **and `StatCounters` only renders on `/styleguide`**, so it is on **no live marketing page** |
+| `LiveDot`        | `/styleguide` only                                                                                                                     |
+| `CircuitDivider` | the live one: homepage (×2), `/about/contact`, and conditionally on solution and vertical pages                                        |
 
 Closely related but **not** one of the three: `CircuitField`, the ambient
 circuit-board artwork behind the hero and the stat band.

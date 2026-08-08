@@ -9,8 +9,8 @@ Discard everything not yet published. **This destroys work permanently.**
 List what will be lost, in their words:
 
 > This will throw away:
->   • the new headline on the About page
->   • the two changed paragraphs on /solutions/discovery
+> • the new headline on the About page
+> • the two changed paragraphs on /solutions/discovery
 >
 > These have not been published, so there's no copy of them anywhere. Once
 > they're gone I can't get them back.

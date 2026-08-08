@@ -9,33 +9,33 @@ The words for a page are often **not** in that page's file. Check here first.
 
 ## Page by page
 
-| Page | Where the copy is | How hard |
-|---|---|---|
-| `/` | `app/page.tsx` — ~85% is right there: hero, pillars, why-hatchet reasons, use cases, testimonials, plans, CTA | **Medium** |
-| `/pricing` | `app/pricing/page.tsx` — `PLANS` and `MODULE_ROWS` arrays at the top | **Easy** |
-| `/about` | `app/about/page.tsx` — `storyStats`, `values`, inline prose | **Easy** |
-| `/about/careers` | headings on the page; **the three jobs are `careersOpenings` in `lib/config/marketing.ts`** | **Easy** |
-| `/about/contact` | `app/about/contact/page.tsx` — prose inline, `salesTeam` roster (11 people) | **Easy** |
-| `/solutions/*` (4) | **`lib/config/solutions.ts`** — the page file has zero copy | **Easy, once you know** |
-| `/who-we-serve/*` (5) | **`lib/config/marketing.ts`**, the `verticals` array | **Easy, same shape** |
-| `/why-hatchet` | **`lib/config/why-hatchet.ts`** (points + platforms) and `components/sections/ComparisonTable.tsx` (the matrix). The page file has only the header and closing CTA | **Was the hardest page; now fine** |
-| `/blog` | page-level copy inline; the posts are WordPress | **Medium** |
-| `/resources/guides` | header + `SHELF_COPY` on the page; reports are WordPress | **Medium** |
-| `/resources/customer-stories`, `/resources/press` | headers and empty states inline; cards are WordPress | **Medium** |
-| `/privacy-policy`, `/terms-of-service`, `/cookie-policy` | `lib/config/legal.ts` — **locked. Legal text needs Seb.** | **Denied** |
+| Page                                                     | Where the copy is                                                                                                                                                  | How hard                           |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------- |
+| `/`                                                      | `app/page.tsx` — ~85% is right there: hero, pillars, why-hatchet reasons, use cases, testimonials, plans, CTA                                                      | **Medium**                         |
+| `/pricing`                                               | `app/pricing/page.tsx` — `PLANS` and `MODULE_ROWS` arrays at the top                                                                                               | **Easy**                           |
+| `/about`                                                 | `app/about/page.tsx` — `storyStats`, `values`, inline prose                                                                                                        | **Easy**                           |
+| `/about/careers`                                         | headings on the page; **the three jobs are `careersOpenings` in `lib/config/marketing.ts`**                                                                        | **Easy**                           |
+| `/about/contact`                                         | `app/about/contact/page.tsx` — prose inline, `salesTeam` roster (11 people)                                                                                        | **Easy**                           |
+| `/solutions/*` (4)                                       | **`lib/config/solutions.ts`** — the page file has zero copy                                                                                                        | **Easy, once you know**            |
+| `/who-we-serve/*` (5)                                    | **`lib/config/marketing.ts`**, the `verticals` array                                                                                                               | **Easy, same shape**               |
+| `/why-hatchet`                                           | **`lib/config/why-hatchet.ts`** (points + platforms) and `components/sections/ComparisonTable.tsx` (the matrix). The page file has only the header and closing CTA | **Was the hardest page; now fine** |
+| `/blog`                                                  | page-level copy inline; the posts are WordPress                                                                                                                    | **Medium**                         |
+| `/resources/guides`                                      | header + `SHELF_COPY` on the page; reports are WordPress                                                                                                           | **Medium**                         |
+| `/resources/customer-stories`, `/resources/press`        | headers and empty states inline; cards are WordPress                                                                                                               | **Medium**                         |
+| `/privacy-policy`, `/terms-of-service`, `/cookie-policy` | `lib/config/legal.ts` — **locked. Legal text needs Seb.**                                                                                                          | **Denied**                         |
 
 ## ⚠️ Files that feed more than one page
 
 Say so out loud before editing these. This is the mistake that is hardest to
 notice afterwards.
 
-| File | Feeds | What happens |
-|---|---|---|
-| `lib/config/solutions.ts` | **4 solution pages** | You are editing one of four. Name which. |
-| `lib/config/marketing.ts` | **5 vertical pages** + careers | Same — one of five. |
-| `components/sections/*` | many pages | See `components/sections/CLAUDE.md` |
-| `components/layout/Header.tsx`, `Footer.tsx` | **every page** | Nav and footer are locked anyway |
-| `lib/config/nav.ts` | header **+ footer + sitemap** | Locked. Nav changes need Seb |
+| File                                         | Feeds                          | What happens                             |
+| -------------------------------------------- | ------------------------------ | ---------------------------------------- |
+| `lib/config/solutions.ts`                    | **4 solution pages**           | You are editing one of four. Name which. |
+| `lib/config/marketing.ts`                    | **5 vertical pages** + careers | Same — one of five.                      |
+| `components/sections/*`                      | many pages                     | See `components/sections/CLAUDE.md`      |
+| `components/layout/Header.tsx`, `Footer.tsx` | **every page**                 | Nav and footer are locked anyway         |
+| `lib/config/nav.ts`                          | header **+ footer + sitemap**  | Locked. Nav changes need Seb             |
 
 ## The one edit that breaks the build
 

@@ -63,7 +63,7 @@ If you do not know an image's real dimensions, **ask** rather than guessing.
 There is exactly one video: the homepage hero clip, hosted on **Mux**.
 
 **Editors cannot swap it.** It needs a Mux dashboard login with billing, and the
-upload produces two different identifiers — a *playback ID* and an *asset ID*.
+upload produces two different identifiers — a _playback ID_ and an _asset ID_.
 Using the asset ID by mistake gives a video that **silently never plays**: the
 poster image shows, nothing happens, and no check anywhere can detect it. Not
 the build, not the type check, not the design check. Someone has to watch the
@@ -71,7 +71,7 @@ page.
 
 **Any request to change the video goes to Seb.** Offer to write the note.
 
-**What they *can* change is the poster** — the still image shown before it
+**What they _can_ change is the poster** — the still image shown before it
 plays. That is a normal image swap, and it fails visibly if it is wrong.
 
 ## The four forms are frozen

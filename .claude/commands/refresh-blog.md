@@ -24,8 +24,8 @@ so, say plainly that Seb needs to run the sync, and offer to write the note.
 Compare before and after, and describe it as content:
 
 > Pulled in 2 new posts:
->   • "Twitch viewership in Q3 2026"
->   • "What the Kick deal means for creators"
+> • "Twitch viewership in Q3 2026"
+> • "What the Kick deal means for creators"
 > One existing post was updated — the Q2 trends piece.
 
 If nothing changed, say so. Do not publish for the sake of it.

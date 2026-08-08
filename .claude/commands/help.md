@@ -8,31 +8,39 @@ any of these commands — plain English always works.** Lead with that.
 > You can just tell me what you want in your own words. Here's the sort of thing:
 
 **Changing words**
+
 > "Change the headline on the pricing page to …"
 > "The About page intro should mention we work with Riot and Capcom"
 > "Make the button on /why-hatchet say 'See a Demo' instead"
 
 **Looking at it**
-> "Show me the site"    ·    "What does the pricing page look like now?"
+
+> "Show me the site" · "What does the pricing page look like now?"
 
 **Pictures**
-> "Swap the team photo for Alessandra" *(I'll need the new file and its size)*
+
+> "Swap the team photo for Alessandra" _(I'll need the new file and its size)_
 
 **Publishing**
-> "Save this"  or  "Put it on the test site"   → goes to staging, not live
+
+> "Save this" or "Put it on the test site" → goes to staging, not live
 > "It's ready" → sends it to Seb to review
 
 **Going back**
-> "Undo that"        → reverses the last thing published
-> "Start over"       → throws away unpublished work (I'll check first)
+
+> "Undo that" → reverses the last thing published
+> "Start over" → throws away unpublished work (I'll check first)
 
 **Where things stand**
-> "What's changed?"   ·   "What has Mark been doing?"
+
+> "What's changed?" · "What has Mark been doing?"
 
 **New pages**
+
 > "I need a landing page for the summer campaign"
 
 **Blog and reports**
+
 > "Mark published a new post, can you pull it in?"
 
 Then add:

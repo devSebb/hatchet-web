@@ -6,7 +6,7 @@ description: What to do when a publish fails, when the staging site looks wrong,
 # When something goes wrong
 
 **Nothing an editor does can break the live site.** Everything goes to a private
-staging site first, and a failed check means *nothing was published at all*.
+staging site first, and a failed check means _nothing was published at all_.
 Lead with that — it is true, and it is the thing they are worried about.
 
 ## When a check fails during `/publish`
@@ -14,13 +14,13 @@ Lead with that — it is true, and it is the thing they are worried about.
 Say which check failed, in plain words, and what you are doing about it. Never
 paste a raw error.
 
-| Check | What it means | What to do |
-|---|---|---|
-| **Type check** | Something refers to a name that no longer exists — usually a renamed or deleted bit of code. | Fix it. It is nearly always the last edit. |
-| **Lint** | A code-quality rule. | Fix it. |
-| **Design check** | A change would alter how the site looks. | Read what it says — it names the file and the fix. Usually a spacing ±1 or a hand-written colour. |
-| **Formatting** | Spacing or quotes in the code. | Run `pnpm format`. Never a real problem. |
-| **Build** | The site could not be assembled. | See below. |
+| Check            | What it means                                                                                | What to do                                                                                        |
+| ---------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **Type check**   | Something refers to a name that no longer exists — usually a renamed or deleted bit of code. | Fix it. It is nearly always the last edit.                                                        |
+| **Lint**         | A code-quality rule.                                                                         | Fix it.                                                                                           |
+| **Design check** | A change would alter how the site looks.                                                     | Read what it says — it names the file and the fix. Usually a spacing ±1 or a hand-written colour. |
+| **Formatting**   | Spacing or quotes in the code.                                                               | Run `pnpm format`. Never a real problem.                                                          |
+| **Build**        | The site could not be assembled.                                                             | See below.                                                                                        |
 
 ### The build error worth recognising
 
@@ -34,8 +34,8 @@ in that paragraph **exactly**. Someone edited the paragraph and the phrase no
 longer appears in it, so the link has nothing to attach to.
 
 **The fix:** either put the phrase back into the paragraph word for word, or
-update the phrase to match the new wording. The current phrase is *"Check out
-our other Solutions pages"*.
+update the phrase to match the new wording. The current phrase is _"Check out
+our other Solutions pages"_.
 
 This is the only error of its kind, and it is a **good** one — it stops the
 build rather than shipping a broken page.
@@ -53,7 +53,7 @@ Work down this list:
 
 1. **Is it actually the new version?** A staging deploy takes 3–5 minutes.
    Reload with a hard refresh.
-2. **A section vanished.** Several sections render *nothing* rather than
+2. **A section vanished.** Several sections render _nothing_ rather than
    erroring when they have no content — the blog carousel with no posts, a hero
    with no image or video. Check the content is there.
 3. **Text is invisible, white on white.** A section is using the gradient
